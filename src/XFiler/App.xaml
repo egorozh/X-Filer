@@ -1,0 +1,26 @@
+﻿<sdk:ExplorerApp x:Class="XFiler.App"
+                 x:ClassModifier="internal"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:sdk="clr-namespace:XFiler.SDK"
+                 xmlns:xFiler="clr-namespace:XFiler"
+                 ShutdownMode="OnLastWindowClose">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+              
+                <ResourceDictionary Source="Themes/App/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
+              
+                <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type sdk:ExplorerTabItemViewModel}">
+                        <xFiler:DirectoryTabItem />
+                    </DataTemplate>
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</sdk:ExplorerApp>

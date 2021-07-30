@@ -1,0 +1,32 @@
+﻿<sdk:ExplorerWindowBase x:Class="XFiler.ExplorerWindow"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
+                        xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+                        xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
+                        xmlns:xFiler="clr-namespace:XFiler"
+                        mc:Ignorable="d"
+
+                        Style="{DynamicResource {x:Static themes:ResourceKeys.MainWindowStyle}}"
+                       
+                        Title="{Binding CurrentTabItem.Header}"
+
+                        Height="720" Width="1024">
+
+    <dockablz:Layout Partition="2AE89D18-F236-4D20-9605-6C03319038E6"
+                     IsFloatDropZoneEnabled="False"
+                     x:Name="Layout">
+
+        <dockablz:Layout.BranchTemplate>
+            <DataTemplate>
+                <xFiler:ExplorerView />
+            </DataTemplate>
+        </dockablz:Layout.BranchTemplate>
+
+        <xFiler:ExplorerView x:Name="InitMainView" />
+
+    </dockablz:Layout>
+
+</sdk:ExplorerWindowBase>

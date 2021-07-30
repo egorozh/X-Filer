@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>Enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
+    <PackageReference Include="Squircle.WPF" Version="5.0.0" />
+    <ProjectReference Include="..\..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
+  </ItemGroup>
+
+</Project>

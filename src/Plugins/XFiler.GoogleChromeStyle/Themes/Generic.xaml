@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="MainWindow/Windows.xaml" />
+
+        <ResourceDictionary Source="Controls/SearchControl.xaml" />
+        <ResourceDictionary Source="Controls/RectSelectListBox.xaml" />
+        <ResourceDictionary Source="Controls/RectSelectDataGrid.xaml" />
+
+        <ResourceDictionary Source="Others/Colors.xaml" />
+        <ResourceDictionary Source="Others/Scroll.xaml" />
+        <ResourceDictionary Source="Others/Menu.xaml" />
+        <ResourceDictionary Source="Others/Expanders.xaml" />
+        <ResourceDictionary Source="Others/Dragablze.xaml" />
+        <ResourceDictionary Source="Others/GroupItem.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

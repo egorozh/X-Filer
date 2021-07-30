@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler", "XFiler\XFiler.csproj", "{D4CF15CA-DFE3-481A-8B5F-E713450DA93F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sdk", "Sdk", "{238F966F-4A92-455E-8B96-E329A3C67A9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{15ACF1E9-FF7D-4934-B3E0-A7783F2F0838}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.SDK", "SDK\XFiler.SDK\XFiler.SDK.csproj", "{A7787238-3B49-4DF9-81A7-FDF283B57317}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.Base", "Plugins\XFiler.Base\XFiler.Base.csproj", "{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.GoogleChromeStyle", "Plugins\XFiler.GoogleChromeStyle\XFiler.GoogleChromeStyle.csproj", "{B99E18DE-A09E-43DD-A152-2E1B4727A053}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.BaseStyle", "Plugins\XFiler.BaseStyle\XFiler.BaseStyle.csproj", "{B0E649D5-A8DC-48D6-B702-0DC386905AA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4CF15CA-DFE3-481A-8B5F-E713450DA93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4CF15CA-DFE3-481A-8B5F-E713450DA93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4CF15CA-DFE3-481A-8B5F-E713450DA93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4CF15CA-DFE3-481A-8B5F-E713450DA93F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7787238-3B49-4DF9-81A7-FDF283B57317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7787238-3B49-4DF9-81A7-FDF283B57317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7787238-3B49-4DF9-81A7-FDF283B57317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7787238-3B49-4DF9-81A7-FDF283B57317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B99E18DE-A09E-43DD-A152-2E1B4727A053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B99E18DE-A09E-43DD-A152-2E1B4727A053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B99E18DE-A09E-43DD-A152-2E1B4727A053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B99E18DE-A09E-43DD-A152-2E1B4727A053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0E649D5-A8DC-48D6-B702-0DC386905AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E649D5-A8DC-48D6-B702-0DC386905AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E649D5-A8DC-48D6-B702-0DC386905AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E649D5-A8DC-48D6-B702-0DC386905AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A7787238-3B49-4DF9-81A7-FDF283B57317} = {238F966F-4A92-455E-8B96-E329A3C67A9B}
+		{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4} = {15ACF1E9-FF7D-4934-B3E0-A7783F2F0838}
+		{B99E18DE-A09E-43DD-A152-2E1B4727A053} = {15ACF1E9-FF7D-4934-B3E0-A7783F2F0838}
+		{B0E649D5-A8DC-48D6-B702-0DC386905AA6} = {15ACF1E9-FF7D-4934-B3E0-A7783F2F0838}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B25000C6-E314-45E7-874B-69C955B90F19}
+	EndGlobalSection
+EndGlobal

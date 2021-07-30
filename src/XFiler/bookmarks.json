@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Path": "C:\\" 
+  },
+  {
+    "BookmarkFolderName": "Games",
+    "Children": [
+      {
+        "Path": "D:\\"
+      },
+      {
+        "Path": "E:\\"
+      }
+    ] 
+  }
+]
