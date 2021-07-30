@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Dragablz" Version="0.0.3.223" />
-    <PackageReference Include="gong-wpf-dragdrop" Version="2.3.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\gong-wpf-dragdrop\src\GongSolutions.WPF.DragDrop\GongSolutions.WPF.DragDrop.csproj" />
   </ItemGroup>
 
 </Project>
