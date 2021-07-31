@@ -4,9 +4,9 @@ namespace XFiler.SDK
 {
     public static class Extensions
     {
-        public static IExplorerApp ExplorerApp(this Application application)
+        public static IXFilerApp XFilerApp(this Application application)
         {
-            return (IExplorerApp)application;
+            return (IXFilerApp)application;
         }
     }
 }

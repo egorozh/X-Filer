@@ -12,7 +12,7 @@
     <!--#region Main Window-->
 
     <ControlTemplate x:Key="GoogleChromeWindowTemplate"
-                     TargetType="{x:Type wpf:ExplorerWindowBase}">
+                     TargetType="{x:Type wpf:XFilerWindowBase}">
 
         <Grid Background="#01FFFFFF">
 
@@ -84,7 +84,7 @@
 
     </ControlTemplate>
 
-    <Style TargetType="{x:Type wpf:ExplorerWindowBase}"
+    <Style TargetType="{x:Type wpf:XFilerWindowBase}"
            x:Key="{x:Static themes:ResourceKeys.MainWindowStyle}">
 
         <Setter Property="WindowStyle" Value="None" />

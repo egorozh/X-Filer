@@ -1,6 +1,6 @@
 ﻿namespace XFiler.SDK
 {
-    public abstract class ChromerTabItemViewModel : BaseViewModel, ITabItem
+    public abstract class TabItemViewModel : BaseViewModel, ITabItem
     {
         #region Public Properties
 
@@ -14,7 +14,7 @@
 
         #region Constructor
 
-        protected ChromerTabItemViewModel(string header)
+        protected TabItemViewModel(string header)
         {
             Header = header;
         }

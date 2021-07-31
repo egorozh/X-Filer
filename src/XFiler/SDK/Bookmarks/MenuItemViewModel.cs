@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
-using XFiler.SDK;
 
-namespace XFiler
+namespace XFiler.SDK
 {
     /// <summary>
     /// View-Model MenuItem'а 

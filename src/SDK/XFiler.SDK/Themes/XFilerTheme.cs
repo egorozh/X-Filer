@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace XFiler.SDK.Themes
 {
-    public abstract class ExplorerTheme : DependencyObject
+    public abstract class XFilerTheme : DependencyObject
     {
         public string Guid => GetGuid();
         
@@ -11,4 +11,4 @@ namespace XFiler.SDK.Themes
 
         public abstract string GetGuid();
     }
-}
+}   

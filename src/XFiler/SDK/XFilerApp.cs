@@ -1,18 +1,18 @@
-﻿using System.Globalization;
+﻿using Autofac;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
-using Autofac;
 using XFiler.GoogleChromeStyle;
 using XFiler.SDK.Themes;
 
 namespace XFiler.SDK
 {
-    internal class ExplorerApp : Application, IExplorerApp
+    internal class XFilerApp : Application, IXFilerApp
     {
         #region Private Fields
 
-        private ExplorerTheme? _currentTheme;
+        private XFilerTheme? _currentTheme;
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        public ExplorerApp()
+        public XFilerApp()
         {
             Host = new IoC().Build();
             
@@ -68,7 +68,7 @@ namespace XFiler.SDK
 
         #region Private Methods
 
-        private void SetTheme(ExplorerTheme newTheme)
+        private void SetTheme(XFilerTheme newTheme)
         {
             if (_currentTheme != null)
             {

@@ -17,7 +17,7 @@ namespace XFiler.SDK
 
         #region Events
 
-        public event EventHandler HistoryChanged;
+        public event EventHandler? HistoryChanged;
 
         #endregion
 

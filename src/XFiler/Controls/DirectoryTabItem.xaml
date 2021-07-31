@@ -250,7 +250,7 @@
                                 Value="{Binding DataContext.IconPath, Converter={valueConverters:IconPathToImageConverter}, RelativeSource={RelativeSource Self}}" />
                     </Style>
                     <HierarchicalDataTemplate
-                        DataType="{x:Type xFiler:MenuItemViewModel}"
+                        DataType="{x:Type sdk1:MenuItemViewModel}"
                         ItemsSource="{Binding Path=Bookmarks}" />
                 </Menu.Resources>
             </Menu>

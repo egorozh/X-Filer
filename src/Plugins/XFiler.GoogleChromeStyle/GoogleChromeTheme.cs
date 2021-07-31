@@ -3,7 +3,7 @@ using XFiler.SDK.Themes;
 
 namespace XFiler.GoogleChromeStyle
 {
-    public class GoogleChromeTheme : ExplorerTheme
+    public class GoogleChromeTheme : XFilerTheme
     {   
         public override Uri GetResourceUri() =>
             new("/XFiler.GoogleChromeStyle;component/Themes/Generic.xaml", 

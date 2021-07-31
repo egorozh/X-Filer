@@ -21,7 +21,7 @@ namespace XFiler.SDK
             => new ExplorerTabItemViewModel(_filesPresenterFactory, _bookmarksManager, dirPath, name);
 
         public IExplorerTabItemViewModel CreateRootTab()
-            => new ExplorerTabItemViewModel(_filesPresenterFactory, _bookmarksManager, IExplorerApp.RootName,
-                IExplorerApp.RootName);
+            => new ExplorerTabItemViewModel(_filesPresenterFactory, _bookmarksManager, IXFilerApp.RootName,
+                IXFilerApp.RootName);
     }
 }

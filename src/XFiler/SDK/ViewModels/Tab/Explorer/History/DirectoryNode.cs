@@ -2,8 +2,8 @@
 {
     internal class DirectoryNode
     {
-        public DirectoryNode PreviousNode { get; set; }
-        public DirectoryNode NextNode { get; set; }
+        public DirectoryNode? PreviousNode { get; set; }
+        public DirectoryNode? NextNode { get; set; }
 
         public string DirectoryPath { get; }
         public string DirectoryPathName { get; }

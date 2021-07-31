@@ -6,44 +6,44 @@ using Prism.Commands;
 
 namespace XFiler.SDK
 {
-    public class ExplorerWindowBase : Window
+    public class XFilerWindowBase : Window
     {
         public static double SystemButtonsWidth { get; } = 44 * 3;
 
         #region Dependency Properties
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.Register(
-            nameof(CloseCommand), typeof(ICommand), typeof(ExplorerWindowBase),
+            nameof(CloseCommand), typeof(ICommand), typeof(XFilerWindowBase),
             new PropertyMetadata(default(ICommand)));
 
         public static readonly DependencyProperty CollapseCommandProperty = DependencyProperty.Register(
-            nameof(CollapseCommand), typeof(ICommand), typeof(ExplorerWindowBase),
+            nameof(CollapseCommand), typeof(ICommand), typeof(XFilerWindowBase),
             new PropertyMetadata(default(ICommand)));
 
         public static readonly DependencyProperty ExpandCommandProperty = DependencyProperty.Register(
-            nameof(ExpandCommand), typeof(ICommand), typeof(ExplorerWindowBase),
+            nameof(ExpandCommand), typeof(ICommand), typeof(XFilerWindowBase),
             new PropertyMetadata(default(ICommand)));
 
         public static readonly DependencyProperty TabsMaxWidthProperty = DependencyProperty.Register(
-            nameof(TabsMaxWidth), typeof(double), typeof(ExplorerWindowBase), new PropertyMetadata(default(double)));
+            nameof(TabsMaxWidth), typeof(double), typeof(XFilerWindowBase), new PropertyMetadata(default(double)));
 
         public static readonly DependencyProperty ToolBarContentProperty = DependencyProperty.Register(
-            nameof(ToolBarContent), typeof(FrameworkElement), typeof(ExplorerWindowBase),
+            nameof(ToolBarContent), typeof(FrameworkElement), typeof(XFilerWindowBase),
             new PropertyMetadata(default(FrameworkElement)));
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
-            nameof(ItemsSource), typeof(IEnumerable), typeof(ExplorerWindowBase),
+            nameof(ItemsSource), typeof(IEnumerable), typeof(XFilerWindowBase),
             new PropertyMetadata(default(IEnumerable)));
 
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
-            nameof(SelectedItem), typeof(object), typeof(ExplorerWindowBase), new PropertyMetadata(default(object)));
+            nameof(SelectedItem), typeof(object), typeof(XFilerWindowBase), new PropertyMetadata(default(object)));
 
         public static readonly DependencyProperty TabItemTemplateProperty = DependencyProperty.Register(
-            nameof(TabItemTemplate), typeof(DataTemplate), typeof(ExplorerWindowBase),
+            nameof(TabItemTemplate), typeof(DataTemplate), typeof(XFilerWindowBase),
             new PropertyMetadata(default(DataTemplate)));
 
         public static readonly DependencyProperty ActiveTabBackgroundProperty = DependencyProperty.Register(
-            nameof(ActiveTabBackground), typeof(Brush), typeof(ExplorerWindowBase),
+            nameof(ActiveTabBackground), typeof(Brush), typeof(XFilerWindowBase),
             new PropertyMetadata(default(Brush)));
 
         #endregion
@@ -108,7 +108,7 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        public ExplorerWindowBase()
+        public XFilerWindowBase()
         {
             CloseCommand = new DelegateCommand(OnClose);
             CollapseCommand = new DelegateCommand(OnCollapse);

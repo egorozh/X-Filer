@@ -6,7 +6,7 @@ using Prism.Commands;
 
 namespace XFiler.SDK
 {
-    public class ExplorerTabItemViewModel : ChromerTabItemViewModel, IExplorerTabItemViewModel
+    public class ExplorerTabItemViewModel : TabItemViewModel, IExplorerTabItemViewModel
     {
         #region Private Fields
 

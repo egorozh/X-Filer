@@ -102,7 +102,7 @@ namespace XFiler.SDK
 
         private async void LoadItems()
         {
-            if (CurrentDirectoryPathName == IExplorerApp.RootName)
+            if (CurrentDirectoryPathName == IXFilerApp.RootName)
             {
                 await LoadRootItems();
 

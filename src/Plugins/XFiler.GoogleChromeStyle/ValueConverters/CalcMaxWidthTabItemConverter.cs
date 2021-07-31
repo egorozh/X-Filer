@@ -12,7 +12,7 @@ namespace XFiler.GoogleChromeStyle.ValueConverters
                 values[0] is double controlWidth &&
                 values[1] is int itemsCount)
             {
-                var newWidth = (controlWidth - ExplorerWindowBase.SystemButtonsWidth - 10.0) / itemsCount;
+                var newWidth = (controlWidth - XFilerWindowBase.SystemButtonsWidth - 10.0) / itemsCount;
                 if (newWidth < 256.0)
                     return newWidth;
             }

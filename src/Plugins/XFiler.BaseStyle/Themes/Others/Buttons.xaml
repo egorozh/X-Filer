@@ -34,13 +34,13 @@
                             <Setter Property="Background" Value="#1A1A1A" />
                         </Trigger>
                         <DataTrigger Value="False"
-                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }">
+                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }">
                             <Setter Property="Foreground" Value="#666666" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Value="False"
-                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }" />
+                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }" />
                                 <Condition Value="True"
                                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" />
                             </MultiDataTrigger.Conditions>
@@ -82,13 +82,13 @@
                             <Setter Property="Background" Value="#E81123" />
                         </Trigger>
                         <DataTrigger Value="False"
-                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }">
+                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }">
                             <Setter Property="Foreground" Value="#666666" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Value="False"
-                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }" />
+                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }" />
                                 <Condition Value="True"
                                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" />
                             </MultiDataTrigger.Conditions>
@@ -130,13 +130,13 @@
                             <Setter Property="Background" Value="#1A1A1A" />
                         </Trigger>
                         <DataTrigger Value="False"
-                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }">
+                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }">
                             <Setter Property="Foreground" Value="#666666" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Value="False"
-                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }" />
+                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }" />
                                 <Condition Value="True"
                                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" />
                             </MultiDataTrigger.Conditions>
@@ -148,7 +148,7 @@
                             <Setter Property="Background" Value="#333333" />
                         </Trigger>
                         <DataTrigger Value="Normal"
-                                     Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }">
+                                     Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }">
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Canvas Width="24" Height="24">
@@ -161,7 +161,7 @@
                             <Setter Property="ToolTip" Value="Развернуть" />
                         </DataTrigger>
                         <DataTrigger Value="Maximized"
-                                     Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }">
+                                     Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }">
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Canvas Width="24" Height="24">
@@ -272,13 +272,13 @@
                                     Value="#555555" />
                         </Trigger>
                         <DataTrigger Value="False"
-                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }">
+                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }">
                             <Setter Property="Foreground" Value="#BFBFBF" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Value="False"
-                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }" />
+                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }" />
                                 <Condition Value="True"
                                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" />
                             </MultiDataTrigger.Conditions>
@@ -290,7 +290,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition
-                                    Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:ExplorerWindowBase}} }"
+                                    Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type wpf:XFilerWindowBase}} }"
                                     Value="False" />
                                 <Condition
                                     Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"

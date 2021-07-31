@@ -3,7 +3,7 @@ using XFiler.SDK.Themes;
 
 namespace XFiler.BaseStyle
 {
-    public class BaseStyleTheme : ExplorerTheme
+    public class BaseStyleTheme : XFilerTheme
     {
         public override Uri GetResourceUri() =>
             new("/XFiler.BaseStyle;component/Themes/ExplorerBaseTheme.xaml", UriKind.Relative);

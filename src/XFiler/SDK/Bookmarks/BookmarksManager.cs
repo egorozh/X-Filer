@@ -5,9 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Prism.Commands;
-using XFiler.SDK;
 
-namespace XFiler
+namespace XFiler.SDK
 {
     internal class BookmarksManager : BaseViewModel, IBookmarksManager
     {

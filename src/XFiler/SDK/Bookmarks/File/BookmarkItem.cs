@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace XFiler
+namespace XFiler.SDK
 {
     internal class BookmarkItem
     {
