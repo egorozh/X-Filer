@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:wpf="clr-namespace:Squircle.WPF;assembly=Squircle.WPF"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:xFiler="clr-namespace:XFiler"
              xmlns:valueConverters="clr-namespace:XFiler.ValueConverters"
@@ -23,9 +22,10 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <wpf:Squircle x:Name="templateRoot"
-                                           Background="{TemplateBinding Background}"
-                                           SnapsToDevicePixels="True">
+                        <Border x:Name="templateRoot"
+                                CornerRadius="8"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True">
 
                             <ContentPresenter x:Name="contentPresenter"
                                               Focusable="False"
@@ -33,7 +33,7 @@
                                               Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </wpf:Squircle>
+                        </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="LightSkyBlue" />
@@ -52,9 +52,9 @@
 
     <UserControl.InputBindings>
         <xFiler:ExtendedMouseBinding Gesture="XButton1"
-                                 Command="{Binding MoveBackCommand}" />
+                                     Command="{Binding MoveBackCommand}" />
         <xFiler:ExtendedMouseBinding Gesture="XButton2"
-                                 Command="{Binding MoveForwardCommand}" />
+                                     Command="{Binding MoveForwardCommand}" />
 
         <KeyBinding Modifiers="Alt" Key="Left"
                     Command="{Binding MoveBackCommand}" />
@@ -161,9 +161,9 @@
             </Button>
 
             <sdk:SearchControl Grid.Column="3"
-                              VerticalAlignment="Center"
-                              Margin="10 0"
-                              Text="{Binding SearchText}">
+                               VerticalAlignment="Center"
+                               Margin="10 0"
+                               Text="{Binding SearchText}">
                 <sdk:SearchControl.Resources>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="Transparent" />

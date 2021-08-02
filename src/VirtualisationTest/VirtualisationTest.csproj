@@ -1,14 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Nullable>Enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
-    <ProjectReference Include="..\..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
   </ItemGroup>
 
 </Project>

@@ -37,11 +37,10 @@ namespace XFiler.DragDrop
                     rect = new Rect(visualTargetItem.TranslatePoint(new Point(), this.AdornedElement),
                         new Size(listBoxItem.ActualWidth, listBoxItem.ActualHeight));
 
-                    var geometry = PathGeometry.CreateFromGeometry(
-                        Geometry.Parse(
-                            Squircle.SquircleGenerator.GetGeometry(rect.Width, rect.Height)));
-
-                    geometry.Transform = new TranslateTransform(rect.Left, rect.Top);
+                    var geometry = new RectangleGeometry(rect, 8, 8);
+                    //{
+                    //    Transform = new TranslateTransform(rect.Left, rect.Top)
+                    //};
 
                     drawingContext.DrawGeometry(null, Pen, geometry);
 

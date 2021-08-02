@@ -5,7 +5,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-             xmlns:wpf="clr-namespace:Squircle.WPF;assembly=Squircle.WPF"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:filePresenters="clr-namespace:XFiler.FilePresenters"
              mc:Ignorable="d"
@@ -78,28 +77,29 @@
 
                             <Grid>
 
-                                <wpf:Squircle x:Name="Bd"
-                                              Margin="{TemplateBinding Padding}"
-                                              Background="{TemplateBinding Background}"
-                                              BorderThickness="2"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              SnapsToDevicePixels="true">
+                                <Border x:Name="Bd"
+                                        CornerRadius="8"
+                                        Margin="{TemplateBinding Padding}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderThickness="2"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        SnapsToDevicePixels="true">
 
-                                    <wpf:Squircle.InputBindings>
+                                    <Border.InputBindings>
                                         <MouseBinding MouseAction="MiddleClick"
                                                       Command="{StaticResource OpenNewTabCommand}"
                                                       CommandParameter="{Binding}" />
                                         <MouseBinding MouseAction="LeftDoubleClick"
                                                       Command="{StaticResource  OpenCommand}"
                                                       CommandParameter="{Binding }" />
-                                    </wpf:Squircle.InputBindings>
+                                    </Border.InputBindings>
 
                                     <ContentPresenter
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 
-                                </wpf:Squircle>
+                                </Border>
 
                             </Grid>
                         </ControlTemplate>
