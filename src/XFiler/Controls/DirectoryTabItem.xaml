@@ -51,9 +51,9 @@
 
     <UserControl.InputBindings>
         <local:ExtendedMouseBinding Gesture="XButton1"
-                                     Command="{Binding MoveBackCommand}" />
+                                    Command="{Binding MoveBackCommand}" />
         <local:ExtendedMouseBinding Gesture="XButton2"
-                                     Command="{Binding MoveForwardCommand}" />
+                                    Command="{Binding MoveForwardCommand}" />
 
         <KeyBinding Modifiers="Alt" Key="Left"
                     Command="{Binding MoveBackCommand}" />
@@ -340,6 +340,7 @@
                     </Image>
 
                 </RadioButton>
+
                 <RadioButton GroupName="PresenterView"
                              IsChecked="{Binding IsGridPresenter, Mode=TwoWay}">
                     <Image Width="26"
@@ -387,6 +388,7 @@
                     </Image>
 
                 </RadioButton>
+
             </StackPanel>
         </Grid>
 

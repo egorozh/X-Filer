@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.7" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
     <ProjectReference Include="..\..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
   </ItemGroup>

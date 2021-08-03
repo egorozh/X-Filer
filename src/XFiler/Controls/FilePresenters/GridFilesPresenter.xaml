@@ -4,10 +4,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:filePresenters="clr-namespace:XFiler"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
-             xmlns:filePresenters="clr-namespace:XFiler"
-             xmlns:controls="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -36,6 +36,15 @@
 
     <sdk:RectSelectDataGrid ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
 
+                            AutoGenerateColumns="False"
+
+                            HeadersVisibility="Column"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            CanUserSortColumns="True"
+                            SelectionMode="Extended"
+                            SelectionUnit="FullRow"
+
                             dd:DragDrop.DropScrollingMode="VerticalOnly"
                             dd:DragDrop.IsDragSource="True"
                             dd:DragDrop.IsDropTarget="True"
@@ -48,14 +57,22 @@
 
                             VirtualizingPanel.IsVirtualizing="True"
                             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                            VirtualizingPanel.VirtualizationMode="Recycling">
-
-        <sdk:RectSelectDataGrid.RowStyle>
+                            VirtualizingPanel.VirtualizationMode="Recycling"
+                            EnableColumnVirtualization="True"
+                            EnableRowVirtualization="True">
+     
+        <DataGrid.RowStyle>
             <Style TargetType="{x:Type DataGridRow}">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderThickness" Value="0 1" />
-                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                <Setter Property="ValidationErrorTemplate"
+                        Value="{StaticResource MahApps.Templates.DataGridRow.ValidationError}" />
+                <Setter Property="mah:DataGridHelper.CellPadding"
+                        Value="{Binding Path=(mah:DataGridHelper.CellPadding), FallbackValue=0, TargetNullValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                <Setter Property="mah:DataGridHelper.SelectionUnit"
+                        Value="{Binding Path=SelectionUnit, FallbackValue={x:Static DataGridSelectionUnit.FullRow}, TargetNullValue={x:Static DataGridSelectionUnit.FullRow}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+
                 <Setter Property="ContextMenu">
                     <Setter.Value>
                         <ContextMenu>
@@ -71,24 +88,15 @@
                         </ContextMenu>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="ValidationErrorTemplate">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <TextBlock Foreground="Red" Margin="2,0,0,0" Text="!" VerticalAlignment="Center" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type DataGridRow}">
-
                             <Border x:Name="DGR_Border"
                                     HorizontalAlignment="Left"
                                     Background="{TemplateBinding Background}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    SnapsToDevicePixels="True">
-
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                 <Border.InputBindings>
                                     <MouseBinding MouseAction="MiddleClick"
                                                   Command="{StaticResource OpenNewTabCommand}"
@@ -98,25 +106,30 @@
                                                   CommandParameter="{Binding }" />
                                 </Border.InputBindings>
                                 <SelectiveScrollingGrid>
-
-                                    <SelectiveScrollingGrid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
-                                    </SelectiveScrollingGrid.ColumnDefinitions>
-                                    <SelectiveScrollingGrid.RowDefinitions>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
-                                    </SelectiveScrollingGrid.RowDefinitions>
+                                    </Grid.RowDefinitions>
 
                                     <DataGridCellsPresenter Grid.Column="1"
                                                             ItemsPanel="{TemplateBinding ItemsPanel}"
                                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                    <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1"
-                                                              SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+
+                                    <DataGridDetailsPresenter Grid.Row="1"
+                                                              Grid.Column="1"
+                                                              SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=AreRowDetailsFrozen, FallbackValue={x:Static SelectiveScrollingOrientation.Both}, TargetNullValue={x:Static SelectiveScrollingOrientation.Both}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}}"
                                                               Visibility="{TemplateBinding DetailsVisibility}" />
-                                    <DataGridRowHeader Grid.RowSpan="2"
+
+                                    <DataGridRowHeader Grid.Row="0"
+                                                       Grid.RowSpan="2"
+                                                       Grid.Column="0"
                                                        SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
-                                                       Visibility="{Binding HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                                       Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, FallbackValue={x:Static Visibility.Visible}, TargetNullValue={x:Static Visibility.Visible}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}" />
                                 </SelectiveScrollingGrid>
                             </Border>
                         </ControlTemplate>
@@ -125,54 +138,100 @@
                 <Style.Triggers>
                     <Trigger Property="IsNewItem" Value="True">
                         <Setter Property="Margin"
-                                Value="{Binding NewItemMargin, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=NewItemMargin}" />
                     </Trigger>
+
+                    <!--  IsSelected  -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                            <Condition Property="IsSelected" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background}" />
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.BorderBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text}" />
+                    </MultiTrigger>
+
+                    <!--  IsSelected and Selector.IsSelectionActive  -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                            <Condition Property="IsSelected" Value="True" />
+                            <Condition Property="Selector.IsSelectionActive" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background.Inactive}" />
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.BorderBrush.Inactive}" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.Inactive}" />
+                    </MultiTrigger>
+
+                    <!--  IsMouseOver  -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                            <Condition Property="IsMouseOver" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background.MouseOver}" />
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.BorderBrush.MouseOver}" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
+                    </MultiTrigger>
+
+                    <!--  IsEnabled  -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                            <Condition Property="IsEnabled" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </MultiTrigger>
+
+                    <!--  IsEnabled and IsSelected  -->
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                            <Condition Property="IsEnabled" Value="False" />
+                            <Condition Property="IsSelected" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background.Disabled}" />
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.BorderBrush.Disabled}" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.Disabled}" />
+                    </MultiTrigger>
+
                 </Style.Triggers>
             </Style>
-        </sdk:RectSelectDataGrid.RowStyle>
+
+        </DataGrid.RowStyle>
 
         <sdk:RectSelectDataGrid.GroupStyle>
             <GroupStyle ContainerStyle="{StaticResource ExpanderGroupItem}" />
         </sdk:RectSelectDataGrid.GroupStyle>
 
         <sdk:RectSelectDataGrid.Columns>
-            <DataGridTemplateColumn Header="Имя"
-                                    CanUserSort="True"
-                                    SortMemberPath="Name">
+            <DataGridTemplateColumn Width="20"
+                                    MinWidth="20"
+                                    MaxWidth="20">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-
-                            <Image MaxWidth="18"
-                                   MaxHeight="18"
-                                   Margin="10 0 5 0"
-                                   Source="{Binding Icon}" />
-
-                            <TextBlock HorizontalAlignment="Center"
-                                       Foreground="White"
-                                       Background="Transparent"
-                                       Text="{Binding Name}"
-                                       TextTrimming="CharacterEllipsis" />
-                        </StackPanel>
+                        <Image MaxWidth="18"
+                               MaxHeight="18"
+                               Source="{Binding Icon}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
-                <DataGridTemplateColumn.CellEditingTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-
-                            <Image MaxWidth="18"
-                                   MaxHeight="18"
-                                   Margin="10 0 5 0"
-                                   Source="{Binding Icon}" />
-
-                            <TextBox HorizontalAlignment="Center"
-                                     Foreground="White"
-                                     Background="Transparent"
-                                     Text="{Binding Name}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellEditingTemplate>
             </DataGridTemplateColumn>
+            <DataGridTextColumn Header="Имя"
+                                CanUserSort="True"
+                                Binding="{Binding Name, Mode=TwoWay}" />
             <DataGridTextColumn Header="Дата изменения"
                                 IsReadOnly="True"
                                 Binding="{Binding ChangeDateTime, StringFormat=g}" />

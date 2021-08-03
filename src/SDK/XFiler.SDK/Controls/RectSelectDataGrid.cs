@@ -28,7 +28,17 @@ namespace XFiler.SDK
         {
             base.OnApplyTemplate();
 
-            if (GetTemplateChild("PART_Canvas") is Canvas canvas)
+            if (GetTemplateChild("DG_ScrollViewer") is ScrollViewer scrollViewer)
+                scrollViewer.Loaded += ScrollViewerOnLoaded;
+        }
+
+        private void ScrollViewerOnLoaded(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = (ScrollViewer)sender;
+
+            scrollViewer.Loaded -= ScrollViewerOnLoaded;
+
+            if (scrollViewer.Template.FindName("PART_Canvas", scrollViewer) is Canvas canvas)
             {
                 _selectLogic = new RectSelectLogic<DataGridRow>(this, canvas,
                     i => i.IsSelected = true, i => i.IsSelected = false);
