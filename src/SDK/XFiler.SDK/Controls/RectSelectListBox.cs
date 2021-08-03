@@ -4,20 +4,21 @@ using System.Windows.Input;
 
 namespace XFiler.SDK
 {
-    public class RectSelectListBox : ListBox
+    public class RectSelectListBox : ListView
     {
         #region Private Fields
 
-        private RectSelectLogic<ListBoxItem> _selectLogic;
+        private RectSelectLogic<ListViewItem> _selectLogic;
 
         #endregion
 
         public static readonly DependencyProperty HasSelectItemsProperty = DependencyProperty.Register(
-            "HasSelectItems", typeof(bool), typeof(RectSelectListBox), new PropertyMetadata(default(bool)));
+            "HasSelectItems", typeof(bool), typeof(RectSelectListBox),
+            new PropertyMetadata(default(bool)));
 
         public bool HasSelectItems
         {
-            get => (bool) GetValue(HasSelectItemsProperty);
+            get => (bool)GetValue(HasSelectItemsProperty);
             set => SetValue(HasSelectItemsProperty, value);
         }
 
@@ -37,8 +38,13 @@ namespace XFiler.SDK
         {
             base.OnApplyTemplate();
 
-            _selectLogic = new RectSelectLogic<ListBoxItem>(this, GetTemplateChild("PART_Canvas") as Canvas,
-                i => i.IsSelected = true, i => i.IsSelected = false);
+            if (GetTemplateChild("PART_Canvas") is Canvas canvas)
+            {
+                _selectLogic = new RectSelectLogic<ListViewItem>(this, canvas,
+                    i => i.IsSelected = true, i => i.IsSelected = false);
+
+                Unloaded += RectSelectListBox_Unloaded;
+            }
         }
 
         #endregion
@@ -56,21 +62,32 @@ namespace XFiler.SDK
         {
             base.OnMouseLeftButtonDown(e);
 
-            _selectLogic.OnMouseLeftButtonDown(e);
+            _selectLogic?.OnMouseLeftButtonDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
 
-            _selectLogic.OnMouseMove(e);
+            _selectLogic?.OnMouseMove(e);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
 
-            _selectLogic.OnMouseLeftButtonUp(e);
+            _selectLogic?.OnMouseLeftButtonUp(e);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void RectSelectListBox_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= RectSelectListBox_Unloaded;
+            _selectLogic?.Dispose();
+            _selectLogic = null!;
         }
 
         #endregion

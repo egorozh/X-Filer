@@ -3,11 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-             xmlns:xFiler="clr-namespace:XFiler"
-             xmlns:valueConverters="clr-namespace:XFiler.ValueConverters"
+             xmlns:local="clr-namespace:XFiler"
              xmlns:sdk1="clr-namespace:XFiler.SDK"
-             xmlns:filePresenters="clr-namespace:XFiler.FilePresenters"
+             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+             xmlns:valueConverters="clr-namespace:XFiler.ValueConverters"
              mc:Ignorable="d"
 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -51,9 +50,9 @@
     </UserControl.Resources>
 
     <UserControl.InputBindings>
-        <xFiler:ExtendedMouseBinding Gesture="XButton1"
+        <local:ExtendedMouseBinding Gesture="XButton1"
                                      Command="{Binding MoveBackCommand}" />
-        <xFiler:ExtendedMouseBinding Gesture="XButton2"
+        <local:ExtendedMouseBinding Gesture="XButton2"
                                      Command="{Binding MoveForwardCommand}" />
 
         <KeyBinding Modifiers="Alt" Key="Left"
@@ -241,7 +240,7 @@
                                     <Binding Path="DataContext.CommandParameter"
                                              RelativeSource="{RelativeSource Self}" />
                                     <Binding Path="DataContext"
-                                             RelativeSource="{RelativeSource AncestorType={x:Type xFiler:DirectoryTabItem}}" />
+                                             RelativeSource="{RelativeSource AncestorType={x:Type local:DirectoryTabItem}}" />
                                 </MultiBinding>
                             </Setter.Value>
                         </Setter>
@@ -292,10 +291,10 @@
                 </ContentControl.ContextMenu>
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type sdk1:TileFilesPresenterViewModel}">
-                        <filePresenters:TileFilePresenter />
+                        <local:TileFilePresenter />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type sdk1:GridFilesPresenterViewModel}">
-                        <filePresenters:GridFilesPresenter />
+                        <local:GridFilesPresenter />
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

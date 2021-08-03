@@ -100,11 +100,11 @@ namespace XFiler.SDK
 
         #region Private Methods
 
-        private async void LoadItems()
+        private void LoadItems()
         {
             if (CurrentDirectoryPathName == IXFilerApp.RootName)
             {
-                await LoadRootItems();
+                LoadRootItems();
 
                 return;
             }
@@ -121,11 +121,8 @@ namespace XFiler.SDK
                 foreach (var directory in directories)
                 {
                     var item = _fileEntityFactory.CreateDirectory(directory);
-                    
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        DirectoriesAndFiles.Add(item);
-                    });
+
+                    DirectoriesAndFiles.Add(item);
                 }
 
                 var files = directoryInfo.EnumerateFiles()
@@ -135,10 +132,7 @@ namespace XFiler.SDK
                 {
                     var item = _fileEntityFactory.CreateFile(fileInfo);
 
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        DirectoriesAndFiles.Add(item);
-                    });
+                    DirectoriesAndFiles.Add(item);
                 }
             }
             catch (Exception ex)
@@ -147,7 +141,7 @@ namespace XFiler.SDK
             }
         }
 
-        private async Task LoadRootItems()
+        private void LoadRootItems()
         {
             var group = "Папки";
 
@@ -164,10 +158,8 @@ namespace XFiler.SDK
             {
                 var item = _fileEntityFactory.CreateDirectory(new DirectoryInfo(specialFolder), @group);
 
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    DirectoriesAndFiles.Add(item);
-                });
+
+                DirectoriesAndFiles.Add(item);
             }
 
             @group = "Устройства и диски";
@@ -176,10 +168,7 @@ namespace XFiler.SDK
             {
                 var item = _fileEntityFactory.CreateLogicalDrive(logicalDrive, @group);
 
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    DirectoriesAndFiles.Add(item);
-                });
+                DirectoriesAndFiles.Add(item);
             }
         }
 

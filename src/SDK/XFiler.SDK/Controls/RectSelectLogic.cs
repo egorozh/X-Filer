@@ -6,14 +6,14 @@ using System.Windows.Media;
 
 namespace XFiler.SDK
 {
-    internal class RectSelectLogic<T> where T : Control
+    internal class RectSelectLogic<T> : IDisposable where T : Control
     {
         #region Private Fields
 
-        private readonly ItemsControl _itemsControl;
+        private ItemsControl _itemsControl;
         private Canvas _canvas;
-        private readonly Action<T> _selectAction;
-        private readonly Action<T> _unSelectAction;
+        private Action<T> _selectAction;
+        private Action<T> _unSelectAction;
         private System.Windows.Shapes.Rectangle _rectangleShape;
         private Point _initPos;
         private bool _isRectSelected;
@@ -22,7 +22,8 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        public RectSelectLogic(ItemsControl itemsControl, Canvas canvas,
+        public RectSelectLogic(ItemsControl itemsControl,
+            Canvas canvas,
             Action<T> selectAction,
             Action<T> unSelectAction)
         {
@@ -85,6 +86,14 @@ namespace XFiler.SDK
             Mouse.Capture(null);
         }
 
+        public void Dispose()
+        {
+            _itemsControl = null!;
+            _canvas = null!;
+            _selectAction = null!;
+            _unSelectAction = null!;
+        }
+
         #endregion
 
         #region Private Methods
@@ -93,7 +102,7 @@ namespace XFiler.SDK
         {
             foreach (var item in _itemsControl.Items)
             {
-                var uiItem = (T) _itemsControl.ItemContainerGenerator.ContainerFromItem(item);
+                var uiItem = (T)_itemsControl.ItemContainerGenerator.ContainerFromItem(item);
 
                 if (uiItem == null)
                     continue;

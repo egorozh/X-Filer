@@ -1,4 +1,4 @@
-﻿namespace XFiler.FilePresenters
+﻿namespace XFiler
 {
     public partial class TileFilePresenter
     {
