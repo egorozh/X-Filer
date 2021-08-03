@@ -7,6 +7,7 @@
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:filePresenters="clr-namespace:XFiler"
+             xmlns:controls="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -19,33 +20,35 @@
         </CollectionViewSource>
 
         <sdk:CommandReference x:Key="OpenCommand"
-                                   Command="{Binding DataContext.OpenCommand, 
+                              Command="{Binding DataContext.OpenCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type filePresenters:GridFilesPresenter}}}" />
 
         <sdk:CommandReference x:Key="OpenNewTabCommand"
-                                   Command="{Binding DataContext.OpenNewTabCommand, 
+                              Command="{Binding DataContext.OpenNewTabCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type filePresenters:GridFilesPresenter}}}"
-                                   CommandParameter="{Binding DataContext,
+                              CommandParameter="{Binding DataContext,
                                                         RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" />
 
         <sdk:CommandReference x:Key="OpenNewWindowCommand"
-                                   Command="{Binding DataContext.OpenNewWindowCommand, 
+                              Command="{Binding DataContext.OpenNewWindowCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type filePresenters:GridFilesPresenter}}}" />
     </UserControl.Resources>
-
 
     <sdk:RectSelectDataGrid ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
 
                             dd:DragDrop.DropScrollingMode="VerticalOnly"
                             dd:DragDrop.IsDragSource="True"
                             dd:DragDrop.IsDropTarget="True"
-                            dd:DragDrop.DropHandler="{Binding DropTarget}"
-
                             dd:DragDrop.UseDefaultEffectDataTemplate="True"
+                            dd:DragDrop.DragDirectlySelectedOnly="True"
+                            dd:DragDrop.UseDefaultDragAdorner="True"
 
+                            dd:DragDrop.DropHandler="{Binding DropTarget}"
                             dd:DragDrop.DragHandler="{Binding DragSource}"
 
-                            dd:DragDrop.DragDirectlySelectedOnly="True">
+                            VirtualizingPanel.IsVirtualizing="True"
+                            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                            VirtualizingPanel.VirtualizationMode="Recycling">
 
         <sdk:RectSelectDataGrid.RowStyle>
             <Style TargetType="{x:Type DataGridRow}">

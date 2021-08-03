@@ -28,9 +28,13 @@ namespace XFiler.SDK
         {
             base.OnApplyTemplate();
 
-            _selectLogic =
-                new RectSelectLogic<DataGridRow>(this, GetTemplateChild("PART_Canvas") as Canvas,
+            if (GetTemplateChild("PART_Canvas") is Canvas canvas)
+            {
+                _selectLogic = new RectSelectLogic<DataGridRow>(this, canvas,
                     i => i.IsSelected = true, i => i.IsSelected = false);
+
+                Unloaded += RectSelectDataGrid_Unloaded;
+            }
         }
 
         #endregion
@@ -41,21 +45,32 @@ namespace XFiler.SDK
         {
             base.OnMouseLeftButtonDown(e);
 
-            _selectLogic.OnMouseLeftButtonDown(e);
+            _selectLogic?.OnMouseLeftButtonDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
 
-            _selectLogic.OnMouseMove(e);
+            _selectLogic?.OnMouseMove(e);
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
 
-            _selectLogic.OnMouseLeftButtonUp(e);
+            _selectLogic?.OnMouseLeftButtonUp(e);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void RectSelectDataGrid_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= RectSelectDataGrid_Unloaded;
+            _selectLogic?.Dispose();
+            _selectLogic = null!;
         }
 
         #endregion
