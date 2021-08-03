@@ -4,11 +4,11 @@ using System.Windows.Input;
 
 namespace XFiler.SDK
 {
-    public class RectSelectListBox : ListView
+    public class RectSelectListBox : ListBox
     {
         #region Private Fields
 
-        private RectSelectLogic<ListViewItem> _selectLogic;
+        private RectSelectLogic<ListBoxItem> _selectLogic;
 
         #endregion
 
@@ -40,7 +40,7 @@ namespace XFiler.SDK
 
             if (GetTemplateChild("PART_Canvas") is Canvas canvas)
             {
-                _selectLogic = new RectSelectLogic<ListViewItem>(this, canvas,
+                _selectLogic = new RectSelectLogic<ListBoxItem>(this, canvas,
                     i => i.IsSelected = true, i => i.IsSelected = false);
 
                 Unloaded += RectSelectListBox_Unloaded;

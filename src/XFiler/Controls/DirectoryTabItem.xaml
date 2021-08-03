@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:XFiler"
              xmlns:sdk1="clr-namespace:XFiler.SDK"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-             xmlns:valueConverters="clr-namespace:XFiler.ValueConverters"
              mc:Ignorable="d"
 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -70,6 +69,8 @@
 
             <!-- BookMarks-->
             <RowDefinition Height="36" />
+
+            <RowDefinition Height="Auto" />
 
             <RowDefinition Height="*" />
 
@@ -236,7 +237,7 @@
                                 Value="{Binding DataContext.Command, RelativeSource={RelativeSource Self}}" />
                         <Setter Property="CommandParameter">
                             <Setter.Value>
-                                <MultiBinding Converter="{valueConverters:CloneParamsConverter}">
+                                <MultiBinding Converter="{local:CloneParamsConverter}">
                                     <Binding Path="DataContext.CommandParameter"
                                              RelativeSource="{RelativeSource Self}" />
                                     <Binding Path="DataContext"
@@ -246,7 +247,7 @@
                         </Setter>
 
                         <Setter Property="Icon"
-                                Value="{Binding DataContext.IconPath, Converter={valueConverters:IconPathToImageConverter}, RelativeSource={RelativeSource Self}}" />
+                                Value="{Binding DataContext.IconPath, Converter={local:IconPathToImageConverter}, RelativeSource={RelativeSource Self}}" />
                     </Style>
                     <HierarchicalDataTemplate
                         DataType="{x:Type sdk1:MenuItemViewModel}"
@@ -255,7 +256,17 @@
             </Menu>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Row="2">
+            <ProgressBar Visibility="{Binding FilesPresenter.IsLoaded, Converter={local:BoolToVisibilityConverter}}"
+                         Minimum="0"
+                         Maximum="100"
+                         Value="{Binding FilesPresenter.Progress}"
+                         Height="4"
+                         HorizontalAlignment="Stretch" />
+
+        </Grid>
+
+        <Grid Grid.Row="3">
             <ContentControl x:Name="ContentControl"
                             Content="{Binding FilesPresenter}">
                 <ContentControl.ContextMenu>

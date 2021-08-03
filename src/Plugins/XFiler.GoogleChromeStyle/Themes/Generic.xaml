@@ -16,6 +16,7 @@
         <ResourceDictionary Source="Others/Expanders.xaml" />
         <ResourceDictionary Source="Others/Dragablze.xaml" />
         <ResourceDictionary Source="Others/GroupItem.xaml" />
+        <ResourceDictionary Source="Others/ProgressBar.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 

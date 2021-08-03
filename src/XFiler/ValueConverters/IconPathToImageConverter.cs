@@ -8,7 +8,7 @@ using SharpVectors.Converters;
 using SharpVectors.Renderers.Wpf;
 using XFiler.SDK;
 
-namespace XFiler.ValueConverters
+namespace XFiler
 {
     internal class IconPathToImageConverter : BaseValueConverter
     {

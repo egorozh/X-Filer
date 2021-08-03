@@ -2,7 +2,7 @@
 using System.Globalization;
 using XFiler.SDK;
 
-namespace XFiler.ValueConverters
+namespace XFiler
 {
     public class CloneParamsConverter : BaseMultiValueConverter
     {

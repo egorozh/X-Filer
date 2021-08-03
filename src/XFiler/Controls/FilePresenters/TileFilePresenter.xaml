@@ -53,7 +53,7 @@
                            SelectionMode="Extended">
 
         <ListBox.ItemContainerStyle>
-            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource EntityItemStyle}">
+            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource EntityItemStyle}">
                 <Setter Property="ContextMenu">
                     <Setter.Value>
                         <ContextMenu>
