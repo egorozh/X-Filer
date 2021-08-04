@@ -5,15 +5,15 @@ using System.Windows.Input;
 
 namespace XFiler
 {
-    public partial class DirectoryTabItem
+    public partial class ExplorerTabItem
     {
-        public DirectoryTabItem()
+        public ExplorerTabItem()
         {
             InitializeComponent();
 
-            var dpd = DependencyPropertyDescriptor.FromProperty(ContentControl.ContentProperty, typeof(ContentControl));
+            //var dpd = DependencyPropertyDescriptor.FromProperty(ContentProperty, typeof(ContentControl));
             
-            dpd?.AddValueChanged(ContentControl, OnContentControlChanged);
+            //dpd?.AddValueChanged(ContentControl, OnContentControlChanged);
         }
 
         private void OnContentControlChanged(object? sender, EventArgs e)

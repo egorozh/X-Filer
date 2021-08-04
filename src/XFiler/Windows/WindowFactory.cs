@@ -31,6 +31,19 @@ namespace XFiler
             ShowNewWindow(tabsVm, new Point(24, 24));
         }
 
+        public IXFilerWindow GetWindowWithRootTab()
+        {
+            var tabsViewModel = _tabsFactory.Invoke().CreateTabsViewModel(new[]
+            {
+                _explorerTabFactory.Invoke().CreateRootTab()
+            });
+
+            return new ExplorerWindow
+            {
+                DataContext = tabsViewModel
+            };
+        }
+
         private static void ShowNewWindow(ITabsViewModel mvm, Point location)
         {
             var currentApp = Application.Current ?? throw new ArgumentNullException("Application.Current");
@@ -38,7 +51,6 @@ namespace XFiler
             var activeWindow = (currentApp.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)
                                 ?? currentApp.MainWindow)
                                ?? throw new ArgumentNullException("Application.Current.MainWindow");
-            ;
 
             ExplorerWindow mainWindow = new()
             {
@@ -61,6 +73,6 @@ namespace XFiler
 
                 OpenTabInNewWindow(vm);
             }
-        }   
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
+using Hardcodet.Wpf.TaskbarNotification;
+using SingleInstanceHelper;
 using XFiler.GoogleChromeStyle;
 using XFiler.SDK.Themes;
 
@@ -13,21 +15,27 @@ namespace XFiler.SDK
         #region Private Fields
 
         private XFilerTheme? _currentTheme;
+        private TaskbarIcon _notifyIcon;
 
         #endregion
 
         #region Public Properties
 
-        public IContainer Host { get; }
+        public IContainer Host { get; private set; }
 
-        public ExplorerWindow ExplorerWindow { get; private set; } = null!;
-        
         #endregion
 
-        #region Constructor
+        #region Protected Methods
 
-        public XFilerApp()
+        protected override void OnStartup(StartupEventArgs e)
         {
+            var first = ApplicationActivator.LaunchOrReturn(OnNextInstanceRunned, e.Args);
+
+            if (!first)
+                Shutdown();
+
+            _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+
             Host = new IoC().Build();
             
             CultureInfo currentCulture = new("Ru-ru");
@@ -36,32 +44,25 @@ namespace XFiler.SDK
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
-        }
 
-        #endregion
-
-        #region Protected Methods
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
 
             SetTheme(new GoogleChromeTheme());
 
-            ITabsFactory tabsFactory = Host.Resolve<ITabsFactory>();
-            IExplorerTabFactory explorerTabFactory = Host.Resolve<IExplorerTabFactory>();
+            _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
 
-            var tabsViewModel = tabsFactory.CreateTabsViewModel(new[]
-            {
-                explorerTabFactory.CreateRootTab()
-            });
+            var windowFactory = Host.Resolve<IWindowFactory>();
 
-            ExplorerWindow = new ExplorerWindow
-            {
-                DataContext = tabsViewModel
-            };
+            var window = windowFactory.GetWindowWithRootTab();
 
-            ExplorerWindow.Show();
+            window.Show();
+
+            base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _notifyIcon.Dispose();
+            base.OnExit(e);
         }
 
         #endregion
@@ -82,6 +83,22 @@ namespace XFiler.SDK
 
             if (LoadComponent(_currentTheme.GetResourceUri()) is ResourceDictionary resourceDict)
                 Resources.MergedDictionaries.Add(resourceDict);
+        }
+
+        private void OnNextInstanceRunned(string[] commandArgs)
+        {
+            var window = Windows.OfType<IXFilerWindow>().FirstOrDefault();
+
+            if (window != null)
+            {
+                window.NormalizeAndActivate();
+            }
+            else
+            {
+                var windowFactory = Host.Resolve<IWindowFactory>();
+
+                windowFactory.GetWindowWithRootTab().Show();
+            }
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="XFiler.DirectoryTabItem"
+﻿<UserControl x:Class="XFiler.ExplorerTabItem"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -241,7 +241,7 @@
                                     <Binding Path="DataContext.CommandParameter"
                                              RelativeSource="{RelativeSource Self}" />
                                     <Binding Path="DataContext"
-                                             RelativeSource="{RelativeSource AncestorType={x:Type local:DirectoryTabItem}}" />
+                                             RelativeSource="{RelativeSource AncestorType={x:Type local:ExplorerTabItem}}" />
                                 </MultiBinding>
                             </Setter.Value>
                         </Setter>

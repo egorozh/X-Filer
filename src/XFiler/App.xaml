@@ -4,20 +4,22 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:xFiler="clr-namespace:XFiler"
                xmlns:sdk="clr-namespace:XFiler.SDK"
-               ShutdownMode="OnLastWindowClose">
+               ShutdownMode="OnExplicitShutdown">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="Themes/App/Icons.xaml" />
+                <ResourceDictionary Source="Resources/NotifyIcon.xaml" />
+
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/XFiler.GoogleChromeStyle;component/Themes/Generic.xaml" />
 
                 <ResourceDictionary>
                     <DataTemplate DataType="{x:Type sdk:ExplorerTabItemViewModel}">
-                        <xFiler:DirectoryTabItem />
+                        <xFiler:ExplorerTabItem />
                     </DataTemplate>
 
                 </ResourceDictionary>

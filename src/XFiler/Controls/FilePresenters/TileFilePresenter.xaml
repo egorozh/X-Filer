@@ -32,7 +32,7 @@
         <sdk:CommandReference x:Key="OpenNewWindowCommand"
                               Command="{Binding DataContext.OpenNewWindowCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type presenters:TileFilePresenter}}}" />
-   
+
     </UserControl.Resources>
 
     <sdk:RectSelectListBox ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
@@ -45,7 +45,7 @@
 
                            dd:DragDrop.DropHandler="{Binding DropTarget}"
                            dd:DragDrop.DragHandler="{Binding DragSource}"
-                          
+
                            VirtualizingPanel.IsVirtualizing="True"
                            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                            VirtualizingPanel.VirtualizationMode="Recycling"
@@ -78,9 +78,9 @@
                                 <Border x:Name="Bd"
                                         CornerRadius="8"
                                         Margin="{TemplateBinding Padding}"
-                                        Background="{TemplateBinding Background}"
+                                        Background="Transparent"
                                         BorderThickness="2"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderBrush="Transparent"
                                         SnapsToDevicePixels="true">
 
                                     <Border.InputBindings>
@@ -92,10 +92,9 @@
                                                       CommandParameter="{Binding }" />
                                     </Border.InputBindings>
 
-                                    <ContentPresenter
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    <ContentPresenter HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Stretch"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                                 </Border>
 
@@ -113,7 +112,8 @@
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <controls:VirtualizingWrapPanel Orientation="Vertical"
-                                                SpacingMode="None"/>
+                                                SpacingMode="None"
+                                                ScrollUnit="Item" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
 
@@ -175,7 +175,6 @@
                             </Setter.Value>
                         </Setter>
                     </MultiDataTrigger>
-
 
                     <DataTrigger Value="True"
                                  Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">

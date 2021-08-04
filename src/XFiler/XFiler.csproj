@@ -5,6 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <Nullable>Enable</Nullable>
+    <ApplicationIcon>files.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,9 +16,15 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="SingleInstanceHelper" Version="1.0.3" />
     <PackageReference Include="SharpVectors.Reloaded" Version="1.7.5" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="files.ico" />
   </ItemGroup>
 
   <ItemGroup>
