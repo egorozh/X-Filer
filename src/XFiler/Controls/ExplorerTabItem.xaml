@@ -245,7 +245,14 @@
                             </Setter.Value>
                         </Setter>
 
-                        <Setter Property="Icon" Value="{Binding Icon}" />
+                        <Setter Property="Icon" >
+                            <Setter.Value>
+                                <MultiBinding Converter="{sdk1:IconConverter}">
+                                    <Binding Path="."/>
+                                    <Binding Path="IconLoader"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
 
                     <HierarchicalDataTemplate DataType="{x:Type sdk1:MenuItemViewModel}"

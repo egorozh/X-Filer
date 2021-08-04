@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace XFiler.SDK
 {
@@ -22,22 +20,17 @@ namespace XFiler.SDK
 
         public IList<MenuItemViewModel> Items { get; set; }
 
-        public Image? Icon { get; set; }
+        public IIconLoader IconLoader { get; }
 
         public MenuItemViewModel(BookmarkItem bookmarkItem,
             ObservableCollection<MenuItemViewModel> children,
-            IIconLoader iconLoader,
-            ICommand command)
+            ICommand command, IIconLoader iconLoader)
         {
             Path = bookmarkItem.Path;
             CommandParameter = bookmarkItem.Path;
             Items = children;
-            Icon = new Image()
-            {
-                Source = iconLoader.GetIcon(this, 64),
-                Stretch = Stretch.Uniform
-            };
-            
+            IconLoader = iconLoader;
+
             if (Path == null)
             {
                 Header = bookmarkItem.BookmarkFolderName;

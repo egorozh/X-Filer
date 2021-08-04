@@ -25,7 +25,6 @@ namespace XFiler
                 new BaseImageProvider()
             };
             services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
-
             services.RegisterInstance(imageProviders).As<IEnumerable<IImageProvider>>().SingleInstance();
 
             services.RegisterType<MenuItemFactory>().As<IMenuItemFactory>().SingleInstance();
