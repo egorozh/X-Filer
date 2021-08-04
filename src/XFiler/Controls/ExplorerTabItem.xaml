@@ -228,13 +228,12 @@
                   VerticalAlignment="Center"
                   ItemsSource="{Binding DataContext.Bookmarks, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <Menu.Resources>
-                    <Style TargetType="{x:Type MenuItem}">
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
                         <Setter Property="Header"
-                                Value="{Binding DataContext.Header, RelativeSource={RelativeSource Self}}" />
-                        <Setter Property="ItemsSource"
-                                Value="{Binding DataContext.Items, RelativeSource={RelativeSource Self}}" />
+                                Value="{Binding Header}" />
                         <Setter Property="Command"
-                                Value="{Binding DataContext.Command, RelativeSource={RelativeSource Self}}" />
+                                Value="{Binding Command}" />
+
                         <Setter Property="CommandParameter">
                             <Setter.Value>
                                 <MultiBinding Converter="{local:CloneParamsConverter}">
@@ -246,12 +245,12 @@
                             </Setter.Value>
                         </Setter>
 
-                        <Setter Property="Icon"
-                                Value="{Binding DataContext.IconPath, Converter={local:IconPathToImageConverter}, RelativeSource={RelativeSource Self}}" />
+                        <Setter Property="Icon" Value="{Binding Icon}" />
                     </Style>
-                    <HierarchicalDataTemplate
-                        DataType="{x:Type sdk1:MenuItemViewModel}"
-                        ItemsSource="{Binding Path=Bookmarks}" />
+
+                    <HierarchicalDataTemplate DataType="{x:Type sdk1:MenuItemViewModel}"
+                                              ItemsSource="{Binding Items}" />
+
                 </Menu.Resources>
             </Menu>
         </Grid>

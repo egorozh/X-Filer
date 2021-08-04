@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.DragDrop;
 using XFiler.SDK;
@@ -18,8 +19,16 @@ namespace XFiler
 
         private static void RegisterServices(ContainerBuilder services)
         {
-            services.RegisterType<ExtensionToImageFileConverter>().AsSelf().SingleInstance();
-            services.RegisterType<IconPathProvider>().As<IIconPathProvider>().SingleInstance();
+            var imageProviders = new List<IImageProvider>
+            {
+                // Always Last
+                new BaseImageProvider()
+            };
+            services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
+
+            services.RegisterInstance(imageProviders).As<IEnumerable<IImageProvider>>().SingleInstance();
+
+            services.RegisterType<MenuItemFactory>().As<IMenuItemFactory>().SingleInstance();
             services.RegisterType<BookmarksManager>().As<IBookmarksManager>().SingleInstance();
 
             services.RegisterType<BoundExampleInterTabClient>().As<ITabClient>().SingleInstance();
@@ -28,7 +37,7 @@ namespace XFiler
 
             services.RegisterType<ChromerDragDrop>().As<IDropTarget>().SingleInstance();
             services.RegisterType<ChromerDragHandler>().As<IDragSource>().SingleInstance();
-            services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
+
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
             services.RegisterType<FilesPresenterFactory>().As<IFilesPresenterFactory>().SingleInstance();
             services.RegisterType<ExplorerTabFactory>().As<IExplorerTabFactory>().SingleInstance();

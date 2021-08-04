@@ -2,5 +2,6 @@
 {
     public interface IMenuItemViewModel
     {
+        string? Path { get; }
     }
 }

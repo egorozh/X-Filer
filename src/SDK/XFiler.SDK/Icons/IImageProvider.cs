@@ -2,7 +2,7 @@
 
 namespace XFiler.SDK
 {
-    public interface IIconLoader
+    public interface IImageProvider
     {
         ImageSource? GetIcon(FileEntityViewModel viewModel, double size);
 

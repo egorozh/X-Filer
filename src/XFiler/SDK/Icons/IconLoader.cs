@@ -1,56 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using SharpVectors.Converters;
-using SharpVectors.Renderers.Wpf;
 
 namespace XFiler.SDK
 {
     internal class IconLoader : IIconLoader
     {
-        private readonly Dictionary<string, ImageSource> _cash = new();
+        private readonly IEnumerable<IImageProvider> _imageProviders;
 
-        private readonly IIconPathProvider _iconPathProvider;
-
-        public IconLoader(IIconPathProvider iconPathProvider)
+        public IconLoader(IEnumerable<IImageProvider> imageProviders)
         {
-            _iconPathProvider = iconPathProvider;
+            _imageProviders = imageProviders;
         }
 
-        public ImageSource? GetIcon(FileEntityViewModel viewModel)
+        public ImageSource? GetIcon(FileEntityViewModel viewModel, double size)
         {
-            var fileInfo = _iconPathProvider.GetIconPath(viewModel);
-            var path = fileInfo.FullName;
-
-            if (_cash.ContainsKey(path))
-                return _cash[path];
-
             ImageSource? source = null;
 
-            if (fileInfo.Extension.ToUpper() == ".SVG")
+            foreach (var imageProvider in _imageProviders)
             {
-                var settings = new WpfDrawingSettings
-                {
-                    TextAsGeometry = false,
-                    IncludeRuntime = true,
-                };
+                source = imageProvider.GetIcon(viewModel, size);
 
-                var converter = new FileSvgReader(settings);
+                if (source == null)
+                    continue;
 
-                var drawing = converter.Read(path);
-
-                if (drawing != null)
-                {
-                    source = new DrawingImage(drawing);
-                    _cash.Add(path, source);
-                }
-                   
+                break;
             }
-            else
+
+            return source;
+        }
+
+        public ImageSource? GetIcon(IMenuItemViewModel viewModel, double size)
+        {
+            ImageSource? source = null;
+
+            foreach (var imageProvider in _imageProviders)
             {
-                source = new BitmapImage(new Uri(path));
-                _cash.Add(path, source);
+                source = imageProvider.GetIcon(viewModel, size);
+
+                if (source == null)
+                    continue;
+
+                break;
             }
 
             return source;

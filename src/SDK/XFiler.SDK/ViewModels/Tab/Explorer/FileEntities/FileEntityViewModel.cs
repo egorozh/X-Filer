@@ -29,7 +29,7 @@ namespace XFiler.SDK
             FullName = fullName;
             IconLoader = iconLoader;
 
-            Icon = iconLoader.GetIcon(this);
+            Icon = iconLoader.GetIcon(this, 64);
         }
 
         #endregion

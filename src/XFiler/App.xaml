@@ -10,7 +10,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="Themes/App/Icons.xaml" />
+                <ResourceDictionary Source="Resources/Icons.xaml" />
                 <ResourceDictionary Source="Resources/NotifyIcon.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />

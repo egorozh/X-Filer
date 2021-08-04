@@ -10,6 +10,12 @@ namespace XFiler.SDK
 {
     internal class BookmarksManager : BaseViewModel, IBookmarksManager
     {
+        #region Private Fields
+
+        private readonly IMenuItemFactory _itemFactory;
+
+        #endregion
+        
         #region Constants
 
         private const string BookmarksFileName = "bookmarks.json";
@@ -17,9 +23,7 @@ namespace XFiler.SDK
         #endregion
 
         #region Private Fields
-
-        private readonly ExtensionToImageFileConverter _converter;
-
+        
         private readonly ObservableCollection<MenuItemViewModel> _bookmarks;
         private readonly List<BookmarkItem> _items;
 
@@ -40,10 +44,10 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        public BookmarksManager(ExtensionToImageFileConverter converter)
+        public BookmarksManager(IMenuItemFactory itemFactory)
         {
-            _converter = converter;
-
+            _itemFactory = itemFactory;
+            
             BookmarkClickCommand = new DelegateCommand<IList<object>>(OnBookmarkClicked);
             AddBookmarkCommand = new DelegateCommand<string>(OnAddBookmark);
 
@@ -52,71 +56,25 @@ namespace XFiler.SDK
             _bookmarks = CreateMenuItemViewModels(_items);
         }
 
-        private ObservableCollection<MenuItemViewModel> CreateMenuItemViewModels(IList<BookmarkItem> items)
+        private ObservableCollection<MenuItemViewModel> CreateMenuItemViewModels(IList<BookmarkItem>? items)
         {
             var menuVms = new ObservableCollection<MenuItemViewModel>();
 
             if (items == null || !items.Any())
                 return menuVms;
-
-            var applicationDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            var iconsDirectory = new DirectoryInfo(Path.Combine(applicationDirectory, "Resources", "Icons"));
-
+            
             foreach (var bookmarkItem in items)
             {
-                var path = bookmarkItem.Path;
-
-                var vm = new MenuItemViewModel(path)
-                {
-                    Items = CreateMenuItemViewModels(bookmarkItem.Children)
-                };
-
-                if (path == null)
-                {
-                    vm.Header = bookmarkItem.BookmarkFolderName;
-                    vm.IconPath = Path.Combine(iconsDirectory.FullName, IconName.BookmarkFolder + ".svg");
-                }
-                else
-                {
-                    try
-                    {
-                        DefinitionPathToVm(vm, path, iconsDirectory);
-                    }
-                    catch (Exception e)
-                    {
-                        continue;
-                    }
-                }
-
+                var vm = _itemFactory
+                    .CreateItem(bookmarkItem, CreateMenuItemViewModels(bookmarkItem.Children),
+                        BookmarkClickCommand);
+                
                 menuVms.Add(vm);
             }
 
             return menuVms;
         }
-
-        private void DefinitionPathToVm(MenuItemViewModel vm, string path, DirectoryInfo iconsDirectory)
-        {
-            vm.Command = BookmarkClickCommand;
-
-            var attr = File.GetAttributes(path);
-
-            if (attr.HasFlag(FileAttributes.Directory))
-            {
-                vm.Header = new DirectoryInfo(path).Name;
-                vm.IconPath = Path.Combine(iconsDirectory.FullName, IconName.Folder + ".svg");
-            }
-            else
-            {
-                var extension = new FileInfo(path).Extension;
-
-                vm.Header = new FileInfo(path).Name;
-                vm.IconPath =
-                    _converter.GetImagePath(string.IsNullOrEmpty(extension) ? "" : extension.Substring(1))
-                        .FullName;
-            }
-        }
-
+        
         private List<BookmarkItem> OpenBookmarksFile()
         {
             if (File.Exists(BookmarksFileName))

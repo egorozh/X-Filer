@@ -345,10 +345,10 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Viewbox Stretch="Uniform"
-                         Margin="10 6 2 6">
-                    <ContentPresenter ContentSource="Icon" />
-                </Viewbox>
+                <ContentPresenter ContentSource="Icon"
+                                  VerticalAlignment="Center"
+                                  Margin="10 6 2 6"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                 <ContentPresenter Grid.Column="1"
                                   Margin="6,3,10,3"
@@ -467,7 +467,7 @@
                          Margin="6,0,6,0"
                          Fill="{StaticResource NormalBrush}"
                          Stroke="{StaticResource NormalBorderBrush}" />
-                
+
                 <ContentPresenter Name="HeaderHost"
                                   Grid.Column="1"
                                   ContentSource="Header"
