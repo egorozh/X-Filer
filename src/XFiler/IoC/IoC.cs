@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using GongSolutions.Wpf.DragDrop;
+using XFiler.Base;
 using XFiler.DragDrop;
 using XFiler.SDK;
 
@@ -38,12 +39,13 @@ namespace XFiler
             services.RegisterType<ChromerDragHandler>().As<IDragSource>().SingleInstance();
 
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
-            services.RegisterType<FilesPresenterFactory>().As<IFilesPresenterFactory>().SingleInstance();
+
             services.RegisterType<ExplorerTabFactory>().As<IExplorerTabFactory>().SingleInstance();
             services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
-
-
+            
             services.RegisterType<NotifyIconViewModel>().AsSelf().SingleInstance();
+
+            services.RegisterModule<BasePlugin>();
         }
     }
 }

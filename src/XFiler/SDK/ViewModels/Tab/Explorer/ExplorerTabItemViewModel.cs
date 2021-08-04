@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Prism.Commands;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using Prism.Commands;
+using System.Linq;
 
 namespace XFiler.SDK
 {
@@ -11,16 +13,14 @@ namespace XFiler.SDK
         #region Private Fields
 
         private readonly IDirectoryHistory _history;
-        private readonly IFilesPresenterFactory _filesPresenterFactory;
         private string _searchText;
 
         #endregion
 
         #region Public Properties
 
-        public bool IsTilePresenter { get; set; }
-
-        public bool IsGridPresenter { get; set; }
+        public IReadOnlyList<IFilesPresenterFactory> FilesPresenters { get; }
+        public IFilesPresenterFactory CurrentPresenter { get; set; }
 
         public string SearchText
         {
@@ -29,8 +29,6 @@ namespace XFiler.SDK
         }
 
         public string CurrentDirectoryFileName => _history.Current.DirectoryPath;
-
-        public IFilesPresenter? FilesPresenter { get; set; }
 
         #endregion
 
@@ -47,12 +45,13 @@ namespace XFiler.SDK
         #region Constructor
 
         public ExplorerTabItemViewModel(
-            IFilesPresenterFactory filesPresenterFactory,
+            IReadOnlyList<IFilesPresenterFactory> filesPresenters,
             IBookmarksManager bookmarksManager,
             string directoryPath,
             string directoryName) : base(directoryName)
         {
-            _filesPresenterFactory = filesPresenterFactory;
+            FilesPresenters = filesPresenters;
+
             AddBookmarkCommand = bookmarksManager.AddBookmarkCommand;
 
             _history = new DirectoryHistory(directoryPath, directoryName);
@@ -64,16 +63,19 @@ namespace XFiler.SDK
             _searchText = _history.Current.DirectoryPath;
 
             _history.HistoryChanged += History_HistoryChanged;
-
             PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
 
-            IsTilePresenter = true;
+            foreach (var factory in filesPresenters)
+                factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
+
+            CurrentPresenter = FilesPresenters.First();
         }
 
-        public ExplorerTabItemViewModel(IFilesPresenterFactory filesPresenterFactory,
+        public ExplorerTabItemViewModel(
+            IReadOnlyList<IFilesPresenterFactory> filesPresenters,
             IBookmarksManager bookmarksManager,
             DirectoryInfo directoryInfo)
-            : this(filesPresenterFactory, bookmarksManager, directoryInfo.FullName, directoryInfo.Name)
+            : this(filesPresenters, bookmarksManager, directoryInfo.FullName, directoryInfo.Name)
         {
         }
 
@@ -83,30 +85,9 @@ namespace XFiler.SDK
 
             switch (e.PropertyName)
             {
-                case nameof(IsTilePresenter):
+                case nameof(CurrentPresenter):
 
-                    if (IsTilePresenter)
-                    {
-                        IsGridPresenter = false;
-                        OpenDirectory();
-                    }
-                    else if (!IsGridPresenter)
-                    {
-                        IsTilePresenter = true;
-                    }
-
-                    break;
-                case nameof(IsGridPresenter):
-
-                    if (IsGridPresenter)
-                    {
-                        IsTilePresenter = false;
-                        OpenDirectory();
-                    }
-                    else if (!IsTilePresenter)
-                    {
-                        IsGridPresenter = true;
-                    }
+                    OpenDirectory();
 
                     break;
             }
@@ -117,6 +98,14 @@ namespace XFiler.SDK
         #endregion
 
         #region Public Methods
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            foreach (var factory in FilesPresenters)
+                factory.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
+        }
 
         public void OpenBookmark(string path)
         {
@@ -144,7 +133,6 @@ namespace XFiler.SDK
                     break;
             }
         }
-
 
         private bool OnCanMoveForward() => _history.CanMoveForward;
 
@@ -198,17 +186,7 @@ namespace XFiler.SDK
 
         private void OpenDirectory()
         {
-            if (FilesPresenter != null)
-            {
-                FilesPresenter.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
-                FilesPresenter.Dispose();
-            }
-
-            var presenterType = IsGridPresenter ? PresenterType.Grid : PresenterType.RegularTile;
-
-            FilesPresenter = _filesPresenterFactory.CreatePresenter(presenterType, CurrentDirectoryFileName);
-
-            FilesPresenter.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
+            CurrentPresenter.UpdatePresenter(CurrentDirectoryFileName);
         }
 
         private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)

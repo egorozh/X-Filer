@@ -144,7 +144,7 @@ namespace XFiler.SDK
 
             //here's your view model:
             var viewModel = args.DragablzItem.DataContext as IExplorerTabItemViewModel;
-
+            viewModel?.Dispose();
             //here's how you can cancel stuff:
             //args.Cancel(); 
         }

@@ -1,4 +1,4 @@
-﻿namespace XFiler
+﻿namespace XFiler.Base
 {
     public partial class GridFilesPresenter
     {

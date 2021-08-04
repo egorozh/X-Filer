@@ -1,6 +1,8 @@
-﻿namespace XFiler.SDK
+﻿using System;
+
+namespace XFiler.SDK
 {
-    public interface ITabItem
+    public interface ITabItem : IDisposable
     {
         string Header { get; set; }
 

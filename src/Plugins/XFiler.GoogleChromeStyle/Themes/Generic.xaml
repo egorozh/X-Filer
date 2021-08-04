@@ -10,6 +10,8 @@
         <ResourceDictionary Source="Controls/SearchControl.xaml" />
         <ResourceDictionary Source="Controls/RectSelectListBox.xaml" />
         <ResourceDictionary Source="Controls/RectSelectDataGrid.xaml" />
+        <ResourceDictionary Source="Controls/Buttons.xaml" />
+        <ResourceDictionary Source="Controls/Icons.xaml" />
 
         <ResourceDictionary Source="Others/Colors.xaml" />
         <ResourceDictionary Source="Others/Menu.xaml" />

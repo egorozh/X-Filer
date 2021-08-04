@@ -10,17 +10,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Plugins\XFiler.BaseStyle\XFiler.BaseStyle.csproj" />
+    <ProjectReference Include="..\Plugins\XFiler.Base\XFiler.Base.csproj" />
     <ProjectReference Include="..\Plugins\XFiler.GoogleChromeStyle\XFiler.GoogleChromeStyle.csproj" />
     <ProjectReference Include="..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.2.0" />
+
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SingleInstanceHelper" Version="1.0.3" />
     <PackageReference Include="SharpVectors.Reloaded" Version="1.7.5" />
-    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
+ 
   </ItemGroup>
 
   <ItemGroup>

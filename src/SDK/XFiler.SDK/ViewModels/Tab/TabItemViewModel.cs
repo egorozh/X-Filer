@@ -20,5 +20,13 @@
         }
 
         #endregion
+
+        #region Public Methods
+
+        public virtual void Dispose()
+        {
+        }
+
+        #endregion
     }
 }

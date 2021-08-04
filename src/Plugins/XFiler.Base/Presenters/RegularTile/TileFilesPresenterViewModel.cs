@@ -1,10 +1,11 @@
 ﻿using GongSolutions.Wpf.DragDrop;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler.Base
 {
-    public class GridFilesPresenterViewModel : BaseFilesPresenter
+    public class TileFilesPresenterViewModel : BaseFilesPresenter
     {
-        public GridFilesPresenterViewModel(string directoryPathName,
+        public TileFilesPresenterViewModel(string directoryPathName,
             IFileEntityFactory fileEntityFactory,
             IDropTarget dropTarget,
             IDragSource dragSource,

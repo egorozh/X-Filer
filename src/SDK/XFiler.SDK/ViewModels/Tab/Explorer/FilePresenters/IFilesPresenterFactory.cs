@@ -1,7 +1,19 @@
-﻿namespace XFiler.SDK
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+
+namespace XFiler.SDK
 {
-    public interface IFilesPresenterFactory
+    public interface IFilesPresenterFactory : INotifyPropertyChanged, IDisposable
     {
-        IFilesPresenter CreatePresenter(PresenterType presenterType, string currentDirectory);
+        IFilesPresenter? FilesPresenter { get; }
+
+        string Name { get; }
+
+        DataTemplate Template { get; }
+
+        event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
+
+        void UpdatePresenter(string currentDirectory);
     }
 }
