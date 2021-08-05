@@ -1,18 +1,17 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Input;
+using XFiler.SDK;
 
 namespace XFiler
 {
-    public partial class ExplorerTabItem
+    public partial class ExplorerTabItem : IExplorerTabItem
     {
         public ExplorerTabItem()
         {
             InitializeComponent();
 
             //var dpd = DependencyPropertyDescriptor.FromProperty(ContentProperty, typeof(ContentControl));
-            
+
             //dpd?.AddValueChanged(ContentControl, OnContentControlChanged);
         }
 

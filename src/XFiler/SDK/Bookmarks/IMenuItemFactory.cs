@@ -6,6 +6,6 @@ namespace XFiler.SDK
     internal interface IMenuItemFactory
     {
         MenuItemViewModel CreateItem(BookmarkItem bookmarkItem,
-            ObservableCollection<MenuItemViewModel> children, ICommand bookmarkClickCommand);
+            ObservableCollection<IMenuItemViewModel> children, ICommand bookmarkClickCommand);
     }
 }

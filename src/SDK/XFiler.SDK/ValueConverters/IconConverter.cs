@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace XFiler.SDK
 {
-    internal class IconConverter : BaseMultiValueConverter
+    public class IconConverter : BaseMultiValueConverter
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

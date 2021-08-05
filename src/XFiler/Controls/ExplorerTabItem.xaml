@@ -4,15 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:XFiler"
-             xmlns:sdk1="clr-namespace:XFiler.SDK"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-             xmlns:base="clr-namespace:XFiler.Base;assembly=XFiler.Base"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-
-    </UserControl.Resources>
 
     <UserControl.InputBindings>
         <local:ExtendedMouseBinding Gesture="XButton1"
@@ -42,201 +38,13 @@
 
         </Grid.RowDefinitions>
 
-        <!--Search TextBox-->
-        <Grid Grid.Row="0"
-              Margin="5 0">
+        <sdk:ToolBarControl Grid.Row="0" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <sdk:BookmarksControl Grid.Row="1" />
 
-            <Grid.Resources>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Margin" Value="2" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border x:Name="border"
-                                        Height="28"
-                                        Width="28"
-                                        CornerRadius="14"
-                                        Background="{TemplateBinding Background}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        SnapsToDevicePixels="true">
-
-                                    <Viewbox Width="22"
-                                             Height="22"
-                                             Stretch="Uniform">
-                                        <ContentPresenter />
-                                    </Viewbox>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" Value="#454545" />
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Setter Property="Background" Value="#333333" />
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="false">
-                                        <Setter Property="Foreground" Value="#8C8C8C" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Grid.Resources>
-
-            <Button ToolTip="Нажмите, чтобы вернуться."
-                    Command="{Binding MoveBackCommand}">
-                <Canvas Width="24" Height="24">
-                    <Path
-                        Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
-                        Data="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
-                </Canvas>
-            </Button>
-
-            <Button Grid.Column="1"
-                    ToolTip="Нажмите, чтобы перейти вперёд."
-                    Command="{Binding MoveForwardCommand}">
-                <Canvas Width="24" Height="24">
-                    <Path
-                        Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
-                        Data="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
-                </Canvas>
-            </Button>
-
-            <Button Grid.Column="2"
-                    ToolTip="Обновить">
-                <Canvas Width="24" Height="24">
-                    <Path
-                        Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
-                        Data="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z" />
-                </Canvas>
-            </Button>
-
-            <sdk:SearchControl Grid.Column="3"
-                               VerticalAlignment="Center"
-                               Margin="10 0"
-                               Text="{Binding SearchText}">
-                <sdk:SearchControl.Resources>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="BorderBrush" Value="Transparent" />
-                        <Setter Property="Foreground" Value="White" />
-                        <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="Margin" Value="2 2 4 2" />
-                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border"
-                                            Height="24"
-                                            Width="24"
-                                            CornerRadius="14"
-                                            Background="{TemplateBinding Background}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            SnapsToDevicePixels="true">
-
-                                        <Viewbox Width="18"
-                                                 Height="18"
-                                                 Stretch="Uniform">
-                                            <ContentPresenter />
-                                        </Viewbox>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="true">
-                                            <Setter Property="Background" Value="#454545" />
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="true">
-                                            <Setter Property="Background" Value="#333333" />
-                                        </Trigger>
-                                        <Trigger Property="IsEnabled" Value="false">
-                                            <Setter Property="Foreground" Value="#8C8C8C" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </sdk:SearchControl.Resources>
-                <sdk:SearchControl.ButtonsContent>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding AddBookmarkCommand}"
-                                CommandParameter="{Binding FilePath}">
-                            <Path Stretch="Uniform"
-                                  Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"
-                                  Data="M5.8 21L7.4 14L2 9.2L9.2 8.6L12 2L14.8 8.6L22 9.2L18.8 12H18C17.3 12 16.6 12.1 15.9 12.4L18.1 10.5L13.7 10.1L12 6.1L10.3 10.1L5.9 10.5L9.2 13.4L8.2 17.7L12 15.4L12.5 15.7C12.3 16.2 12.1 16.8 12.1 17.3L5.8 21M17 14V17H14V19H17V22H19V19H22V17H19V14H17Z" />
-
-                        </Button>
-                    </StackPanel>
-                </sdk:SearchControl.ButtonsContent>
-            </sdk:SearchControl>
-        </Grid>
-
-        <!-- BookMarks-->
-        <Grid Grid.Row="1">
-            <Menu Background="Transparent"
-                  VerticalAlignment="Center"
-                  ItemsSource="{Binding DataContext.Bookmarks, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
-                <Menu.Resources>
-                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Header}" />
-                        <Setter Property="Command"
-                                Value="{Binding Command}" />
-
-                        <Setter Property="CommandParameter">
-                            <Setter.Value>
-                                <MultiBinding Converter="{local:CloneParamsConverter}">
-                                    <Binding Path="DataContext.CommandParameter"
-                                             RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="DataContext"
-                                             RelativeSource="{RelativeSource AncestorType={x:Type local:ExplorerTabItem}}" />
-                                </MultiBinding>
-                            </Setter.Value>
-                        </Setter>
-
-                        <Setter Property="Icon">
-                            <Setter.Value>
-                                <MultiBinding Converter="{sdk1:IconConverter}">
-                                    <Binding Path="." />
-                                    <Binding Path="IconLoader" />
-                                </MultiBinding>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-
-                    <HierarchicalDataTemplate DataType="{x:Type sdk1:MenuItemViewModel}"
-                                              ItemsSource="{Binding Items}" />
-
-                </Menu.Resources>
-            </Menu>
-        </Grid>
-
-        <Grid Row="2">
-            <ProgressBar Visibility="{Binding FilesPresenter.IsLoaded, Converter={local:BoolToVisibilityConverter}}"
-                         Minimum="0"
-                         Maximum="100"
-                         Value="{Binding FilesPresenter.Progress}"
-                         Height="4"
-                         HorizontalAlignment="Stretch" />
-
-        </Grid>
+        <sdk:PresenterProgressBar Grid.Row="2"
+                                  Visibility="{Binding CurrentPresenter.FilesPresenter.IsLoaded, Converter={local:BoolToVisibilityConverter}}"
+                                  Value="{Binding CurrentPresenter.FilesPresenter.Progress}" />
 
         <Grid Grid.Row="3">
             <ContentControl x:Name="ContentControl"
@@ -257,12 +65,10 @@
                         <Separator />
 
                         <MenuItem Header="Вид">
-                            <MenuItem Header="Значки"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding IsTilePresenter, Mode=TwoWay}" />
-                            <MenuItem Header="Таблица"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding IsGridPresenter, Mode=TwoWay}" />
+                            <b:Interaction.Behaviors>
+                                <local:ComboBoxToMenuBehavior Items="{Binding FilesPresenters}"
+                                                              CurrentItem="{Binding CurrentPresenter, Mode=TwoWay}" />
+                            </b:Interaction.Behaviors>
                         </MenuItem>
                         <MenuItem Header="Сортировка" />
                         <MenuItem Header="Группировка" />

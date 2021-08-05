@@ -18,12 +18,12 @@ namespace XFiler.SDK
 
         public object? CommandParameter { get; set; }
 
-        public IList<MenuItemViewModel> Items { get; set; }
+        public IList<IMenuItemViewModel> Items { get; set; }
 
         public IIconLoader IconLoader { get; }
 
         public MenuItemViewModel(BookmarkItem bookmarkItem,
-            ObservableCollection<MenuItemViewModel> children,
+            ObservableCollection<IMenuItemViewModel> children,
             ICommand command, IIconLoader iconLoader)
         {
             Path = bookmarkItem.Path;

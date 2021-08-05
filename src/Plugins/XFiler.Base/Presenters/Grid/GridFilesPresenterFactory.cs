@@ -34,10 +34,10 @@ namespace XFiler.Base
             var ms = new MemoryStream(Encoding.UTF8.GetBytes(
                 @"<DataTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
                                   xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" 
-xmlns:base=""clr-namespace:XFiler.Base;assembly=XFiler.Base""
-DataType=""{ x:Type base:GridFilesPresenterViewModel}"">
-                <base:GridFilesPresenter />
-                </DataTemplate>"));
+                                  xmlns:base=""clr-namespace:XFiler.Base;assembly=XFiler.Base""
+                                  DataType=""{ x:Type base:GridFilesPresenterViewModel}"">
+                        <base:GridFilesPresenter />
+                    </DataTemplate>"));
 
             return (DataTemplate)XamlReader.Load(ms);
         }

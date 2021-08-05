@@ -14,7 +14,7 @@ namespace XFiler.SDK
 
         public MenuItemViewModel CreateItem(
             BookmarkItem bookmarkItem,
-            ObservableCollection<MenuItemViewModel> children,
+            ObservableCollection<IMenuItemViewModel> children,
             ICommand command)
         {
             return new MenuItemViewModel(bookmarkItem, children,  command, _iconLoader);

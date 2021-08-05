@@ -24,7 +24,7 @@ namespace XFiler.SDK
 
         #region Private Fields
         
-        private readonly ObservableCollection<MenuItemViewModel> _bookmarks;
+        private readonly ObservableCollection<IMenuItemViewModel> _bookmarks;
         private readonly List<BookmarkItem> _items;
 
         #endregion
@@ -56,9 +56,9 @@ namespace XFiler.SDK
             _bookmarks = CreateMenuItemViewModels(_items);
         }
 
-        private ObservableCollection<MenuItemViewModel> CreateMenuItemViewModels(IList<BookmarkItem>? items)
+        private ObservableCollection<IMenuItemViewModel> CreateMenuItemViewModels(IList<BookmarkItem>? items)
         {
-            var menuVms = new ObservableCollection<MenuItemViewModel>();
+            var menuVms = new ObservableCollection<IMenuItemViewModel>();
 
             if (items == null || !items.Any())
                 return menuVms;
