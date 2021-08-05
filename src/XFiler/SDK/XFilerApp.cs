@@ -1,10 +1,10 @@
 ﻿using Autofac;
+using Hardcodet.Wpf.TaskbarNotification;
+using SingleInstanceHelper;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
-using Hardcodet.Wpf.TaskbarNotification;
-using SingleInstanceHelper;
 using XFiler.GoogleChromeStyle;
 using XFiler.SDK.Themes;
 
@@ -37,10 +37,14 @@ namespace XFiler.SDK
             _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
 
             Host = new IoC().Build();
-            
-            CultureInfo currentCulture = new("Ru-ru");
-            CultureInfo.CurrentCulture = currentCulture;
-            CultureInfo.CurrentUICulture = currentCulture;
+
+            var availableCultures = new[]
+            {
+                "Ru-ru",
+                "En-us"
+            };
+
+            SetCulture(availableCultures[1]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
@@ -58,11 +62,22 @@ namespace XFiler.SDK
 
             base.OnStartup(e);
         }
-
+        
         protected override void OnExit(ExitEventArgs e)
         {
             _notifyIcon.Dispose();
             base.OnExit(e);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public static void SetCulture(string culture)
+        {
+            CultureInfo currentCulture = new(culture);
+            CultureInfo.CurrentCulture = currentCulture;
+            CultureInfo.CurrentUICulture = currentCulture;
         }
 
         #endregion

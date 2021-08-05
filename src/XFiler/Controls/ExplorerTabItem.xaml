@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:XFiler"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:localization="clr-namespace:XFiler.Resources.Localization"
              mc:Ignorable="d"
 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -52,24 +53,26 @@
                 <ContentControl.ContextMenu>
                     <ContextMenu>
 
-                        <MenuItem Header="Назад"
-                                  InputGestureText="Alt + Стрелка влево"
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonHeader}"
+                                  InputGestureText="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonGesture}"
                                   Command="{Binding MoveBackCommand}" />
 
-                        <MenuItem Header="Вперёд"
-                                  InputGestureText="Alt + Стрелка вправо"
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_ForwardButtonHeader}"
+                                  InputGestureText="{x:Static localization:Strings.ExplorerTab_ContextMenu_ForwardButtonGesture}"
                                   Command="{Binding MoveForwardCommand}" />
 
-                        <MenuItem Header="Обновить" InputGestureText="Ctrl + R" />
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_UpdateButtonHeader}" 
+                                  InputGestureText="Ctrl + R" />
 
                         <Separator />
 
-                        <MenuItem Header="Вид">
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_View}">
                             <b:Interaction.Behaviors>
                                 <local:ComboBoxToMenuBehavior Items="{Binding FilesPresenters}"
                                                               CurrentItem="{Binding CurrentPresenter, Mode=TwoWay}" />
                             </b:Interaction.Behaviors>
                         </MenuItem>
+
                         <MenuItem Header="Сортировка" />
                         <MenuItem Header="Группировка" />
 
