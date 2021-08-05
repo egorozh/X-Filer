@@ -583,7 +583,7 @@
 
     <!-- MenuItem Style -->
 
-    <Style x:Key="{x:Type MenuItem}" TargetType="{x:Type MenuItem}">
+    <Style  TargetType="{x:Type MenuItem}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">

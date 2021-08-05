@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace XFiler.SDK
 {
@@ -48,7 +49,7 @@ namespace XFiler.SDK
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
             IBookmarksManager bookmarksManager,
             string directoryPath,
-            string directoryName) : base(directoryName)
+            string directoryName) : base(directoryName, CreateTemplate())
         {
             FilesPresenters = filesPresenters;
 
@@ -70,6 +71,7 @@ namespace XFiler.SDK
 
             CurrentPresenter = FilesPresenters.First();
         }
+
 
         public ExplorerTabItemViewModel(
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
@@ -165,6 +167,12 @@ namespace XFiler.SDK
         #endregion
 
         #region Private Methods
+
+        private static DataTemplate CreateTemplate() => new()
+        {
+            DataType = typeof(ExplorerTabItemViewModel),
+            VisualTree = new FrameworkElementFactory(typeof(ExplorerTabItem))
+        };
 
         private void OpenDirectory(DirectoryInfo directoryInfo)
         {

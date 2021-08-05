@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xFiler="clr-namespace:XFiler"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              mc:Ignorable="d"
 
@@ -26,6 +27,9 @@
                              FixedHeaderCount="0"
                              Style="{StaticResource TabablzControlStyle}"
                              AddLocationHint="After">
+        <dragablz:TabablzControl.ContentTemplateSelector>
+            <xFiler:TabTemplateSelector />
+        </dragablz:TabablzControl.ContentTemplateSelector>
 
         <dragablz:TabablzControl.ItemContainerStyle>
             <Style TargetType="{x:Type dragablz:DragablzItem}"

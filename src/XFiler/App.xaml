@@ -3,7 +3,6 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:local="clr-namespace:XFiler"
-                 xmlns:sdk="clr-namespace:XFiler.SDK"
                  ShutdownMode="OnExplicitShutdown">
 
     <Application.Resources>
@@ -16,14 +15,6 @@
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/XFiler.GoogleChromeStyle;component/Themes/Generic.xaml" />
-
-                <ResourceDictionary>
-                    <DataTemplate DataType="{x:Type sdk:ExplorerTabItemViewModel}">
-                        <local:ExplorerTabItem />
-                    </DataTemplate>
-
-                </ResourceDictionary>
-
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

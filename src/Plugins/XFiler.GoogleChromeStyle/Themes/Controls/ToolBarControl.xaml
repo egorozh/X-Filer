@@ -12,47 +12,57 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type sdk:ToolBarControl}">
-                    <Grid Margin="5 0">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid Margin="5 0"
+                          >
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <Button ToolTip="{x:Static localization:Strings.ToolBarControl_BackButtonTooltip}"
+                            <Button ToolTip="{x:Static localization:Strings.ToolBarControl_BackButtonTooltip}"
                                 Style="{StaticResource ToolButton}"
                                 Command="{Binding MoveBackCommand}"
                                 Content="{StaticResource BackIcon}" />
 
-                        <Button Grid.Column="1"
+                            <Button Grid.Column="1"
                                 Style="{StaticResource ToolButton}"
                                 ToolTip="{x:Static localization:Strings.ToolBarControl_ForwardButtonTooltip}"
                                 Command="{Binding MoveForwardCommand}"
                                 Content="{StaticResource ForwardIcon}" />
 
-                        <Button Grid.Column="2"
+                            <Button Grid.Column="2"
                                 Style="{StaticResource ToolButton}"
                                 ToolTip="{x:Static localization:Strings.ToolBarControl_RefreshButtonTooltip}"
                                 Content="{StaticResource UpdateIcon}" />
 
-                        <sdk:SearchControl Grid.Column="3"
+                            <sdk:SearchControl Grid.Column="3"
                                            VerticalAlignment="Center"
                                            Margin="10 0"
                                            Text="{Binding SearchText}">
-                            <sdk:SearchControl.Resources>
-                                <Style TargetType="Button" BasedOn="{StaticResource SearchContentButton}" />
-                            </sdk:SearchControl.Resources>
-                            <sdk:SearchControl.ButtonsContent>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Command="{Binding AddBookmarkCommand}"
+                                <sdk:SearchControl.Resources>
+                                    <Style TargetType="Button" BasedOn="{StaticResource SearchContentButton}" />
+                                </sdk:SearchControl.Resources>
+                                <sdk:SearchControl.ButtonsContent>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Command="{Binding AddBookmarkCommand}"
                                             CommandParameter="{Binding FilePath}"
                                             Content="{StaticResource AddBookmarkIcon}" />
-                                </StackPanel>
-                            </sdk:SearchControl.ButtonsContent>
-                        </sdk:SearchControl>
+                                    </StackPanel>
+                                </sdk:SearchControl.ButtonsContent>
+                            </sdk:SearchControl>
+
+                            <Menu Grid.Column="4">
+                                <MenuItem Header="..." 
+                                      ItemsSource="{TemplateBinding SettingsItems}"/>
+                            </Menu>
+                        </Grid>
                     </Grid>
+                   
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

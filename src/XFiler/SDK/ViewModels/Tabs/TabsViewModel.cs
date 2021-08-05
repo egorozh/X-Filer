@@ -14,6 +14,7 @@ namespace XFiler.SDK
 
         private readonly IExplorerTabFactory _explorerTabFactory;
         private readonly IWindowFactory _windowFactory;
+        private readonly ISettingsTabFactory _settingsFactory;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace XFiler.SDK
         public DelegateCommand<object> OpenTabItemInNewWindowCommand { get; }
         public DelegateCommand<object> DuplicateTabCommand { get; }
         public DelegateCommand<object> CloseAllTabsCommand { get; }
+        public DelegateCommand CreateSettingsTabCommand { get; }
 
         #endregion
 
@@ -48,10 +50,13 @@ namespace XFiler.SDK
             IExplorerTabFactory explorerTabFactory,
             IWindowFactory windowFactory,
             IBookmarksManager bookmarksManager,
-            IEnumerable<ITabItem> init)
+            IEnumerable<ITabItem> init,
+            ISettingsTabFactory settingsFactory)
         {
             _explorerTabFactory = explorerTabFactory;
             _windowFactory = windowFactory;
+            _settingsFactory = settingsFactory;
+
 
             InterTabClient = tabClient;
             Bookmarks = bookmarksManager.Bookmarks;
@@ -61,6 +66,8 @@ namespace XFiler.SDK
                 new DelegateCommand<object>(OnOpenTabItemInNewWindow, OnCanOpenTabItemInNewWindow);
             DuplicateTabCommand = new DelegateCommand<object>(OnDuplicate);
             CloseAllTabsCommand = new DelegateCommand<object>(OnCloseAllTabs, CanCloseAllTabs);
+
+            CreateSettingsTabCommand = new DelegateCommand(OnOpenSettings);
 
             TabItems = new ObservableCollection<ITabItem>(init);
 
@@ -84,6 +91,10 @@ namespace XFiler.SDK
                     CurrentTabItem = tab;
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void OnCreateNewTabItem(object? obj)
         {
@@ -126,9 +137,10 @@ namespace XFiler.SDK
                 TabItems.Remove(item);
         }
 
-        #endregion
-
-        #region Private Methods
+        private void OnOpenSettings()
+        {
+            _settingsFactory.OpenSettingsTab();
+        }
 
         private IExplorerTabItemViewModel CreateTabVm() => _explorerTabFactory.CreateRootTab();
 

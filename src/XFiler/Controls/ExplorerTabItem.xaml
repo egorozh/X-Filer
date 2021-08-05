@@ -26,28 +26,15 @@
     <Grid Background="{DynamicResource ToolBarBackground}">
 
         <Grid.RowDefinitions>
-
-            <!--Search TextBox-->
-            <RowDefinition Height="36" />
-
-            <!-- BookMarks-->
-            <RowDefinition Height="36" />
-
             <RowDefinition Height="Auto" />
-
             <RowDefinition Height="*" />
-
         </Grid.RowDefinitions>
 
-        <sdk:ToolBarControl Grid.Row="0" />
-
-        <sdk:BookmarksControl Grid.Row="1" />
-
-        <sdk:PresenterProgressBar Grid.Row="2"
+        <sdk:PresenterProgressBar Grid.Row="0"
                                   Visibility="{Binding CurrentPresenter.FilesPresenter.IsLoaded, Converter={local:BoolToVisibilityConverter}}"
                                   Value="{Binding CurrentPresenter.FilesPresenter.Progress}" />
 
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="1">
             <ContentControl x:Name="ContentControl"
                             Content="{Binding CurrentPresenter}">
                 <ContentControl.ContextMenu>
@@ -61,7 +48,7 @@
                                   InputGestureText="{x:Static localization:Strings.ExplorerTab_ContextMenu_ForwardButtonGesture}"
                                   Command="{Binding MoveForwardCommand}" />
 
-                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_UpdateButtonHeader}" 
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_UpdateButtonHeader}"
                                   InputGestureText="Ctrl + R" />
 
                         <Separator />

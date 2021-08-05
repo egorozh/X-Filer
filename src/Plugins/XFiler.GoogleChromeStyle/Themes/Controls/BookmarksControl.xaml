@@ -7,7 +7,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type sdk:BookmarksControl}">
-                    <Grid >
+                    <Grid Background="{TemplateBinding Background}">
                         <Menu Background="Transparent"
                               VerticalAlignment="Center"
                               ItemsSource="{Binding DataContext.Bookmarks, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
@@ -25,7 +25,7 @@
                                                 <Binding Path="DataContext.CommandParameter"
                                                          RelativeSource="{RelativeSource Self}" />
                                                 <Binding Path="DataContext"
-                                                         RelativeSource="{RelativeSource AncestorType={x:Type sdk:IExplorerTabItem}}" />
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type Menu}}" />
                                             </MultiBinding>
                                         </Setter.Value>
                                     </Setter>
@@ -40,8 +40,7 @@
                                     </Setter>
                                 </Style>
 
-                                <HierarchicalDataTemplate DataType="{x:Type sdk:IMenuItemViewModel}"
-                                                          ItemsSource="{Binding Items}" />
+                                <HierarchicalDataTemplate DataType="{x:Type sdk:IMenuItemViewModel}" />
 
                             </Menu.Resources>
                         </Menu>

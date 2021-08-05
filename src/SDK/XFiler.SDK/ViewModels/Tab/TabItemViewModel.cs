@@ -1,8 +1,12 @@
-﻿namespace XFiler.SDK
+﻿using System.Windows;
+
+namespace XFiler.SDK
 {
     public abstract class TabItemViewModel : BaseViewModel, ITabItem
     {
         #region Public Properties
+
+        public DataTemplate Template { get; }
 
         public string Header { get; set; }
 
@@ -14,9 +18,10 @@
 
         #region Constructor
 
-        protected TabItemViewModel(string header)
+        protected TabItemViewModel(string header, DataTemplate template)
         {
             Header = header;
+            Template = template;
         }
 
         #endregion

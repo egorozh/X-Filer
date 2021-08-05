@@ -2,7 +2,8 @@
                     xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
                     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters">
+                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
+                    xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK">
 
     <Style TargetType="{x:Type Thumb}" x:Key="ChromerInvisibleThumbStyle">
         <Setter Property="Background" Value="Transparent" />
@@ -222,7 +223,7 @@
                 </MultiBinding>
             </Setter.Value>
         </Setter>
-     
+
         <Setter Property="Padding" Value="10,1" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -414,14 +415,14 @@
         <Setter Property="SelectedItem" Value="{Binding CurrentTabItem, Mode=TwoWay}" />
         <Setter Property="NewItemFactory" Value="{Binding Factory}" />
         <Setter Property="ItemsSource" Value="{Binding TabItems}" />
-        <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" /> 
-       
+        <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" />
+
         <Setter Property="ItemContainerStyle" Value="{StaticResource ChromerDragableTabItemStyle}" />
         <Setter Property="ShowDefaultAddButton" Value="True" />
         <Setter Property="ShowDefaultCloseButton" Value="True" />
         <Setter Property="AdjacentHeaderItemOffset" Value="-16" />
         <Setter Property="HeaderMemberPath" Value="Header" />
-       
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dragablz:TabablzControl}">
@@ -433,20 +434,11 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="RowDefinition0" Height="Auto" />
+                            <RowDefinition Height="36" />
+                            <RowDefinition Height="36" />
                             <RowDefinition x:Name="RowDefinition1" Height="*" />
                         </Grid.RowDefinitions>
-                        <Border x:Name="contentPanel"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"
-                                Grid.Column="0"
-                                KeyboardNavigation.DirectionalNavigation="Contained"
-                                Grid.Row="1"
-                                KeyboardNavigation.TabIndex="2"
-                                KeyboardNavigation.TabNavigation="Local"
-                                Margin="0 0 0 0">
-                            <Grid x:Name="PART_ItemsHolder" />
-                        </Border>
+
                         <Grid Grid.Column="0" Grid.Row="0"
                               Margin="0,2,2,0"
                               HorizontalAlignment="Left"
@@ -504,6 +496,34 @@
                                             ContentTemplateSelector="{TemplateBinding HeaderSuffixContentTemplateSelector}"
                                             HorizontalAlignment="Stretch" />
                         </Grid>
+
+
+                        <sdk:ToolBarControl Grid.Row="1" Grid.Column="0"
+                                            DataContext="{TemplateBinding SelectedItem}"
+                                            Background="{DynamicResource ToolBarBackground}">
+                            <MenuItem Header="Settings" />
+                            <MenuItem Header="Settings" />
+                        </sdk:ToolBarControl>
+
+                        <sdk:BookmarksControl Grid.Row="2" Grid.Column="0"
+                                              DataContext="{TemplateBinding SelectedItem}"
+                                              Background="{DynamicResource ToolBarBackground}"/>
+
+                        <Border Grid.Column="0" Grid.Row="3"
+                                x:Name="contentPanel"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+
+                                KeyboardNavigation.TabIndex="2"
+                                KeyboardNavigation.TabNavigation="Local"
+                                Margin="0 0 0 0">
+                            <Grid x:Name="PART_ItemsHolder" />
+                        </Border>
+
+
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHeaderPanelVisible" Value="False">

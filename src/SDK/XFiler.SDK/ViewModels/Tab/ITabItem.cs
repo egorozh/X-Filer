@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Windows;
 
 namespace XFiler.SDK
 {
     public interface ITabItem : IDisposable
     {
-        string Header { get; set; }
+        DataTemplate Template { get; }
+
+        string Header { get; }
 
         bool IsSelected { get; set; }
 
