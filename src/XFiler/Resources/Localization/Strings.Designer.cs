@@ -106,11 +106,38 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на View.
         /// </summary>
         public static string ExplorerTab_ContextMenu_View {
             get {
                 return ResourceManager.GetString("ExplorerTab.ContextMenu.View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit.
+        /// </summary>
+        public static string NotifyIcon_ContextMenu_ExitHeader {
+            get {
+                return ResourceManager.GetString("NotifyIcon.ContextMenu.ExitHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string NotifyIcon_ContextMenu_ShowWindowHeader {
+            get {
+                return ResourceManager.GetString("NotifyIcon.ContextMenu.ShowWindowHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Double-click for window, right-click for menu.
+        /// </summary>
+        public static string NotifyIcon_ToolTipText {
+            get {
+                return ResourceManager.GetString("NotifyIcon.ToolTipText", resourceCulture);
             }
         }
     }

@@ -116,4 +116,13 @@
   <data name="ExplorerTab.ContextMenu.View" xml:space="preserve">
     <value>Вид</value>
   </data>
+  <data name="NotifyIcon.ToolTipText" xml:space="preserve">
+    <value>Двойной клик для показа окна, правый клик - открыть меню</value>
+  </data>
+  <data name="NotifyIcon.ContextMenu.ExitHeader" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="NotifyIcon.ContextMenu.ShowWindowHeader" xml:space="preserve">
+    <value>Показать окно</value>
+  </data>
 </root>

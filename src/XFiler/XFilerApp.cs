@@ -1,14 +1,15 @@
-﻿using Autofac;
-using Hardcodet.Wpf.TaskbarNotification;
-using SingleInstanceHelper;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
+using Autofac;
+using Hardcodet.Wpf.TaskbarNotification;
+using SingleInstanceHelper;
 using XFiler.GoogleChromeStyle;
+using XFiler.SDK;
 using XFiler.SDK.Themes;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class XFilerApp : Application, IXFilerApp
     {
@@ -38,18 +39,19 @@ namespace XFiler.SDK
 
             Host = new IoC().Build();
 
-            var availableCultures = new[]
-            {
-                "Ru-ru",
-                "En-us"
-            };
+            //var availableCultures = new[]
+            //{
+            //    "Ru-ru",
+            //    "En-us"
+            //};
 
-            SetCulture(availableCultures[1]);
+            //var currentLanguage = CultureInfo.CurrentCulture;
+
+            //SetCulture(availableCultures[1]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
-
-
+            
             SetTheme(new GoogleChromeTheme());
 
             _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();

@@ -116,4 +116,13 @@
   <data name="ExplorerTab.ContextMenu.View" xml:space="preserve">
     <value>View</value>
   </data>
+  <data name="NotifyIcon.ToolTipText" xml:space="preserve">
+    <value>Double-click for window, right-click for menu</value>
+  </data>
+  <data name="NotifyIcon.ContextMenu.ExitHeader" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="NotifyIcon.ContextMenu.ShowWindowHeader" xml:space="preserve">
+    <value>Show Window</value>
+  </data>
 </root>
