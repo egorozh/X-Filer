@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Prism.Commands;
 
 namespace XFiler.SDK
 {
@@ -15,7 +15,7 @@ namespace XFiler.SDK
         private readonly IMenuItemFactory _itemFactory;
 
         #endregion
-        
+
         #region Constants
 
         private const string BookmarksFileName = "bookmarks.json";
@@ -23,7 +23,7 @@ namespace XFiler.SDK
         #endregion
 
         #region Private Fields
-        
+
         private readonly ObservableCollection<IMenuItemViewModel> _bookmarks;
         private readonly List<BookmarkItem> _items;
 
@@ -47,7 +47,7 @@ namespace XFiler.SDK
         public BookmarksManager(IMenuItemFactory itemFactory)
         {
             _itemFactory = itemFactory;
-            
+
             BookmarkClickCommand = new DelegateCommand<IList<object>>(OnBookmarkClicked);
             AddBookmarkCommand = new DelegateCommand<string>(OnAddBookmark);
 
@@ -62,19 +62,19 @@ namespace XFiler.SDK
 
             if (items == null || !items.Any())
                 return menuVms;
-            
+
             foreach (var bookmarkItem in items)
             {
                 var vm = _itemFactory
                     .CreateItem(bookmarkItem, CreateMenuItemViewModels(bookmarkItem.Children),
                         BookmarkClickCommand);
-                
+
                 menuVms.Add(vm);
             }
 
             return menuVms;
         }
-        
+
         private List<BookmarkItem> OpenBookmarksFile()
         {
             if (File.Exists(BookmarksFileName))
@@ -101,16 +101,16 @@ namespace XFiler.SDK
         private void OnBookmarkClicked(IList<object> parameters)
         {
             if (parameters.Count == 2 &&
-                parameters[0] is string path &&
-                parameters[1] is ExplorerTabItemViewModel tabItemViewModel)
+                parameters[0] is XFilerUrl url &&
+                parameters[1] is ITabItemModel tabItemViewModel)
             {
-                tabItemViewModel.OpenBookmark(path);
+                tabItemViewModel.Open(url);
             }
         }
 
         private void OnAddBookmark(string path)
         {
-            if (!Directory.Exists(path)) 
+            if (!Directory.Exists(path))
                 return;
 
             _items.Add(new BookmarkItem

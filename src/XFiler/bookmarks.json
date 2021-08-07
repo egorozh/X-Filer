@@ -1,6 +1,9 @@
 ﻿[
   {
-    "Path": "C:\\" 
+    "Path": "C:\\"
+  },
+  {
+    "Path": "xfiler://mycomputer"
   },
   {
     "BookmarkFolderName": "Games",

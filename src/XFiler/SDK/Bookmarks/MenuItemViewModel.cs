@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows.Input;
 
 namespace XFiler.SDK
 {
-    /// <summary>
-    /// View-Model MenuItem'а 
-    /// </summary>
     internal class MenuItemViewModel : BaseViewModel, IMenuItemViewModel
     {
         public string? Path { get; set; }
@@ -16,7 +12,7 @@ namespace XFiler.SDK
 
         public ICommand? Command { get; set; }
 
-        public object? CommandParameter { get; set; }
+        public XFilerUrl? Url { get; }
 
         public IList<IMenuItemViewModel> Items { get; set; }
 
@@ -27,7 +23,7 @@ namespace XFiler.SDK
             ICommand command, IIconLoader iconLoader)
         {
             Path = bookmarkItem.Path;
-            CommandParameter = bookmarkItem.Path;
+
             Items = children;
             IconLoader = iconLoader;
 
@@ -38,12 +34,8 @@ namespace XFiler.SDK
             else
             {
                 Command = command;
-
-                var attr = File.GetAttributes(Path);
-
-                Header = attr.HasFlag(FileAttributes.Directory)
-                    ? new DirectoryInfo(Path).Name
-                    : new FileInfo(Path).Name;
+                Url = XFilerUrl.FromPath(Path);
+                Header = Url.Header;
             }
         }
     }

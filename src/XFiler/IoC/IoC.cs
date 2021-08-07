@@ -40,11 +40,12 @@ namespace XFiler
 
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
 
-            services.RegisterType<ExplorerTabFactory>().As<IExplorerTabFactory>().SingleInstance();
+            services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
+            services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
             services.RegisterType<SettingsTabFactory>().As<ISettingsTabFactory>().SingleInstance();
 
             services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
-            
+
             services.RegisterType<NotifyIconViewModel>().AsSelf().SingleInstance();
 
             services.RegisterModule<BasePlugin>();

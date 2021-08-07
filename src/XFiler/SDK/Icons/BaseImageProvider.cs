@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 
@@ -45,29 +46,36 @@ namespace XFiler.SDK
 
         private static string GetResourceKey(IMenuItemViewModel menuItemViewModel)
         {
-            var path = menuItemViewModel.Path;
+            var url = menuItemViewModel.Url;
 
-            if (path == null)
+            if (url == null)
                 return IconName.BookmarkFolder;
 
-            var attr = File.GetAttributes(path);
-
-            if (attr.HasFlag(FileAttributes.Directory))
+            try
             {
-                var dirInfo = new DirectoryInfo(path);
+                var attr = File.GetAttributes(url.FullName);
 
-                if (dirInfo.Parent == null)
+                if (attr.HasFlag(FileAttributes.Directory))
                 {
-                    if (dirInfo.FullName == "C:\\")
-                        return IconName.SystemDrive;
+                    var dirInfo = new DirectoryInfo(url.FullName);
 
-                    return IconName.LogicalDrive;
+                    if (dirInfo.Parent == null)
+                    {
+                        if (dirInfo.FullName == "C:\\")
+                            return IconName.SystemDrive;
+
+                        return IconName.LogicalDrive;
+                    }
+
+                    return IconName.Folder;
                 }
 
-                return IconName.Folder;
+                return GetExtensionKey(url.FullName);
             }
-
-            return GetExtensionKey(path);
+            catch (Exception e)
+            {
+                return IconName.Blank;
+            }
         }
 
         private static string GetExtensionKey(string path)

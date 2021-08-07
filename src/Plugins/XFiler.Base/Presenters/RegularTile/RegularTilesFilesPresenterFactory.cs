@@ -1,4 +1,5 @@
-﻿using GongSolutions.Wpf.DragDrop;
+﻿using System.IO;
+using GongSolutions.Wpf.DragDrop;
 using System.Windows;
 using XFiler.SDK;
 
@@ -22,7 +23,7 @@ namespace XFiler.Base
             _windowFactory = windowFactory;
         }
 
-        public override IFilesPresenter CreatePresenter(string currentDirectory)
+        public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory)
             => new TileFilesPresenterViewModel(currentDirectory, _fileEntityFactory, _dropTarget, _dragSource,
                 _windowFactory);
 

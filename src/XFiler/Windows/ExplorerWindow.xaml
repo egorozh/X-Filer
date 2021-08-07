@@ -21,11 +21,11 @@
 
         <dockablz:Layout.BranchTemplate>
             <DataTemplate>
-                <xFiler:ExplorerView />
+                <xFiler:TabsControl />
             </DataTemplate>
         </dockablz:Layout.BranchTemplate>
 
-        <xFiler:ExplorerView x:Name="InitMainView" />
+        <xFiler:TabsControl x:Name="InitMainView" />
 
     </dockablz:Layout>
 

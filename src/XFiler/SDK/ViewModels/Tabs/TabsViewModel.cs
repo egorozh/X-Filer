@@ -12,7 +12,7 @@ namespace XFiler.SDK
     {
         #region Private Fields
 
-        private readonly IExplorerTabFactory _explorerTabFactory;
+        private readonly ITabFactory _tabFactory;
         private readonly IWindowFactory _windowFactory;
         private readonly ISettingsTabFactory _settingsFactory;
 
@@ -22,16 +22,16 @@ namespace XFiler.SDK
 
         public ITabClient InterTabClient { get; }
 
-        public ObservableCollection<ITabItem> TabItems { get; }
+        public ObservableCollection<ITabItemModel> TabItems { get; }
 
         public ItemActionCallback ClosingTabItemHandler { get; }
 
-        public ITabItem? CurrentTabItem { get; set; }
+        public ITabItemModel? CurrentTabItem { get; set; }
 
         public IReadOnlyCollection<IMenuItemViewModel> Bookmarks { get; }
 
-        public Func<IExplorerTabItemViewModel> Factory { get; }
-
+        public Func<ITabItemModel> Factory { get; }
+            
         #endregion
 
         #region Commands
@@ -47,13 +47,13 @@ namespace XFiler.SDK
         #region Constructor
 
         public TabsViewModel(ITabClient tabClient,
-            IExplorerTabFactory explorerTabFactory,
+            ITabFactory tabFactory,
             IWindowFactory windowFactory,
             IBookmarksManager bookmarksManager,
-            IEnumerable<ITabItem> init,
+            IEnumerable<ITabItemModel> init,
             ISettingsTabFactory settingsFactory)
         {
-            _explorerTabFactory = explorerTabFactory;
+            _tabFactory = tabFactory;
             _windowFactory = windowFactory;
             _settingsFactory = settingsFactory;
 
@@ -69,7 +69,8 @@ namespace XFiler.SDK
 
             CreateSettingsTabCommand = new DelegateCommand(OnOpenSettings);
 
-            TabItems = new ObservableCollection<ITabItem>(init);
+            TabItems = new ObservableCollection<ITabItemModel>(init);
+            //CurrentTabItem = TabItems.FirstOrDefault();
 
             Factory = CreateTabVm;
 
@@ -84,7 +85,7 @@ namespace XFiler.SDK
         {
             if (fileEntityViewModel is DirectoryViewModel directoryViewModel)
             {
-                var tab = _explorerTabFactory.CreateExplorerTab(directoryViewModel.DirectoryInfo);
+                var tab = _tabFactory.CreateExplorerTab(directoryViewModel.DirectoryInfo);
                 TabItems.Add(tab);
 
                 if (isSelectNewTab)
@@ -98,14 +99,14 @@ namespace XFiler.SDK
 
         private void OnCreateNewTabItem(object? obj)
         {
-            TabItems.Add(_explorerTabFactory.CreateRootTab());
+            TabItems.Add(_tabFactory.CreateMyComputerTab());
         }
 
         private bool OnCanOpenTabItemInNewWindow(object? obj) => TabItems.Count > 1;
 
         private void OnOpenTabItemInNewWindow(object? obj)
         {
-            if (obj is not ExplorerTabItemViewModel directoryTabItem)
+            if (obj is not ITabItemModel directoryTabItem)
                 return;
 
             TabItems.Remove(directoryTabItem);
@@ -115,23 +116,21 @@ namespace XFiler.SDK
 
         private void OnDuplicate(object? obj)
         {
-            if (obj is not ExplorerTabItemViewModel directoryTabItem)
+            if (obj is not ITabItemModel directoryTabItem)
                 return;
 
-            TabItems.Add(_explorerTabFactory
-                .CreateExplorerTab(
-                    directoryTabItem.CurrentDirectoryFileName,
-                    directoryTabItem.Header));
+            TabItems.Add(_tabFactory
+                .CreateTab(directoryTabItem.Url));
         }
 
         private bool CanCloseAllTabs(object? obj) => TabItems.Count > 1;
 
         private void OnCloseAllTabs(object? obj)
         {
-            if (obj is not ExplorerTabItemViewModel directoryTabItem)
+            if (obj is not ITabItemModel tabItem)
                 return;
 
-            var removedItems = TabItems.Where(i => i != directoryTabItem).ToList();
+            var removedItems = TabItems.Where(i => i != tabItem).ToList();
 
             foreach (var item in removedItems)
                 TabItems.Remove(item);
@@ -142,7 +141,7 @@ namespace XFiler.SDK
             _settingsFactory.OpenSettingsTab();
         }
 
-        private IExplorerTabItemViewModel CreateTabVm() => _explorerTabFactory.CreateRootTab();
+        private ITabItemModel CreateTabVm() => _tabFactory.CreateMyComputerTab();
 
         private void TabItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
@@ -155,7 +154,7 @@ namespace XFiler.SDK
             //in here you can dispose stuff or cancel the close
 
             //here's your view model:
-            var viewModel = args.DragablzItem.DataContext as IExplorerTabItemViewModel;
+            var viewModel = args.DragablzItem.DataContext as ITabItemModel;
             viewModel?.Dispose();
             //here's how you can cancel stuff:
             //args.Cancel(); 

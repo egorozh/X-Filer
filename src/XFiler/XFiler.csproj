@@ -49,4 +49,15 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Controls\MyComputerPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

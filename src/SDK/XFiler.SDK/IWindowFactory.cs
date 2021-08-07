@@ -6,7 +6,7 @@ namespace XFiler.SDK
     {
         DelegateCommand<FileEntityViewModel> OpenNewWindowCommand { get; }
 
-        void OpenTabInNewWindow(IExplorerTabItemViewModel tabItem);
+        void OpenTabInNewWindow(ITabItemModel tabItem);
 
         IXFilerWindow GetWindowWithRootTab();
     }

@@ -5,6 +5,5 @@ namespace XFiler.SDK
     /// </summary>
     public interface IXFilerApp
     {
-        const string RootName = "Мой компьютер";
     }
 }

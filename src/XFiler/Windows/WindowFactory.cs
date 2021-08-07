@@ -9,11 +9,11 @@ namespace XFiler
     internal class WindowFactory : IWindowFactory
     {
         private readonly Func<ITabsFactory> _tabsFactory;
-        private readonly Func<IExplorerTabFactory> _explorerTabFactory;
+        private readonly Func<ITabFactory> _explorerTabFactory;
 
         public DelegateCommand<FileEntityViewModel> OpenNewWindowCommand { get; }
 
-        public WindowFactory(Func<ITabsFactory> tabsFactory, Func<IExplorerTabFactory> explorerTabFactory)
+        public WindowFactory(Func<ITabsFactory> tabsFactory, Func<ITabFactory> explorerTabFactory)
         {
             _tabsFactory = tabsFactory;
             _explorerTabFactory = explorerTabFactory;
@@ -21,7 +21,7 @@ namespace XFiler
             OpenNewWindowCommand = new DelegateCommand<FileEntityViewModel>(OnOpenNewWindow);
         }
 
-        public void OpenTabInNewWindow(IExplorerTabItemViewModel tabItem)
+        public void OpenTabInNewWindow(ITabItemModel tabItem)
         {
             var tabsVm = _tabsFactory.Invoke().CreateTabsViewModel(new[]
             {
@@ -35,7 +35,7 @@ namespace XFiler
         {
             var tabsViewModel = _tabsFactory.Invoke().CreateTabsViewModel(new[]
             {
-                _explorerTabFactory.Invoke().CreateRootTab()
+                _explorerTabFactory.Invoke().CreateMyComputerTab()
             });
 
             return new ExplorerWindow

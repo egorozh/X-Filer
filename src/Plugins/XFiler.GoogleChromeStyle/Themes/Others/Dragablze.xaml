@@ -410,14 +410,9 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="0 8 0 0" />
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-
         <Setter Property="SelectedItem" Value="{Binding CurrentTabItem, Mode=TwoWay}" />
-        <Setter Property="NewItemFactory" Value="{Binding Factory}" />
-        <Setter Property="ItemsSource" Value="{Binding TabItems}" />
-        <Setter Property="ClosingItemCallback" Value="{Binding ClosingTabItemHandler}" />
-
-        <Setter Property="ItemContainerStyle" Value="{StaticResource ChromerDragableTabItemStyle}" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+ 
         <Setter Property="ShowDefaultAddButton" Value="True" />
         <Setter Property="ShowDefaultCloseButton" Value="True" />
         <Setter Property="AdjacentHeaderItemOffset" Value="-16" />
@@ -501,13 +496,14 @@
                         <sdk:ToolBarControl Grid.Row="1" Grid.Column="0"
                                             DataContext="{TemplateBinding SelectedItem}"
                                             Background="{DynamicResource ToolBarBackground}">
+                          
                             <MenuItem Header="Settings" />
                             <MenuItem Header="Settings" />
                         </sdk:ToolBarControl>
 
                         <sdk:BookmarksControl Grid.Row="2" Grid.Column="0"
                                               DataContext="{TemplateBinding SelectedItem}"
-                                              Background="{DynamicResource ToolBarBackground}"/>
+                                              Background="{DynamicResource ToolBarBackground}" />
 
                         <Border Grid.Column="0" Grid.Row="3"
                                 x:Name="contentPanel"

@@ -25,7 +25,7 @@ namespace XFiler.Base
             _windowFactory = windowFactory;
         }
 
-        public override IFilesPresenter CreatePresenter(string currentDirectory)
+        public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory)
             => new GridFilesPresenterViewModel(currentDirectory, _fileEntityFactory,
                 _dropTarget, _dragSource, _windowFactory);
 

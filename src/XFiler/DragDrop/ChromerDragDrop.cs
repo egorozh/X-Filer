@@ -76,12 +76,12 @@ namespace XFiler.DragDrop
                     if (dropInfo.Data is FileEntityViewModel sourceItem)
                         DropItem(sourceItem, sourceCollection, dropInfo, dropInfo.TargetItem as FileEntityViewModel,
                             targetCollection,
-                            filesPresenter.CurrentDirectoryPathName);
+                            filesPresenter.CurrentDirectory.FullName);
                     if (dropInfo.Data is ICollection<object> sourceItems)
                         DropItems(sourceItems.Cast<FileEntityViewModel>().ToList(), sourceCollection, dropInfo,
                             dropInfo.TargetItem as FileEntityViewModel,
                             targetCollection,
-                            filesPresenter.CurrentDirectoryPathName);
+                            filesPresenter.CurrentDirectory.FullName);
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace XFiler.DragDrop
             {
                 var targetVisual = (ItemsControl)dropInfo.VisualTarget;
                 var viewModel = targetVisual.DataContext as IFilesPresenter;
-                DirectoryInfo targetDirectory = new(viewModel.CurrentDirectoryPathName);
+                DirectoryInfo targetDirectory = new(viewModel.CurrentDirectory.FullName);
 
                 var targetRoot = targetDirectory.Root.Name;
 
@@ -189,7 +189,7 @@ namespace XFiler.DragDrop
             {
                 var targetVisual = (ItemsControl)dropInfo.VisualTarget;
                 var viewModel = targetVisual.DataContext as IFilesPresenter;
-                DirectoryInfo targetDirectory = new(viewModel.CurrentDirectoryPathName);
+                DirectoryInfo targetDirectory = new(viewModel.CurrentDirectory.FullName);
 
                 var targetRoot = targetDirectory.Root.Name;
 
