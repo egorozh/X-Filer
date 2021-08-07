@@ -17,8 +17,8 @@ namespace XFiler.SDK
         public ITabItemModel CreateExplorerTab(DirectoryInfo directoryInfo)
             => new TabItemModel(_bookmarksManager, _pageFactory, directoryInfo);
 
-        public ITabItemModel CreateTab(XFilerUrl url)
-            => new TabItemModel(_bookmarksManager, _pageFactory, url);
+        public ITabItemModel CreateTab(XFilerRoute route)
+            => new TabItemModel(_bookmarksManager, _pageFactory, route);
 
         public ITabItemModel CreateMyComputerTab()
             => new TabItemModel(_bookmarksManager, _pageFactory, SpecialUrls.MyComputer);

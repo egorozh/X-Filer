@@ -9,7 +9,7 @@ namespace XFiler.SDK
 
         public event EventHandler<HyperlinkEventArgs>? GoToUrl;
 
-        public SearchPageModel(XFilerUrl url)
+        public SearchPageModel(XFilerRoute route)
         {
             Template = CreateTemplate();
         }

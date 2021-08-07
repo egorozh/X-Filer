@@ -12,7 +12,7 @@ namespace XFiler.SDK
 
         public ICommand? Command { get; set; }
 
-        public XFilerUrl? Url { get; }
+        public XFilerRoute? Url { get; }
 
         public IList<IMenuItemViewModel> Items { get; set; }
 
@@ -34,7 +34,7 @@ namespace XFiler.SDK
             else
             {
                 Command = command;
-                Url = XFilerUrl.FromPath(Path);
+                Url = XFilerRoute.FromPath(Path);
                 Header = Url.Header;
             }
         }

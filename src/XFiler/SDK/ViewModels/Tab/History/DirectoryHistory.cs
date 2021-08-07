@@ -23,9 +23,9 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        public DirectoryHistory(XFilerUrl url)
+        public DirectoryHistory(XFilerRoute route)
         {   
-            var head = new DirectoryNode(url);
+            var head = new DirectoryNode(route);
             Current = head;
         }
 
@@ -51,9 +51,9 @@ namespace XFiler.SDK
             RaiseHistoryChanged();
         }
 
-        public void Add(XFilerUrl url)
+        public void Add(XFilerRoute route)
         {
-            var node = new DirectoryNode(url);
+            var node = new DirectoryNode(route);
                 
             Current.NextNode = node;
             node.PreviousNode = Current;

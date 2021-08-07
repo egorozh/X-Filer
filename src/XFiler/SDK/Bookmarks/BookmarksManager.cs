@@ -101,7 +101,7 @@ namespace XFiler.SDK
         private void OnBookmarkClicked(IList<object> parameters)
         {
             if (parameters.Count == 2 &&
-                parameters[0] is XFilerUrl url &&
+                parameters[0] is XFilerRoute url &&
                 parameters[1] is ITabItemModel tabItemViewModel)
             {
                 tabItemViewModel.Open(url);

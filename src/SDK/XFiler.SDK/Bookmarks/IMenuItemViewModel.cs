@@ -6,6 +6,6 @@ namespace XFiler.SDK
     {
         IList<IMenuItemViewModel> Items { get; set; }
 
-        XFilerUrl? Url { get; }
+        XFilerRoute? Url { get; }
     }
 }

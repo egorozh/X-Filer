@@ -2,17 +2,17 @@ namespace XFiler.SDK
 {
     public static class SpecialUrls
     {
-        public static XFilerUrl MyComputer = new("Мой компьютер", "xfiler://mycomputer");
+        public static XFilerRoute MyComputer = new("Мой компьютер", "xfiler://mycomputer", RouteType.Special);
 
-        public static XFilerUrl Settings = new("Параметры", "xfiler://settings");
+        public static XFilerRoute Settings = new("Параметры", "xfiler://settings", RouteType.Special);
 
 
-        public static XFilerUrl? GetSpecialUrl(string fullName)
+        public static XFilerRoute? GetSpecialUrl(string fullName)
         {
             if (MyComputer.FullName == fullName)
                 return MyComputer;
             if (Settings.FullName == fullName)
-                return Settings;    
+                return Settings;
 
             return null;
         }

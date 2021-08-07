@@ -2,6 +2,6 @@
 {
     public interface IPageFactory
     {
-        IPageModel? CreatePage(XFilerUrl url);
+        IPageModel? CreatePage(XFilerRoute route);
     }
 }

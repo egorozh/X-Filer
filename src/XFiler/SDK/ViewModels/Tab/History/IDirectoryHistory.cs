@@ -17,6 +17,6 @@ namespace XFiler.SDK
 
         void MoveForward();
 
-        void Add(XFilerUrl url);    
+        void Add(XFilerRoute route);    
     }
 }

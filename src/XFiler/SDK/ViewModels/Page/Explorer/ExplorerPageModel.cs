@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -90,7 +91,19 @@ namespace XFiler.SDK
 
         private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
         {
-            GoTo(new XFilerUrl(e.FileEntityViewModel.Name, e.FileEntityViewModel.FullName));
+            XFilerRoute route = SpecialUrls.MyComputer;
+
+            switch (e.FileEntityViewModel)
+            {
+                case DirectoryViewModel directoryViewModel:
+                    route = new XFilerRoute(directoryViewModel.DirectoryInfo);
+                    break;
+                case FileViewModel fileViewModel:
+                    route = new XFilerRoute(fileViewModel.Info);
+                    break;
+            }
+
+            GoTo(route);
         }
 
         #endregion

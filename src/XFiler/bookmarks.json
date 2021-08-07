@@ -6,6 +6,9 @@
     "Path": "xfiler://mycomputer"
   },
   {
+    "Path": "https://www.youtube.com/"
+  },
+  {
     "BookmarkFolderName": "Games",
     "Children": [
       {
@@ -14,6 +17,6 @@
       {
         "Path": "E:\\"
       }
-    ] 
+    ]
   }
 ]

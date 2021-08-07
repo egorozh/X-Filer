@@ -120,7 +120,7 @@ namespace XFiler.SDK
                 return;
 
             TabItems.Add(_tabFactory
-                .CreateTab(directoryTabItem.Url));
+                .CreateTab(directoryTabItem.Route));
         }
 
         private bool CanCloseAllTabs(object? obj) => TabItems.Count > 1;

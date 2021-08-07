@@ -18,7 +18,7 @@ namespace XFiler.SDK
 
         public IPageModel Page { get; private set; }
 
-        public XFilerUrl Url { get; private set; }
+        public XFilerRoute Route { get; private set; }
 
         public string Header { get; set; }
 
@@ -49,29 +49,29 @@ namespace XFiler.SDK
         public TabItemModel(
             IBookmarksManager bookmarksManager,
             IPageFactory pageFactory,
-            XFilerUrl url)
+            XFilerRoute route)
         {
             _pageFactory = pageFactory;
 
             AddBookmarkCommand = bookmarksManager.AddBookmarkCommand;
 
-            _history = new DirectoryHistory(url);
+            _history = new DirectoryHistory(route);
 
             MoveBackCommand = new DelegateCommand(OnMoveBack, OnCanMoveBack);
             MoveForwardCommand = new DelegateCommand(OnMoveForward, OnCanMoveForward);
 
-            Url = url;
-            Header = url.Header;
-            _searchText = url.FullName;
-            Page = _pageFactory.CreatePage(Url);
+            Route = route;
+            Header = route.Header;
+            _searchText = route.FullName;
+            Page = _pageFactory.CreatePage(Route);
 
             Page.GoToUrl += PageOnGoToUrl;
             _history.HistoryChanged += History_HistoryChanged;
         }
 
         public TabItemModel(IBookmarksManager bookmarksManager, IPageFactory pageFactory,
-            FileSystemInfo directoryInfo)
-            : this(bookmarksManager, pageFactory, new XFilerUrl(directoryInfo))
+            DirectoryInfo directoryInfo)
+            : this(bookmarksManager, pageFactory, new XFilerRoute(directoryInfo))
         {
         }
 
@@ -95,16 +95,19 @@ namespace XFiler.SDK
             AddBookmarkCommand = null!;
         }
 
-        public void Open(XFilerUrl url)
+        public void Open(XFilerRoute route)
         {
-            var page = _pageFactory.CreatePage(url);
+            if (Route == route)
+                return;
+
+            var page = _pageFactory.CreatePage(route);
 
             if (page != null)
             {
-                _history.Add(url);
-                Url = url;
-                Header = url.Header;
-                SearchText = url.FullName;
+                _history.Add(route);
+                Route = route;
+                Header = route.Header;
+                SearchText = route.FullName;
 
                 if (Page != null!)
                     Page.GoToUrl -= PageOnGoToUrl;
@@ -124,7 +127,7 @@ namespace XFiler.SDK
         {
             _history.MoveForward();
 
-            UpdatePage(_history.Current.Url);
+            UpdatePage(_history.Current.Route);
         }
 
         private bool OnCanMoveBack() => _history.CanMoveBack;
@@ -133,7 +136,7 @@ namespace XFiler.SDK
         {
             _history.MoveBack();
 
-            UpdatePage(_history.Current.Url);
+            UpdatePage(_history.Current.Route);
         }
 
         #endregion
@@ -153,19 +156,19 @@ namespace XFiler.SDK
 
         private void PageOnGoToUrl(object? sender, HyperlinkEventArgs e)
         {
-            Open(e.Url);
+            Open(e.Route);
         }
 
-        private void UpdatePage(XFilerUrl url)
+        private void UpdatePage(XFilerRoute route)
         {
-            Url = url;
-            Header = url.Header;
-            SearchText = url.FullName;
+            Route = route;
+            Header = route.Header;
+            SearchText = route.FullName;
 
             if (Page != null!)
                 Page.GoToUrl -= PageOnGoToUrl;
 
-            var page = _pageFactory.CreatePage(Url);
+            var page = _pageFactory.CreatePage(Route);
 
             if (page != null)
             {

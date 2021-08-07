@@ -14,33 +14,27 @@ namespace XFiler.SDK
             _filesPresenters = filesPresenters;
         }
 
-        public IPageModel? CreatePage(XFilerUrl url)
+        public IPageModel? CreatePage(XFilerRoute route)
         {
-            if (url == SpecialUrls.MyComputer)
-                return new MyComputerPageModel();
-
-            if (url == SpecialUrls.Settings)
-                return new SettingsPageModel();
-
-            try
+            switch (route.Type)
             {
-                string path = url.FullName;
-
-                var attr = File.GetAttributes(path);
-
-                if (attr.HasFlag(FileAttributes.Directory))
-                    return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(path));
-                else
-                {
-                    OpenFile(path);
+                case RouteType.File:
+                    OpenFile(route.FullName);
                     return null;
-                }
-            }
-            catch (Exception e)
-            {
+                case RouteType.Directory:
+                    return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
+                case RouteType.Special:
+                    if (route == SpecialUrls.MyComputer)
+                        return new MyComputerPageModel();
+
+                    if (route == SpecialUrls.Settings)
+                        return new SettingsPageModel();
+                    break;
+                case RouteType.WebLink:
+                    return new BrowserPageModel(route.FullName);
             }
 
-            return new SearchPageModel(url);
+            return new SearchPageModel(route);
         }
 
         private static void OpenFile(string path) => new Process

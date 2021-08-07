@@ -2,14 +2,14 @@
 {
     public class HyperlinkEventArgs
     {
-        public HyperlinkEventArgs(XFilerUrl url, bool isOpenInNewTab = false)
+        public HyperlinkEventArgs(XFilerRoute route, bool isOpenInNewTab = false)
         {
-            Url = url;
+            Route = route;
             IsOpenInNewTab = isOpenInNewTab;
         }
 
         public bool IsOpenInNewTab { get;  }
 
-        public XFilerUrl Url { get;  }
+        public XFilerRoute Route { get;  }
     }
 }

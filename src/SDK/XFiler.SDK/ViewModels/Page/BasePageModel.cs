@@ -14,9 +14,9 @@ namespace XFiler.SDK
             Template = template;
         }
 
-        protected void GoTo(XFilerUrl url, bool isOpenInNewTab = false)
+        protected void GoTo(XFilerRoute route, bool isOpenInNewTab = false)
         {
-            GoToUrl?.Invoke(this, new HyperlinkEventArgs(url, isOpenInNewTab));
+            GoToUrl?.Invoke(this, new HyperlinkEventArgs(route, isOpenInNewTab));
         }
 
         public virtual void Dispose()
