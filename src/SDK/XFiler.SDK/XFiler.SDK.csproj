@@ -1,12 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Nullable>Enable</Nullable>
-    <Platforms>x64</Platforms>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Dragablz" Version="0.0.3.223" />

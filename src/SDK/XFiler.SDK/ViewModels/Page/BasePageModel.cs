@@ -14,6 +14,11 @@ namespace XFiler.SDK
             Template = template;
         }
 
+        protected BasePageModel(Type pageType)
+        {
+            Template = CreateTemplate(pageType);
+        }
+
         protected void GoTo(XFilerRoute route, bool isOpenInNewTab = false)
         {
             GoToUrl?.Invoke(this, new HyperlinkEventArgs(route, isOpenInNewTab));
@@ -22,5 +27,11 @@ namespace XFiler.SDK
         public virtual void Dispose()
         {
         }
+
+        private DataTemplate CreateTemplate(Type pageType) => new()
+        {
+            DataType = this.GetType(),
+            VisualTree = new FrameworkElementFactory(pageType)
+        };
     }
 }

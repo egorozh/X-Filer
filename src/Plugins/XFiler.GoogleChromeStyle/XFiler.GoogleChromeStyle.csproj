@@ -1,12 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Nullable>Enable</Nullable>
-    <Platforms>x64</Platforms>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.7" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />

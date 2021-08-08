@@ -1,20 +1,42 @@
-﻿using System.Windows;
+﻿using CefSharp.Wpf;
+using System.ComponentModel;
 
 namespace XFiler.SDK
 {
     internal class BrowserPageModel : BasePageModel
     {
-        public string Url { get; }
+        private ChromiumWebBrowser _webBrowser = null!;
 
-        public BrowserPageModel(string url) : base(CreateTemplate())
+        public string Url { get; set; }
+
+        public BrowserPageModel(string url) : base(typeof(BrowserPage))
         {
             Url = url;
+
+            PropertyChanged += BrowserModelPropertyChanged;
         }
 
-        private static DataTemplate CreateTemplate() => new()
+        public void InjectBrowser(ChromiumWebBrowser webBrowser)
         {
-            DataType = typeof(BrowserPageModel),
-            VisualTree = new FrameworkElementFactory(typeof(BrowserPage))
-        };
+            _webBrowser = webBrowser;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            PropertyChanged -= BrowserModelPropertyChanged;
+
+            _webBrowser.Dispose();
+            _webBrowser = null!;
+        }
+
+        private void BrowserModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Url))
+            {
+                GoTo(new XFilerRoute(Url, Url, RouteType.WebLink));
+            }
+        }
     }
 }

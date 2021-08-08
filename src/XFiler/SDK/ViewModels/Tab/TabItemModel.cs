@@ -110,7 +110,11 @@ namespace XFiler.SDK
                 SearchText = route.FullName;
 
                 if (Page != null!)
+                {
                     Page.GoToUrl -= PageOnGoToUrl;
+                    Page.Dispose();
+                }
+                   
 
                 Page = page;
                 Page.GoToUrl += PageOnGoToUrl;
@@ -166,7 +170,10 @@ namespace XFiler.SDK
             SearchText = route.FullName;
 
             if (Page != null!)
+            {
                 Page.GoToUrl -= PageOnGoToUrl;
+                Page.Dispose();
+            }
 
             var page = _pageFactory.CreatePage(Route);
 

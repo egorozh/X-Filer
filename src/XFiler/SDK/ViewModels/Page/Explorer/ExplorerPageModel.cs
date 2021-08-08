@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
 
 namespace XFiler.SDK
 {
@@ -26,7 +24,7 @@ namespace XFiler.SDK
 
         public ExplorerPageModel(
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
-            DirectoryInfo directory) : base(CreateTemplate())
+            DirectoryInfo directory) : base(typeof(ExplorerPage))
         {
             _directory = directory;
 
@@ -78,12 +76,6 @@ namespace XFiler.SDK
 
         #region Private Methods
 
-        private static DataTemplate CreateTemplate() => new()
-        {
-            DataType = typeof(ExplorerPageModel),
-            VisualTree = new FrameworkElementFactory(typeof(ExplorerPage))
-        };
-
         private void OpenDirectory()
         {
             CurrentPresenter.UpdatePresenter(_directory);
@@ -91,17 +83,12 @@ namespace XFiler.SDK
 
         private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
         {
-            XFilerRoute route = SpecialUrls.MyComputer;
-
-            switch (e.FileEntityViewModel)
+            XFilerRoute route = e.FileEntityViewModel switch
             {
-                case DirectoryViewModel directoryViewModel:
-                    route = new XFilerRoute(directoryViewModel.DirectoryInfo);
-                    break;
-                case FileViewModel fileViewModel:
-                    route = new XFilerRoute(fileViewModel.Info);
-                    break;
-            }
+                DirectoryViewModel directoryViewModel => new XFilerRoute(directoryViewModel.DirectoryInfo),
+                FileViewModel fileViewModel => new XFilerRoute(fileViewModel.Info),
+                _ => SpecialUrls.MyComputer
+            };
 
             GoTo(route);
         }
