@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace XFiler.Resources.Localization {
+namespace XFiler.SDK.Localization {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace XFiler.Resources.Localization {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("XFiler.Resources.Localization.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("XFiler.SDK.Localization.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,101 +61,74 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Alt + Left Arrow.
+        ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string ExplorerTab_ContextMenu_BackButtonGesture {
+        public static string Routes_Desktop {
             get {
-                return ResourceManager.GetString("ExplorerTab.ContextMenu.BackButtonGesture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Back.
-        /// </summary>
-        public static string ExplorerTab_ContextMenu_BackButtonHeader {
-            get {
-                return ResourceManager.GetString("ExplorerTab.ContextMenu.BackButtonHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Alt + Right Arrow.
-        /// </summary>
-        public static string ExplorerTab_ContextMenu_ForwardButtonGesture {
-            get {
-                return ResourceManager.GetString("ExplorerTab.ContextMenu.ForwardButtonGesture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Forward.
-        /// </summary>
-        public static string ExplorerTab_ContextMenu_ForwardButtonHeader {
-            get {
-                return ResourceManager.GetString("ExplorerTab.ContextMenu.ForwardButtonHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Refresh.
-        /// </summary>
-        public static string ExplorerTab_ContextMenu_UpdateButtonHeader {
-            get {
-                return ResourceManager.GetString("ExplorerTab.ContextMenu.UpdateButtonHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на View.
-        /// </summary>
-        public static string ExplorerTab_ContextMenu_View {
-            get {
-                return ResourceManager.GetString("ExplorerTab.ContextMenu.View", resourceCulture);
+                return ResourceManager.GetString("Routes.Desktop", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string MyComputer_DrivesHeader {
+        public static string Routes_Downloads {
             get {
-                return ResourceManager.GetString("MyComputer.DrivesHeader", resourceCulture);
+                return ResourceManager.GetString("Routes.Downloads", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Folders.
+        ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string MyComputer_FolderHeader {
+        public static string Routes_MyComputer {
             get {
-                return ResourceManager.GetString("MyComputer.FolderHeader", resourceCulture);
+                return ResourceManager.GetString("Routes.MyComputer", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Exit.
+        ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string NotifyIcon_ContextMenu_ExitHeader {
+        public static string Routes_MyDocuments {
             get {
-                return ResourceManager.GetString("NotifyIcon.ContextMenu.ExitHeader", resourceCulture);
+                return ResourceManager.GetString("Routes.MyDocuments", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Show Window.
+        ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string NotifyIcon_ContextMenu_ShowWindowHeader {
+        public static string Routes_MyMusic {
             get {
-                return ResourceManager.GetString("NotifyIcon.ContextMenu.ShowWindowHeader", resourceCulture);
+                return ResourceManager.GetString("Routes.MyMusic", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Double-click for window, right-click for menu.
+        ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string NotifyIcon_ToolTipText {
+        public static string Routes_MyPictures {
             get {
-                return ResourceManager.GetString("NotifyIcon.ToolTipText", resourceCulture);
+                return ResourceManager.GetString("Routes.MyPictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Routes_MyVideos {
+            get {
+                return ResourceManager.GetString("Routes.MyVideos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Routes_Settings {
+            get {
+                return ResourceManager.GetString("Routes.Settings", resourceCulture);
             }
         }
     }

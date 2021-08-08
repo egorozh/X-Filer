@@ -21,6 +21,6 @@ namespace XFiler.SDK
             => new TabItemModel(_bookmarksManager, _pageFactory, route);
 
         public ITabItemModel CreateMyComputerTab()
-            => new TabItemModel(_bookmarksManager, _pageFactory, SpecialUrls.MyComputer);
+            => new TabItemModel(_bookmarksManager, _pageFactory, SpecialRoutes.MyComputer);
     }
 }

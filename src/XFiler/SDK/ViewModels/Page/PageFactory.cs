@@ -24,10 +24,10 @@ namespace XFiler.SDK
                 case RouteType.Directory:
                     return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
                 case RouteType.Special:
-                    if (route == SpecialUrls.MyComputer)
+                    if (route == SpecialRoutes.MyComputer)
                         return new MyComputerPageModel();
 
-                    if (route == SpecialUrls.Settings)
+                    if (route == SpecialRoutes.Settings)
                         return new SettingsPageModel();
                     break;
                 case RouteType.WebLink:

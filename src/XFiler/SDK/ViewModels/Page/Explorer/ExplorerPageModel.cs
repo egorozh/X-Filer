@@ -87,7 +87,7 @@ namespace XFiler.SDK
             {
                 DirectoryViewModel directoryViewModel => new XFilerRoute(directoryViewModel.DirectoryInfo),
                 FileViewModel fileViewModel => new XFilerRoute(fileViewModel.Info),
-                _ => SpecialUrls.MyComputer
+                _ => SpecialRoutes.MyComputer
             };
 
             GoTo(route);

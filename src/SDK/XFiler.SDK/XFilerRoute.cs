@@ -35,7 +35,7 @@ namespace XFiler.SDK
 
         public static XFilerRoute FromPath(string path)
         {
-            var special = SpecialUrls.GetSpecialUrl(path);
+            var special = SpecialRoutes.GetSpecialUrl(path);
 
             if (special != null)
                 return special;
@@ -51,7 +51,7 @@ namespace XFiler.SDK
                 return webLink;
 
 
-            return SpecialUrls.MyComputer;
+            return SpecialRoutes.MyComputer;
         }
 
         private static XFilerRoute? IsWebLinkRoute(string url)

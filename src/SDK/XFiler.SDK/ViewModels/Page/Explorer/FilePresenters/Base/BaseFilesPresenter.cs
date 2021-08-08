@@ -160,24 +160,7 @@ namespace XFiler.SDK
         private async Task<IReadOnlyList<(object, EntityType)>> GetItems() => await Task.Run(() =>
         {
             List<(object, EntityType)> list = new();
-
-            //if (CurrentDirectoryPathName == IXFilerApp.RootName)
-            //{
-            //    list.AddRange(new (object, EntityType)[]
-            //    {
-            //        (Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), EntityType.SpecialFolder),
-            //        (Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            //            EntityType.SpecialFolder),
-            //        (Environment.GetFolderPath(Environment.SpecialFolder.Desktop), EntityType.SpecialFolder),
-            //        (Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), EntityType.SpecialFolder),
-            //        (Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), EntityType.SpecialFolder)
-            //    });
-
-            //    list.AddRange(Directory.GetLogicalDrives().Select(p => ((object)p, EntityType.Drive)));
-            //}
-            //else
-            //{
-           
+            
             var comparer = new NaturalSortComparer();
 
             list.AddRange(CurrentDirectory.EnumerateDirectories()
@@ -187,8 +170,7 @@ namespace XFiler.SDK
             list.AddRange(CurrentDirectory.EnumerateFiles()
                 .OrderBy(d => d.Name, comparer)
                 .Select(d => ((object)d, EntityType.File)));
-            //}
-
+            
             return list;
         });
 

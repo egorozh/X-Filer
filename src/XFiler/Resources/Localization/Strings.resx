@@ -125,4 +125,10 @@
   <data name="NotifyIcon.ContextMenu.ShowWindowHeader" xml:space="preserve">
     <value>Show Window</value>
   </data>
+  <data name="MyComputer.FolderHeader" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="MyComputer.DrivesHeader" xml:space="preserve">
+    <value>Drives</value>
+  </data>
 </root>

@@ -98,37 +98,28 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-  <data name="ExplorerTab.ContextMenu.BackButtonHeader" xml:space="preserve">
-    <value>Назад</value>
+  <data name="Routes.MyComputer" xml:space="preserve">
+    <value>Этот компьютер</value>
   </data>
-  <data name="ExplorerTab.ContextMenu.ForwardButtonHeader" xml:space="preserve">
-    <value>Вперёд</value>
+  <data name="Routes.Settings" xml:space="preserve">
+    <value>Параметры</value>
   </data>
-  <data name="ExplorerTab.ContextMenu.UpdateButtonHeader" xml:space="preserve">
-    <value>Обновить</value>
+  <data name="Routes.Downloads" xml:space="preserve">
+    <value>Загрузки</value>
   </data>
-  <data name="ExplorerTab.ContextMenu.BackButtonGesture" xml:space="preserve">
-    <value>Alt + Стрелка влево</value>
+  <data name="Routes.Desktop" xml:space="preserve">
+    <value>Рабочий стол</value>
   </data>
-  <data name="ExplorerTab.ContextMenu.ForwardButtonGesture" xml:space="preserve">
-    <value>Alt + Стрелка вправо</value>
+  <data name="Routes.MyDocuments" xml:space="preserve">
+    <value>Документы</value>
   </data>
-  <data name="ExplorerTab.ContextMenu.View" xml:space="preserve">
-    <value>Вид</value>
+  <data name="Routes.MyMusic" xml:space="preserve">
+    <value>Музыка</value>
   </data>
-  <data name="NotifyIcon.ToolTipText" xml:space="preserve">
-    <value>Двойной клик для показа окна, правый клик - открыть меню</value>
+  <data name="Routes.MyPictures" xml:space="preserve">
+    <value>Картинки</value>
   </data>
-  <data name="NotifyIcon.ContextMenu.ExitHeader" xml:space="preserve">
-    <value>Выйти</value>
-  </data>
-  <data name="NotifyIcon.ContextMenu.ShowWindowHeader" xml:space="preserve">
-    <value>Показать окно</value>
-  </data>
-  <data name="MyComputer.FolderHeader" xml:space="preserve">
-    <value>Папки</value>
-  </data>
-  <data name="MyComputer.DrivesHeader" xml:space="preserve">
-    <value>Диски</value>
+  <data name="Routes.MyVideos" xml:space="preserve">
+    <value>Видео</value>
   </data>
 </root>
