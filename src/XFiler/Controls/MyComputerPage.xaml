@@ -6,9 +6,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:XFiler"
              xmlns:localization="clr-namespace:XFiler.Resources.Localization"
+             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              mc:Ignorable="d"
 
              d:DesignHeight="450" d:DesignWidth="800">
+
 
     <Grid Background="{DynamicResource ToolBarBackground}">
 
@@ -17,7 +19,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <GroupBox Header="{x:Static localization:Strings.MyComputer_FolderHeader}" />
+        <GroupBox Header="{x:Static localization:Strings.MyComputer_FolderHeader}">
+            <ItemsControl ItemsSource="{Binding Folders}"
+                          Style="{DynamicResource FolderItemsControlStyle}" />
+        </GroupBox>
 
         <GroupBox Grid.Row="1"
                   Header="{x:Static localization:Strings.MyComputer_DrivesHeader}">

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Win32;
 using XFiler.SDK.Localization;
 
 namespace XFiler.SDK
@@ -44,7 +45,7 @@ namespace XFiler.SDK
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Special);
 
             Downloads = new(Strings.Routes_Downloads,
-                Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), RouteType.Special);
+                GetDownloadFolderPath(), RouteType.Special);
 
             MyDocuments = new(Strings.Routes_MyDocuments,
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), RouteType.Special);
@@ -87,5 +88,12 @@ namespace XFiler.SDK
         };
 
         #endregion
+
+        private static string GetDownloadFolderPath()
+        {
+            return Registry
+                .GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders",
+                    "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString();
+        }
     }
 }

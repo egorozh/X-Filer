@@ -5,6 +5,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
+
         <ResourceDictionary Source="MainWindow/Windows.xaml" />
 
         <ResourceDictionary Source="Controls/SearchControl.xaml" />
@@ -21,6 +23,8 @@
         <ResourceDictionary Source="Others/Expanders.xaml" />
         <ResourceDictionary Source="Others/Dragablze.xaml" />
         <ResourceDictionary Source="Others/GroupItem.xaml" />
+        <ResourceDictionary Source="Others/GroupBox.xaml" />
+        <ResourceDictionary Source="Others/ItemsControl.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 

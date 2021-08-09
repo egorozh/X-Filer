@@ -8,10 +8,14 @@ namespace XFiler.SDK
     internal class PageFactory : IPageFactory
     {
         private readonly Func<IReadOnlyList<IFilesPresenterFactory>> _filesPresenters;
+        private readonly IIconLoader _iconLoader;
 
-        public PageFactory(Func<IReadOnlyList<IFilesPresenterFactory>> filesPresenters)
+        public PageFactory(
+            Func<IReadOnlyList<IFilesPresenterFactory>> filesPresenters,
+            IIconLoader iconLoader)
         {
             _filesPresenters = filesPresenters;
+            _iconLoader = iconLoader;
         }
 
         public IPageModel? CreatePage(XFilerRoute route)
@@ -25,11 +29,13 @@ namespace XFiler.SDK
                     return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
                 case RouteType.Special:
                     if (route == SpecialRoutes.MyComputer)
-                        return new MyComputerPageModel();
+                        return new MyComputerPageModel(_iconLoader);
 
                     if (route == SpecialRoutes.Settings)
                         return new SettingsPageModel();
-                    break;
+
+                    return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
+
                 case RouteType.WebLink:
                     return new BrowserPageModel(route.FullName);
             }

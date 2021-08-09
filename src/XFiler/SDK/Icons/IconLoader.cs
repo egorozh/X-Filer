@@ -12,13 +12,13 @@ namespace XFiler.SDK
             _imageProviders = imageProviders;
         }
 
-        public ImageSource? GetIcon(FileEntityViewModel viewModel, double size)
+        public ImageSource? GetIcon(XFilerRoute route, double size)
         {
             ImageSource? source = null;
 
             foreach (var imageProvider in _imageProviders)
             {
-                source = imageProvider.GetIcon(viewModel, size);
+                source = imageProvider.GetIcon(route, size);
 
                 if (source == null)
                     continue;
@@ -29,7 +29,7 @@ namespace XFiler.SDK
             return source;
         }
 
-        public ImageSource? GetIcon(IMenuItemViewModel viewModel, double size)
+        public ImageSource? GetIcon(FileEntityViewModel viewModel, double size)
         {
             ImageSource? source = null;
 

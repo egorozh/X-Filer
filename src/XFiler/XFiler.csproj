@@ -15,7 +15,6 @@
   <ItemGroup>
 
     <PackageReference Include="CefSharp.Wpf.NETCore" Version="91.1.230" />
-
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SingleInstanceHelper" Version="1.0.3" />

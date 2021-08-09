@@ -4,8 +4,8 @@ namespace XFiler.SDK
 {
     public interface IIconLoader
     {
-        ImageSource? GetIcon(FileEntityViewModel viewModel, double size);
+        ImageSource? GetIcon(XFilerRoute route, double size);
 
-        ImageSource? GetIcon(IMenuItemViewModel viewModel, double size);
+        ImageSource? GetIcon(FileEntityViewModel viewModel, double size);
     }
 }
