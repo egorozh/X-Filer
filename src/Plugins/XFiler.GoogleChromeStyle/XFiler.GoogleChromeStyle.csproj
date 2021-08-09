@@ -1,10 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <ItemGroup>
+    <None Remove="Fonts\Roboto-Black.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.10.0-alpha003" />
     <PackageReference Include="MahApps.Metro" Version="2.4.7" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
     <ProjectReference Include="..\..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +28,12 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Themes\Others\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 
 </Project>

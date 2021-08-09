@@ -6,6 +6,7 @@
         <Setter Property="Background" Value="#202124" />
         <Setter Property="BorderBrush" Value="#404D64" />
         <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="./resources/Fonts/Roboto-*.ttf#Roboto" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />

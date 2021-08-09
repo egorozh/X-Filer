@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="./resources/Fonts/Roboto-*.ttf#Roboto" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="FontFamily" Value="./resources/Fonts/Roboto-*.ttf#Roboto" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+        <Setter Property="FontFamily" Value="./resources/Fonts/Roboto-*.ttf#Roboto" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+</ResourceDictionary>

@@ -7,6 +7,8 @@
 
         <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
 
+        <ResourceDictionary Source="Others/Fonts.xaml" />
+
         <ResourceDictionary Source="MainWindow/Windows.xaml" />
 
         <ResourceDictionary Source="Controls/SearchControl.xaml" />
@@ -18,6 +20,7 @@
         <ResourceDictionary Source="Controls/Buttons.xaml" />
         <ResourceDictionary Source="Controls/Icons.xaml" />
 
+       
         <ResourceDictionary Source="Others/Colors.xaml" />
         <ResourceDictionary Source="Others/Menu.xaml" />
         <ResourceDictionary Source="Others/Expanders.xaml" />

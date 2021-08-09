@@ -412,7 +412,7 @@
         <Setter Property="Margin" Value="0 8 0 0" />
         <Setter Property="SelectedItem" Value="{Binding CurrentTabItem, Mode=TwoWay}" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
- 
+
         <Setter Property="ShowDefaultAddButton" Value="True" />
         <Setter Property="ShowDefaultCloseButton" Value="True" />
         <Setter Property="AdjacentHeaderItemOffset" Value="-16" />
@@ -496,7 +496,7 @@
                         <sdk:ToolBarControl Grid.Row="1" Grid.Column="0"
                                             DataContext="{TemplateBinding SelectedItem}"
                                             Background="{DynamicResource ToolBarBackground}">
-                          
+
                             <MenuItem Header="Settings" />
                             <MenuItem Header="Settings" />
                         </sdk:ToolBarControl>
@@ -666,7 +666,10 @@
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SecondItemLength, Mode=TwoWay}" />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter x:Name="PART_FirstContentPresenter" Content="{TemplateBinding FirstItem}" />
-                            <GridSplitter Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                            <GridSplitter Grid.Column="1"
+                                          ResizeDirection="Columns"
+                                          ShowsPreview="False"
+                                          ResizeBehavior="PreviousAndNext"
                                           Width="5"
                                           Background="#202124" />
                             <ContentPresenter x:Name="PART_SecondContentPresenter" Grid.Column="2"
@@ -698,6 +701,7 @@
                                                   ResizeBehavior="PreviousAndNext"
                                                   Background="#202124"
                                                   Height="5"
+                                                  ShowsPreview="False"
                                                   HorizontalAlignment="Stretch" />
                                     <ContentPresenter x:Name="PART_SecondContentPresenter" Grid.Row="2"
                                                       Content="{TemplateBinding SecondItem}" />
