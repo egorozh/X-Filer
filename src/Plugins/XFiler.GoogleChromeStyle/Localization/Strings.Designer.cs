@@ -61,7 +61,61 @@ namespace XFiler.GoogleChromeStyle.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Back.
+        ///   Ищет локализованную строку, похожую на B.
+        /// </summary>
+        public static string B {
+            get {
+                return ResourceManager.GetString("B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на GB.
+        /// </summary>
+        public static string Gb {
+            get {
+                return ResourceManager.GetString("Gb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на KB.
+        /// </summary>
+        public static string KB {
+            get {
+                return ResourceManager.GetString("KB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на MB.
+        /// </summary>
+        public static string MB {
+            get {
+                return ResourceManager.GetString("MB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на free of.
+        /// </summary>
+        public static string MyComputer_FreeFromText {
+            get {
+                return ResourceManager.GetString("MyComputer.FreeFromText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string TB {
+            get {
+                return ResourceManager.GetString("TB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click to return..
         /// </summary>
         public static string ToolBarControl_BackButtonTooltip {
             get {
@@ -70,7 +124,7 @@ namespace XFiler.GoogleChromeStyle.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Forward.
+        ///   Ищет локализованную строку, похожую на Click to go forward..
         /// </summary>
         public static string ToolBarControl_ForwardButtonTooltip {
             get {

@@ -122,4 +122,10 @@
   <data name="Routes.MyVideos" xml:space="preserve">
     <value>Видео</value>
   </data>
+  <data name="DriveType.Fixed" xml:space="preserve">
+    <value>Локальный диск</value>
+  </data>
+  <data name="DriveType.Usb" xml:space="preserve">
+    <value>USB-накопитель</value>
+  </data>
 </root>

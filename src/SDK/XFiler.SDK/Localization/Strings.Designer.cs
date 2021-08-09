@@ -61,7 +61,25 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Local drive.
+        /// </summary>
+        public static string DriveType_Fixed {
+            get {
+                return ResourceManager.GetString("DriveType.Fixed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string DriveType_Usb {
+            get {
+                return ResourceManager.GetString("DriveType.Usb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Desktop.
         /// </summary>
         public static string Routes_Desktop {
             get {
@@ -70,7 +88,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Downloads.
         /// </summary>
         public static string Routes_Downloads {
             get {
@@ -79,7 +97,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на My Computer.
         /// </summary>
         public static string Routes_MyComputer {
             get {
@@ -88,7 +106,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на My Documents.
         /// </summary>
         public static string Routes_MyDocuments {
             get {
@@ -97,7 +115,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на My Music.
         /// </summary>
         public static string Routes_MyMusic {
             get {
@@ -106,7 +124,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на My Pictures.
         /// </summary>
         public static string Routes_MyPictures {
             get {
@@ -115,7 +133,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на My Videos.
         /// </summary>
         public static string Routes_MyVideos {
             get {
@@ -124,7 +142,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Settings.
         /// </summary>
         public static string Routes_Settings {
             get {

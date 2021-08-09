@@ -1,8 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using Prism.Commands;
 
-namespace XFiler.SDK
+namespace XFiler.SDK.MyComputer
 {
     public class MyComputerPageModel : BasePageModel
     {
@@ -13,6 +15,8 @@ namespace XFiler.SDK
         #region Public Methods
 
         public ObservableCollection<FolderItemModel> Folders { get; }
+
+        public ObservableCollection<DriveItemModel> Drives { get; }
 
         #endregion
 
@@ -30,6 +34,9 @@ namespace XFiler.SDK
 
             Folders = new ObservableCollection<FolderItemModel>(
                 SpecialRoutes.GetFolders().Select(r => new FolderItemModel(r, iconLoader, OpenCommand)));
+
+            Drives = new ObservableCollection<DriveItemModel>(
+                Directory.GetLogicalDrives().Select(p => new DriveItemModel(p, iconLoader, OpenCommand)));
         }
 
         #endregion

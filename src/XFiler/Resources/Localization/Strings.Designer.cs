@@ -115,7 +115,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Drives.
         /// </summary>
         public static string MyComputer_DrivesHeader {
             get {

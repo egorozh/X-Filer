@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-                    xmlns:fluentWpf="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF">
+                    xmlns:fluentWpf="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+                    xmlns:localization="clr-namespace:XFiler.GoogleChromeStyle.Localization"
+                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters">
 
     <DataTemplate x:Key="FolderItemTemplate">
         <Button HorizontalAlignment="Stretch"
@@ -24,6 +26,66 @@
                            HorizontalAlignment="Center"
                            Margin="16 0 16 8" />
             </StackPanel>
+        </Button>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DriveItemTemplate">
+        <Button HorizontalAlignment="Stretch"
+                Margin="5"
+                MinWidth="240"
+                fluentWpf:RevealElement.BorderRadius="8"
+                Background="Transparent"
+                HorizontalContentAlignment="Stretch"
+                Command="{Binding OpenCommand}"
+                CommandParameter="{Binding Route}"
+                Style="{StaticResource ButtonRevealStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image HorizontalAlignment="Center"
+                       Width="36"
+                       Height="36"
+                       Margin="4"
+                       Source="{Binding Icon}" />
+
+                <Grid Grid.Column="1"
+                      Margin="4 10 6 10"
+                      VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="{Binding Name}"
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               Margin="16 0 16 8" />
+
+                    <ProgressBar Grid.Row="1"
+                                 MinHeight="6"
+                                 Height="6"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Value="{Binding UsedPercentage}" />
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal"
+                                Margin="0 3">
+
+                        <TextBlock FontSize="12"
+                                   Text="{Binding TotalFreeSpace, Converter={valueConverters:FileSizeToStringConverter}}" />
+                        <TextBlock FontSize="12"
+                                   Margin="3 0"
+                                   Text="{x:Static localization:Strings.MyComputer_FreeFromText}" />
+                        <TextBlock FontSize="12"
+                                   Text="{Binding TotalSize, Converter={valueConverters:FileSizeToStringConverter}}" />
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
         </Button>
     </DataTemplate>
 

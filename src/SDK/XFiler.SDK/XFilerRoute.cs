@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using XFiler.SDK.Localization;
 
 namespace XFiler.SDK
 {
@@ -33,6 +34,13 @@ namespace XFiler.SDK
             Type = RouteType.File;
         }
 
+        public XFilerRoute(DriveInfo driveInfo)
+        {
+            Header = GetName(driveInfo);
+            FullName = driveInfo.RootDirectory.FullName;
+            Type = RouteType.Directory;
+        }
+        
         public static XFilerRoute FromPath(string path)
         {
             var special = SpecialRoutes.GetSpecialUrl(path);
@@ -94,5 +102,31 @@ namespace XFiler.SDK
                 return null;
             }
         }
+
+        private string GetName(DriveInfo driveInfo)
+        {
+            switch (driveInfo.DriveType)
+            {
+                case DriveType.Unknown:
+                    break;
+                case DriveType.NoRootDirectory:
+                    break;
+                case DriveType.Removable:
+                    return $"{Strings.DriveType_Usb} ({driveInfo.Name})";
+                case DriveType.Fixed:
+                    return $"{Strings.DriveType_Fixed} ({driveInfo.Name})";
+                case DriveType.Network:
+                    break;
+                case DriveType.CDRom:
+                    break;
+                case DriveType.Ram:
+                    break;
+                default:
+                    return driveInfo.Name;
+            }
+
+            return driveInfo.Name;
+        }
+
     }
 }

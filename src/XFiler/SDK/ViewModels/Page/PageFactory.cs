@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using XFiler.SDK.MyComputer;
 
 namespace XFiler.SDK
 {

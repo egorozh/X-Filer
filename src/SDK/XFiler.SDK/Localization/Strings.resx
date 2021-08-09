@@ -122,4 +122,10 @@
   <data name="Routes.MyComputer" xml:space="preserve">
     <value>My Computer</value>
   </data>
+  <data name="DriveType.Fixed" xml:space="preserve">
+    <value>Local drive</value>
+  </data>
+  <data name="DriveType.Usb" xml:space="preserve">
+    <value>Usb drive</value>
+  </data>
 </root>

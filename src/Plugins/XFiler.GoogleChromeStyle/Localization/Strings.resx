@@ -107,4 +107,22 @@
   <data name="ToolBarControl.RefreshButtonTooltip" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MyComputer.FreeFromText" xml:space="preserve">
+    <value>free of</value>
+  </data>
+  <data name="Gb" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="KB" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="B" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="TB" xml:space="preserve">
+    <value>TB</value>
+  </data>
 </root>

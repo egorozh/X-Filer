@@ -1,32 +1,12 @@
-﻿using System;
-using System.Windows.Media;
-using Prism.Commands;
+﻿using Prism.Commands;
 
-namespace XFiler.SDK
+namespace XFiler.SDK.MyComputer
 {
-    public class FolderItemModel : BaseViewModel, IDisposable
+    public class FolderItemModel : BaseItemModel
     {
-        public string Name { get; }
-
-        public ImageSource? Icon { get; private set; }
-
-        public XFilerRoute Route { get; private set; }
-
-        public DelegateCommand<XFilerRoute> OpenCommand { get; private set; }
-
         public FolderItemModel(XFilerRoute route, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
+            : base(route, iconLoader, openCommand)
         {
-            Route = route;
-            OpenCommand = openCommand;
-            Name = route.Header;
-            Icon = iconLoader.GetIcon(route, 36);
-        }
-
-        public void Dispose()
-        {
-            Icon = null;
-            OpenCommand = null!;
-            Route = null!;
         }
     }
 }
