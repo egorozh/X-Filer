@@ -14,6 +14,10 @@ namespace XFiler.SDK
 
             _fixer = new WindowResizer(AssociatedObject);
 
+            AssociatedObject.BorderThickness = AssociatedObject.WindowState == WindowState.Normal
+                ? new Thickness(10)
+                : new Thickness(0);
+
             AssociatedObject.StateChanged += (s, e) => UpdatePadding();
 
             AssociatedObject.Loaded += (s, e) => UpdatePadding();
@@ -23,17 +27,11 @@ namespace XFiler.SDK
             AssociatedObject.StateChanged += AssociatedObject_StateChanged;
         }
 
-        private void AssociatedObject_StateChanged(object sender, EventArgs e)
+        private void AssociatedObject_StateChanged(object? sender, EventArgs e)
         {
-            switch (AssociatedObject.WindowState)
-            {
-                case WindowState.Normal:
-                    AssociatedObject.Margin = new Thickness(10);
-                    break;
-                case WindowState.Maximized:
-                    AssociatedObject.Margin = new Thickness(0);
-                    break;
-            }
+            AssociatedObject.BorderThickness = AssociatedObject.WindowState == WindowState.Normal
+                ? new Thickness(10)
+                : new Thickness(0);
         }
 
         private void FixerOnWindowDockChanged(WindowDockPosition dockPosition)
@@ -42,10 +40,10 @@ namespace XFiler.SDK
             {
                 case WindowDockPosition.Undocked:
                     if (AssociatedObject.WindowState != WindowState.Maximized)
-                        AssociatedObject.Margin = new Thickness(10);
+                        AssociatedObject.BorderThickness = new Thickness(10);
                     break;
                 default:
-                    AssociatedObject.Margin = new Thickness(0);
+                    AssociatedObject.BorderThickness = new Thickness(0);
                     break;
             }
         }
