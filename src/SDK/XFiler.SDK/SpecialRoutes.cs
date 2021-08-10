@@ -37,27 +37,27 @@ namespace XFiler.SDK
 
         static SpecialRoutes()
         {
-            MyComputer = new(Strings.Routes_MyComputer, "xfiler://mycomputer", RouteType.Special);
+            MyComputer = new(Strings.Routes_MyComputer, "xfiler://mycomputer", RouteType.MyComputer);
 
-            Settings = new(Strings.Routes_Settings, "xfiler://settings", RouteType.Special);
+            Settings = new(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
 
             Desktop = new(Strings.Routes_Desktop,
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Special);
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Desktop);
 
             Downloads = new(Strings.Routes_Downloads,
-                GetDownloadFolderPath(), RouteType.Special);
+                GetDownloadFolderPath(), RouteType.Downloads);
 
             MyDocuments = new(Strings.Routes_MyDocuments,
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), RouteType.Special);
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), RouteType.MyDocuments);
 
             MyPictures = new(Strings.Routes_MyPictures,
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), RouteType.Special);
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), RouteType.MyPictures);
 
             MyMusic = new(Strings.Routes_MyMusic,
-                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), RouteType.Special);
+                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), RouteType.MyMusic);
 
             MyVideos = new(Strings.Routes_MyVideos,
-                Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), RouteType.Special);
+                Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), RouteType.MyVideos);
 
             Routes = new Dictionary<string, XFilerRoute>
             {

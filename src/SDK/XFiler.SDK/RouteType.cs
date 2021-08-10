@@ -6,8 +6,26 @@ namespace XFiler.SDK
 
         Directory,
 
-        Special,
+        SystemDrive,
 
-        WebLink
+        Drive,
+
+        WebLink,
+
+        MyComputer,
+
+        Settings,
+
+        Desktop,
+
+        Downloads,
+
+        MyDocuments,
+
+        MyPictures,
+
+        MyMusic,
+
+        MyVideos
     }
 }

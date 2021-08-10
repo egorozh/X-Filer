@@ -25,7 +25,13 @@
                   Header="{x:Static localization:Strings.MyComputer_DrivesHeader}">
             <ItemsControl ItemsSource="{Binding Drives}"
                           Style="{DynamicResource FolderItemsControlStyle}"
-                          ItemTemplate="{DynamicResource DriveItemTemplate}" />
+                          ItemTemplate="{DynamicResource DriveItemTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </GroupBox>
 
     </Grid>

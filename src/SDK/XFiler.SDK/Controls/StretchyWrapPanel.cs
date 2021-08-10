@@ -14,8 +14,8 @@ namespace XFiler.SDK
         [TypeConverter(typeof(LengthConverter))]
         public double ItemWidth
         {
-            get { return (double)GetValue(ItemWidthProperty); }
-            set { SetValue(ItemWidthProperty, value); }
+            get => (double)GetValue(ItemWidthProperty);
+            set => SetValue(ItemWidthProperty, value);
         }
 
         public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register(nameof(ItemHeight),
@@ -25,8 +25,8 @@ namespace XFiler.SDK
         [TypeConverter(typeof(LengthConverter))]
         public double ItemHeight
         {
-            get { return (double)GetValue(ItemHeightProperty); }
-            set { SetValue(ItemHeightProperty, value); }
+            get => (double)GetValue(ItemHeightProperty);
+            set => SetValue(ItemHeightProperty, value);
         }
 
         public static readonly DependencyProperty OrientationProperty = StackPanel.OrientationProperty.AddOwner(
@@ -36,8 +36,8 @@ namespace XFiler.SDK
 
         public Orientation Orientation
         {
-            get { return _orientation; }
-            set { SetValue(OrientationProperty, value); }
+            get => _orientation;
+            set => SetValue(OrientationProperty, value);
         }
 
         private static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -53,8 +53,8 @@ namespace XFiler.SDK
 
         public bool StretchProportionally
         {
-            get { return _stretchProportionally; }
-            set { SetValue(StretchProportionallyProperty, value); }
+            get => _stretchProportionally;
+            set => SetValue(StretchProportionallyProperty, value);
         }
 
         private static void OnStretchProportionallyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -86,7 +86,7 @@ namespace XFiler.SDK
 
             internal double Width
             {
-                get { return _orientation == Orientation.Horizontal ? U : V; }
+                get => _orientation == Orientation.Horizontal ? U : V;
                 set
                 {
                     if (_orientation == Orientation.Horizontal)
@@ -102,7 +102,7 @@ namespace XFiler.SDK
 
             internal double Height
             {
-                get { return _orientation == Orientation.Horizontal ? V : U; }
+                get => _orientation == Orientation.Horizontal ? V : U;
                 set
                 {
                     if (_orientation == Orientation.Horizontal)

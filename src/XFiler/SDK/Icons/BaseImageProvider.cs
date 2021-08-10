@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
 
@@ -20,7 +19,7 @@ namespace XFiler.SDK
 
             return source;
         }
-        
+
         public ImageSource? GetIcon(XFilerRoute route, double size)
         {
             var key = GetResourceKey(route);
@@ -49,51 +48,22 @@ namespace XFiler.SDK
             if (route == null)
                 return IconName.BookmarkFolder;
 
-            if (route.Type == RouteType.Special)
+            return route.Type switch
             {
-                if (route == SpecialRoutes.Desktop)
-                    return IconName.Desktop;
-                if (route == SpecialRoutes.Downloads)
-                    return IconName.Downloads;
-                if (route == SpecialRoutes.MyComputer)
-                    return IconName.MyComputer;
-                if (route == SpecialRoutes.MyDocuments)
-                    return IconName.MyDocuments;
-                if (route == SpecialRoutes.MyMusic)
-                    return IconName.MyMusic;
-                if (route == SpecialRoutes.MyPictures)
-                    return IconName.MyPictures;
-                if (route == SpecialRoutes.MyVideos)
-                    return IconName.MyVideos;
-                if (route == SpecialRoutes.Settings)
-                    return IconName.Settings;
-            }
-
-            try
-            {
-                var attr = File.GetAttributes(route.FullName);
-
-                if (attr.HasFlag(FileAttributes.Directory))
-                {
-                    var dirInfo = new DirectoryInfo(route.FullName);
-
-                    if (dirInfo.Parent == null)
-                    {
-                        if (dirInfo.FullName == "C:\\")
-                            return IconName.SystemDrive;
-
-                        return IconName.LogicalDrive;
-                    }
-
-                    return IconName.Folder;
-                }
-
-                return GetExtensionKey(route.FullName);
-            }
-            catch (Exception e)
-            {
-                return IconName.Blank;
-            }
+                RouteType.MyComputer => IconName.MyComputer,
+                RouteType.Desktop => IconName.Desktop,
+                RouteType.Downloads => IconName.Downloads,
+                RouteType.MyDocuments => IconName.MyDocuments,
+                RouteType.MyMusic => IconName.MyMusic,
+                RouteType.MyPictures => IconName.MyPictures,
+                RouteType.MyVideos => IconName.MyVideos,
+                RouteType.Settings => IconName.Settings,
+                RouteType.Drive => IconName.LogicalDrive,
+                RouteType.SystemDrive => IconName.SystemDrive,
+                RouteType.Directory => IconName.Folder,
+                RouteType.File => GetExtensionKey(route.FullName),
+                _ => IconName.Blank
+            };
         }
 
         private static string GetExtensionKey(string path)

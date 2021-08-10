@@ -21,28 +21,32 @@ namespace XFiler.SDK
 
         public IPageModel? CreatePage(XFilerRoute route)
         {
-            switch (route.Type)
+            if (route.Type == RouteType.File)
             {
-                case RouteType.File:
-                    OpenFile(route.FullName);
-                    return null;
-                case RouteType.Directory:
-                    return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
-                case RouteType.Special:
-                    if (route == SpecialRoutes.MyComputer)
-                        return new MyComputerPageModel(_iconLoader);
-
-                    if (route == SpecialRoutes.Settings)
-                        return new SettingsPageModel();
-
-                    return new ExplorerPageModel(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
-
-                case RouteType.WebLink:
-                    return new BrowserPageModel(route.FullName);
+                OpenFile(route.FullName);
+                return null;
             }
 
-            return new SearchPageModel(route);
+            return route.Type switch
+            {
+                RouteType.Directory => CreateExplorerPage(route),
+                RouteType.Desktop => CreateExplorerPage(route),
+                RouteType.Downloads => CreateExplorerPage(route),
+                RouteType.MyDocuments => CreateExplorerPage(route),
+                RouteType.MyMusic => CreateExplorerPage(route),
+                RouteType.MyPictures => CreateExplorerPage(route),
+                RouteType.MyVideos => CreateExplorerPage(route),
+                RouteType.SystemDrive => CreateExplorerPage(route),
+                RouteType.Drive => CreateExplorerPage(route),
+                RouteType.MyComputer => new MyComputerPageModel(_iconLoader),
+                RouteType.Settings => new SettingsPageModel(),
+                RouteType.WebLink => new BrowserPageModel(route.FullName),
+                _ => new SearchPageModel(route)
+            };
         }
+
+        private ExplorerPageModel CreateExplorerPage(XFilerRoute route) =>
+            new(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
 
         private static void OpenFile(string path) => new Process
         {

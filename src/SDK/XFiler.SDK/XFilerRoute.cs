@@ -7,11 +7,17 @@ namespace XFiler.SDK
 {
     public sealed record XFilerRoute
     {
+        #region Public Properties
+
         public string Header { get; }
 
         public string FullName { get; }
 
         public RouteType Type { get; }
+
+        #endregion
+
+        #region Constructors
 
         public XFilerRoute(string header, string fullName, RouteType type)
         {
@@ -38,9 +44,16 @@ namespace XFiler.SDK
         {
             Header = GetName(driveInfo);
             FullName = driveInfo.RootDirectory.FullName;
-            Type = RouteType.Directory;
+
+            Type = FullName == "C:\\"
+                ? RouteType.SystemDrive
+                : RouteType.Drive;
         }
-        
+
+        #endregion
+
+        #region Public Methods
+
         public static XFilerRoute FromPath(string path)
         {
             var special = SpecialRoutes.GetSpecialUrl(path);
@@ -58,9 +71,12 @@ namespace XFiler.SDK
             if (webLink != null)
                 return webLink;
 
-
             return SpecialRoutes.MyComputer;
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static XFilerRoute? IsWebLinkRoute(string url)
         {
@@ -93,9 +109,16 @@ namespace XFiler.SDK
             {
                 var attr = File.GetAttributes(path);
 
-                return attr.HasFlag(FileAttributes.Directory)
-                    ? new XFilerRoute(new DirectoryInfo(path))
-                    : new XFilerRoute(new FileInfo(path));
+                if (attr.HasFlag(FileAttributes.Directory))
+                {
+                    var info = new DirectoryInfo(path);
+
+                    return info.Parent == null
+                        ? new XFilerRoute(new DriveInfo(path))
+                        : new XFilerRoute(info);
+                }
+
+                return new XFilerRoute(new FileInfo(path));
             }
             catch (Exception e)
             {
@@ -103,7 +126,7 @@ namespace XFiler.SDK
             }
         }
 
-        private string GetName(DriveInfo driveInfo)
+        private static string GetName(DriveInfo driveInfo)
         {
             switch (driveInfo.DriveType)
             {
@@ -128,5 +151,6 @@ namespace XFiler.SDK
             return driveInfo.Name;
         }
 
+        #endregion
     }
 }
