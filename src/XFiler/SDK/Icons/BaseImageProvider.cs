@@ -6,20 +6,6 @@ namespace XFiler.SDK
 {
     public class BaseImageProvider : IImageProvider
     {
-        public ImageSource? GetIcon(FileEntityViewModel viewModel, double size)
-        {
-            var key = GetResourceKey(viewModel);
-
-            ImageSource? source;
-
-            if (Application.Current.TryFindResource(key) is ImageSource s)
-                source = s;
-            else
-                source = Application.Current.TryFindResource(IconName.Blank) as ImageSource;
-
-            return source;
-        }
-
         public ImageSource? GetIcon(XFilerRoute route, double size)
         {
             var key = GetResourceKey(route);
@@ -33,15 +19,6 @@ namespace XFiler.SDK
 
             return source;
         }
-
-        private static string GetResourceKey(FileEntityViewModel viewModel) => viewModel switch
-        {
-            FileViewModel fileViewModel => GetExtensionKey(fileViewModel.FullName),
-            LogicalDriveViewModel { FullName: "C:\\" } => IconName.SystemDrive,
-            LogicalDriveViewModel => IconName.LogicalDrive,
-            DirectoryViewModel => IconName.Folder,
-            _ => IconName.Blank
-        };
 
         private static string GetResourceKey(XFilerRoute? route)
         {

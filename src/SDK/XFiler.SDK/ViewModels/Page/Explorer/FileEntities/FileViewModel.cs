@@ -9,9 +9,9 @@ namespace XFiler.SDK
 
         public double Size => Info.Length / 1024.0;
 
-        public FileViewModel(FileInfo fileInfo, IIconLoader iconLoader) : base(fileInfo.Name, fileInfo.FullName, iconLoader)
+        public FileViewModel(XFilerRoute route, IIconLoader iconLoader) : base(route, iconLoader)
         {
-            Info = fileInfo;
+            Info = new FileInfo(route.FullName);
         }
 
         public override DateTime ChangeDateTime => Info.LastWriteTime;
@@ -20,6 +20,6 @@ namespace XFiler.SDK
             => new FileInfo(FullName).Directory?.Root.Name;
 
         public override FileEntityViewModel Clone()
-            => new FileViewModel(new FileInfo(Info.FullName), IconLoader);
+            => new FileViewModel(Route, IconLoader);
     }
 }

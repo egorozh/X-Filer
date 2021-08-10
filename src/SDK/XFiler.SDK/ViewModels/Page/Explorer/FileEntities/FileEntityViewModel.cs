@@ -9,6 +9,8 @@ namespace XFiler.SDK
 
         #region Public Properties
 
+        public XFilerRoute Route { get; }
+
         public string Name { get; set; }
 
         public string FullName { get; set; }
@@ -23,13 +25,15 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        protected FileEntityViewModel(string name, string fullName, IIconLoader iconLoader)
+        protected FileEntityViewModel(XFilerRoute route, IIconLoader iconLoader)
         {
-            Name = name;
-            FullName = fullName;
+            Name = route.Header;
+            FullName = route.FullName;
+
+            Route = route;
             IconLoader = iconLoader;
 
-            Icon = iconLoader.GetIcon(this, 64);
+            Icon = iconLoader.GetIcon(route, 64);
         }
 
         #endregion

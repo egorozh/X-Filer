@@ -131,4 +131,10 @@
   <data name="MyComputer.DrivesHeader" xml:space="preserve">
     <value>Drives</value>
   </data>
+  <data name="PageFactory,NotAccessText" xml:space="preserve">
+    <value>You do not have access to the folder</value>
+  </data>
+  <data name="PageFactory,NotAccessCaption" xml:space="preserve">
+    <value>No access</value>
+  </data>
 </root>

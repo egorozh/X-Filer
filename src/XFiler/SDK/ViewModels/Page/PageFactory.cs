@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
+using XFiler.Resources.Localization;
 using XFiler.SDK.MyComputer;
 
 namespace XFiler.SDK
@@ -45,8 +47,27 @@ namespace XFiler.SDK
             };
         }
 
-        private ExplorerPageModel CreateExplorerPage(XFilerRoute route) =>
-            new(_filesPresenters.Invoke(), new DirectoryInfo(route.FullName));
+        private ExplorerPageModel? CreateExplorerPage(XFilerRoute route)
+        {
+            var dir = new DirectoryInfo(route.FullName);
+
+            try
+            {
+                dir.GetAccessControl();
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                MessageBox.Show($"{Strings.PageFactory_NotAccessText} \"{dir.FullName}\"",
+                    Strings.PageFactory_NotAccessCaption,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return null;
+            }
+
+            return new ExplorerPageModel(_filesPresenters.Invoke(), dir);
+        }
+
 
         private static void OpenFile(string path) => new Process
         {

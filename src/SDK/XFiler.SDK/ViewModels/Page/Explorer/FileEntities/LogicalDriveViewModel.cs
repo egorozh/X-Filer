@@ -1,16 +1,12 @@
-﻿using System.IO;
-
-namespace XFiler.SDK
+﻿namespace XFiler.SDK
 {
     public sealed class LogicalDriveViewModel : DirectoryViewModel
     {
-        public LogicalDriveViewModel(string directoryName, IIconLoader iconLoader)
-            : base(new DirectoryInfo(directoryName), iconLoader)
+        public LogicalDriveViewModel(XFilerRoute route, IIconLoader iconLoader)
+            : base(route, iconLoader)
         {
-            FullName = directoryName;
         }
 
-        public override string GetRootName()
-            => FullName;
+        public override string GetRootName() => FullName;
     }
 }

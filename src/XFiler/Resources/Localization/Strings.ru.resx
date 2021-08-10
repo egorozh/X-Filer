@@ -131,4 +131,10 @@
   <data name="MyComputer.DrivesHeader" xml:space="preserve">
     <value>Диски</value>
   </data>
+  <data name="PageFactory,NotAccessCaption" xml:space="preserve">
+    <value>"Нет доступа"</value>
+  </data>
+  <data name="PageFactory,NotAccessText" xml:space="preserve">
+    <value>У вас нет доступа к папке</value>
+  </data>
 </root>

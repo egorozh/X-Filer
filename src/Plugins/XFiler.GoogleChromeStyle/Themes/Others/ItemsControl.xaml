@@ -11,6 +11,7 @@
                 MinWidth="120"
                 fluentWpf:RevealElement.BorderRadius="8"
                 Background="Transparent"
+                Cursor="Hand"
                 Command="{Binding OpenCommand}"
                 CommandParameter="{Binding Route}"
                 Style="{StaticResource ButtonRevealStyle}">
@@ -33,6 +34,7 @@
         <Button HorizontalAlignment="Stretch"
                 Margin="5"
                 MinWidth="240"
+                Cursor="Hand"
                 fluentWpf:RevealElement.BorderRadius="8"
                 Background="Transparent"
                 HorizontalContentAlignment="Stretch"

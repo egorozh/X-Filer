@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GongSolutions.Wpf.DragDrop;
+using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using GongSolutions.Wpf.DragDrop;
-using Prism.Commands;
 
 namespace XFiler.SDK
 {
@@ -86,6 +86,16 @@ namespace XFiler.SDK
             _backgroundWorker = null;
         }
 
+        public async Task Update()
+        {
+            if (_backgroundWorker is { IsBusy: true })
+                _backgroundWorker.CancelAsync();
+
+            _backgroundWorker?.Dispose();
+
+            await InitItems();
+        }
+
         #endregion
 
         #region Command Methods
@@ -110,14 +120,14 @@ namespace XFiler.SDK
 
         #region Private Methods
 
-        private async void InitItems()
-        {
+        private async Task InitItems()
+        {   
             IsLoaded = true;
             Progress = 0;
 
             try
             {
-                IReadOnlyList<(object, EntityType)> items = await GetItems();
+                var items = await GetItems();
 
                 _backgroundWorker = new BackgroundWorker
                 {
@@ -141,47 +151,48 @@ namespace XFiler.SDK
             }
         }
 
-
-        private FileEntityViewModel CreateItem((object, EntityType) item)
+        private FileEntityViewModel CreateItem((FileSystemInfo, EntityType) item)
         {
             var (path, entityType) = item;
 
             return entityType switch
             {
-                EntityType.SpecialFolder =>
-                    _fileEntityFactory.CreateDirectory(new DirectoryInfo((string)path), "Папки"),
-                EntityType.Drive => _fileEntityFactory.CreateLogicalDrive((string)path, "Устройства и диски"),
                 EntityType.Directory => _fileEntityFactory.CreateDirectory((DirectoryInfo)path),
                 EntityType.File => _fileEntityFactory.CreateFile((FileInfo)path),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        private async Task<IReadOnlyList<(object, EntityType)>> GetItems() => await Task.Run(() =>
+        private async Task<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems() => await Task.Run(() =>
         {
-            List<(object, EntityType)> list = new();
-            
+            List<(FileSystemInfo, EntityType)> list = new();
+
             var comparer = new NaturalSortComparer();
 
+            var hideSystemFiles = true;
+
             list.AddRange(CurrentDirectory.EnumerateDirectories()
+                .Where(f => NotHidenFilter(f, hideSystemFiles))
                 .OrderBy(d => d.Name, comparer)
-                .Select(d => ((object)d, EntityType.Directory)));
+                .Select(d => ((FileSystemInfo)d, EntityType.Directory)));
 
             list.AddRange(CurrentDirectory.EnumerateFiles()
+                .Where(f => NotHidenFilter(f, hideSystemFiles))
                 .OrderBy(d => d.Name, comparer)
-                .Select(d => ((object)d, EntityType.File)));
-            
+                .Select(d => ((FileSystemInfo)d, EntityType.File)));
+
             return list;
         });
 
+        private static bool NotHidenFilter(FileSystemInfo info, bool hideSystemFiles)
+            => !hideSystemFiles || !info.Attributes.HasFlag(FileAttributes.Hidden);
+
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-        {
-            Progress = e.ProgressPercentage;
-        }
+            => Progress = e.ProgressPercentage;
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            if (e.Argument is not IReadOnlyList<(object, EntityType)> items)
+            if (e.Argument is not IReadOnlyList<(FileSystemInfo, EntityType)> items)
                 return;
 
             var bw = (BackgroundWorker)sender!;
@@ -211,8 +222,6 @@ namespace XFiler.SDK
 
         private enum EntityType
         {
-            SpecialFolder,
-            Drive,
             Directory,
             File
         }

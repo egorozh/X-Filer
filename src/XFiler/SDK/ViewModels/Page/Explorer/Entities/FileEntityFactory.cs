@@ -11,20 +11,14 @@ namespace XFiler.SDK
             _iconLoader = iconLoader;
         }
 
-        public LogicalDriveViewModel CreateLogicalDrive(string logicalDrive, string? @group = null)
-            => new(logicalDrive, _iconLoader)
-            {
-                Group = @group
-            };
-
         public DirectoryViewModel CreateDirectory(DirectoryInfo directoryInfo, string? @group = null)
-            => new(directoryInfo, _iconLoader)
+            => new(new XFilerRoute(directoryInfo), _iconLoader)
             {
                 Group = @group
             };
 
         public FileViewModel CreateFile(FileInfo fileInfo, string? @group = null)
-            => new(fileInfo, _iconLoader)
+            => new(new XFilerRoute(fileInfo), _iconLoader)
             {
                 Group = @group
             };

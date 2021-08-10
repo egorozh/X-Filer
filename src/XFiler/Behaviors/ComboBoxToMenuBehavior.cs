@@ -66,11 +66,14 @@ namespace XFiler
         }
 
         #endregion
-        
+
         #region Private Methods
 
-        private void ItemsChanged(IReadOnlyList<IFilesPresenterFactory> items)
+        private void ItemsChanged(IReadOnlyList<IFilesPresenterFactory>? items)
         {
+            if (items == null)
+                return;
+            
             foreach (var item in items)
             {
                 MenuItem menuItem = new()
@@ -88,8 +91,11 @@ namespace XFiler
             }
         }
 
-        private void CurrentItemChanged(IFilesPresenterFactory current)
+        private void CurrentItemChanged(IFilesPresenterFactory? current)
         {
+            if (current == null)
+                return;
+
             if (!_dictionary.ContainsKey(current))
                 return;
 
@@ -104,7 +110,7 @@ namespace XFiler
 
             Subscribe();
         }
-        
+
         private void MenuItemOnChecked(object sender, RoutedEventArgs e)
         {
             var presenter = _dictionary.First(p => p.Value == sender).Key;

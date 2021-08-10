@@ -28,22 +28,5 @@ namespace XFiler.SDK
 
             return source;
         }
-
-        public ImageSource? GetIcon(FileEntityViewModel viewModel, double size)
-        {
-            ImageSource? source = null;
-
-            foreach (var imageProvider in _imageProviders)
-            {
-                source = imageProvider.GetIcon(viewModel, size);
-
-                if (source == null)
-                    continue;
-
-                break;
-            }
-
-            return source;
-        }
     }
 }

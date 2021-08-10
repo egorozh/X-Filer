@@ -42,6 +42,8 @@ namespace XFiler.SDK
 
         public DelegateCommand MoveForwardCommand { get; }
 
+        public DelegateCommand UpdateCommand { get; }
+
         #endregion
 
         #region Constructor
@@ -59,6 +61,7 @@ namespace XFiler.SDK
 
             MoveBackCommand = new DelegateCommand(OnMoveBack, OnCanMoveBack);
             MoveForwardCommand = new DelegateCommand(OnMoveForward, OnCanMoveForward);
+            UpdateCommand = new DelegateCommand(OnUpdate);
 
             Route = route;
             Header = route.Header;
@@ -68,7 +71,7 @@ namespace XFiler.SDK
             Page.GoToUrl += PageOnGoToUrl;
             _history.HistoryChanged += History_HistoryChanged;
         }
-
+        
         public TabItemModel(IBookmarksManager bookmarksManager, IPageFactory pageFactory,
             DirectoryInfo directoryInfo)
             : this(bookmarksManager, pageFactory, new XFilerRoute(directoryInfo))
@@ -140,6 +143,11 @@ namespace XFiler.SDK
         {
             _history.MoveBack();
 
+            UpdatePage(_history.Current.Route);
+        }
+
+        private void OnUpdate()
+        {
             UpdatePage(_history.Current.Route);
         }
 

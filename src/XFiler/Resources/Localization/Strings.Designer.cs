@@ -158,5 +158,23 @@ namespace XFiler.Resources.Localization {
                 return ResourceManager.GetString("NotifyIcon.ToolTipText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string PageFactory_NotAccessCaption {
+            get {
+                return ResourceManager.GetString("PageFactory,NotAccessCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string PageFactory_NotAccessText {
+            get {
+                return ResourceManager.GetString("PageFactory,NotAccessText", resourceCulture);
+            }
+        }
     }
 }
