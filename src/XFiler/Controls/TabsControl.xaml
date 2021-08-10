@@ -28,7 +28,7 @@
                              Style="{StaticResource TabablzControlStyle}"
 
                              ItemsSource="{Binding TabItems}"
-                            
+
                              NewItemFactory="{Binding Factory}"
                              ClosingItemCallback="{Binding ClosingTabItemHandler}"
 
@@ -37,22 +37,7 @@
                              AddLocationHint="After">
         <dragablz:TabablzControl.ContentTemplate>
             <DataTemplate>
-                <ContentControl Content="{Binding Page}">
-                    <ContentControl.InputBindings>
-                        <sdk:ExtendedMouseBinding Gesture="XButton1"
-                                                  Command="{Binding MoveBackCommand}" />
-                        <sdk:ExtendedMouseBinding Gesture="XButton2"
-                                                  Command="{Binding MoveForwardCommand}" />
-
-                        <KeyBinding Modifiers="Alt" Key="Left"
-                                    Command="{Binding MoveBackCommand}" />
-                        <KeyBinding Modifiers="Alt" Key="Right"
-                                    Command="{Binding MoveForwardCommand}" />
-                    </ContentControl.InputBindings>
-                    <ContentControl.ContentTemplateSelector>
-                        <xFiler:PageTemplateSelector />
-                    </ContentControl.ContentTemplateSelector>
-                </ContentControl>
+                <xFiler:TabControl />
             </DataTemplate>
         </dragablz:TabablzControl.ContentTemplate>
 

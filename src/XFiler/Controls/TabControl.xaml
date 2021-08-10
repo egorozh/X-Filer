@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="XFiler.TabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+             xmlns:xFiler="clr-namespace:XFiler"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ContentControl Content="{Binding Page}"
+                    x:Name="ContentControl">
+        <ContentControl.InputBindings>
+            <sdk:ExtendedMouseBinding Gesture="XButton1"
+                                      Command="{Binding MoveBackCommand}" />
+            <sdk:ExtendedMouseBinding Gesture="XButton2"
+                                      Command="{Binding MoveForwardCommand}" />
+
+            <KeyBinding Modifiers="Alt" Key="Left"
+                        Command="{Binding MoveBackCommand}" />
+            <KeyBinding Modifiers="Alt" Key="Right"
+                        Command="{Binding MoveForwardCommand}" />
+        </ContentControl.InputBindings>
+        <ContentControl.ContentTemplateSelector>
+            <xFiler:PageTemplateSelector />
+        </ContentControl.ContentTemplateSelector>
+    </ContentControl>
+</UserControl>
