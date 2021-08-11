@@ -25,28 +25,31 @@ namespace XFiler
 
         public IPageModel? CreatePage(XFilerRoute route)
         {
-            if (route.Type == RouteType.File)
+            switch (route.Type)
             {
-                OpenFile(route.FullName);
-                return null;
+                case RouteType.File:
+                    OpenFile(route.FullName);
+                    return null;
+                case RouteType.WebLink:
+                    OpenFile(route.FullName);
+                    return null;
+                default:
+                    return route.Type switch
+                    {
+                        RouteType.Directory => CreateExplorerPage(route),
+                        RouteType.Desktop => CreateExplorerPage(route),
+                        RouteType.Downloads => CreateExplorerPage(route),
+                        RouteType.MyDocuments => CreateExplorerPage(route),
+                        RouteType.MyMusic => CreateExplorerPage(route),
+                        RouteType.MyPictures => CreateExplorerPage(route),
+                        RouteType.MyVideos => CreateExplorerPage(route),
+                        RouteType.SystemDrive => CreateExplorerPage(route),
+                        RouteType.Drive => CreateExplorerPage(route),
+                        RouteType.MyComputer => new MyComputerPageModel(_iconLoader),
+                        RouteType.Settings => new SettingsPageModel(),
+                        _ => new SearchPageModel(route)
+                    };
             }
-
-            return route.Type switch
-            {
-                RouteType.Directory => CreateExplorerPage(route),
-                RouteType.Desktop => CreateExplorerPage(route),
-                RouteType.Downloads => CreateExplorerPage(route),
-                RouteType.MyDocuments => CreateExplorerPage(route),
-                RouteType.MyMusic => CreateExplorerPage(route),
-                RouteType.MyPictures => CreateExplorerPage(route),
-                RouteType.MyVideos => CreateExplorerPage(route),
-                RouteType.SystemDrive => CreateExplorerPage(route),
-                RouteType.Drive => CreateExplorerPage(route),
-                RouteType.MyComputer => new MyComputerPageModel(_iconLoader),
-                RouteType.Settings => new SettingsPageModel(),
-                RouteType.WebLink => new BrowserPageModel(route.FullName),
-                _ => new SearchPageModel(route)
-            };
         }
 
         private ExplorerPageModel? CreateExplorerPage(XFilerRoute route)
