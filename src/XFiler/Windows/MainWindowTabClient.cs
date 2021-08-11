@@ -1,8 +1,9 @@
-﻿using Dragablz;
-using System;
+﻿using System;
 using System.Windows;
+using Dragablz;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public class MainWindowTabClient : IInterTabClient
     {

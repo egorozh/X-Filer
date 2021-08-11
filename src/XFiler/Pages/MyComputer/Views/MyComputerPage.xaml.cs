@@ -1,6 +1,6 @@
 ﻿using XFiler.SDK;
 
-namespace XFiler
+namespace XFiler.MyComputer
 {
     public partial class MyComputerPage : IExplorerPage
     {

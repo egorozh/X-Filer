@@ -2,8 +2,9 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public class ExplorerPageModel : BasePageModel, IExplorerPageModel
     {

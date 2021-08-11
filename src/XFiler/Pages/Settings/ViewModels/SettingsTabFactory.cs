@@ -1,4 +1,4 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler
 {
     internal class SettingsTabFactory : ISettingsTabFactory
     {

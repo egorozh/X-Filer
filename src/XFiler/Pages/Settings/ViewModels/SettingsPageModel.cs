@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class SettingsPageModel : BaseViewModel, ISettingsPageModel
     {

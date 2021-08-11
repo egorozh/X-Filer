@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class IconLoader : IIconLoader
     {

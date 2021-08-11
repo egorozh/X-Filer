@@ -1,4 +1,4 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler
 {
     public interface ISettingsTabFactory
     {

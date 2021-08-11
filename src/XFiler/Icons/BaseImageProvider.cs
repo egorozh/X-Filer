@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public class BaseImageProvider : IImageProvider
     {

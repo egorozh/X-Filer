@@ -1,12 +1,13 @@
-﻿using Dragablz;
-using Prism.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Dragablz;
+using Prism.Commands;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public class TabsViewModel : BaseViewModel, ITabsViewModel
     {

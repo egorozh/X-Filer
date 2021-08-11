@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler.History
 {
     internal class DirectoryHistory : IDirectoryHistory
     {

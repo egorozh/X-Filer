@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler.History
 {
     internal interface IDirectoryHistory : IEnumerable<DirectoryNode>
     {

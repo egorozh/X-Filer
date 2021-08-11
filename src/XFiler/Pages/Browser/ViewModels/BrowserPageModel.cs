@@ -1,7 +1,8 @@
-﻿using CefSharp.Wpf;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using CefSharp.Wpf;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class BrowserPageModel : BasePageModel
     {

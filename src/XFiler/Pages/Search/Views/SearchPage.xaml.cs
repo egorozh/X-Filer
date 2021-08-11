@@ -1,4 +1,4 @@
-﻿namespace XFiler
+﻿namespace XFiler.Views
 {
     public partial class SearchPage 
     {

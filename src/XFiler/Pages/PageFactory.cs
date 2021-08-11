@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using XFiler.MyComputer;
 using XFiler.Resources.Localization;
-using XFiler.SDK.MyComputer;
+using XFiler.SDK;
+using XFiler.ViewModels;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class PageFactory : IPageFactory
     {

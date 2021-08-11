@@ -1,4 +1,6 @@
-﻿namespace XFiler.SDK
+﻿using XFiler.SDK;
+
+namespace XFiler.History
 {
     internal class DirectoryNode
     {

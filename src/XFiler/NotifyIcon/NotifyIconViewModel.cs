@@ -2,8 +2,9 @@
 using System.Windows;
 using System.Windows.Input;
 using Prism.Commands;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler.NotifyIcon
 {
     public class NotifyIconViewModel
     {

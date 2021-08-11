@@ -4,6 +4,7 @@ using Dragablz;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;
 using XFiler.DragDrop;
+using XFiler.NotifyIcon;
 using XFiler.SDK;
 
 namespace XFiler

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class MenuItemViewModel : BaseViewModel, IMenuItemViewModel
     {

@@ -1,12 +1,13 @@
-﻿using Prism.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Prism.Commands;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     internal class BookmarksManager : BaseViewModel, IBookmarksManager
     {

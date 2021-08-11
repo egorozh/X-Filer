@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows.Media;
 using Prism.Commands;
+using XFiler.SDK;
 
-namespace XFiler.SDK.MyComputer
+namespace XFiler.MyComputer
 {
     public abstract class BaseItemModel : BaseViewModel, IDisposable
     {

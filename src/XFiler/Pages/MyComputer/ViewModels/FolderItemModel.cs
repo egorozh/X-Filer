@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
+using XFiler.SDK;
 
-namespace XFiler.SDK.MyComputer
+namespace XFiler.MyComputer
 {
     public class FolderItemModel : BaseItemModel
     {

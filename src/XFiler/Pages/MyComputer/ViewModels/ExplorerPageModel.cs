@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Prism.Commands;
+using XFiler.SDK;
 
-namespace XFiler.SDK.MyComputer
+namespace XFiler.MyComputer
 {
     public class MyComputerPageModel : BasePageModel
     {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
+using XFiler.SDK;
+using XFiler.Views;
 
-namespace XFiler.SDK
+namespace XFiler.ViewModels
 {
     internal class SearchPageModel : BaseViewModel, IPageModel
     {

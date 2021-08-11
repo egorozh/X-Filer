@@ -1,8 +1,10 @@
-﻿using Prism.Commands;
-using System;
+﻿using System;
 using System.IO;
+using Prism.Commands;
+using XFiler.History;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public class TabItemModel : BaseViewModel, ITabItemModel
     {

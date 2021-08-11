@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dragablz;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public class TabsFactory : ITabsFactory
     {

@@ -6,6 +6,7 @@ using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
 using XFiler.GoogleChromeStyle;
+using XFiler.NotifyIcon;
 using XFiler.SDK;
 using XFiler.SDK.Themes;
 
