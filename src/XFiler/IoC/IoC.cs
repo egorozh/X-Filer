@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using Dragablz;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;
 using XFiler.DragDrop;
@@ -31,7 +32,7 @@ namespace XFiler
             services.RegisterType<MenuItemFactory>().As<IMenuItemFactory>().SingleInstance();
             services.RegisterType<BookmarksManager>().As<IBookmarksManager>().SingleInstance();
 
-            services.RegisterType<BoundExampleInterTabClient>().As<ITabClient>().SingleInstance();
+            services.RegisterType<MainWindowTabClient>().As<IInterTabClient>().SingleInstance();
 
             services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
 

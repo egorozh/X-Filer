@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Dragablz;
 
 namespace XFiler.SDK
 {
     public class TabsFactory : ITabsFactory
     {
-        private readonly ITabClient _tabClient;
+        private readonly IInterTabClient _tabClient;
         private readonly ITabFactory _tabFactory;
         private readonly IWindowFactory _windowFactory;
         private readonly IBookmarksManager _bookmarksManager;
         private readonly ISettingsTabFactory _settingsFactory;
 
-        public TabsFactory(ITabClient tabClient, ITabFactory tabFactory,
+        public TabsFactory(IInterTabClient tabClient, ITabFactory tabFactory,
             IWindowFactory windowFactory, IBookmarksManager bookmarksManager, ISettingsTabFactory settingsFactory)
         {
             _tabClient = tabClient;

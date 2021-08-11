@@ -20,7 +20,7 @@ namespace XFiler.SDK
 
         #region Public Properties
 
-        public ITabClient InterTabClient { get; }
+        public IInterTabClient InterTabClient { get; }
 
         public ObservableCollection<ITabItemModel> TabItems { get; }
 
@@ -46,7 +46,7 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        public TabsViewModel(ITabClient tabClient,
+        public TabsViewModel(IInterTabClient tabClient,
             ITabFactory tabFactory,
             IWindowFactory windowFactory,
             IBookmarksManager bookmarksManager,

@@ -38,7 +38,7 @@ namespace XFiler
                 _explorerTabFactory.Invoke().CreateMyComputerTab()
             });
 
-            return new ExplorerWindow
+            return new MainWindow
             {
                 DataContext = tabsViewModel
             };
@@ -52,7 +52,7 @@ namespace XFiler
                                 ?? currentApp.MainWindow)
                                ?? throw new ArgumentNullException("Application.Current.MainWindow");
 
-            ExplorerWindow mainWindow = new()
+            MainWindow mainWindow = new()
             {
                 DataContext = mvm,
                 WindowStartupLocation = WindowStartupLocation.Manual,

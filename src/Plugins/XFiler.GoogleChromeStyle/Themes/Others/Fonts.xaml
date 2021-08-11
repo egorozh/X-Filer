@@ -6,7 +6,7 @@
         <Setter Property="FontSize" Value="13" />
     </Style>
 
-    <Style TargetType="TextBox">
+    <Style TargetType="TextBox"  BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="FontFamily" Value="./resources/Fonts/Roboto-*.ttf#Roboto" />
         <Setter Property="FontSize" Value="13" />
     </Style>

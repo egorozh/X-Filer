@@ -1,4 +1,4 @@
-﻿<sdk:XFilerWindowBase x:Class="XFiler.ExplorerWindow"
+﻿<sdk:XFilerWindowBase x:Class="XFiler.MainWindow"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,8 +16,7 @@
                         Height="720" Width="1024">
 
     <dockablz:Layout Partition="2AE89D18-F236-4D20-9605-6C03319038E6"
-                     IsFloatDropZoneEnabled="False"
-                     x:Name="Layout">
+                     IsFloatDropZoneEnabled="False">
 
         <dockablz:Layout.BranchTemplate>
             <DataTemplate>

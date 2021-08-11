@@ -3,9 +3,9 @@ using XFiler.SDK;
 
 namespace XFiler
 {
-    public partial class ExplorerWindow : IXFilerWindow
+    public partial class MainWindow : IXFilerWindow
     {
-        public ExplorerWindow()
+        public MainWindow()
         {
             InitializeComponent();
         }
