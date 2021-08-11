@@ -367,6 +367,7 @@
                     <Border Name="SubmenuBorder"
                             SnapsToDevicePixels="True"
                             BorderBrush="#3C4043"
+                            Background="#292A2D"
                             BorderThickness="1">
                         <ScrollViewer CanContentScroll="True"
                                       Style="{StaticResource MenuScrollViewer}">

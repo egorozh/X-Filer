@@ -1,26 +1,10 @@
-﻿using System;
-using System.Windows;
-using XFiler.SDK;
+﻿using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class SettingsPageModel : BaseViewModel, ISettingsPageModel
+    internal class SettingsPageModel : BasePageModel, ISettingsPageModel
     {
-        public event EventHandler<HyperlinkEventArgs>? GoToUrl;
-        public DataTemplate Template { get; }
-
-        public SettingsPageModel()
-        {
-            Template = CreateTemplate();
-        }
-
-        private static DataTemplate CreateTemplate() => new()
-        {
-            DataType = typeof(SettingsPageModel),
-            VisualTree = new FrameworkElementFactory(typeof(SettingsPage))
-        };
-
-        public void Dispose()
+        public SettingsPageModel() : base(typeof(SettingsPage))
         {
         }
     }

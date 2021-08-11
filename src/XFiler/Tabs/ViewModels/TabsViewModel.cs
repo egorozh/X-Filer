@@ -15,7 +15,6 @@ namespace XFiler
 
         private readonly ITabFactory _tabFactory;
         private readonly IWindowFactory _windowFactory;
-        private readonly ISettingsTabFactory _settingsFactory;
 
         #endregion
 
@@ -32,7 +31,7 @@ namespace XFiler
         public IReadOnlyCollection<IMenuItemViewModel> Bookmarks { get; }
 
         public Func<ITabItemModel> Factory { get; }
-            
+
         #endregion
 
         #region Commands
@@ -40,8 +39,9 @@ namespace XFiler
         public DelegateCommand<object> CreateNewTabItemCommand { get; }
         public DelegateCommand<object> OpenTabItemInNewWindowCommand { get; }
         public DelegateCommand<object> DuplicateTabCommand { get; }
-        public DelegateCommand<object> CloseAllTabsCommand { get; }
+        public DelegateCommand<object> CloseOtherTabsCommand { get; }
         public DelegateCommand CreateSettingsTabCommand { get; }
+        public DelegateCommand CloseAllTabsCommand { get; }
 
         #endregion
 
@@ -51,13 +51,10 @@ namespace XFiler
             ITabFactory tabFactory,
             IWindowFactory windowFactory,
             IBookmarksManager bookmarksManager,
-            IEnumerable<ITabItemModel> init,
-            ISettingsTabFactory settingsFactory)
+            IEnumerable<ITabItemModel> init)
         {
             _tabFactory = tabFactory;
             _windowFactory = windowFactory;
-            _settingsFactory = settingsFactory;
-
 
             InterTabClient = tabClient;
             Bookmarks = bookmarksManager.Bookmarks;
@@ -66,12 +63,13 @@ namespace XFiler
             OpenTabItemInNewWindowCommand =
                 new DelegateCommand<object>(OnOpenTabItemInNewWindow, OnCanOpenTabItemInNewWindow);
             DuplicateTabCommand = new DelegateCommand<object>(OnDuplicate);
-            CloseAllTabsCommand = new DelegateCommand<object>(OnCloseAllTabs, CanCloseAllTabs);
+            CloseOtherTabsCommand = new DelegateCommand<object>(OnCloseOtherTabs, CanCloseAllTabs);
 
             CreateSettingsTabCommand = new DelegateCommand(OnOpenSettings);
+            CloseAllTabsCommand = new DelegateCommand(OnCloseAllTabs);
+
 
             TabItems = new ObservableCollection<ITabItemModel>(init);
-            //CurrentTabItem = TabItems.FirstOrDefault();
 
             Factory = CreateTabVm;
 
@@ -126,7 +124,7 @@ namespace XFiler
 
         private bool CanCloseAllTabs(object? obj) => TabItems.Count > 1;
 
-        private void OnCloseAllTabs(object? obj)
+        private void OnCloseOtherTabs(object? obj)
         {
             if (obj is not ITabItemModel tabItem)
                 return;
@@ -134,12 +132,22 @@ namespace XFiler
             var removedItems = TabItems.Where(i => i != tabItem).ToList();
 
             foreach (var item in removedItems)
-                TabItems.Remove(item);
+                TabablzControl.CloseItem(item);
+        }
+
+        private void OnCloseAllTabs()
+        {
+            var removedItems = TabItems.ToList();
+
+            foreach (var item in removedItems)
+                TabablzControl.CloseItem(item);
         }
 
         private void OnOpenSettings()
         {
-            _settingsFactory.OpenSettingsTab();
+            var tab = _tabFactory.CreateTab(SpecialRoutes.Settings);
+            TabItems.Add(tab);
+            CurrentTabItem = tab;
         }
 
         private ITabItemModel CreateTabVm() => _tabFactory.CreateMyComputerTab();
@@ -147,7 +155,7 @@ namespace XFiler
         private void TabItemsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             OpenTabItemInNewWindowCommand.RaiseCanExecuteChanged();
-            CloseAllTabsCommand.RaiseCanExecuteChanged();
+            CloseOtherTabsCommand.RaiseCanExecuteChanged();
         }
 
         private void ClosingTabItemHandlerImpl(ItemActionCallbackArgs<TabablzControl> args)

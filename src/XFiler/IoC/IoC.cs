@@ -44,7 +44,6 @@ namespace XFiler
 
             services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
             services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
-            services.RegisterType<SettingsTabFactory>().As<ISettingsTabFactory>().SingleInstance();
 
             services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
 

@@ -19,8 +19,8 @@
         <sdk:CommandReference x:Key="DuplicateTabCommand"
                               Command="{Binding DataContext.DuplicateTabCommand,ElementName=InitialTabablzControl}" />
 
-        <sdk:CommandReference x:Key="CloseAllTabsCommand"
-                              Command="{Binding DataContext.CloseAllTabsCommand,ElementName=InitialTabablzControl}" />
+        <sdk:CommandReference x:Key="CloseOtherTabsCommand"
+                              Command="{Binding DataContext.CloseOtherTabsCommand,ElementName=InitialTabablzControl}" />
 
     </UserControl.Resources>
 
@@ -71,7 +71,7 @@
                                       CommandParameter="{Binding  RelativeSource={RelativeSource TemplatedParent}}" />
 
                             <MenuItem Header="Закрыть другие вкладки"
-                                      Command="{StaticResource CloseAllTabsCommand}"
+                                      Command="{StaticResource CloseOtherTabsCommand}"
                                       CommandParameter="{Binding}" />
 
                         </ContextMenu>

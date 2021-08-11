@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-                    xmlns:localization="clr-namespace:XFiler.GoogleChromeStyle.Localization">
+                    xmlns:localization="clr-namespace:XFiler.GoogleChromeStyle.Localization"
+                    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml" />
         <ResourceDictionary Source="Icons.xaml" />
@@ -56,9 +57,15 @@
                                 </sdk:SearchControl.ButtonsContent>
                             </sdk:SearchControl>
 
-                            <Menu Grid.Column="4">
-                                <MenuItem Header="..."
-                                          ItemsSource="{TemplateBinding SettingsItems}" />
+                            <Menu Grid.Column="4"
+                                  DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}">
+                                <MenuItem Header="...">
+                                    <MenuItem Header="Параметры"
+                                              Command="{Binding CreateSettingsTabCommand}" />
+                                    <Separator />
+                                    <MenuItem Header="Закрыть все вкладки" 
+                                              Command="{Binding CloseAllTabsCommand}"/>
+                                </MenuItem>
                             </Menu>
                         </Grid>
                     </Grid>

@@ -495,11 +495,7 @@
 
                         <sdk:ToolBarControl Grid.Row="1" Grid.Column="0"
                                             DataContext="{TemplateBinding SelectedItem}"
-                                            Background="{DynamicResource ToolBarBackground}">
-
-                            <MenuItem Header="Settings" />
-                            <MenuItem Header="Settings" />
-                        </sdk:ToolBarControl>
+                                            Background="{DynamicResource ToolBarBackground}" />
 
                         <sdk:BookmarksControl Grid.Row="2" Grid.Column="0"
                                               DataContext="{TemplateBinding SelectedItem}"
