@@ -105,25 +105,18 @@ namespace XFiler.SDK
 
         private static XFilerRoute? IsFileSystemRoute(string path)
         {
-            try
-            {
-                var attr = File.GetAttributes(path);
+            var info = path.ToInfo();
 
-                if (attr.HasFlag(FileAttributes.Directory))
-                {
-                    var info = new DirectoryInfo(path);
-
-                    return info.Parent == null
-                        ? new XFilerRoute(new DriveInfo(path))
-                        : new XFilerRoute(info);
-                }
-
-                return new XFilerRoute(new FileInfo(path));
-            }
-            catch (Exception e)
-            {
+            if (info == null)
                 return null;
-            }
+
+            return info switch
+            {
+                FileInfo fileInfo => new XFilerRoute(fileInfo),
+                DirectoryInfo { Parent: null } => new XFilerRoute(new DriveInfo(path)),
+                DirectoryInfo dir => new XFilerRoute(dir),
+                _ => null
+            };
         }
 
         private static string GetName(DriveInfo driveInfo)

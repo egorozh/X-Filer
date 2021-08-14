@@ -43,7 +43,10 @@ namespace XFiler.SDK
 
         #region Commands
 
-        public DelegateCommand<object> OpenCommand { get; }
+        public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
+
+        public DelegateCommand<FileEntityViewModel> PasteCommand { get; }
+
         public DelegateCommand<object> OpenNewTabCommand { get; }
 
         public DelegateCommand<FileEntityViewModel> OpenNewWindowCommand { get; }
@@ -57,6 +60,7 @@ namespace XFiler.SDK
             IDropTarget dropTarget,
             IDragSource dragSource,
             IWindowFactory windowFactory,
+            IClipboardService clipboardService,
             DirectoryInfo directoryPathName)
         {
             _fileEntityFactory = fileEntityFactory;
@@ -65,10 +69,10 @@ namespace XFiler.SDK
             CurrentDirectory = directoryPathName;
 
             OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
-
-
-            OpenCommand = new DelegateCommand<object>(Open);
+            OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
+
+            PasteCommand = clipboardService.PasteCommand;
 
             InitItems();
         }
@@ -86,33 +90,22 @@ namespace XFiler.SDK
             _backgroundWorker = null;
         }
 
-        public async Task Update()
-        {
-            if (_backgroundWorker is { IsBusy: true })
-                _backgroundWorker.CancelAsync();
-
-            _backgroundWorker?.Dispose();
-
-            await InitItems();
-        }
-
         #endregion
 
         #region Command Methods
 
-        private void Open(object parameter)
+        private void Open(FileEntityViewModel fileEntityViewModel)
         {
-            if (parameter is FileEntityViewModel fileEntityViewModel)
-                DirectoryOrFileOpened?.Invoke(this, new OpenDirectoryEventArgs(fileEntityViewModel));
+            DirectoryOrFileOpened?.Invoke(this, new OpenDirectoryEventArgs(fileEntityViewModel));
         }
 
         private void OpenNewTab(object parameter)
         {
             if (parameter is object[] { Length: 2 } parameters &&
-                parameters[0] is ITabsViewModel mainViewModel &&
+                parameters[0] is ITabsViewModel tabsModel &&
                 parameters[1] is FileEntityViewModel fileEntityViewModel)
             {
-                mainViewModel.OnOpenNewTab(fileEntityViewModel);
+                tabsModel.OnOpenNewTab(fileEntityViewModel);
             }
         }
 
@@ -121,7 +114,7 @@ namespace XFiler.SDK
         #region Private Methods
 
         private async Task InitItems()
-        {   
+        {
             IsLoaded = true;
             Progress = 0;
 

@@ -11,21 +11,24 @@ namespace XFiler.Base
         private readonly IDropTarget _dropTarget;
         private readonly IDragSource _dragSource;
         private readonly IWindowFactory _windowFactory;
+        private readonly IClipboardService _clipboardService;
 
         public RegularTilesFilesPresenterFactory(IFileEntityFactory fileEntityFactory,
             IDropTarget dropTarget,
             IDragSource dragSource,
-            IWindowFactory windowFactory) : base("Крупные значки", CreateTemplate())
+            IWindowFactory windowFactory,
+            IClipboardService clipboardService) : base("Крупные значки", CreateTemplate())
         {
             _fileEntityFactory = fileEntityFactory;
             _dropTarget = dropTarget;
             _dragSource = dragSource;
             _windowFactory = windowFactory;
+            _clipboardService = clipboardService;
         }
 
         public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory)
             => new TileFilesPresenterViewModel(currentDirectory, _fileEntityFactory, _dropTarget, _dragSource,
-                _windowFactory);
+                _windowFactory, _clipboardService);
 
         private static DataTemplate CreateTemplate() => new()
         {

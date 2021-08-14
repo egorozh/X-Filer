@@ -34,6 +34,7 @@ namespace XFiler
             services.RegisterType<BookmarksManager>().As<IBookmarksManager>().SingleInstance();
 
             services.RegisterType<MainWindowTabClient>().As<IInterTabClient>().SingleInstance();
+            services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
 
             services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
 

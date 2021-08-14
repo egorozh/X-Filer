@@ -10,8 +10,9 @@ namespace XFiler.Base
             IFileEntityFactory fileEntityFactory,
             IDropTarget dropTarget,
             IDragSource dragSource,
-            IWindowFactory windowFactory) :
-            base(fileEntityFactory, dropTarget, dragSource, windowFactory, directoryPathName)
+            IWindowFactory windowFactory,
+            IClipboardService clipboardService) :
+            base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService, directoryPathName)
         {
         }
     }

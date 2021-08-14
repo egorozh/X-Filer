@@ -31,26 +31,16 @@ namespace XFiler.DragDrop
 
         public void DragOver(IDropInfo dropInfo)
         {
-            if (dropInfo?.DragInfo == null)
-            {
+            if (dropInfo.Data is not IDataObject && dropInfo?.DragInfo == null)
                 return;
-            }
 
             if (!dropInfo.IsSameDragDropContextAsSource)
-            {
                 return;
-            }
 
-            //var debugWindow = Application.Current.Windows.OfType<DebugWindow>().FirstOrDefault();
-
-            //if (debugWindow != null)
-            //{
-            //    debugWindow.TextBlock.Text =
-            //        $"{dropInfo.VisualTarget} ; {dropInfo.VisualTargetItem}";
-            //}
-
-            if (dropInfo.TargetCollection is ListCollectionView listCollectionView &&
-                listCollectionView.SourceCollection is ObservableCollection<FileEntityViewModel> targetCollection)
+            if (dropInfo.TargetCollection is ListCollectionView
+            {
+                SourceCollection: ObservableCollection<FileEntityViewModel> targetCollection
+            })
             {
                 if (CanDrag(dropInfo, targetCollection))
                     return;
@@ -64,21 +54,23 @@ namespace XFiler.DragDrop
 
         public void Drop(IDropInfo dropInfo)
         {
+            if (dropInfo.Data is not IDataObject && dropInfo?.DragInfo == null)
+                return;
+
             if (dropInfo.TargetCollection is ListCollectionView listCollectionView &&
-                listCollectionView.SourceCollection is ObservableCollection<FileEntityViewModel> targetCollection &&
-                dropInfo.DragInfo.SourceCollection is ListCollectionView sourceListCollectionView &&
-                sourceListCollectionView.SourceCollection is ObservableCollection<FileEntityViewModel> sourceCollection)
+                listCollectionView.SourceCollection is ObservableCollection<FileEntityViewModel> targetCollection)
             {
                 var targetVisual = (ItemsControl)dropInfo.VisualTarget;
 
                 if (targetVisual.DataContext is IFilesPresenter filesPresenter)
                 {
                     if (dropInfo.Data is FileEntityViewModel sourceItem)
-                        DropItem(sourceItem, sourceCollection, dropInfo, dropInfo.TargetItem as FileEntityViewModel,
+                        DropItems(new List<FileEntityViewModel>() { sourceItem },
+                            dropInfo, dropInfo.TargetItem as FileEntityViewModel,
                             targetCollection,
                             filesPresenter.CurrentDirectory.FullName);
                     if (dropInfo.Data is ICollection<object> sourceItems)
-                        DropItems(sourceItems.Cast<FileEntityViewModel>().ToList(), sourceCollection, dropInfo,
+                        DropItems(sourceItems.Cast<FileEntityViewModel>().ToList(), dropInfo,
                             dropInfo.TargetItem as FileEntityViewModel,
                             targetCollection,
                             filesPresenter.CurrentDirectory.FullName);
@@ -92,56 +84,26 @@ namespace XFiler.DragDrop
 
         #region Drag
 
-        private bool CanDrag(IDropInfo dropInfo, ObservableCollection<FileEntityViewModel> targetCollection)
+        private static bool CanDrag(IDropInfo dropInfo, ObservableCollection<FileEntityViewModel> targetCollection)
             => dropInfo.Data switch
             {
-                FileEntityViewModel sourceItem => CanDragOneSourceItem(dropInfo, targetCollection, sourceItem),
+                FileEntityViewModel sourceItem => CanDragManySourceItems(dropInfo, targetCollection,
+                    new[] { sourceItem }),
                 ICollection<object> sourceItems => CanDragManySourceItems(dropInfo, targetCollection,
                     sourceItems.Cast<FileEntityViewModel>().ToList()),
+                IDataObject dataObject => CanDragExplorerItems(
+                    dropInfo,
+                    targetCollection.Select(f => f.Route.FullName),
+                    dataObject),
                 _ => false
             };
 
-        private bool CanDragOneSourceItem(IDropInfo dropInfo,
-            ObservableCollection<FileEntityViewModel> targetCollection,
-            FileEntityViewModel sourceItem)
+        private static bool CanDragManySourceItems(IDropInfo dropInfo,
+            IReadOnlyList<FileEntityViewModel> targetCollection,
+            IReadOnlyList<FileEntityViewModel> sourceItems)
         {
+            var sourceItem = sourceItems.First();
             var sourceRoot = sourceItem.GetRootName();
-
-            //var debugWindow = Application.Current.Windows.OfType<DebugWindow>().FirstOrDefault();
-
-            //if (debugWindow != null)
-            //{
-            //    debugWindow.TextBlock.Text =
-            //        $"{dropInfo.TargetItem}";
-            //}
-
-            if (dropInfo.TargetItem is DirectoryViewModel targetFolder && targetFolder != sourceItem)
-            {
-                var targetRoot = targetFolder.GetRootName();
-
-                dropInfo.DropTargetAdorner = typeof(ChromerDropTargetHighlightAdorner);
-
-                if (sourceItem is LogicalDriveViewModel logicalDrive)
-                {
-                    dropInfo.Effects = DragDropEffects.Link;
-                    dropInfo.EffectText = "Создать ссылку в";
-                    dropInfo.DestinationText = $"{targetFolder.Name}";
-                }
-                else if (sourceRoot == targetRoot)
-                {
-                    dropInfo.Effects = DragDropEffects.Move;
-                    dropInfo.EffectText = "Переместить в";
-                    dropInfo.DestinationText = $"{targetFolder.Name}";
-                }
-                else
-                {
-                    dropInfo.Effects = DragDropEffects.Copy;
-                    dropInfo.EffectText = "Копировать в";
-                    dropInfo.DestinationText = $"{targetFolder.Name}";
-                }
-
-                return true;
-            }
 
             if (dropInfo.TargetItem == null && !targetCollection.Contains(sourceItem))
             {
@@ -153,66 +115,10 @@ namespace XFiler.DragDrop
 
                 dropInfo.DropTargetAdorner = typeof(ChromerDropTargetInsertAdorner);
 
-                if (sourceItem is LogicalDriveViewModel logicalDrive)
-                {
-                    dropInfo.Effects = DragDropEffects.Link;
-                    dropInfo.EffectText = "Создать ссылку в";
-                    dropInfo.DestinationText = $"{targetDirectory.Name}";
-                }
-                else if (sourceRoot == targetRoot)
-                {
-                    dropInfo.Effects = DragDropEffects.Move;
-                    dropInfo.EffectText = "Переместить в";
-                    dropInfo.DestinationText = $"{targetDirectory.Name}";
-                }
-                else
-                {
-                    dropInfo.Effects = DragDropEffects.Copy;
-                    dropInfo.EffectText = "Копировать в";
-                    dropInfo.DestinationText = $"{targetDirectory.Name}";
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool CanDragManySourceItems(IDropInfo dropInfo,
-            ObservableCollection<FileEntityViewModel> targetCollection,
-            ICollection<FileEntityViewModel> sourceItems)
-        {
-            var sourceItem = sourceItems.First();
-            var sourceRoot = sourceItem.GetRootName();
-
-            if (dropInfo.TargetItem == null && !targetCollection.Contains(sourceItems.First()))
-            {
-                var targetVisual = (ItemsControl)dropInfo.VisualTarget;
-                var viewModel = targetVisual.DataContext as IFilesPresenter;
-                DirectoryInfo targetDirectory = new(viewModel.CurrentDirectory.FullName);
-
-                var targetRoot = targetDirectory.Root.Name;
-
-                dropInfo.DropTargetAdorner = typeof(ChromerDropTargetInsertAdorner);
-
-                if (sourceItem is LogicalDriveViewModel logicalDrive)
-                {
-                    dropInfo.Effects = DragDropEffects.Link;
-                    dropInfo.EffectText = "Создать ссылку в";
-                    dropInfo.DestinationText = $"{targetDirectory.Name}";
-                }
-                else if (sourceRoot == targetRoot)
-                {
-                    dropInfo.Effects = DragDropEffects.Move;
-                    dropInfo.EffectText = "Переместить в";
-                    dropInfo.DestinationText = $"{targetDirectory.Name}";
-                }
-                else
-                {
-                    dropInfo.Effects = DragDropEffects.Copy;
-                    dropInfo.EffectText = "Копировать в";
-                    dropInfo.DestinationText = $"{targetDirectory.Name}";
-                }
+                SetDropInfoParams(dropInfo, sourceItem.FullName.ToInfo(),
+                    targetDirectory,
+                    new DirectoryInfo(sourceRoot),
+                    targetRoot);
 
                 return true;
             }
@@ -224,24 +130,10 @@ namespace XFiler.DragDrop
 
                 dropInfo.DropTargetAdorner = typeof(ChromerDropTargetHighlightAdorner);
 
-                if (sourceItem is LogicalDriveViewModel logicalDrive)
-                {
-                    dropInfo.Effects = DragDropEffects.Link;
-                    dropInfo.EffectText = "Создать ссылку в";
-                    dropInfo.DestinationText = $"{targetFolder.Name}";
-                }
-                else if (sourceRoot == targetRoot)
-                {
-                    dropInfo.Effects = DragDropEffects.Move;
-                    dropInfo.EffectText = "Переместить в";
-                    dropInfo.DestinationText = $"{targetFolder.Name}";
-                }
-                else
-                {
-                    dropInfo.Effects = DragDropEffects.Copy;
-                    dropInfo.EffectText = "Копировать в";
-                    dropInfo.DestinationText = $"{targetFolder.Name}";
-                }
+                SetDropInfoParams(dropInfo, sourceItem.FullName.ToInfo(),
+                    targetFolder.DirectoryInfo,
+                    new DirectoryInfo(sourceRoot),
+                    targetRoot);
 
                 return true;
             }
@@ -249,55 +141,94 @@ namespace XFiler.DragDrop
             return false;
         }
 
-        #endregion
-
-        #region Drop
-
-        private void DropItem(FileEntityViewModel sourceItem,
-            ObservableCollection<FileEntityViewModel> sourceCollection, IDropInfo dropInfo,
-            FileEntityViewModel? targetItem,
-            ObservableCollection<FileEntityViewModel> targetCollection, string targetDirectory)
+        private static bool CanDragExplorerItems(IDropInfo dropInfo,
+            IEnumerable<string> targetCollection,
+            IDataObject dataObject)
         {
-            var copyAndMove = WpfCopyAndMove.Instance;
+            if (!dataObject.GetDataPresent(DataFormats.FileDrop) ||
+                dataObject.GetData(DataFormats.FileDrop) is not string[] fullPaths)
+                return false;
 
-            bool result;
+            IReadOnlyList<FileSystemInfo> sourceItems = fullPaths.Select(GetFileInfo).ToList();
 
-            if (dropInfo.Effects == DragDropEffects.Move)
-            {
-                result = copyAndMove.Move(sourceItem,
-                    targetItem as DirectoryViewModel ??
-                    _fileEntityFactory.CreateDirectory(new DirectoryInfo(targetDirectory)));
+            var sourceItem = sourceItems.First();
+            var sourceRoot = sourceItem.GetRootName();
 
-                if (result)
+            if (dropInfo.TargetItem == null
+                && !targetCollection.Contains(sourceItem.FullName)
+                && dropInfo.VisualTarget is Control
                 {
-                    sourceCollection.Remove(sourceItem);
-
-                    if (targetItem == null)
-                        targetCollection.Add(sourceItem);
-                }
-            }
-            else if (dropInfo.Effects == DragDropEffects.Copy)
+                    DataContext: IFilesPresenter presenter
+                })
             {
-                result = copyAndMove.Copy(sourceItem,
-                    targetItem as DirectoryViewModel ??
-                    _fileEntityFactory.CreateDirectory(new DirectoryInfo(targetDirectory)));
+                DirectoryInfo targetDirectory = presenter.CurrentDirectory;
 
-                if (result)
-                {
-                    if (targetItem == null)
-                        targetCollection.Add(sourceItem.Clone());
-                }
+                var targetRoot = targetDirectory.Root.Name;
+
+                dropInfo.DropTargetAdorner = typeof(ChromerDropTargetInsertAdorner);
+
+                SetDropInfoParams(dropInfo, sourceItem, targetDirectory, sourceRoot, targetRoot);
+
+                return true;
             }
-            else if (dropInfo.Effects == DragDropEffects.Link)
+
+            if (dropInfo.TargetItem is DirectoryViewModel targetFolder &&
+                !sourceItems.Select(fi => fi.FullName).Contains(targetFolder.Route.FullName))
             {
+                var targetRoot = targetFolder.GetRootName();
+
+                dropInfo.DropTargetAdorner = typeof(ChromerDropTargetHighlightAdorner);
+
+                SetDropInfoParams(dropInfo, sourceItem, targetFolder.DirectoryInfo, sourceRoot, targetRoot);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void SetDropInfoParams(IDropInfo dropInfo,
+            FileSystemInfo? sourceItem,
+            DirectoryInfo targetFolder,
+            DirectoryInfo sourceRoot,
+            string? targetRoot)
+        {
+            if (sourceItem is DirectoryInfo { Parent: null })
+            {
+                dropInfo.Effects = DragDropEffects.Link;
+                dropInfo.EffectText = "Создать ссылку в";
+                dropInfo.DestinationText = $"{targetFolder.Name}";
+            }
+            else if (sourceRoot.FullName == targetRoot)
+            {
+                dropInfo.Effects = DragDropEffects.Move;
+                dropInfo.EffectText = "Переместить в";
+                dropInfo.DestinationText = $"{targetFolder.Name}";
+            }
+            else
+            {
+                dropInfo.Effects = DragDropEffects.Copy;
+                dropInfo.EffectText = "Копировать в";
+                dropInfo.DestinationText = $"{targetFolder.Name}";
             }
         }
 
+        private static FileSystemInfo GetFileInfo(string path) => path.ToInfo();
+
+        #endregion
+
+        #region Drop
+        
         private void DropItems(ICollection<FileEntityViewModel> sourceItems,
-            ObservableCollection<FileEntityViewModel> sourceCollection, IDropInfo dropInfo,
+            IDropInfo dropInfo,
             FileEntityViewModel? targetItem,
             ObservableCollection<FileEntityViewModel> targetCollection, string targetDirectory)
         {
+            if (dropInfo.DragInfo.SourceCollection is not ListCollectionView
+            {
+                SourceCollection: ObservableCollection<FileEntityViewModel> sourceCollection
+            }) return;
+            
             var copyAndMove = WpfCopyAndMove.Instance;
 
             bool result;
