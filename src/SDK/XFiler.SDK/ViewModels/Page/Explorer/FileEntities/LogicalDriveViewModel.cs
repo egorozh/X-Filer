@@ -1,8 +1,10 @@
-﻿namespace XFiler.SDK
+﻿using System.IO;
+
+namespace XFiler.SDK
 {
     public sealed class LogicalDriveViewModel : DirectoryViewModel
     {
-        public LogicalDriveViewModel(XFilerRoute route, IIconLoader iconLoader)
+        public LogicalDriveViewModel(DirectoryInfo route, IIconLoader iconLoader)
             : base(route, iconLoader)
         {
         }

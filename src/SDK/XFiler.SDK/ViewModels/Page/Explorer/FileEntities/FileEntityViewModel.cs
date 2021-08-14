@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Media;
 
 namespace XFiler.SDK
@@ -8,6 +9,8 @@ namespace XFiler.SDK
         protected IIconLoader IconLoader { get; }
 
         #region Public Properties
+
+        public FileSystemInfo Info { get; }
 
         public XFilerRoute Route { get; }
 
@@ -25,22 +28,20 @@ namespace XFiler.SDK
 
         #region Constructor
 
-        protected FileEntityViewModel(XFilerRoute route, IIconLoader iconLoader)
+        protected FileEntityViewModel(XFilerRoute route, IIconLoader iconLoader, FileSystemInfo info)
         {
             Name = route.Header;
             FullName = route.FullName;
 
             Route = route;
             IconLoader = iconLoader;
+            Info = info;
 
             Icon = iconLoader.GetIcon(route, 64);
         }
 
         #endregion
-
-
+        
         public abstract string? GetRootName();
-
-        public abstract FileEntityViewModel Clone();
     }
 }

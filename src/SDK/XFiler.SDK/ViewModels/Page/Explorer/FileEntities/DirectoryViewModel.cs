@@ -7,18 +7,14 @@ namespace XFiler.SDK
     {
         public DirectoryInfo DirectoryInfo { get; }
 
-        public DirectoryViewModel(XFilerRoute route, IIconLoader iconLoader)
-            : base(route, iconLoader)
+        public DirectoryViewModel(DirectoryInfo directoryInfo, IIconLoader iconLoader)
+            : base(new XFilerRoute(directoryInfo), iconLoader, directoryInfo)
         {
-            DirectoryInfo = new DirectoryInfo(route.FullName);
+            DirectoryInfo = directoryInfo;
         }
 
         public override DateTime ChangeDateTime => DirectoryInfo.LastWriteTime;
 
-        public override string GetRootName()
-            => new DirectoryInfo(FullName).Root.Name;
-
-        public override FileEntityViewModel Clone()
-            => new DirectoryViewModel(Route, IconLoader);
+        public override string GetRootName() => Info.GetRootName().FullName;
     }
 }

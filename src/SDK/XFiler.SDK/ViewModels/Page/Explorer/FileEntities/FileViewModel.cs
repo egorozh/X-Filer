@@ -5,21 +5,18 @@ namespace XFiler.SDK
 {
     public sealed class FileViewModel : FileEntityViewModel
     {
-        public FileInfo Info { get; }
+        public FileInfo FileInfo { get; }
 
-        public double Size => Info.Length / 1024.0;
+        public double Size => FileInfo.Length / 1024.0;
 
-        public FileViewModel(XFilerRoute route, IIconLoader iconLoader) : base(route, iconLoader)
+        public FileViewModel(FileInfo info, IIconLoader iconLoader) : base(new XFilerRoute(info), iconLoader, info)
         {
-            Info = new FileInfo(route.FullName);
+            FileInfo = info;
         }
 
         public override DateTime ChangeDateTime => Info.LastWriteTime;
 
         public override string? GetRootName()
-            => new FileInfo(FullName).Directory?.Root.Name;
-
-        public override FileEntityViewModel Clone()
-            => new FileViewModel(Route, IconLoader);
+            => Info.GetRootName().FullName;
     }
 }

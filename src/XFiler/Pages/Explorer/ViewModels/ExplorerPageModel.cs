@@ -86,8 +86,8 @@ namespace XFiler
         {
             XFilerRoute route = e.FileEntityViewModel switch
             {
-                DirectoryViewModel directoryViewModel => new XFilerRoute(directoryViewModel.DirectoryInfo),
-                FileViewModel fileViewModel => new XFilerRoute(fileViewModel.Info),
+                DirectoryViewModel directoryViewModel => directoryViewModel.Route,
+                FileViewModel fileViewModel => fileViewModel.Route,
                 _ => SpecialRoutes.MyComputer
             };
 

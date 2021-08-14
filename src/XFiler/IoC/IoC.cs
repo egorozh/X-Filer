@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using Dragablz;
 using GongSolutions.Wpf.DragDrop;
+using System.Collections.Generic;
 using XFiler.Base;
 using XFiler.DragDrop;
 using XFiler.NotifyIcon;
@@ -30,6 +30,8 @@ namespace XFiler
             services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
             services.RegisterInstance(imageProviders).As<IEnumerable<IImageProvider>>().SingleInstance();
 
+            services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
+
             services.RegisterType<MenuItemFactory>().As<IMenuItemFactory>().SingleInstance();
             services.RegisterType<BookmarksManager>().As<IBookmarksManager>().SingleInstance();
 
@@ -38,7 +40,7 @@ namespace XFiler
 
             services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
 
-            services.RegisterType<ChromerDragDrop>().As<IDropTarget>().SingleInstance();
+            services.RegisterType<XFilerDragDrop>().As<IDropTarget>().SingleInstance();
             services.RegisterType<ChromerDragHandler>().As<IDragSource>().SingleInstance();
 
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
