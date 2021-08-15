@@ -1,6 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Prism.Commands;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -51,7 +52,7 @@ namespace XFiler.SDK
 
         public DelegateCommand<object> OpenNewTabCommand { get; }
 
-        public DelegateCommand<FileEntityViewModel> OpenNewWindowCommand { get; }
+        public DelegateCommand<object> OpenNewWindowCommand { get; }
 
         #endregion
 
@@ -105,10 +106,17 @@ namespace XFiler.SDK
         private void OpenNewTab(object parameter)
         {
             if (parameter is object[] { Length: 2 } parameters &&
-                parameters[0] is ITabsViewModel tabsModel &&
-                parameters[1] is FileEntityViewModel fileEntityViewModel)
+                parameters[0] is ITabsViewModel tabsModel)
             {
-                tabsModel.OnOpenNewTab(fileEntityViewModel);
+                switch (parameters[1])
+                {
+                    case FileEntityViewModel fileEntityViewModel:
+                        tabsModel.OnOpenNewTab(fileEntityViewModel);
+                        break;
+                    case IEnumerable e:
+                        tabsModel.OnOpenNewTab(e.OfType<IFileSystemModel>());
+                        break;
+                }
             }
         }
 

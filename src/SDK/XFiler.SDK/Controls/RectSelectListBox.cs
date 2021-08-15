@@ -22,6 +22,15 @@ namespace XFiler.SDK
             set => SetValue(HasSelectItemsProperty, value);
         }
 
+        public static readonly DependencyProperty IsManyItemsSelectedProperty = DependencyProperty.Register(
+            "IsManyItemsSelected", typeof(bool), typeof(RectSelectListBox), new PropertyMetadata(default(bool)));
+
+        public bool IsManyItemsSelected
+        {
+            get => (bool)GetValue(IsManyItemsSelectedProperty);
+            set => SetValue(IsManyItemsSelectedProperty, value);
+        }
+
         #region Static Constructor
 
         static RectSelectListBox()
@@ -56,6 +65,7 @@ namespace XFiler.SDK
             base.OnSelectionChanged(e);
 
             HasSelectItems = SelectedItems.Count > 0;
+            IsManyItemsSelected = SelectedItems.Count > 1;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

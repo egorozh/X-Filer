@@ -35,7 +35,7 @@
                               Command="{Binding DataContext.OpenNewWindowCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
 
-        <sdk:CommandReference x:Key="PasteCommand" 
+        <sdk:CommandReference x:Key="PasteCommand"
                               Command="{Binding DataContext.PasteCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
     </UserControl.Resources>
@@ -56,6 +56,26 @@
                            VirtualizingPanel.VirtualizationMode="Recycling"
 
                            SelectionMode="Extended">
+        <ListBox.Resources>
+            <sdk:CommandReference x:Key="OpenManyItemsNewTabCommand"
+                                  Command="{Binding DataContext.OpenNewTabCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}">
+                <sdk:CommandReference.CommandParameter>
+                    <MultiBinding Converter="{sdk:CloneParamsConverter}">
+                        <Binding Path="DataContext"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type dragablz:TabablzControl}}" />
+                        <Binding Path="SelectedItems"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}" />
+
+                    </MultiBinding>
+                </sdk:CommandReference.CommandParameter>
+            </sdk:CommandReference>
+
+            <sdk:CommandReference x:Key="OpenManyItemsNewWindowCommand"
+                                  Command="{Binding DataContext.OpenNewWindowCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" 
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}"/>
+        </ListBox.Resources>
 
         <ListBox.ItemContainerStyle>
             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource EntityItemStyle}">
@@ -113,8 +133,9 @@
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}"
-                                 Value="True">
+                    <DataTrigger
+                        Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}"
+                        Value="True">
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu>
@@ -127,6 +148,22 @@
                                     <MenuItem Header="Открыть в новом окне"
                                               Command="{StaticResource  OpenNewWindowCommand}"
                                               CommandParameter="{Binding}" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                    <DataTrigger
+                        Binding="{Binding IsManyItemsSelected,
+                        RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}"
+                        Value="True">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Открыть в новой вкладке"
+                                              Command="{StaticResource  OpenManyItemsNewTabCommand}" />
+
+                                    <MenuItem Header="Открыть в новом окне"
+                                              Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
                                 </ContextMenu>
                             </Setter.Value>
                         </Setter>

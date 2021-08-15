@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Prism.Commands;
@@ -11,14 +13,14 @@ namespace XFiler
         private readonly Func<ITabsFactory> _tabsFactory;
         private readonly Func<ITabFactory> _explorerTabFactory;
 
-        public DelegateCommand<FileEntityViewModel> OpenNewWindowCommand { get; }
+        public DelegateCommand<object> OpenNewWindowCommand { get; }
 
         public WindowFactory(Func<ITabsFactory> tabsFactory, Func<ITabFactory> explorerTabFactory)
         {
             _tabsFactory = tabsFactory;
             _explorerTabFactory = explorerTabFactory;
 
-            OpenNewWindowCommand = new DelegateCommand<FileEntityViewModel>(OnOpenNewWindow);
+            OpenNewWindowCommand = new DelegateCommand<object>(OnOpenNewWindow);
         }
 
         public void OpenTabInNewWindow(ITabItemModel tabItem)
@@ -27,6 +29,13 @@ namespace XFiler
             {
                 tabItem
             });
+
+            ShowNewWindow(tabsVm, new Point(24, 24));
+        }
+
+        public void OpenTabInNewWindow(IEnumerable<ITabItemModel> tabs)
+        {
+            var tabsVm = _tabsFactory.Invoke().CreateTabsViewModel(tabs);
 
             ShowNewWindow(tabsVm, new Point(24, 24));
         }
@@ -63,15 +72,24 @@ namespace XFiler
             mainWindow.Show();
         }
 
-        private void OnOpenNewWindow(FileEntityViewModel fileEntityViewModel)
+        private void OnOpenNewWindow(object parameter)
         {
-            if (fileEntityViewModel is DirectoryViewModel directoryViewModel)
+            if (parameter is IDirectoryModel model)
             {
                 var vm = _explorerTabFactory
                     .Invoke()
-                    .CreateExplorerTab(directoryViewModel.DirectoryInfo);
+                    .CreateExplorerTab(model.DirectoryInfo);
 
                 OpenTabInNewWindow(vm);
+            }
+            else if (parameter is IEnumerable items)
+            {
+                var tabs = items.OfType<IDirectoryModel>()
+                    .Select(directoryModel => _explorerTabFactory.Invoke()
+                        .CreateExplorerTab(directoryModel.DirectoryInfo))
+                    .ToList();
+
+                OpenTabInNewWindow(tabs);
             }
         }
     }

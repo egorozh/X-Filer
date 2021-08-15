@@ -27,8 +27,8 @@ namespace XFiler
             PasteCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CanPaste(IFileSystemModel arg) =>
-            System.Windows.Clipboard.ContainsFileDropList() && arg.Info is not FileInfo;
+        private bool CanPaste(IFileSystemModel? arg) =>
+            arg != null && System.Windows.Clipboard.ContainsFileDropList() && arg.Info is not FileInfo;
 
         private void OnPaste(IFileSystemModel entity)
         {

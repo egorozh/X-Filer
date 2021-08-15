@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using Dragablz;
 using Prism.Commands;
@@ -80,7 +81,7 @@ namespace XFiler
 
         #region Public Methods
 
-        public void OnOpenNewTab(FileEntityViewModel fileEntityViewModel, bool isSelectNewTab = false)
+        public void OnOpenNewTab(IFileSystemModel fileEntityViewModel, bool isSelectNewTab = false)
         {
             if (fileEntityViewModel is DirectoryViewModel directoryViewModel)
             {
@@ -89,6 +90,21 @@ namespace XFiler
 
                 if (isSelectNewTab)
                     CurrentTabItem = tab;
+            }
+        }
+
+        public void OnOpenNewTab(IEnumerable<IFileSystemModel> models, bool isSelectNewTab = false)
+        {
+            foreach (var model in models)
+            {
+                if (model.Info is DirectoryInfo info)
+                {
+                    var tab = _tabFactory.CreateExplorerTab(info);
+                    TabItems.Add(tab);
+
+                    if (isSelectNewTab)
+                        CurrentTabItem = tab;
+                }
             }
         }
 
