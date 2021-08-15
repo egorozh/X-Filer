@@ -8,8 +8,8 @@ namespace XFiler.SDK
 
         public double Size => FileInfo.Length / 1024.0;
 
-        public FileViewModel(FileInfo info, IIconLoader iconLoader) 
-            : base(new XFilerRoute(info), iconLoader, info)
+        public FileViewModel(FileInfo info, IIconLoader iconLoader, IClipboardService clipboardService)
+            : base(new XFilerRoute(info), iconLoader, info, clipboardService)
         {
             FileInfo = info;
         }

@@ -77,7 +77,7 @@ namespace XFiler.SDK
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
 
             OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
-          
+
             PasteCommand = clipboardService.PasteCommand;
             CutCommand = clipboardService.CutCommand;
             CopyCommand = clipboardService.CopyCommand;
@@ -96,6 +96,9 @@ namespace XFiler.SDK
 
             _backgroundWorker?.Dispose();
             _backgroundWorker = null;
+
+            foreach (var model in DirectoriesAndFiles)
+                model.Dispose();
 
             _fileEntityFactory = null!;
 
