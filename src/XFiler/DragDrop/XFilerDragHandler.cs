@@ -1,34 +1,27 @@
-﻿using System;
+﻿using GongSolutions.Wpf.DragDrop;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Windows;
-using GongSolutions.Wpf.DragDrop;
-using GongSolutions.Wpf.DragDrop.Utilities;
 
 namespace XFiler.DragDrop
 {
-    public class ChromerDragHandler : IDragSource
-    {
+    internal class XFilerDragHandler : IDragSource
+    {   
         /// <inheritdoc />
         public virtual void StartDrag(IDragInfo dragInfo)
         {
-            var items = TypeUtilities.CreateDynamicallyTypedList(dragInfo.SourceItems).Cast<object>().ToList();
+            var items = dragInfo.SourceItems.Cast<object>().ToList();
+          
             if (items.Count > 1)
             {
                 dragInfo.Data = items;
             }
             else
             {
-                // special case: if the single item is an enumerable then we can not drop it as single item
                 var singleItem = items.FirstOrDefault();
-                if (singleItem is IEnumerable && !(singleItem is string))
-                {
-                    dragInfo.Data = items;
-                }
-                else
-                {
-                    dragInfo.Data = singleItem;
-                }
+
+                dragInfo.Data = singleItem is IEnumerable and not string ? items : singleItem;
             }
 
             dragInfo.Effects = dragInfo.Data != null

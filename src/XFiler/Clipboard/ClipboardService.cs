@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using System.IO;
+using Prism.Commands;
 using WK.Libraries.SharpClipboardNS;
 using XFiler.SDK;
 
@@ -6,12 +7,14 @@ namespace XFiler
 {
     public class ClipboardService : IClipboardService
     {
+        private readonly IFileOperations _fileOperations;
         private readonly SharpClipboard _clipboard;
 
         public DelegateCommand<IFileSystemModel> PasteCommand { get; }
 
-        public ClipboardService()
+        public ClipboardService(IFileOperations fileOperations)
         {
+            _fileOperations = fileOperations;
             _clipboard = new SharpClipboard();
 
             _clipboard.ClipboardChanged += ClipboardOnClipboardChanged;
@@ -24,7 +27,8 @@ namespace XFiler
             PasteCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CanPaste(IFileSystemModel arg) => System.Windows.Clipboard.ContainsFileDropList();
+        private bool CanPaste(IFileSystemModel arg) =>
+            System.Windows.Clipboard.ContainsFileDropList() && arg.Info is not FileInfo;
 
         private void OnPaste(IFileSystemModel entity)
         {

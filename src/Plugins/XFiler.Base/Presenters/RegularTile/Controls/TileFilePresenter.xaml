@@ -112,6 +112,26 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}"
+                                 Value="True">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Открыть"
+                                              Command="{StaticResource OpenCommand}"
+                                              CommandParameter="{Binding}" />
+                                    <MenuItem Header="Открыть в новой вкладке"
+                                              Command="{StaticResource  OpenNewTabCommand}"
+                                              CommandParameter="{Binding}" />
+                                    <MenuItem Header="Открыть в новом окне"
+                                              Command="{StaticResource  OpenNewWindowCommand}"
+                                              CommandParameter="{Binding}" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
         </ListBox.ItemContainerStyle>
 

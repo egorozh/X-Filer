@@ -41,7 +41,7 @@ namespace XFiler
             services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
 
             services.RegisterType<XFilerDragDrop>().As<IDropTarget>().SingleInstance();
-            services.RegisterType<ChromerDragHandler>().As<IDragSource>().SingleInstance();
+            services.RegisterType<XFilerDragHandler>().As<IDragSource>().SingleInstance();
 
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
 
