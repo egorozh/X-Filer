@@ -40,12 +40,19 @@ namespace XFiler.DragDrop
 
             var sourceItem = sourceItems.First();
 
-            var adornerType = GetAdornerType(dropInfo, sourceItems, targetDirectory, sourceItem);
+            dropInfo.DropTargetAdorner = dropInfo.TargetItem switch
+            {
+                null  => typeof(ToFolderAdorner),
+                IDirectoryModel => typeof(ToItemAdorner),
+                _ => null
+            };
 
-            if (adornerType == null)
+            var isValid = dropInfo.Validation(sourceItems, targetDirectory, sourceItem);
+
+            if (!isValid)
                 return false;
 
-            SetDropInfoParams(dropInfo, sourceItem, targetDirectory, adornerType);
+            SetDropInfoParams(dropInfo, sourceItem, targetDirectory);
             return true;
         }
 
@@ -53,22 +60,22 @@ namespace XFiler.DragDrop
 
         #region Private Methods
 
-        private static Type? GetAdornerType(IDropInfo dropInfo,
+        private static bool Validation(this IDropInfo dropInfo,
             IEnumerable<FileSystemInfo> sourceItems,
             DirectoryInfo target, FileSystemInfo source) => dropInfo.TargetItem switch
         {
-            null when source.SourceValid(target) => typeof(ToFolderAdorner),
-            IDirectoryModel when sourceItems.SourcesValid(target) => typeof(ToItemAdorner),
-            _ => null
+            null when source.SourceValid(target) => true,
+            IDirectoryModel when sourceItems.SourcesValid(target) =>true,
+            _ => false
         };
 
         private static bool SourceValid(this FileSystemInfo sourceItem, DirectoryInfo targetDirectory)
         {
-            IEnumerable<string> targetCollection = targetDirectory
+            IEnumerable<string> targetItems = targetDirectory
                 .EnumerateFileSystemInfos()
                 .Select(d => d.FullName);
 
-            return !targetCollection.Contains(sourceItem.FullName);
+            return !targetItems.Contains(sourceItem.FullName);
         }
 
         private static bool SourcesValid(this IEnumerable<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory)
@@ -78,14 +85,11 @@ namespace XFiler.DragDrop
                 .Contains(targetDirectory.FullName);
         }
 
-        private static void SetDropInfoParams(IDropInfo dropInfo, FileSystemInfo sourceItem, DirectoryInfo targetFolder,
-            Type adornerType)
+        private static void SetDropInfoParams(IDropInfo dropInfo, FileSystemInfo sourceItem, DirectoryInfo targetFolder)
         {
             var sourceRoot = sourceItem.GetRootName();
             var targetRoot = targetFolder.Root;
-
-            dropInfo.DropTargetAdorner = adornerType;
-
+            
             if (sourceItem is DirectoryInfo { Parent: null })
             {
                 dropInfo.Effects = DragDropEffects.Link;
