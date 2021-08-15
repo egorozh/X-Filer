@@ -16,7 +16,7 @@ namespace XFiler.SDK
     {
         #region Private Fields
 
-        private readonly IFileEntityFactory _fileEntityFactory;
+        private IFileEntityFactory _fileEntityFactory;
         private BackgroundWorker? _backgroundWorker;
 
         #endregion
@@ -25,8 +25,8 @@ namespace XFiler.SDK
 
         public ObservableCollection<FileEntityViewModel> DirectoriesAndFiles { get; set; } = new();
 
-        public IDropTarget DropTarget { get; }
-        public IDragSource DragSource { get; }
+        public IDropTarget DropTarget { get; private set; }
+        public IDragSource DragSource { get; private set; }
 
         public DirectoryInfo DirectoryInfo { get; }
 
@@ -47,12 +47,13 @@ namespace XFiler.SDK
         #region Commands
 
         public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
-
-        public DelegateCommand<IFileSystemModel> PasteCommand { get; }
-
         public DelegateCommand<object> OpenNewTabCommand { get; }
 
-        public DelegateCommand<object> OpenNewWindowCommand { get; }
+        public DelegateCommand<IFileSystemModel> PasteCommand { get; private set; }
+        public DelegateCommand<object> CutCommand { get; private set; }
+        public DelegateCommand<object> CopyCommand { get; private set; }
+
+        public DelegateCommand<object> OpenNewWindowCommand { get; private set; }
 
         #endregion
 
@@ -72,11 +73,14 @@ namespace XFiler.SDK
             DirectoryInfo = directoryPathName;
             Info = directoryPathName;
 
-            OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
             OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
 
+            OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
+          
             PasteCommand = clipboardService.PasteCommand;
+            CutCommand = clipboardService.CutCommand;
+            CopyCommand = clipboardService.CopyCommand;
 
             InitItems();
         }
@@ -92,6 +96,17 @@ namespace XFiler.SDK
 
             _backgroundWorker?.Dispose();
             _backgroundWorker = null;
+
+            _fileEntityFactory = null!;
+
+            DropTarget = null!;
+            DragSource = null!;
+
+            OpenNewWindowCommand = null!;
+
+            PasteCommand = null!;
+            CutCommand = null!;
+            CopyCommand = null!;
         }
 
         #endregion

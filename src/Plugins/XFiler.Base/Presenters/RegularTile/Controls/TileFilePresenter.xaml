@@ -38,6 +38,14 @@
         <sdk:CommandReference x:Key="PasteCommand"
                               Command="{Binding DataContext.PasteCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+
+        <sdk:CommandReference x:Key="CutCommand"
+                              Command="{Binding DataContext.CutCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+
+        <sdk:CommandReference x:Key="CopyCommand"   
+                              Command="{Binding DataContext.CopyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
     </UserControl.Resources>
 
     <sdk:RectSelectListBox ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
@@ -73,32 +81,91 @@
 
             <sdk:CommandReference x:Key="OpenManyItemsNewWindowCommand"
                                   Command="{Binding DataContext.OpenNewWindowCommand, 
-                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" 
-                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}"/>
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+
+            <sdk:CommandReference x:Key="CutManyCommand"
+                                  Command="{Binding DataContext.CutCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+
+            <sdk:CommandReference x:Key="CopyManyCommand"
+                                  Command="{Binding DataContext.CopyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+
+            <ContextMenu x:Key="DirectoryContextMenu">
+                <MenuItem Header="Открыть"
+                          Command="{StaticResource OpenCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новой вкладке"
+                          Command="{StaticResource  OpenNewTabCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новом окне"
+                          Command="{StaticResource  OpenNewWindowCommand}"
+                          CommandParameter="{Binding}" />
+
+                <Separator />
+
+                <MenuItem Header="Вырезать"
+                          Command="{StaticResource CutCommand}"
+                          CommandParameter="{Binding}" />
+                
+                <MenuItem Header="Копировать"
+                          Command="{StaticResource CopyCommand}"
+                          CommandParameter="{Binding}" />
+
+                <MenuItem Header="Вставить"
+                          Command="{StaticResource PasteCommand}"
+                          CommandParameter="{Binding}" />
+
+            </ContextMenu>
+
+            <ContextMenu x:Key="FileContextMenu">
+                <MenuItem Header="Открыть"
+                          Command="{StaticResource OpenCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новой вкладке"
+                          Command="{StaticResource  OpenNewTabCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новом окне"
+                          Command="{StaticResource  OpenNewWindowCommand}"
+                          CommandParameter="{Binding}" />
+
+                <Separator />
+
+                <MenuItem Header="Вырезать"
+                          Command="{StaticResource CutCommand}"
+                          CommandParameter="{Binding}" />
+
+                <MenuItem Header="Копировать"
+                          Command="{StaticResource CopyCommand}"
+                          CommandParameter="{Binding}" />
+            </ContextMenu>
+
+            <ContextMenu x:Key="ManyItemsContextMenu">
+                <MenuItem Header="Открыть в новой вкладке"
+                          Command="{StaticResource  OpenManyItemsNewTabCommand}" />
+
+                <MenuItem Header="Открыть в новом окне"
+                          Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
+
+                <Separator />
+
+                <MenuItem Header="Вырезать"
+                          Command="{StaticResource CutManyCommand}"
+                          CommandParameter="{Binding}" />
+
+                <MenuItem Header="Копировать"
+                          Command="{StaticResource CopyManyCommand}"
+                          CommandParameter="{Binding}" />
+            </ContextMenu>
+
         </ListBox.Resources>
 
         <ListBox.ItemContainerStyle>
             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource EntityItemStyle}">
-                <Setter Property="ContextMenu">
-                    <Setter.Value>
-                        <ContextMenu>
-                            <MenuItem Header="Открыть"
-                                      Command="{StaticResource OpenCommand}"
-                                      CommandParameter="{Binding}" />
-                            <MenuItem Header="Открыть в новой вкладке"
-                                      Command="{StaticResource  OpenNewTabCommand}"
-                                      CommandParameter="{Binding}" />
-                            <MenuItem Header="Открыть в новом окне"
-                                      Command="{StaticResource  OpenNewWindowCommand}"
-                                      CommandParameter="{Binding}" />
-                            <Separator />
-
-                            <MenuItem Header="Вставить"
-                                      Command="{StaticResource PasteCommand}"
-                                      CommandParameter="{Binding}" />
-                        </ContextMenu>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -133,40 +200,14 @@
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
-                    <DataTrigger
-                        Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}"
-                        Value="True">
-                        <Setter Property="ContextMenu">
-                            <Setter.Value>
-                                <ContextMenu>
-                                    <MenuItem Header="Открыть"
-                                              Command="{StaticResource OpenCommand}"
-                                              CommandParameter="{Binding}" />
-                                    <MenuItem Header="Открыть в новой вкладке"
-                                              Command="{StaticResource  OpenNewTabCommand}"
-                                              CommandParameter="{Binding}" />
-                                    <MenuItem Header="Открыть в новом окне"
-                                              Command="{StaticResource  OpenNewWindowCommand}"
-                                              CommandParameter="{Binding}" />
-                                </ContextMenu>
-                            </Setter.Value>
-                        </Setter>
+                    <DataTrigger Value="True"
+                                 Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}">
+                        <Setter Property="ContextMenu" Value="{StaticResource FileContextMenu}" />
                     </DataTrigger>
-                    <DataTrigger
-                        Binding="{Binding IsManyItemsSelected,
-                        RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}"
-                        Value="True">
-                        <Setter Property="ContextMenu">
-                            <Setter.Value>
-                                <ContextMenu>
-                                    <MenuItem Header="Открыть в новой вкладке"
-                                              Command="{StaticResource  OpenManyItemsNewTabCommand}" />
-
-                                    <MenuItem Header="Открыть в новом окне"
-                                              Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
-                                </ContextMenu>
-                            </Setter.Value>
-                        </Setter>
+                    <DataTrigger Value="True"
+                                 Binding="{Binding IsManyItemsSelected,
+                        RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}">
+                        <Setter Property="ContextMenu" Value="{StaticResource ManyItemsContextMenu}" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -249,7 +290,6 @@
                         <Setter TargetName="Bd" Property="BorderBrush" Value="#cFcFcF" />
                         <Setter TargetName="TextBlock" Property="Foreground" Value="White" />
                     </DataTrigger>
-
 
                 </DataTemplate.Triggers>
             </DataTemplate>
