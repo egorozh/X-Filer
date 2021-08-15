@@ -8,7 +8,7 @@ namespace XFiler
     {
         private readonly SharpClipboard _clipboard;
 
-        public DelegateCommand<FileEntityViewModel> PasteCommand { get; }
+        public DelegateCommand<IFileSystemModel> PasteCommand { get; }
 
         public ClipboardService()
         {
@@ -16,7 +16,7 @@ namespace XFiler
 
             _clipboard.ClipboardChanged += ClipboardOnClipboardChanged;
 
-            PasteCommand = new DelegateCommand<FileEntityViewModel>(OnPaste, CanPaste);
+            PasteCommand = new DelegateCommand<IFileSystemModel>(OnPaste, CanPaste);
         }
 
         private void ClipboardOnClipboardChanged(object? sender, SharpClipboard.ClipboardChangedEventArgs e)
@@ -24,9 +24,9 @@ namespace XFiler
             PasteCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CanPaste(FileEntityViewModel arg) => System.Windows.Clipboard.ContainsFileDropList();
+        private bool CanPaste(IFileSystemModel arg) => System.Windows.Clipboard.ContainsFileDropList();
 
-        private void OnPaste(FileEntityViewModel entity)
+        private void OnPaste(IFileSystemModel entity)
         {
             var files = System.Windows.Clipboard.GetFileDropList();
         }

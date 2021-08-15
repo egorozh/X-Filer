@@ -1,12 +1,9 @@
 ﻿using System;
-using System.IO;
 
 namespace XFiler.SDK
 {
-    public interface IFilesPresenter : IDisposable
+    public interface IFilesPresenter : IDisposable, IDirectoryModel, IFileSystemModel
     {
-        DirectoryInfo CurrentDirectory { get; }
-
         event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
     }
 }

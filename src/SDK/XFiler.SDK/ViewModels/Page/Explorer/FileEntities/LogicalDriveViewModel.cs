@@ -8,7 +8,5 @@ namespace XFiler.SDK
             : base(route, iconLoader)
         {
         }
-
-        public override string GetRootName() => FullName;
     }
 }

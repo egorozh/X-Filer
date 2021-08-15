@@ -1,13 +1,13 @@
-﻿using System.Windows;
+﻿using GongSolutions.Wpf.DragDrop;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using GongSolutions.Wpf.DragDrop;
 
 namespace XFiler.DragDrop
 {
-    public class ChromerDropTargetHighlightAdorner : DropTargetAdorner
-    {
-        public ChromerDropTargetHighlightAdorner(UIElement adornedElement, DropInfo dropInfo)
+    public class ToItemAdorner : DropTargetAdorner
+    {   
+        public ToItemAdorner(UIElement adornedElement, DropInfo dropInfo)
             : base(adornedElement, dropInfo)
         {
             Pen = new Pen(new SolidColorBrush(Color.FromArgb(255, 0, 220, 255)), 2);

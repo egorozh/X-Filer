@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace XFiler.SDK
 {
-    public abstract class FileEntityViewModel : BaseViewModel
+    public abstract class FileEntityViewModel : BaseViewModel, IFileSystemModel
     {
         protected IIconLoader IconLoader { get; }
 
@@ -20,7 +20,7 @@ namespace XFiler.SDK
 
         public string? Group { get; set; }
 
-        public abstract DateTime ChangeDateTime { get; }
+        public DateTime ChangeDateTime => Info.LastWriteTime;
 
         public ImageSource? Icon { get; set; }
 
@@ -41,7 +41,5 @@ namespace XFiler.SDK
         }
 
         #endregion
-        
-        public abstract string? GetRootName();
     }
 }

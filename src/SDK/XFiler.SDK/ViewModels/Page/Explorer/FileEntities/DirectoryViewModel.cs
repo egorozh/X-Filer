@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace XFiler.SDK
 {
-    public class DirectoryViewModel : FileEntityViewModel
+    public class DirectoryViewModel : FileEntityViewModel, IDirectoryModel
     {
         public DirectoryInfo DirectoryInfo { get; }
 
@@ -12,9 +11,5 @@ namespace XFiler.SDK
         {
             DirectoryInfo = directoryInfo;
         }
-
-        public override DateTime ChangeDateTime => DirectoryInfo.LastWriteTime;
-
-        public override string GetRootName() => Info.GetRootName().FullName;
     }
 }

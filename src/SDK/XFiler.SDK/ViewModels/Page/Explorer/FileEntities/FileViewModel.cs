@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace XFiler.SDK
 {
@@ -9,14 +8,10 @@ namespace XFiler.SDK
 
         public double Size => FileInfo.Length / 1024.0;
 
-        public FileViewModel(FileInfo info, IIconLoader iconLoader) : base(new XFilerRoute(info), iconLoader, info)
+        public FileViewModel(FileInfo info, IIconLoader iconLoader) 
+            : base(new XFilerRoute(info), iconLoader, info)
         {
             FileInfo = info;
         }
-
-        public override DateTime ChangeDateTime => Info.LastWriteTime;
-
-        public override string? GetRootName()
-            => Info.GetRootName().FullName;
     }
 }

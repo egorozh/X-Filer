@@ -27,7 +27,9 @@ namespace XFiler.SDK
         public IDropTarget DropTarget { get; }
         public IDragSource DragSource { get; }
 
-        public DirectoryInfo CurrentDirectory { get; }
+        public DirectoryInfo DirectoryInfo { get; }
+
+        public FileSystemInfo Info { get; }
 
         public bool IsLoaded { get; set; }
 
@@ -45,7 +47,7 @@ namespace XFiler.SDK
 
         public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
 
-        public DelegateCommand<FileEntityViewModel> PasteCommand { get; }
+        public DelegateCommand<IFileSystemModel> PasteCommand { get; }
 
         public DelegateCommand<object> OpenNewTabCommand { get; }
 
@@ -66,7 +68,8 @@ namespace XFiler.SDK
             _fileEntityFactory = fileEntityFactory;
             DropTarget = dropTarget;
             DragSource = dragSource;
-            CurrentDirectory = directoryPathName;
+            DirectoryInfo = directoryPathName;
+            Info = directoryPathName;
 
             OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
             OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
@@ -164,12 +167,12 @@ namespace XFiler.SDK
 
             var hideSystemFiles = true;
 
-            list.AddRange(CurrentDirectory.EnumerateDirectories()
+            list.AddRange(DirectoryInfo.EnumerateDirectories()
                 .Where(f => NotHidenFilter(f, hideSystemFiles))
                 .OrderBy(d => d.Name, comparer)
                 .Select(d => ((FileSystemInfo)d, EntityType.Directory)));
 
-            list.AddRange(CurrentDirectory.EnumerateFiles()
+            list.AddRange(DirectoryInfo.EnumerateFiles()
                 .Where(f => NotHidenFilter(f, hideSystemFiles))
                 .OrderBy(d => d.Name, comparer)
                 .Select(d => ((FileSystemInfo)d, EntityType.File)));

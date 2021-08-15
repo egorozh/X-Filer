@@ -3,7 +3,7 @@
 namespace XFiler.SDK
 {
     public interface IClipboardService
-    {
-        DelegateCommand<FileEntityViewModel> PasteCommand { get; }
-    }
+    {   
+        DelegateCommand<IFileSystemModel> PasteCommand { get; }
+    }   
 }
