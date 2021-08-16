@@ -9,6 +9,9 @@ namespace XFiler.Base
         {
             base.Load(services);
 
+            services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>("grid");
+            services.RegisterType<TileFilesPresenterViewModel>().Keyed<IFilesPresenter>("regularTile");
+
             services.RegisterType<RegularTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
             services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>();
         }

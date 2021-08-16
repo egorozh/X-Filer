@@ -22,6 +22,11 @@ namespace XFiler
 
         private static void RegisterServices(ContainerBuilder services)
         {
+            services.RegisterType<ExplorerOptions>().As<IExplorerOptions>().SingleInstance();
+
+            services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
+            services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);
+           
             var imageProviders = new List<IImageProvider>
             {
                 // Always Last

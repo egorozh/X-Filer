@@ -4,13 +4,12 @@ namespace XFiler.SDK
 {
     public class DirectoryViewModel : FileEntityViewModel, IDirectoryModel
     {
-        public DirectoryInfo DirectoryInfo { get; }
+        public DirectoryInfo DirectoryInfo => (DirectoryInfo)Info;
 
-        public DirectoryViewModel(DirectoryInfo directoryInfo, IIconLoader iconLoader,
+        public DirectoryViewModel(IIconLoader iconLoader,
             IClipboardService clipboardService)
-            : base(new XFilerRoute(directoryInfo), iconLoader, directoryInfo, clipboardService)
+            : base(iconLoader, clipboardService)
         {
-            DirectoryInfo = directoryInfo;
         }
     }
 }

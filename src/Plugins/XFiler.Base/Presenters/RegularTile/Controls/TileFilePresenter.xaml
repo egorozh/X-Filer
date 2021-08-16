@@ -321,8 +321,12 @@
                     <DataTrigger Value="True"
                                  Binding="{Binding IsSystem}">
                         <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
-                    </DataTrigger> 
-                </DataTemplate.Triggers>
+                    </DataTrigger>
+                    <DataTrigger Value="True"
+                                 Binding="{Binding IsHidden}">
+                        <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                    </DataTrigger>
+</DataTemplate.Triggers>
             </DataTemplate>
         </ListBox.ItemTemplate>
 

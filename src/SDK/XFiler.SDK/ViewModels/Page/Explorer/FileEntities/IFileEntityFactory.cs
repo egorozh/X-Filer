@@ -4,7 +4,7 @@ namespace XFiler.SDK
 {
     public interface IFileEntityFactory
     {
-        DirectoryViewModel CreateDirectory(DirectoryInfo directoryInfo, string? @group = null);
-        FileViewModel CreateFile(FileInfo fileInfo, string? @group = null);
+        FileEntityViewModel CreateDirectory(DirectoryInfo directoryInfo, string? @group = null);
+        FileEntityViewModel CreateFile(FileInfo fileInfo, string? @group = null);
     }
 }

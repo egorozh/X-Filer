@@ -17,6 +17,7 @@ namespace XFiler.SDK
         #region Private Fields
 
         private IFileEntityFactory _fileEntityFactory;
+        private IExplorerOptions _settings;
         private BackgroundWorker? _backgroundWorker;
 
         #endregion
@@ -28,9 +29,9 @@ namespace XFiler.SDK
         public IDropTarget DropTarget { get; private set; }
         public IDragSource DragSource { get; private set; }
 
-        public DirectoryInfo DirectoryInfo { get; }
+        public DirectoryInfo DirectoryInfo { get; private set; } = null!;
 
-        public FileSystemInfo Info { get; }
+        public FileSystemInfo Info { get; private set; } = null!;
 
         public bool IsLoaded { get; set; }
 
@@ -65,14 +66,13 @@ namespace XFiler.SDK
             IDragSource dragSource,
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
-            DirectoryInfo directoryPathName)
+            IExplorerOptions settings)
         {
             _fileEntityFactory = fileEntityFactory;
+            _settings = settings;
             DropTarget = dropTarget;
             DragSource = dragSource;
-            DirectoryInfo = directoryPathName;
-            Info = directoryPathName;
-
+            
             OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
 
@@ -81,13 +81,19 @@ namespace XFiler.SDK
             PasteCommand = clipboardService.PasteCommand;
             CutCommand = clipboardService.CutCommand;
             CopyCommand = clipboardService.CopyCommand;
-
-            InitItems();
         }
 
         #endregion
 
         #region Public Methods
+
+        public void Init(DirectoryInfo directoryInfo)
+        {
+            DirectoryInfo = directoryInfo;
+            Info = directoryInfo;
+
+            InitItems();
+        }
 
         public void Dispose()
         {
@@ -101,6 +107,7 @@ namespace XFiler.SDK
                 model.Dispose();
 
             _fileEntityFactory = null!;
+            _settings = null!;
 
             DropTarget = null!;
             DragSource = null!;
@@ -191,23 +198,29 @@ namespace XFiler.SDK
 
             var comparer = new NaturalSortComparer();
 
-            var hideSystemFiles = false;
+            var hideSystemFiles = !_settings.ShowSystemFiles;
+            var hideHiddenFiles = !_settings.ShowHiddenFiles;
 
             list.AddRange(DirectoryInfo.EnumerateDirectories()
-                .Where(f => NotHidenFilter(f, hideSystemFiles))
+                .Where(f => NotSystemFilter(f, hideSystemFiles))
+                .Where(f => NotHidenFilter(f, hideHiddenFiles))
                 .OrderBy(d => d.Name, comparer)
                 .Select(d => ((FileSystemInfo)d, EntityType.Directory)));
 
             list.AddRange(DirectoryInfo.EnumerateFiles()
-                .Where(f => NotHidenFilter(f, hideSystemFiles))
+                .Where(f => NotSystemFilter(f, hideSystemFiles))
+                .Where(f => NotHidenFilter(f, hideHiddenFiles))
                 .OrderBy(d => d.Name, comparer)
                 .Select(d => ((FileSystemInfo)d, EntityType.File)));
 
             return list;
         });
 
-        private static bool NotHidenFilter(FileSystemInfo info, bool hideSystemFiles)
-            => !hideSystemFiles || !info.Attributes.HasFlag(FileAttributes.Hidden);
+        private static bool NotHidenFilter(FileSystemInfo info, bool hideHiddenFiles)
+            => !hideHiddenFiles || !info.Attributes.HasFlag(FileAttributes.Hidden);
+
+        private static bool NotSystemFilter(FileSystemInfo info, bool hideSystemFiles)
+            => !hideSystemFiles || !info.Attributes.HasFlag(FileAttributes.System);
 
         private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
             => Progress = e.ProgressPercentage;

@@ -10,19 +10,20 @@ namespace XFiler.SDK
     {
         #region Private Fields
 
+        private readonly IIconLoader _iconLoader;
         private IClipboardService _clipboardService;
 
         #endregion
 
         #region Public Properties
 
-        public FileSystemInfo Info { get; }
+        public FileSystemInfo Info { get; private set; } = null!;
 
-        public XFilerRoute Route { get; }
+        public XFilerRoute Route { get; private set; } = null!;
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string FullName { get; set; }
+        public string FullName { get; set; } = null!;
 
         public string? Group { get; set; }
 
@@ -32,31 +33,40 @@ namespace XFiler.SDK
 
         public bool IsCutted { get; private set; }
 
-        public bool IsSystem { get; }
+        public bool IsSystem { get; private set; }
+
+        public bool IsHidden { get; private set; }
 
         #endregion
 
         #region Constructor
 
-        protected FileEntityViewModel(XFilerRoute route, IIconLoader iconLoader, FileSystemInfo info,
+        protected FileEntityViewModel(
+            IIconLoader iconLoader,
             IClipboardService clipboardService)
         {
+            _iconLoader = iconLoader;
             _clipboardService = clipboardService;
+
+            _clipboardService.ClipboardChanged += ClipboardServiceOnClipboardChanged;
+        }
+
+        #endregion
+
+        public virtual void Init(XFilerRoute route, FileSystemInfo info)
+        {
             Name = route.Header;
             FullName = route.FullName;
 
             Route = route;
             Info = info;
 
-            Icon = iconLoader.GetIcon(route, 64);
+            Icon = _iconLoader.GetIcon(route, 64);
 
             IsCutted = _clipboardService.IsCutted(info);
-            IsSystem = info.Attributes.HasFlag(FileAttributes.Hidden);
-
-            _clipboardService.ClipboardChanged += ClipboardServiceOnClipboardChanged;
+            IsSystem = info.Attributes.HasFlag(FileAttributes.System);
+            IsHidden = info.Attributes.HasFlag(FileAttributes.Hidden);
         }
-
-        #endregion
 
         public virtual void Dispose()
         {

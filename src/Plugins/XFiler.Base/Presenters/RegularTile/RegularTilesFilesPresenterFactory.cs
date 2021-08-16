@@ -1,5 +1,5 @@
-﻿using System.IO;
-using GongSolutions.Wpf.DragDrop;
+﻿using Autofac.Features.Indexed;
+using System.IO;
 using System.Windows;
 using XFiler.SDK;
 
@@ -7,28 +7,27 @@ namespace XFiler.Base
 {
     public class RegularTilesFilesPresenterFactory : BaseFilesPresenterFactory
     {
-        private readonly IFileEntityFactory _fileEntityFactory;
-        private readonly IDropTarget _dropTarget;
-        private readonly IDragSource _dragSource;
-        private readonly IWindowFactory _windowFactory;
-        private readonly IClipboardService _clipboardService;
+        private IIndex<string, IFilesPresenter> _presenterFactory;
 
-        public RegularTilesFilesPresenterFactory(IFileEntityFactory fileEntityFactory,
-            IDropTarget dropTarget,
-            IDragSource dragSource,
-            IWindowFactory windowFactory,
-            IClipboardService clipboardService) : base("Крупные значки", CreateTemplate())
+        public RegularTilesFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
+            : base("Крупные значки", CreateTemplate())
         {
-            _fileEntityFactory = fileEntityFactory;
-            _dropTarget = dropTarget;
-            _dragSource = dragSource;
-            _windowFactory = windowFactory;
-            _clipboardService = clipboardService;
+            _presenterFactory = presenterFactory;
         }
 
         public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory)
-            => new TileFilesPresenterViewModel(currentDirectory, _fileEntityFactory, _dropTarget, _dragSource,
-                _windowFactory, _clipboardService);
+        {
+            var presenter = _presenterFactory["regularTile"];
+            presenter.Init(currentDirectory);
+            return presenter;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            _presenterFactory = null!;
+        }
 
         private static DataTemplate CreateTemplate() => new()
         {

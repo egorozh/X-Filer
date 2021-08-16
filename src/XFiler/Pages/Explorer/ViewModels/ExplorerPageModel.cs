@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Prism.Commands;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using Prism.Commands;
 using XFiler.SDK;
 
 namespace XFiler
@@ -23,7 +23,7 @@ namespace XFiler
         #endregion
 
         public DelegateCommand<object> PasteCommand { get; private set; }
-            
+
         #region Constructor
 
         public ExplorerPageModel(
@@ -44,22 +44,6 @@ namespace XFiler
             CurrentPresenter = FilesPresenters.First();
         }
 
-        private void DirectoryTabItemViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            PropertyChanged -= DirectoryTabItemViewModelOnPropertyChanged;
-
-            switch (e.PropertyName)
-            {
-                case nameof(CurrentPresenter):
-
-                    OpenDirectory();
-
-                    break;
-            }
-
-            PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
-        }
-
         #endregion
 
         #region Public Methods
@@ -71,8 +55,12 @@ namespace XFiler
             PropertyChanged -= DirectoryTabItemViewModelOnPropertyChanged;
 
             foreach (var factory in FilesPresenters)
+            {
                 factory.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
 
+                factory.Dispose();
+            }
+                
             _directory = null!;
             FilesPresenters = null!;
             CurrentPresenter = null!;
@@ -98,6 +86,22 @@ namespace XFiler
             };
 
             GoTo(route);
+        }
+
+        private void DirectoryTabItemViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged -= DirectoryTabItemViewModelOnPropertyChanged;
+
+            switch (e.PropertyName)
+            {
+                case nameof(CurrentPresenter):
+
+                    OpenDirectory();
+
+                    break;
+            }
+
+            PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
         }
 
         #endregion

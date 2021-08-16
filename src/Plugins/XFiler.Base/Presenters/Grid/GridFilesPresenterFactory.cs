@@ -1,36 +1,35 @@
-﻿using System.IO;
+﻿using Autofac.Features.Indexed;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Markup;
-using GongSolutions.Wpf.DragDrop;
 using XFiler.SDK;
 
 namespace XFiler.Base
 {
     public class GridFilesPresenterFactory : BaseFilesPresenterFactory
     {
-        private readonly IFileEntityFactory _fileEntityFactory;
-        private readonly IDropTarget _dropTarget;
-        private readonly IDragSource _dragSource;
-        private readonly IWindowFactory _windowFactory;
-        private readonly IClipboardService _clipboardService;
+        private IIndex<string, IFilesPresenter> _presenterFactory;
 
-        public GridFilesPresenterFactory(IFileEntityFactory fileEntityFactory,
-            IDropTarget dropTarget,
-            IDragSource dragSource,
-            IWindowFactory windowFactory,
-            IClipboardService clipboardService) : base("Таблица", CreateTemplate())
+        public GridFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
+            : base("Таблица", CreateTemplate())
         {
-            _fileEntityFactory = fileEntityFactory;
-            _dropTarget = dropTarget;
-            _dragSource = dragSource;
-            _windowFactory = windowFactory;
-            _clipboardService = clipboardService;
+            _presenterFactory = presenterFactory;
         }
 
         public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory)
-            => new GridFilesPresenterViewModel(currentDirectory, _fileEntityFactory,
-                _dropTarget, _dragSource, _windowFactory, _clipboardService);
+        {
+            var presenter = _presenterFactory["grid"];
+            presenter.Init(currentDirectory);
+            return presenter;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            _presenterFactory = null!;
+        }
 
         private static DataTemplate CreateTemplate()
         {
