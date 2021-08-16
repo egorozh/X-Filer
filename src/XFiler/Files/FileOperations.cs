@@ -1,7 +1,6 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
+using FileOperationsEx;
 using XFiler.SDK;
 
 namespace XFiler
@@ -17,23 +16,21 @@ namespace XFiler
                 switch (fileSystemInfo)
                 {
                     case DirectoryInfo directoryInfo:
-                        Task.Run(() =>
-                        {
-                            FileSystem.MoveDirectory(
-                                directoryInfo.FullName,
-                                Path.Combine(targetDir, directoryInfo.Name),
-                                UIOption.AllDialogs,
-                                UICancelOption.DoNothing);
-                        });
+
+                        FileSystemEx.MoveDirectory(
+                            directoryInfo.FullName,
+                            Path.Combine(targetDir, directoryInfo.Name),
+                            UIOption.AllDialogs,
+                            UICancelOption.DoNothing);
+
                         break;
                     case FileInfo fileInfo:
-                        Task.Run(() =>
-                        {
-                            FileSystem.MoveFile(fileInfo.FullName,
-                                Path.Combine(targetDir, fileInfo.Name),
-                                UIOption.AllDialogs,
-                                UICancelOption.DoNothing);
-                        });
+
+                        FileSystemEx.MoveFile(fileInfo.FullName,
+                            Path.Combine(targetDir, fileInfo.Name),
+                            UIOption.AllDialogs,
+                            UICancelOption.DoNothing);
+
                         break;
                 }
             }
@@ -42,29 +39,44 @@ namespace XFiler
         public void Copy(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory)
         {
             var targetDir = targetDirectory.FullName;
+           
+            //var sourceBuilder = new List<string>();
+            //var targetPathBuilder = new List<string>();
+
+            //foreach (var source in sourceItems)
+            //{
+            //    sourceBuilder.Add(source.FullName);
+            //    targetPathBuilder.Add(Path.Combine(targetDir, source.Name));
+            //}
+            
+            //var srcPaths = Path.Join(sourceBuilder.ToArray());
+            //var targetPaths = Path.Join(targetPathBuilder.ToArray());
+
+            //FileSystemEx.CopyFile(
+            //    srcPaths,
+            //    targetPaths,
+            //    UIOption.AllDialogs,
+            //    UICancelOption.DoNothing);
 
             foreach (var fileSystemInfo in sourceItems)
             {
                 switch (fileSystemInfo)
                 {
                     case DirectoryInfo directoryInfo:
-                        Task.Run(() =>
-                        {
-                            FileSystem.CopyDirectory(
-                                directoryInfo.FullName,
-                                Path.Combine(targetDir, directoryInfo.Name),
-                                UIOption.AllDialogs,
-                                UICancelOption.DoNothing);
-                        });
+
+                        FileSystemEx.CopyDirectory(
+                            directoryInfo.FullName,
+                            Path.Combine(targetDir, directoryInfo.Name),
+                            UIOption.AllDialogs,
+                            UICancelOption.DoNothing);
+
                         break;
                     case FileInfo fileInfo:
-                        Task.Run(() =>
-                        {
-                            FileSystem.CopyFile(fileInfo.FullName,
-                                Path.Combine(targetDir, fileInfo.Name),
-                                UIOption.AllDialogs,
-                                UICancelOption.DoNothing);
-                        });
+
+                        FileSystemEx.CopyFile(fileInfo.FullName,
+                            Path.Combine(targetDir, fileInfo.Name),
+                            UIOption.AllDialogs,
+                            UICancelOption.DoNothing);
 
                         break;
                 }
