@@ -25,6 +25,7 @@
         <Grid Grid.Row="1">
             <ContentControl x:Name="ContentControl"
                             Content="{Binding CurrentPresenter}">
+
                 <ContentControl.ContextMenu>
                     <ContextMenu>
 
@@ -50,6 +51,13 @@
 
                         <MenuItem Header="Сортировка" />
                         <MenuItem Header="Группировка" />
+
+                        <Separator />
+
+                        <MenuItem Header="Вставить"
+                                  Command="{Binding PasteCommand}"
+                                  CommandParameter="{Binding CurrentPresenter.FilesPresenter}"
+                                  InputGestureText="Ctrl + V" />
 
                         <Separator />
 

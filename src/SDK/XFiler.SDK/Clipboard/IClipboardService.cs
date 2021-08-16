@@ -12,7 +12,7 @@ namespace XFiler.SDK
 
         DelegateCommand<object> CutCommand { get; }
         DelegateCommand<object> CopyCommand { get; }
-        DelegateCommand<IFileSystemModel> PasteCommand { get; }
+        DelegateCommand<object> PasteCommand { get; }
     }
 
     public class FileClipboardEventArgs : EventArgs

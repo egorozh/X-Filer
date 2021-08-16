@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Prism.Commands;
 using XFiler.SDK;
 
 namespace XFiler
@@ -21,15 +22,19 @@ namespace XFiler
 
         #endregion
 
+        public DelegateCommand<object> PasteCommand { get; private set; }
+            
         #region Constructor
 
         public ExplorerPageModel(
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
+            IClipboardService clipboardService,
             DirectoryInfo directory) : base(typeof(ExplorerPage))
         {
             _directory = directory;
 
             FilesPresenters = filesPresenters;
+            PasteCommand = clipboardService.PasteCommand;
 
             PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
 
@@ -71,6 +76,7 @@ namespace XFiler
             _directory = null!;
             FilesPresenters = null!;
             CurrentPresenter = null!;
+            PasteCommand = null!;
         }
 
         #endregion

@@ -109,17 +109,17 @@
 
                 <MenuItem Header="Вырезать"
                           Command="{StaticResource CutCommand}"
-                          CommandParameter="{Binding}" 
-                          InputGestureText="Ctrl + X"/>
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + X" />
 
                 <MenuItem Header="Копировать"
                           Command="{StaticResource CopyCommand}"
-                          CommandParameter="{Binding}" 
+                          CommandParameter="{Binding}"
                           InputGestureText="Ctrl + C" />
 
                 <MenuItem Header="Вставить"
                           Command="{StaticResource PasteCommand}"
-                          CommandParameter="{Binding}" 
+                          CommandParameter="{Binding}"
                           InputGestureText="Ctrl + V" />
 
             </ContextMenu>
@@ -139,8 +139,8 @@
 
                 <MenuItem Header="Вырезать"
                           Command="{StaticResource CutCommand}"
-                          CommandParameter="{Binding}" 
-                          InputGestureText="Ctrl + X"/>
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + X" />
 
                 <MenuItem Header="Копировать"
                           Command="{StaticResource CopyCommand}"
@@ -169,13 +169,21 @@
         </ListBox.Resources>
 
         <ListBox.InputBindings>
-            <KeyBinding Command="{StaticResource CutManyCommand}" 
-                        Modifiers="Control" Key="X"/>
-            <KeyBinding Command="{StaticResource CopyManyCommand}" 
-                        Modifiers="Control" Key="C"/>
-            <KeyBinding Command="{StaticResource PasteCommand}" 
-                        CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}"
-                        Modifiers="Control" Key="V"/>
+            <KeyBinding Command="{StaticResource CutManyCommand}"
+                        Modifiers="Control" Key="X" />
+            <KeyBinding Command="{StaticResource CopyManyCommand}"
+                        Modifiers="Control" Key="C" />
+            <KeyBinding Command="{StaticResource PasteCommand}"
+                        Modifiers="Control" Key="V">
+                <KeyBinding.CommandParameter>
+                    <MultiBinding Converter="{sdk:CloneParamsConverter}">
+                        <Binding Path="SelectedItem"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}" />
+                        <Binding Path="DataContext"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}" />
+                    </MultiBinding>
+                </KeyBinding.CommandParameter>
+            </KeyBinding>
         </ListBox.InputBindings>
 
         <ListBox.ItemContainerStyle>
@@ -235,7 +243,7 @@
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <controls:VirtualizingWrapPanel Orientation="Vertical"
-                                                SpacingMode="None"
+                                                SpacingMode="Uniform"
                                                 ScrollUnit="Item" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>

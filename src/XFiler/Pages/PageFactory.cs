@@ -13,13 +13,16 @@ namespace XFiler
     internal class PageFactory : IPageFactory
     {
         private readonly Func<IReadOnlyList<IFilesPresenterFactory>> _filesPresenters;
+        private readonly IClipboardService _clipboardService;
         private readonly IIconLoader _iconLoader;
 
         public PageFactory(
             Func<IReadOnlyList<IFilesPresenterFactory>> filesPresenters,
+            IClipboardService clipboardService,
             IIconLoader iconLoader)
         {
             _filesPresenters = filesPresenters;
+            _clipboardService = clipboardService;
             _iconLoader = iconLoader;
         }
 
@@ -70,7 +73,7 @@ namespace XFiler
                 return null;
             }
 
-            return new ExplorerPageModel(_filesPresenters.Invoke(), dir);
+            return new ExplorerPageModel(_filesPresenters.Invoke(), _clipboardService, dir);
         }
 
 

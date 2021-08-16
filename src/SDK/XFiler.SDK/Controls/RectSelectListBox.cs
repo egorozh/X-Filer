@@ -74,7 +74,7 @@ namespace XFiler.SDK
 
             _selectLogic?.OnMouseLeftButtonDown(e);
         }
-
+        
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -86,6 +86,14 @@ namespace XFiler.SDK
         {
             base.OnMouseLeftButtonUp(e);
 
+            _selectLogic?.OnMouseLeftButtonUp(e);
+        }
+
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseRightButtonDown(e);
+
+            _selectLogic?.OnMouseLeftButtonDown(e);
             _selectLogic?.OnMouseLeftButtonUp(e);
         }
 

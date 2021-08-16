@@ -31,7 +31,7 @@ namespace XFiler
 
         public DelegateCommand<object> CutCommand { get; }
         public DelegateCommand<object> CopyCommand { get; }
-        public DelegateCommand<IFileSystemModel> PasteCommand { get; }
+        public DelegateCommand<object> PasteCommand { get; }
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace XFiler
 
             CutCommand = new DelegateCommand<object>(OnCut);
             CopyCommand = new DelegateCommand<object>(OnCopy);
-            PasteCommand = new DelegateCommand<IFileSystemModel>(OnPaste, CanPaste);
+            PasteCommand = new DelegateCommand<object>(OnPaste, CanPaste);
 
             SharpClipboard clipboard = new();
             clipboard.ClipboardChanged += ClipboardOnClipboardChanged;
@@ -79,14 +79,21 @@ namespace XFiler
             }
         }
 
-        private static bool CanPaste(IFileSystemModel? model)
+        private static bool CanPaste(object model)
         {
             return Clipboard.ContainsFileDropList();
         }
-          
-        private void OnPaste(IFileSystemModel? model)
+            
+        private void OnPaste(object model)
         {
-            if (model is not { Info: DirectoryInfo directory })
+            IFileSystemModel? dirModel;
+
+            if (model is object[] { Length: 2 } parameters)
+                dirModel = parameters.OfType<IFileSystemModel>().FirstOrDefault();
+            else
+                dirModel = model as IFileSystemModel;
+
+            if (dirModel is not { Info: DirectoryInfo directory })
                 return;
 
             var files = Clipboard.GetFileDropList();

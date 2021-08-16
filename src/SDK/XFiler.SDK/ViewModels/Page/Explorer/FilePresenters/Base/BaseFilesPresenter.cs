@@ -49,7 +49,7 @@ namespace XFiler.SDK
         public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
         public DelegateCommand<object> OpenNewTabCommand { get; }
 
-        public DelegateCommand<IFileSystemModel> PasteCommand { get; private set; }
+        public DelegateCommand<object> PasteCommand { get; private set; }
         public DelegateCommand<object> CutCommand { get; private set; }
         public DelegateCommand<object> CopyCommand { get; private set; }
 
