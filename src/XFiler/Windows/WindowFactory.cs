@@ -80,13 +80,15 @@ namespace XFiler
                     .Invoke()
                     .CreateExplorerTab(model.DirectoryInfo);
 
-                OpenTabInNewWindow(vm);
+                if (vm != null) 
+                    OpenTabInNewWindow(vm);
             }
             else if (parameter is IEnumerable items)
             {
                 var tabs = items.OfType<IDirectoryModel>()
                     .Select(directoryModel => _explorerTabFactory.Invoke()
                         .CreateExplorerTab(directoryModel.DirectoryInfo))
+                    .OfType<ITabItemModel>()
                     .ToList();
 
                 OpenTabInNewWindow(tabs);

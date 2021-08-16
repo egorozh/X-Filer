@@ -15,13 +15,37 @@ namespace XFiler
             _bookmarksManager = bookmarksManager;
         }
 
-        public ITabItemModel CreateExplorerTab(DirectoryInfo directoryInfo)
-            => new TabItemModel(_bookmarksManager, _pageFactory, directoryInfo);
+        public ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo)
+        {
+            var route = new XFilerRoute(directoryInfo);
+            var page = _pageFactory.CreatePage(route);
 
-        public ITabItemModel CreateTab(XFilerRoute route)
-            => new TabItemModel(_bookmarksManager, _pageFactory, route);
+            if (page == null)
+                return null;
 
-        public ITabItemModel CreateMyComputerTab()
-            => new TabItemModel(_bookmarksManager, _pageFactory, SpecialRoutes.MyComputer);
+            return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
+        }
+
+
+        public ITabItemModel? CreateTab(XFilerRoute route)
+        {
+            var page = _pageFactory.CreatePage(route);
+
+            if (page == null)
+                return null;
+
+            return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
+        }
+
+        public ITabItemModel? CreateMyComputerTab()
+        {
+            var route = SpecialRoutes.MyComputer;
+            var page = _pageFactory.CreatePage(route);
+
+            if (page == null)
+                return null;
+
+            return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
+        }
     }
 }

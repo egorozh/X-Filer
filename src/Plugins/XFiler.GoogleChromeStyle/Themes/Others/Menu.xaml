@@ -603,5 +603,59 @@
         </Style.Triggers>
     </Style>
 
+    <ControlTemplate x:Key="MenuDotsMenuTemplate" TargetType="{x:Type MenuItem}">
+        <Border Name="Border"
+                Background="Transparent"
+                Height="28"
+                Width="28"
+                CornerRadius="14">
+
+            <Grid>
+
+                <ContentPresenter ContentSource="Icon"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Margin="8"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                <Popup Name="Popup"
+                       Placement="Bottom"
+                       IsOpen="{TemplateBinding IsSubmenuOpen}"
+                       AllowsTransparency="True"
+
+                       Focusable="False"
+                       PopupAnimation="Fade">
+                    <Border Name="SubmenuBorder"
+                            SnapsToDevicePixels="True"
+                            BorderBrush="#3C4043"
+                            Background="#292A2D"
+                            BorderThickness="1">
+                        <ScrollViewer CanContentScroll="True"
+                                      Style="{StaticResource MenuScrollViewer}">
+                            <StackPanel IsItemsHost="True"
+                                        KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </ScrollViewer>
+                    </Border>
+                </Popup>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSuspendingPopupAnimation" Value="true">
+                <Setter TargetName="Popup" Property="PopupAnimation" Value="None" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#454545" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
+            </Trigger>
+            <!--Snippettoplevelheader-->
+            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="True">
+                <Setter TargetName="SubmenuBorder" Property="Padding" Value="0,0,0,3" />
+            </Trigger>
+            <!--/Snippettoplevelheader-->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
 </ResourceDictionary>

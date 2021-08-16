@@ -53,7 +53,8 @@ namespace XFiler
         public TabItemModel(
             IBookmarksManager bookmarksManager,
             IPageFactory pageFactory,
-            XFilerRoute route)
+            XFilerRoute route,
+            IPageModel initPage)
         {
             _pageFactory = pageFactory;
 
@@ -68,16 +69,10 @@ namespace XFiler
             Route = route;
             Header = route.Header;
             _searchText = route.FullName;
-            Page = _pageFactory.CreatePage(Route);
+            Page = initPage;
 
             Page.GoToUrl += PageOnGoToUrl;
             _history.HistoryChanged += History_HistoryChanged;
-        }
-        
-        public TabItemModel(IBookmarksManager bookmarksManager, IPageFactory pageFactory,
-            DirectoryInfo directoryInfo)
-            : this(bookmarksManager, pageFactory, new XFilerRoute(directoryInfo))
-        {
         }
 
         #endregion
@@ -119,7 +114,7 @@ namespace XFiler
                     Page.GoToUrl -= PageOnGoToUrl;
                     Page.Dispose();
                 }
-                   
+
 
                 Page = page;
                 Page.GoToUrl += PageOnGoToUrl;

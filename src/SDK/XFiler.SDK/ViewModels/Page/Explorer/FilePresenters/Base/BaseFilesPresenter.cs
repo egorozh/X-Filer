@@ -191,7 +191,7 @@ namespace XFiler.SDK
 
             var comparer = new NaturalSortComparer();
 
-            var hideSystemFiles = true;
+            var hideSystemFiles = false;
 
             list.AddRange(DirectoryInfo.EnumerateDirectories()
                 .Where(f => NotHidenFilter(f, hideSystemFiles))

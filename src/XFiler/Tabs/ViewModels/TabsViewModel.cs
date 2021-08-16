@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Dragablz;
+using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using Dragablz;
-using Prism.Commands;
 using XFiler.SDK;
 
 namespace XFiler
@@ -86,6 +86,10 @@ namespace XFiler
             if (fileEntityViewModel is DirectoryViewModel directoryViewModel)
             {
                 var tab = _tabFactory.CreateExplorerTab(directoryViewModel.DirectoryInfo);
+
+                if (tab == null)
+                    return;
+
                 TabItems.Add(tab);
 
                 if (isSelectNewTab)
@@ -100,6 +104,9 @@ namespace XFiler
                 if (model.Info is DirectoryInfo info)
                 {
                     var tab = _tabFactory.CreateExplorerTab(info);
+                    if (tab == null)
+                        continue;
+
                     TabItems.Add(tab);
 
                     if (isSelectNewTab)
@@ -134,8 +141,10 @@ namespace XFiler
             if (obj is not ITabItemModel directoryTabItem)
                 return;
 
-            TabItems.Add(_tabFactory
-                .CreateTab(directoryTabItem.Route));
+            var tab = _tabFactory.CreateTab(directoryTabItem.Route);
+
+            if (tab != null)
+                TabItems.Add(tab);
         }
 
         private bool CanCloseAllTabs(object? obj) => TabItems.Count > 1;
@@ -162,6 +171,10 @@ namespace XFiler
         private void OnOpenSettings()
         {
             var tab = _tabFactory.CreateTab(SpecialRoutes.Settings);
+           
+            if (tab == null) 
+                return;
+
             TabItems.Add(tab);
             CurrentTabItem = tab;
         }
@@ -176,13 +189,8 @@ namespace XFiler
 
         private void ClosingTabItemHandlerImpl(ItemActionCallbackArgs<TabablzControl> args)
         {
-            //in here you can dispose stuff or cancel the close
-
-            //here's your view model:
             var viewModel = args.DragablzItem.DataContext as ITabItemModel;
             viewModel?.Dispose();
-            //here's how you can cancel stuff:
-            //args.Cancel(); 
         }
 
         #endregion

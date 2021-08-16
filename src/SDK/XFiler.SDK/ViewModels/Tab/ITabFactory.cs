@@ -4,8 +4,10 @@ namespace XFiler.SDK
 {
     public interface ITabFactory
     {
-        ITabItemModel CreateExplorerTab(DirectoryInfo directoryInfo);
-        ITabItemModel CreateTab(XFilerRoute route);
-        ITabItemModel CreateMyComputerTab();    
+        ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo);
+
+        ITabItemModel? CreateTab(XFilerRoute route);
+            
+        ITabItemModel CreateMyComputerTab();
     }
-}   
+}

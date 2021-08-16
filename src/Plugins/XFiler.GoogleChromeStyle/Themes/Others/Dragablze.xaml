@@ -408,6 +408,7 @@
     <Style TargetType="{x:Type dragablz:TabablzControl}"
            x:Key="TabablzControlStyle">
         <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource ToolBarBackground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="0 8 0 0" />
         <Setter Property="SelectedItem" Value="{Binding CurrentTabItem, Mode=TwoWay}" />
