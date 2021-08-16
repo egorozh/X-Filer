@@ -30,7 +30,9 @@ namespace XFiler.SDK
 
         public ImageSource? Icon { get; set; }
 
-        public bool IsCutted { get; set; }
+        public bool IsCutted { get; private set; }
+
+        public bool IsSystem { get; }
 
         #endregion
 
@@ -48,6 +50,9 @@ namespace XFiler.SDK
 
             Icon = iconLoader.GetIcon(route, 64);
 
+            IsCutted = _clipboardService.IsCutted(info);
+            IsSystem = info.Attributes.HasFlag(FileAttributes.Hidden);
+
             _clipboardService.ClipboardChanged += ClipboardServiceOnClipboardChanged;
         }
 
@@ -55,6 +60,8 @@ namespace XFiler.SDK
 
         public virtual void Dispose()
         {
+            _clipboardService.ClipboardChanged -= ClipboardServiceOnClipboardChanged;
+
             _clipboardService = null!;
         }
 

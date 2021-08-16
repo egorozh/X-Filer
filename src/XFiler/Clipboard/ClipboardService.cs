@@ -51,6 +51,26 @@ namespace XFiler
 
         #endregion
 
+        #region Public Methods
+
+        public bool IsCutted(FileSystemInfo info)
+        {
+            var items = Clipboard.GetFileDropList()
+                .OfType<string>();
+
+            var action = GetAction();
+
+            if (action.HasFlag(DragDropEffects.Move))
+            {
+                if (items.Any(fi => fi == info.FullName))
+                    return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #region Private Methods
 
         private static void OnCut(object parameter)
@@ -83,7 +103,7 @@ namespace XFiler
         {
             return Clipboard.ContainsFileDropList();
         }
-            
+
         private void OnPaste(object model)
         {
             IFileSystemModel? dirModel;
@@ -96,8 +116,8 @@ namespace XFiler
             if (dirModel is not { Info: DirectoryInfo directory })
                 return;
 
-            var files = Clipboard.GetFileDropList();
-            IReadOnlyList<FileSystemInfo> items = files.OfType<string>()
+            var items = Clipboard.GetFileDropList()
+                .OfType<string>()
                 .Select(p => p.ToInfo())
                 .OfType<FileSystemInfo>().ToList();
 
@@ -111,13 +131,13 @@ namespace XFiler
 
         private void ClipboardOnClipboardChanged(object? sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
-            var files = Clipboard.GetFileDropList();
-            IReadOnlyList<FileSystemInfo> items = files.OfType<string>()
+            var items = Clipboard.GetFileDropList()
+                .OfType<string>()
                 .Select(p => p.ToInfo())
                 .OfType<FileSystemInfo>().ToList();
 
             var action = GetAction();
-            
+
             PasteCommand.RaiseCanExecuteChanged();
 
             ClipboardChanged?.Invoke(this, new FileClipboardEventArgs(action, items));

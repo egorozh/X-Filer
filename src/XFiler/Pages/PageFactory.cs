@@ -61,7 +61,7 @@ namespace XFiler
 
             try
             {
-                dir.GetAccessControl();
+                var access = dir.EnumerateFileSystemInfos();
             }
             catch (UnauthorizedAccessException e)
             {
