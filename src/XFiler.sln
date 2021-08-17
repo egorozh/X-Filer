@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FileOperationsEx", "FileOperationsEx\FileOperationsEx.vbproj", "{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Windows.VB.FileOperations", "Windows.VB.FileOperations\Windows.VB.FileOperations.vbproj", "{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,12 +70,12 @@ Global
 		{E72A3901-9B3C-404B-82D3-D140913EAED1}.Release|Any CPU.ActiveCfg = Release|x64
 		{E72A3901-9B3C-404B-82D3-D140913EAED1}.Release|x64.ActiveCfg = Release|x64
 		{E72A3901-9B3C-404B-82D3-D140913EAED1}.Release|x64.Build.0 = Release|x64
-		{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}.Debug|x64.ActiveCfg = Debug|x64
-		{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}.Debug|x64.Build.0 = Debug|x64
-		{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}.Release|Any CPU.ActiveCfg = Release|x64
-		{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}.Release|x64.ActiveCfg = Release|x64
-		{956D39E5-1E2A-4A0D-B7EB-FE22EF7758C5}.Release|x64.Build.0 = Release|x64
+		{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}.Debug|x64.ActiveCfg = Debug|x64
+		{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}.Debug|x64.Build.0 = Debug|x64
+		{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}.Release|Any CPU.ActiveCfg = Release|x64
+		{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}.Release|x64.ActiveCfg = Release|x64
+		{FD1ACE9B-FF6F-496B-A7D4-B6D36C9F0E6B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

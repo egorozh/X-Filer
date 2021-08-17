@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using FileOperationsEx;
 using XFiler.SDK;
 
 namespace XFiler

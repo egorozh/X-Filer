@@ -11,10 +11,9 @@
 Option Strict On
 Option Explicit On
 
-Imports System
 
-Namespace System
-    
+Namespace Resources
+
     'Этот класс создан автоматически классом StronglyTypedResourceBuilder
     'с помощью такого средства, как ResGen или Visual Studio.
     'Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
@@ -22,24 +21,24 @@ Namespace System
     '''<summary>
     '''  Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+     Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>
     Friend Class SR
 
         Private Shared resourceMan As Global.System.Resources.ResourceManager
-        
+
         Private Shared resourceCulture As Global.System.Globalization.CultureInfo
-        
-        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
+
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>
         Friend Sub New()
             MyBase.New
         End Sub
-        
+
         '''<summary>
         '''  Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>
         Friend Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
@@ -49,21 +48,21 @@ Namespace System
                 Return resourceMan
             End Get
         End Property
-        
+
         '''<summary>
         '''  Перезаписывает свойство CurrentUICulture текущего потока для всех
         '''  обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>
         Friend Shared Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
             Set
-                resourceCulture = value
+                resourceCulture = Value
             End Set
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на No accessible overloaded &apos;{0}&apos; is most specific for these arguments: {1}.
         '''</summary>
@@ -72,7 +71,7 @@ Namespace System
                 Return ResourceManager.GetString("AmbiguousCall_ExactMatch2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на No accessible overloaded &apos;{0}&apos; can be called with these arguments without a widening conversion: {1}.
         '''</summary>
@@ -81,7 +80,7 @@ Namespace System
                 Return ResourceManager.GetString("AmbiguousCall_WideningConversion2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на No accessible overloaded &apos;{0}&apos; can be called with these arguments without a narrowing conversion: {1}.
         '''</summary>
@@ -90,7 +89,7 @@ Namespace System
                 Return ResourceManager.GetString("AmbiguousCall2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Conversion from type &apos;{0}&apos; to type &apos;{1}&apos; is ambiguous..
         '''</summary>
@@ -99,7 +98,7 @@ Namespace System
                 Return ResourceManager.GetString("AmbiguousCast2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на No accessible overloaded &apos;{0}&apos; can be called without a narrowing conversion..
         '''</summary>
@@ -108,7 +107,7 @@ Namespace System
                 Return ResourceManager.GetString("AmbiguousMatch_NarrowingConversion1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Array dimensions do not match those specified by the &apos;VBFixedArray&apos; attribute..
         '''</summary>
@@ -117,7 +116,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_ArrayDimensionsDontMatch", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot determine array type because it is Nothing..
         '''</summary>
@@ -126,7 +125,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_ArrayNotInitialized", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Collection index must be in the range 1 to the size of the collection..
         '''</summary>
@@ -135,7 +134,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_CollectionIndex", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater than or equal to -1..
         '''</summary>
@@ -144,7 +143,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_GEMinusOne1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater than or equal to 1..
         '''</summary>
@@ -153,7 +152,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_GEOne1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater or equal to zero..
         '''</summary>
@@ -162,7 +161,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_GEZero1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater than zero..
         '''</summary>
@@ -171,7 +170,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_GTZero1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Loop control variable of type &apos;{1}&apos; does not implement the &apos;System.IComparable&apos; interface..
         '''</summary>
@@ -180,7 +179,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_IComparable2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на VbStrConv.Katakana and VbStrConv.Hiragana cannot be combined..
         '''</summary>
@@ -189,7 +188,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_IllegalKataHira", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на &apos;{0}&apos; is a type in &apos;{1}&apos; and cannot be used as an expression..
         '''</summary>
@@ -198,7 +197,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_IllegalNestedType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на VbStrConv.Wide and VbStrConv.Narrow cannot be combined..
         '''</summary>
@@ -207,7 +206,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_IllegalWideNarrow", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be less than or equal to the length of argument &apos;{1}&apos;..
         '''</summary>
@@ -216,7 +215,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_IndexLELength2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; cannot be converted to type &apos;Date&apos;..
         '''</summary>
@@ -225,7 +224,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidDateValue1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Length of fixed length string cannot be zero..
         '''</summary>
@@ -234,7 +233,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidFixedLengthString", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Method &apos;{1}&apos; has no parameter named &apos;{0}&apos;..
         '''</summary>
@@ -243,7 +242,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidNamedArg2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Named arguments are not valid as array subscripts..
         '''</summary>
@@ -252,7 +251,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidNamedArgs", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; is Nothing..
         '''</summary>
@@ -261,7 +260,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidNullValue1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument value &apos;{0}&apos; contains characters that are not valid in a path name..
         '''</summary>
@@ -270,7 +269,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidPathChars1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; is not valid for the array..
         '''</summary>
@@ -279,7 +278,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidRank1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Arguments are not valid..
         '''</summary>
@@ -288,7 +287,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidValue", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; is not a valid value..
         '''</summary>
@@ -297,7 +296,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidValue1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; cannot be converted to type &apos;{1}&apos;..
         '''</summary>
@@ -306,7 +305,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidValueType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Conversion&apos; is not valid..
         '''</summary>
@@ -315,7 +314,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_InvalidVbStrConv", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This system does not contain support for the Japanese locale..
         '''</summary>
@@ -324,7 +323,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_JPNNotSupported", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Locale id &apos;{0}&apos; is not supported on this system..
         '''</summary>
@@ -333,7 +332,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_LCIDNotSupported1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Length of argument &apos;{0}&apos; must be greater than zero..
         '''</summary>
@@ -342,7 +341,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_LengthGTZero1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This system does not contain support for the Locale specified..
         '''</summary>
@@ -351,7 +350,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_LocalNotSupported", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater than 0 or equal to -1..
         '''</summary>
@@ -360,7 +359,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_MinusOneOrGTZero1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Type of argument &apos;{0}&apos; is &apos;{1}&apos;, which is not numeric..
         '''</summary>
@@ -369,7 +368,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_NotNumericType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Path&apos; is Nothing or empty..
         '''</summary>
@@ -378,7 +377,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_PathNullOrEmpty", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; is Nothing or empty..
         '''</summary>
@@ -387,7 +386,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_PathNullOrEmpty1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на &apos;FilePutObject&apos; of structure &apos;{0}&apos; is not valid..
         '''</summary>
@@ -396,7 +395,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_PutObjectOfValueType1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be within the range 0 to 99..
         '''</summary>
@@ -405,7 +404,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_Range0to99_1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be within the range 1 to 255..
         '''</summary>
@@ -414,7 +413,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_Range1toFF1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be within the range of -32768 to 65535..
         '''</summary>
@@ -423,7 +422,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_RangeTwoBytes1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; cannot be a multi-dimensional array..
         '''</summary>
@@ -432,7 +431,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_RankEQOne1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This system does not contain support for the Simplified Chinese locale..
         '''</summary>
@@ -441,7 +440,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_SCNotSupported", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на VbStrConv.SimplifiedChinese and VbStrConv.TraditionalChinese cannot be combined..
         '''</summary>
@@ -450,7 +449,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_StrConvSCandTC", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This system does not contain support for the Traditional Chinese locale..
         '''</summary>
@@ -459,7 +458,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_TCNotSupported", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Array argument cannot have more than 2 dimensions..
         '''</summary>
@@ -468,7 +467,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_UnsupportedArrayDimensions", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File I/O of a structure with field &apos;{0}&apos; of type &apos;{1}&apos; is not valid..
         '''</summary>
@@ -477,7 +476,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_UnsupportedFieldType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File I/O with type &apos;{0}&apos; is not valid..
         '''</summary>
@@ -486,7 +485,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_UnsupportedIOType1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на VbStrConv.Wide and VbStrConv.Narrow are not applicable to the locale specified..
         '''</summary>
@@ -495,7 +494,7 @@ Namespace System
                 Return ResourceManager.GetString("Argument_WideNarrowNotApplicable", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument matching parameter &apos;{0}&apos; cannot convert from &apos;{1}&apos; to &apos;{2}&apos;..
         '''</summary>
@@ -504,7 +503,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentMismatch3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument matching parameter &apos;{0}&apos; cannot convert from &apos;{1}&apos; to &apos;{2}&apos; because the conversion is ambiguous..
         '''</summary>
@@ -513,7 +512,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentMismatchAmbiguous3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на ByRef parameter &apos;{0}&apos; cannot convert from &apos;{1}&apos; to &apos;{2}&apos; when assigning back to the matching argument because the conversion is ambiguous..
         '''</summary>
@@ -522,7 +521,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentMismatchAmbiguousCopyBack3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на ByRef parameter &apos;{0}&apos; cannot convert from &apos;{1}&apos; to &apos;{2}&apos; when assigning back to the matching argument..
         '''</summary>
@@ -531,7 +530,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentMismatchCopyBack3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument matching parameter &apos;{0}&apos; narrows from &apos;{1}&apos; to &apos;{2}&apos;..
         '''</summary>
@@ -540,7 +539,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentNarrowing3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на ByRef parameter &apos;{0}&apos; narrows from &apos;{1}&apos; to &apos;{2}&apos; when assigning back to the matching argument..
         '''</summary>
@@ -549,7 +548,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentNarrowingCopyBack3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; cannot be converted to a numeric value..
         '''</summary>
@@ -558,7 +557,7 @@ Namespace System
                 Return ResourceManager.GetString("ArgumentNotNumeric1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Operator &apos;{0}&apos; is not defined for {1} and {2}..
         '''</summary>
@@ -567,7 +566,7 @@ Namespace System
                 Return ResourceManager.GetString("BinaryOperands3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на &apos;Before&apos; and &apos;After&apos; arguments cannot be combined..
         '''</summary>
@@ -576,7 +575,7 @@ Namespace System
                 Return ResourceManager.GetString("Collection_BeforeAfterExclusive", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Add failed. Duplicate key value supplied..
         '''</summary>
@@ -585,7 +584,7 @@ Namespace System
                 Return ResourceManager.GetString("Collection_DuplicateKey", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на &apos;Dir&apos; function must first be called with a &apos;PathName&apos; argument..
         '''</summary>
@@ -594,7 +593,7 @@ Namespace System
                 Return ResourceManager.GetString("DIR_IllegalCall", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Empty placeholder to adjust for 1-based array..
         '''</summary>
@@ -603,7 +602,7 @@ Namespace System
                 Return ResourceManager.GetString("EmptyPlaceHolderMessage", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Expression &apos;{0}&apos; is not a procedure, but occurs as the target of a procedure call..
         '''</summary>
@@ -612,7 +611,7 @@ Namespace System
                 Return ResourceManager.GetString("ExpressionNotProcedure", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Substitution of type arguments failed..
         '''</summary>
@@ -621,7 +620,7 @@ Namespace System
                 Return ResourceManager.GetString("FailedTypeArgumentBinding", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на String length exceeds maximum length of 32767 characters for &apos;FileSystem&apos; APIs..
         '''</summary>
@@ -630,7 +629,7 @@ Namespace System
                 Return ResourceManager.GetString("FileIO_StringLengthExceeded", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File is not opened for read access..
         '''</summary>
@@ -639,7 +638,7 @@ Namespace System
                 Return ResourceManager.GetString("FileOpenedNoRead", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File is not opened for write access..
         '''</summary>
@@ -648,7 +647,7 @@ Namespace System
                 Return ResourceManager.GetString("FileOpenedNoWrite", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Drive &apos;{0}&apos; not found..
         '''</summary>
@@ -657,7 +656,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_DriveNotFound1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File &apos;{0}&apos; cannot be deleted because it is open..
         '''</summary>
@@ -666,7 +665,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_FileAlreadyOpen1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File &apos;{0}&apos; not found..
         '''</summary>
@@ -675,7 +674,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_FileNotFound1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Access&apos; is not valid. Valid values for Append mode are &apos;OpenAccess.Write&apos; and &apos;OpenAccess.Default&apos;..
         '''</summary>
@@ -684,7 +683,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_IllegalAppendAccess", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Access&apos; is not valid. Valid values for Input mode are &apos;OpenAccess.Read&apos; and &apos;OpenAccess.Default&apos;..
         '''</summary>
@@ -693,7 +692,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_IllegalInputAccess", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Access&apos; is not valid. Valid values for Output mode are &apos;OpenAccess.Write&apos; and &apos;OpenAccess.Default&apos;..
         '''</summary>
@@ -702,7 +701,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_IllegalOutputAccess", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Path &apos;{0}&apos; not found..
         '''</summary>
@@ -711,7 +710,7 @@ Namespace System
                 Return ResourceManager.GetString("FileSystem_PathNotFound1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater than or equal to zero..
         '''</summary>
@@ -720,7 +719,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_ArgGEZero1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be greater than zero..
         '''</summary>
@@ -729,7 +728,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_ArgGTZero1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Division by zero..
         '''</summary>
@@ -738,7 +737,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_CalcDivByZero", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot calculate number of periods using the arguments provided..
         '''</summary>
@@ -747,7 +746,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_CannotCalculateNPer", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot calculate rate using the arguments provided..
         '''</summary>
@@ -756,7 +755,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_CannotCalculateRate", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Life&apos; cannot be zero..
         '''</summary>
@@ -765,7 +764,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_LifeNEZero", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Period&apos; must be less than or equal to argument &apos;Life&apos;..
         '''</summary>
@@ -774,7 +773,7 @@ Namespace System
                 Return ResourceManager.GetString("Financial_PeriodLELife", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot convert start value of type &apos;{0}&apos; and step value of type &apos;{1}&apos; to a common numeric type..
         '''</summary>
@@ -783,7 +782,7 @@ Namespace System
                 Return ResourceManager.GetString("ForLoop_CommonType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot convert start value of type &apos;{0}&apos;, limit value of type &apos;{1}&apos;, and step value of type &apos;{2}&apos; to a common numeric type..
         '''</summary>
@@ -792,7 +791,7 @@ Namespace System
                 Return ResourceManager.GetString("ForLoop_CommonType3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot convert argument &apos;{0}&apos; of type &apos;{1}&apos; to type &apos;{2}&apos;..
         '''</summary>
@@ -801,7 +800,7 @@ Namespace System
                 Return ResourceManager.GetString("ForLoop_ConvertToType3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Type &apos;{0}&apos; must define an operator &apos;{1}&apos;, with parameters of type &apos;{0}&apos;, to be used in a &apos;For&apos; statement..
         '''</summary>
@@ -810,7 +809,7 @@ Namespace System
                 Return ResourceManager.GetString("ForLoop_OperatorRequired2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Return and parameter types of &apos;{0}&apos; must be of type &apos;{1}&apos; to be used in a &apos;For&apos; statement..
         '''</summary>
@@ -819,7 +818,7 @@ Namespace System
                 Return ResourceManager.GetString("ForLoop_UnacceptableOperator2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Parameter types of &apos;{0}&apos; must be of type &apos;{1}&apos; to be used in a &apos;For&apos; statement..
         '''</summary>
@@ -828,7 +827,7 @@ Namespace System
                 Return ResourceManager.GetString("ForLoop_UnacceptableRelOperator2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; cannot be an empty string or Nothing..
         '''</summary>
@@ -837,7 +836,7 @@ Namespace System
                 Return ResourceManager.GetString("General_ArgumentEmptyOrNothing_Name", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument cannot be Nothing..
         '''</summary>
@@ -846,7 +845,7 @@ Namespace System
                 Return ResourceManager.GetString("General_ArgumentNullException", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This array is fixed or temporarily locked..
         '''</summary>
@@ -855,7 +854,7 @@ Namespace System
                 Return ResourceManager.GetString("ID10", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Class &apos;{0}&apos; does not implement the System.Collections.ICollection interface..
         '''</summary>
@@ -864,7 +863,7 @@ Namespace System
                 Return ResourceManager.GetString("ID100", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Division by zero..
         '''</summary>
@@ -873,7 +872,7 @@ Namespace System
                 Return ResourceManager.GetString("ID11", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Type mismatch..
         '''</summary>
@@ -882,7 +881,7 @@ Namespace System
                 Return ResourceManager.GetString("ID13", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Out of string space..
         '''</summary>
@@ -891,7 +890,7 @@ Namespace System
                 Return ResourceManager.GetString("ID14", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Expression too complex..
         '''</summary>
@@ -900,7 +899,7 @@ Namespace System
                 Return ResourceManager.GetString("ID16", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Can&apos;t perform requested operation..
         '''</summary>
@@ -909,7 +908,7 @@ Namespace System
                 Return ResourceManager.GetString("ID17", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на User interrupt occurred..
         '''</summary>
@@ -918,7 +917,7 @@ Namespace System
                 Return ResourceManager.GetString("ID18", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Resume without error..
         '''</summary>
@@ -927,7 +926,7 @@ Namespace System
                 Return ResourceManager.GetString("ID20", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Out of stack space..
         '''</summary>
@@ -936,7 +935,7 @@ Namespace System
                 Return ResourceManager.GetString("ID28", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This Error number is obsolete and no longer used..
         '''</summary>
@@ -945,7 +944,7 @@ Namespace System
                 Return ResourceManager.GetString("ID3", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File format is not valid..
         '''</summary>
@@ -954,7 +953,7 @@ Namespace System
                 Return ResourceManager.GetString("ID321", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot create necessary temporary file..
         '''</summary>
@@ -963,7 +962,7 @@ Namespace System
                 Return ResourceManager.GetString("ID322", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Format in resource file is not valid..
         '''</summary>
@@ -972,7 +971,7 @@ Namespace System
                 Return ResourceManager.GetString("ID325", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Feature not yet implemented..
         '''</summary>
@@ -981,7 +980,7 @@ Namespace System
                 Return ResourceManager.GetString("ID32768", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Sub or Function not defined..
         '''</summary>
@@ -990,7 +989,7 @@ Namespace System
                 Return ResourceManager.GetString("ID35", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property value is not valid..
         '''</summary>
@@ -999,7 +998,7 @@ Namespace System
                 Return ResourceManager.GetString("ID380", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property array index is not valid..
         '''</summary>
@@ -1008,7 +1007,7 @@ Namespace System
                 Return ResourceManager.GetString("ID381", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Set not supported at runtime..
         '''</summary>
@@ -1017,7 +1016,7 @@ Namespace System
                 Return ResourceManager.GetString("ID382", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Set not supported (read-only property)..
         '''</summary>
@@ -1026,7 +1025,7 @@ Namespace System
                 Return ResourceManager.GetString("ID383", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Need property array index..
         '''</summary>
@@ -1035,7 +1034,7 @@ Namespace System
                 Return ResourceManager.GetString("ID385", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Set not permitted..
         '''</summary>
@@ -1044,7 +1043,7 @@ Namespace System
                 Return ResourceManager.GetString("ID387", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Get not supported at runtime..
         '''</summary>
@@ -1053,7 +1052,7 @@ Namespace System
                 Return ResourceManager.GetString("ID393", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Get not supported (write-only property)..
         '''</summary>
@@ -1062,7 +1061,7 @@ Namespace System
                 Return ResourceManager.GetString("ID394", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property not found..
         '''</summary>
@@ -1071,7 +1070,7 @@ Namespace System
                 Return ResourceManager.GetString("ID422", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property or method not found..
         '''</summary>
@@ -1080,7 +1079,7 @@ Namespace System
                 Return ResourceManager.GetString("ID423", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object required..
         '''</summary>
@@ -1089,7 +1088,7 @@ Namespace System
                 Return ResourceManager.GetString("ID424", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot create ActiveX component..
         '''</summary>
@@ -1098,7 +1097,7 @@ Namespace System
                 Return ResourceManager.GetString("ID429", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Class does not support Automation or does not support expected interface..
         '''</summary>
@@ -1107,7 +1106,7 @@ Namespace System
                 Return ResourceManager.GetString("ID430", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File name or class name not found during Automation operation..
         '''</summary>
@@ -1116,7 +1115,7 @@ Namespace System
                 Return ResourceManager.GetString("ID432", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object does not support this property or method..
         '''</summary>
@@ -1125,7 +1124,7 @@ Namespace System
                 Return ResourceManager.GetString("ID438", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Automation error..
         '''</summary>
@@ -1134,7 +1133,7 @@ Namespace System
                 Return ResourceManager.GetString("ID440", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Connection to type library or object library for remote process has been lost. Press OK for dialog to remove reference..
         '''</summary>
@@ -1143,7 +1142,7 @@ Namespace System
                 Return ResourceManager.GetString("ID442", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Automation object does not have a default value..
         '''</summary>
@@ -1152,7 +1151,7 @@ Namespace System
                 Return ResourceManager.GetString("ID443", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object does not support this action..
         '''</summary>
@@ -1161,7 +1160,7 @@ Namespace System
                 Return ResourceManager.GetString("ID445", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object does not support named arguments..
         '''</summary>
@@ -1170,7 +1169,7 @@ Namespace System
                 Return ResourceManager.GetString("ID446", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object does not support current locale setting..
         '''</summary>
@@ -1179,7 +1178,7 @@ Namespace System
                 Return ResourceManager.GetString("ID447", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Named argument not found..
         '''</summary>
@@ -1188,7 +1187,7 @@ Namespace System
                 Return ResourceManager.GetString("ID448", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument not optional..
         '''</summary>
@@ -1197,7 +1196,7 @@ Namespace System
                 Return ResourceManager.GetString("ID449", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Wrong number of arguments or property assignment was not valid..
         '''</summary>
@@ -1206,7 +1205,7 @@ Namespace System
                 Return ResourceManager.GetString("ID450", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property let procedure not defined and property get procedure did not return an object..
         '''</summary>
@@ -1215,7 +1214,7 @@ Namespace System
                 Return ResourceManager.GetString("ID451", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Ordinal is not valid..
         '''</summary>
@@ -1224,7 +1223,7 @@ Namespace System
                 Return ResourceManager.GetString("ID452", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Specified DLL function not found..
         '''</summary>
@@ -1233,7 +1232,7 @@ Namespace System
                 Return ResourceManager.GetString("ID453", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Code resource not found..
         '''</summary>
@@ -1242,7 +1241,7 @@ Namespace System
                 Return ResourceManager.GetString("ID454", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Code resource lock error..
         '''</summary>
@@ -1251,7 +1250,7 @@ Namespace System
                 Return ResourceManager.GetString("ID455", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This key is already associated with an element of this collection..
         '''</summary>
@@ -1260,7 +1259,7 @@ Namespace System
                 Return ResourceManager.GetString("ID457", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Variable uses an Automation type not supported in Visual Basic..
         '''</summary>
@@ -1269,7 +1268,7 @@ Namespace System
                 Return ResourceManager.GetString("ID458", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object or class does not support the set of events..
         '''</summary>
@@ -1278,7 +1277,7 @@ Namespace System
                 Return ResourceManager.GetString("ID459", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Clipboard format is not valid..
         '''</summary>
@@ -1287,7 +1286,7 @@ Namespace System
                 Return ResourceManager.GetString("ID460", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Method or data member not found..
         '''</summary>
@@ -1296,7 +1295,7 @@ Namespace System
                 Return ResourceManager.GetString("ID461", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на The remote server machine does not exist or is unavailable..
         '''</summary>
@@ -1305,7 +1304,7 @@ Namespace System
                 Return ResourceManager.GetString("ID462", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Class not registered on local machine..
         '''</summary>
@@ -1314,7 +1313,7 @@ Namespace System
                 Return ResourceManager.GetString("ID463", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Too many DLL application clients..
         '''</summary>
@@ -1323,7 +1322,7 @@ Namespace System
                 Return ResourceManager.GetString("ID47", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Error in loading DLL..
         '''</summary>
@@ -1332,7 +1331,7 @@ Namespace System
                 Return ResourceManager.GetString("ID48", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Picture is not valid..
         '''</summary>
@@ -1341,7 +1340,7 @@ Namespace System
                 Return ResourceManager.GetString("ID481", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Printer error..
         '''</summary>
@@ -1350,7 +1349,7 @@ Namespace System
                 Return ResourceManager.GetString("ID482", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Bad DLL calling convention..
         '''</summary>
@@ -1359,7 +1358,7 @@ Namespace System
                 Return ResourceManager.GetString("ID49", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Procedure call or argument is not valid..
         '''</summary>
@@ -1368,7 +1367,7 @@ Namespace System
                 Return ResourceManager.GetString("ID5", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Internal error..
         '''</summary>
@@ -1377,7 +1376,7 @@ Namespace System
                 Return ResourceManager.GetString("ID51", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Bad file name or number..
         '''</summary>
@@ -1386,7 +1385,7 @@ Namespace System
                 Return ResourceManager.GetString("ID52", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File not found..
         '''</summary>
@@ -1395,7 +1394,7 @@ Namespace System
                 Return ResourceManager.GetString("ID53", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Bad file mode..
         '''</summary>
@@ -1404,7 +1403,7 @@ Namespace System
                 Return ResourceManager.GetString("ID54", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File already open..
         '''</summary>
@@ -1413,7 +1412,7 @@ Namespace System
                 Return ResourceManager.GetString("ID55", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Device I/O error..
         '''</summary>
@@ -1422,7 +1421,7 @@ Namespace System
                 Return ResourceManager.GetString("ID57", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на File already exists..
         '''</summary>
@@ -1431,7 +1430,7 @@ Namespace System
                 Return ResourceManager.GetString("ID58", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Bad record length..
         '''</summary>
@@ -1440,7 +1439,7 @@ Namespace System
                 Return ResourceManager.GetString("ID59", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overflow..
         '''</summary>
@@ -1449,7 +1448,7 @@ Namespace System
                 Return ResourceManager.GetString("ID6", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Disk full..
         '''</summary>
@@ -1458,7 +1457,7 @@ Namespace System
                 Return ResourceManager.GetString("ID61", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Input past end of file..
         '''</summary>
@@ -1467,7 +1466,7 @@ Namespace System
                 Return ResourceManager.GetString("ID62", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Bad record number..
         '''</summary>
@@ -1476,7 +1475,7 @@ Namespace System
                 Return ResourceManager.GetString("ID63", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Too many files..
         '''</summary>
@@ -1485,7 +1484,7 @@ Namespace System
                 Return ResourceManager.GetString("ID67", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Device unavailable..
         '''</summary>
@@ -1494,7 +1493,7 @@ Namespace System
                 Return ResourceManager.GetString("ID68", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Out of memory..
         '''</summary>
@@ -1503,7 +1502,7 @@ Namespace System
                 Return ResourceManager.GetString("ID7", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Permission denied..
         '''</summary>
@@ -1512,7 +1511,7 @@ Namespace System
                 Return ResourceManager.GetString("ID70", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Disk not ready..
         '''</summary>
@@ -1521,7 +1520,7 @@ Namespace System
                 Return ResourceManager.GetString("ID71", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot save file to TEMP..
         '''</summary>
@@ -1530,7 +1529,7 @@ Namespace System
                 Return ResourceManager.GetString("ID735", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot rename with different drive..
         '''</summary>
@@ -1539,7 +1538,7 @@ Namespace System
                 Return ResourceManager.GetString("ID74", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Search text not found..
         '''</summary>
@@ -1548,7 +1547,7 @@ Namespace System
                 Return ResourceManager.GetString("ID744", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Replacements too long..
         '''</summary>
@@ -1557,7 +1556,7 @@ Namespace System
                 Return ResourceManager.GetString("ID746", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Path/File access error..
         '''</summary>
@@ -1566,7 +1565,7 @@ Namespace System
                 Return ResourceManager.GetString("ID75", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Path not found..
         '''</summary>
@@ -1575,7 +1574,7 @@ Namespace System
                 Return ResourceManager.GetString("ID76", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Subscript out of range..
         '''</summary>
@@ -1584,7 +1583,7 @@ Namespace System
                 Return ResourceManager.GetString("ID9", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Object variable or With block variable not set..
         '''</summary>
@@ -1593,7 +1592,7 @@ Namespace System
                 Return ResourceManager.GetString("ID91", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на For loop not initialized..
         '''</summary>
@@ -1602,7 +1601,7 @@ Namespace System
                 Return ResourceManager.GetString("ID92", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Pattern string is not valid..
         '''</summary>
@@ -1611,7 +1610,7 @@ Namespace System
                 Return ResourceManager.GetString("ID93", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на This Error number is obsolete and no longer used..
         '''</summary>
@@ -1620,7 +1619,7 @@ Namespace System
                 Return ResourceManager.GetString("ID94", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Application-defined or object-defined error..
         '''</summary>
@@ -1629,7 +1628,7 @@ Namespace System
                 Return ResourceManager.GetString("ID95", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Unable to sink events of object because the object is already firing events to the maximum number of event receivers that it supports..
         '''</summary>
@@ -1638,7 +1637,7 @@ Namespace System
                 Return ResourceManager.GetString("ID96", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Cannot call friend function on object that is not an instance of defining class..
         '''</summary>
@@ -1647,7 +1646,7 @@ Namespace System
                 Return ResourceManager.GetString("ID97", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на A property or method call cannot include a reference to a private object, either as an argument or as a return value..
         '''</summary>
@@ -1656,7 +1655,7 @@ Namespace System
                 Return ResourceManager.GetString("ID98", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Stop statement encountered..
         '''</summary>
@@ -1665,7 +1664,7 @@ Namespace System
                 Return ResourceManager.GetString("ID999", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Registry key &apos;{0}&apos; could not be created..
         '''</summary>
@@ -1674,7 +1673,7 @@ Namespace System
                 Return ResourceManager.GetString("Interaction_ResKeyNotCreated1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Invocation of &apos;{0}&apos; on type &apos;{1}&apos; returned Nothing..
         '''</summary>
@@ -1683,7 +1682,7 @@ Namespace System
                 Return ResourceManager.GetString("IntermediateLateBoundNothingResult1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Internal error in the Microsoft Visual Basic runtime..
         '''</summary>
@@ -1692,7 +1691,7 @@ Namespace System
                 Return ResourceManager.GetString("InternalError_VisualBasicRuntime", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Arguments to &apos;VBFixedArrayAttribute&apos; are not valid..
         '''</summary>
@@ -1701,7 +1700,7 @@ Namespace System
                 Return ResourceManager.GetString("Invalid_VBFixedArray", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Arguments to &apos;VBFixedStringAttribute&apos; are not valid..
         '''</summary>
@@ -1710,7 +1709,7 @@ Namespace System
                 Return ResourceManager.GetString("Invalid_VBFixedString", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Conversion from string &quot;{0}&quot; to type &apos;{1}&apos; is not valid..
         '''</summary>
@@ -1719,7 +1718,7 @@ Namespace System
                 Return ResourceManager.GetString("InvalidCast_FromStringTo", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Conversion from type &apos;{0}&apos; to type &apos;{1}&apos; is not valid..
         '''</summary>
@@ -1728,7 +1727,7 @@ Namespace System
                 Return ResourceManager.GetString("InvalidCast_FromTo", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument {1} to method &apos;{0}&apos; has type &apos;{2}&apos; and cannot be converted to &apos;{3}&apos;..
         '''</summary>
@@ -1737,7 +1736,7 @@ Namespace System
                 Return ResourceManager.GetString("InvalidCast_FromToArg4", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;{0}&apos; must be a name, and not a relative or absolute path: &apos;{1}&apos;..
         '''</summary>
@@ -1746,7 +1745,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_ArgumentIsPath_Name_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not complete operation on some files and directories. See the Data property of the exception for more details..
         '''</summary>
@@ -1755,7 +1754,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_CopyMoveRecursive", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not complete operation since target directory is under source directory..
         '''</summary>
@@ -1764,7 +1763,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_CyclicOperation", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на The given path is a Win32 device path. Don&apos;t use paths starting with &apos;\\.\&apos;..
         '''</summary>
@@ -1773,7 +1772,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_DevicePath", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not complete operation since a directory already exists in this path &apos;{0}&apos;..
         '''</summary>
@@ -1782,7 +1781,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_DirectoryExists_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not complete operation since directory is a root directory: &apos;{0}&apos;..
         '''</summary>
@@ -1791,7 +1790,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_DirectoryIsRoot_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not find directory &apos;{0}&apos;..
         '''</summary>
@@ -1800,7 +1799,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_DirectoryNotFound_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not complete operation since a file already exists in this path &apos;{0}&apos;..
         '''</summary>
@@ -1809,7 +1808,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_FileExists_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not find file &apos;{0}&apos;..
         '''</summary>
@@ -1818,7 +1817,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_FileNotFound_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на The given file path ends with a directory separator character..
         '''</summary>
@@ -1827,7 +1826,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_FilePathException", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на One of the wildcards is Nothing or empty string..
         '''</summary>
@@ -1836,7 +1835,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_GetFiles_NullPattern", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not get parent path since the given path is a root directory: &apos;{0}&apos;..
         '''</summary>
@@ -1845,7 +1844,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_GetParentPathIsRoot_Path", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not complete operation since source directory and target directory are the same..
         '''</summary>
@@ -1854,7 +1853,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SourceEqualsTargetDirectory", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на All users&apos; application data.
         '''</summary>
@@ -1863,7 +1862,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_AllUserAppData", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Desktop.
         '''</summary>
@@ -1872,7 +1871,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_Desktop", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на My Documents.
         '''</summary>
@@ -1881,7 +1880,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_MyDocuments", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на My Music.
         '''</summary>
@@ -1890,7 +1889,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_MyMusic", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на My Pictures.
         '''</summary>
@@ -1899,7 +1898,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_MyPictures", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Program Files.
         '''</summary>
@@ -1908,7 +1907,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_ProgramFiles", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Programs.
         '''</summary>
@@ -1917,7 +1916,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_Programs", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Temporary directory.
         '''</summary>
@@ -1926,7 +1925,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_Temp", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Current user&apos;s application data.
         '''</summary>
@@ -1935,7 +1934,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectory_UserAppData", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Could not find special directory &apos;{0}&apos;..
         '''</summary>
@@ -1944,7 +1943,7 @@ Namespace System
                 Return ResourceManager.GetString("IO_SpecialDirectoryNotExist", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на No files found matching &apos;{0}&apos;..
         '''</summary>
@@ -1953,7 +1952,7 @@ Namespace System
                 Return ResourceManager.GetString("KILL_NoFilesFound1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Managed classes derived from a COM class cannot be called late bound..
         '''</summary>
@@ -1962,7 +1961,7 @@ Namespace System
                 Return ResourceManager.GetString("LateboundCallToInheritedComClass", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на &apos;StrConv.LinguisticCasing&apos; requires &apos;StrConv.Lowercase&apos; or &apos;StrConv.Uppercase&apos;..
         '''</summary>
@@ -1971,7 +1970,7 @@ Namespace System
                 Return ResourceManager.GetString("LinguisticRequirements", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Method invocation failed because &apos;{0}&apos; cannot be called with these arguments:{1}.
         '''</summary>
@@ -1980,7 +1979,7 @@ Namespace System
                 Return ResourceManager.GetString("MatchArgumentFailure2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Error number must be within the range 0 to 65535..
         '''</summary>
@@ -1989,7 +1988,7 @@ Namespace System
                 Return ResourceManager.GetString("MaxErrNumber", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Method &apos;{0}&apos; cannot be the target of an assignment..
         '''</summary>
@@ -1998,7 +1997,7 @@ Namespace System
                 Return ResourceManager.GetString("MethodAssignment1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Method requires System.Windows.Forms..
         '''</summary>
@@ -2007,7 +2006,7 @@ Namespace System
                 Return ResourceManager.GetString("MethodRequiresSystemWindowsForms", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Public Let &apos;{0}&apos; on type &apos;{1}&apos; not found.  Use &apos;CallByName&apos; function with &apos;CallType.Set&apos;..
         '''</summary>
@@ -2016,7 +2015,7 @@ Namespace System
                 Return ResourceManager.GetString("MissingMember_MemberLetNotFoundOnType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Public member &apos;{0}&apos; on type &apos;{1}&apos; not found..
         '''</summary>
@@ -2025,7 +2024,7 @@ Namespace System
                 Return ResourceManager.GetString("MissingMember_MemberNotFoundOnType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Public Set &apos;{0}&apos; on type &apos;{1}&apos; not found.  Use &apos;CallByName&apos; function with &apos;CallType.Let&apos;..
         '''</summary>
@@ -2034,7 +2033,7 @@ Namespace System
                 Return ResourceManager.GetString("MissingMember_MemberSetNotFoundOnType2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на No default member found for type &apos;{0}&apos;..
         '''</summary>
@@ -2043,7 +2042,7 @@ Namespace System
                 Return ResourceManager.GetString("MissingMember_NoDefaultMemberFound1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Field &apos;{0}&apos; of type &apos;{1}&apos; is &apos;ReadOnly&apos;..
         '''</summary>
@@ -2052,7 +2051,7 @@ Namespace System
                 Return ResourceManager.GetString("MissingMember_ReadOnlyField2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Named argument &apos;{0}&apos; specified multiple times..
         '''</summary>
@@ -2061,7 +2060,7 @@ Namespace System
                 Return ResourceManager.GetString("NamedArgumentAlreadyUsed1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Named arguments cannot match ParamArray parameters..
         '''</summary>
@@ -2070,7 +2069,7 @@ Namespace System
                 Return ResourceManager.GetString("NamedArgumentOnParamArray", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Parameter &apos;{0}&apos; of &apos;{1}&apos; already has a matching argument..
         '''</summary>
@@ -2079,7 +2078,7 @@ Namespace System
                 Return ResourceManager.GetString("NamedArgUsedTwice2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Named argument &apos;{0}&apos; cannot match a ParamArray parameter..
         '''</summary>
@@ -2088,7 +2087,7 @@ Namespace System
                 Return ResourceManager.GetString("NamedParamArrayArgument1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Named argument &apos;{0}&apos; matches no parameter of &apos;{1}&apos;..
         '''</summary>
@@ -2097,7 +2096,7 @@ Namespace System
                 Return ResourceManager.GetString("NamedParamNotFound2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overload resolution failed because no accessible &apos;{0}&apos; accepts this number of arguments..
         '''</summary>
@@ -2106,7 +2105,7 @@ Namespace System
                 Return ResourceManager.GetString("NoArgumentCountOverloadCandidates1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overload resolution failed because no Public &apos;{0}&apos; can be called with these arguments:{1}.
         '''</summary>
@@ -2115,7 +2114,7 @@ Namespace System
                 Return ResourceManager.GetString("NoCallableOverloadCandidates2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property &apos;{0}&apos; is WriteOnly..
         '''</summary>
@@ -2124,7 +2123,7 @@ Namespace System
                 Return ResourceManager.GetString("NoGetProperty1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Method &apos;{0}&apos; cannot be called with {1} argument(s)..
         '''</summary>
@@ -2133,7 +2132,7 @@ Namespace System
                 Return ResourceManager.GetString("NoMethodTakingXArguments2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overload resolution failed because no Public &apos;{0}&apos; is most specific for these arguments:{1}.
         '''</summary>
@@ -2142,7 +2141,7 @@ Namespace System
                 Return ResourceManager.GetString("NoMostSpecificOverload2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overload resolution failed because no Public &apos;{0}&apos; can be called without a narrowing conversion:{1}.
         '''</summary>
@@ -2151,7 +2150,7 @@ Namespace System
                 Return ResourceManager.GetString("NoNonNarrowingOverloadCandidates2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Property &apos;{0}&apos; is ReadOnly..
         '''</summary>
@@ -2160,7 +2159,7 @@ Namespace System
                 Return ResourceManager.GetString("NoSetProperty1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на UI not available for copy or move.
         '''</summary>
@@ -2169,7 +2168,7 @@ Namespace System
                 Return ResourceManager.GetString("NoShellCopyOrMove", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Not most specific..
         '''</summary>
@@ -2178,7 +2177,7 @@ Namespace System
                 Return ResourceManager.GetString("NotMostSpecificOverload", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overload resolution failed because no accessible &apos;{0}&apos; accepts this number of type arguments..
         '''</summary>
@@ -2187,7 +2186,7 @@ Namespace System
                 Return ResourceManager.GetString("NoTypeArgumentCountOverloadCandidates1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на type &apos;{0}&apos;.
         '''</summary>
@@ -2196,7 +2195,7 @@ Namespace System
                 Return ResourceManager.GetString("NoValidOperator_NonStringType1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Operator is not defined for type &apos;{0}&apos;..
         '''</summary>
@@ -2205,7 +2204,7 @@ Namespace System
                 Return ResourceManager.GetString("NoValidOperator_OneOperand", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на string &quot;{0}&quot;.
         '''</summary>
@@ -2214,7 +2213,7 @@ Namespace System
                 Return ResourceManager.GetString("NoValidOperator_StringType1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Operator is not defined for {0} and {1}..
         '''</summary>
@@ -2223,7 +2222,7 @@ Namespace System
                 Return ResourceManager.GetString("NoValidOperator_TwoOperands", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Overload resolution failed because no &apos;{0}&apos; is Public..
         '''</summary>
@@ -2232,7 +2231,7 @@ Namespace System
                 Return ResourceManager.GetString("NoViableOverloadCandidates1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Reference to non-shared member &apos;{0}&apos; requires an object reference..
         '''</summary>
@@ -2241,7 +2240,7 @@ Namespace System
                 Return ResourceManager.GetString("NullReference_InstanceReqToAccessMember1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument not specified for parameter &apos;{0}&apos;..
         '''</summary>
@@ -2250,7 +2249,7 @@ Namespace System
                 Return ResourceManager.GetString("OmittedArgument1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Omitted argument cannot match a ParamArray parameter..
         '''</summary>
@@ -2259,7 +2258,7 @@ Namespace System
                 Return ResourceManager.GetString("OmittedParamArrayArgument", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на On;On;Off.
         '''</summary>
@@ -2268,7 +2267,7 @@ Namespace System
                 Return ResourceManager.GetString("OnOffFormatStyle", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;Per&apos; is not valid..
         '''</summary>
@@ -2277,7 +2276,7 @@ Namespace System
                 Return ResourceManager.GetString("PPMT_PerGT0AndLTNPer", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Call to set property &apos;{0}&apos; requires at least one argument..
         '''</summary>
@@ -2286,7 +2285,7 @@ Namespace System
                 Return ResourceManager.GetString("PropertySetMissingArgument1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Argument &apos;NPer&apos; must be greater than zero..
         '''</summary>
@@ -2295,7 +2294,7 @@ Namespace System
                 Return ResourceManager.GetString("Rate_NPerMustBeGTZero", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Late-bound assignment to a field of value type &apos;{0}&apos; is not valid when &apos;{1}&apos; is the result of a late-bound expression..
         '''</summary>
@@ -2304,7 +2303,7 @@ Namespace System
                 Return ResourceManager.GetString("RValueBaseForValueType", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Late bound calls to file system methods in the Visual Basic runtime are not permitted..
         '''</summary>
@@ -2313,7 +2312,7 @@ Namespace System
                 Return ResourceManager.GetString("Security_LateBoundCallsNotPermitted", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Insufficient security permissions to set the system date..
         '''</summary>
@@ -2322,7 +2321,7 @@ Namespace System
                 Return ResourceManager.GetString("SetLocalDateFailure", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Insufficient security permissions to set the system time..
         '''</summary>
@@ -2331,7 +2330,7 @@ Namespace System
                 Return ResourceManager.GetString("SetLocalTimeFailure", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на False.
         '''</summary>
@@ -2340,7 +2339,7 @@ Namespace System
                 Return ResourceManager.GetString("StringFalse", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на True.
         '''</summary>
@@ -2349,7 +2348,7 @@ Namespace System
                 Return ResourceManager.GetString("StringTrue", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на &apos;SyncLock&apos; operand cannot be of type &apos;{0}&apos; because &apos;{0}&apos; is not a reference type..
         '''</summary>
@@ -2358,7 +2357,7 @@ Namespace System
                 Return ResourceManager.GetString("SyncLockRequiresReferenceType1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на TextFieldParser is unable to complete the read operation because maximum buffer size has been exceeded..
         '''</summary>
@@ -2367,7 +2366,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_BufferExceededMaxSize", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на A delimiter cannot be Nothing or an empty String..
         '''</summary>
@@ -2376,7 +2375,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_DelimiterNothing", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Unable to read delimited fields because Delimiters is Nothing or empty..
         '''</summary>
@@ -2385,7 +2384,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_DelimitersNothing", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на TextFieldParser does not support delimiters that contain end-of-line characters..
         '''</summary>
@@ -2394,7 +2393,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_EndCharsInDelimiter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на All field widths, except the last element, must be greater than zero. A field width less than or equal to zero in the last element indicates the last field is of variable length..
         '''</summary>
@@ -2403,7 +2402,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_FieldWidthsMustPositive", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Unable to read fixed width fields because FieldWidths is Nothing or empty..
         '''</summary>
@@ -2412,7 +2411,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_FieldWidthsNothing", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Unable to read delimited fields because a double quote is not a legal delimiter when HasFieldsEnclosedInQuotes is set to True..
         '''</summary>
@@ -2421,7 +2420,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_IllegalDelimiter", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на A double quote is not a valid comment token for delimited fields where HasFieldsEnclosedInQuotes is set to True..
         '''</summary>
@@ -2430,7 +2429,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_InvalidComment", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Line {0} cannot be parsed using the current Delimiters..
         '''</summary>
@@ -2439,7 +2438,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_MalFormedDelimitedLine", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Line Number:{0}.
         '''</summary>
@@ -2448,7 +2447,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_MalformedExtraData", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Line {0} cannot be parsed using the current FieldWidths..
         '''</summary>
@@ -2457,7 +2456,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_MalFormedFixedWidthLine", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Line {0} cannot be read because it exceeds the maximum line size..
         '''</summary>
@@ -2466,7 +2465,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_MaxLineSizeExceeded", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на NumberOfChars must be greater than zero..
         '''</summary>
@@ -2475,7 +2474,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_NumberOfCharsMustBePositive", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на The stream passed to TextFieldParser cannot be read..
         '''</summary>
@@ -2484,7 +2483,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_StreamNotReadable", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на TextFieldParser does not support comment tokens that contain white space..
         '''</summary>
@@ -2493,7 +2492,7 @@ Namespace System
                 Return ResourceManager.GetString("TextFieldParser_WhitespaceInToken", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на True;True;False.
         '''</summary>
@@ -2502,7 +2501,7 @@ Namespace System
                 Return ResourceManager.GetString("TrueFalseFormatStyle", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Type argument inference fails for argument matching parameter &apos;{0}&apos;..
         '''</summary>
@@ -2511,7 +2510,7 @@ Namespace System
                 Return ResourceManager.GetString("TypeInferenceFails1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Operator &apos;{0}&apos; is not defined for type &apos;{1}&apos;..
         '''</summary>
@@ -2520,7 +2519,7 @@ Namespace System
                 Return ResourceManager.GetString("UnaryOperand2", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Type parameter &apos;{0}&apos; cannot be determined..
         '''</summary>
@@ -2529,7 +2528,7 @@ Namespace System
                 Return ResourceManager.GetString("UnboundTypeParam1", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Use &apos;FilePutObject&apos; instead of &apos;FilePut&apos; when using argument of type &apos;Object&apos;..
         '''</summary>
@@ -2538,7 +2537,7 @@ Namespace System
                 Return ResourceManager.GetString("UseFilePutObject", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Ищет локализованную строку, похожую на Yes;Yes;No.
         '''</summary>

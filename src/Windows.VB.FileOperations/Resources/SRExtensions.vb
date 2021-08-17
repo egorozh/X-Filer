@@ -1,6 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿
 
-Namespace System
+Namespace Resources
 
     Friend Class SRExt
         Friend Shared Function UsingResourceKeys() As Boolean
