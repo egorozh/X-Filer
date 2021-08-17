@@ -43,6 +43,11 @@
                               Command="{Binding DataContext.CutCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
 
+        <sdk:CommandReference x:Key="DeleteCommand"
+                              Command="{Binding DataContext.DeleteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+
+
         <sdk:CommandReference x:Key="CopyCommand"
                               Command="{Binding DataContext.CopyCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
@@ -94,6 +99,16 @@
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
                                   CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
 
+            <sdk:CommandReference x:Key="DeleteManyCommand"
+                                  Command="{Binding DataContext.DeleteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+
+            <sdk:CommandReference x:Key="DeleteManyPermanentlyCommand"
+                                  Command="{Binding DataContext.DeletePermanentlyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+
             <ContextMenu x:Key="DirectoryContextMenu">
                 <MenuItem Header="Открыть"
                           Command="{StaticResource OpenCommand}"
@@ -122,6 +137,13 @@
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + V" />
 
+                <Separator />
+
+                <MenuItem Header="Удалить"
+                          Command="{StaticResource DeleteCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Del" />
+
             </ContextMenu>
 
             <ContextMenu x:Key="FileContextMenu">
@@ -146,6 +168,13 @@
                           Command="{StaticResource CopyCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + C" />
+
+                <Separator />
+
+                <MenuItem Header="Удалить"
+                          Command="{StaticResource DeleteCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Del" />
             </ContextMenu>
 
             <ContextMenu x:Key="ManyItemsContextMenu">
@@ -164,6 +193,12 @@
                 <MenuItem Header="Копировать"
                           Command="{StaticResource CopyManyCommand}"
                           InputGestureText="Ctrl + C" />
+
+                <Separator />
+
+                <MenuItem Header="Удалить"
+                          Command="{StaticResource DeleteManyCommand}"
+                          InputGestureText="Del" />
             </ContextMenu>
 
         </ListBox.Resources>
@@ -171,6 +206,10 @@
         <ListBox.InputBindings>
             <KeyBinding Command="{StaticResource CutManyCommand}"
                         Modifiers="Control" Key="X" />
+            <KeyBinding Command="{StaticResource DeleteManyCommand}"
+                        Key="Delete" />
+            <KeyBinding Command="{StaticResource DeleteManyPermanentlyCommand}"
+                        Modifiers="Shift" Key="Delete" />
             <KeyBinding Command="{StaticResource CopyManyCommand}"
                         Modifiers="Control" Key="C" />
             <KeyBinding Command="{StaticResource PasteCommand}"
@@ -326,7 +365,7 @@
                                  Binding="{Binding IsHidden}">
                         <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
                     </DataTrigger>
-</DataTemplate.Triggers>
+                </DataTemplate.Triggers>
             </DataTemplate>
         </ListBox.ItemTemplate>
 

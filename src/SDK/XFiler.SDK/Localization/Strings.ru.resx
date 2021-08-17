@@ -128,4 +128,7 @@
   <data name="DriveType.Usb" xml:space="preserve">
     <value>USB-накопитель</value>
   </data>
+  <data name="Routes.RecycleBin" xml:space="preserve">
+    <value>Корзина</value>
+  </data>
 </root>

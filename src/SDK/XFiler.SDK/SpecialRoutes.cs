@@ -31,33 +31,38 @@ namespace XFiler.SDK
 
         public static XFilerRoute MyVideos { get; }
 
+        public static XFilerRoute RecycleBin { get; }
+
         #endregion
 
         #region Static Constructor
 
         static SpecialRoutes()
         {
-            MyComputer = new(Strings.Routes_MyComputer, "xfiler://mycomputer", RouteType.MyComputer);
+            MyComputer = new XFilerRoute(Strings.Routes_MyComputer, "xfiler://mycomputer", RouteType.MyComputer);
 
-            Settings = new(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
+            Settings = new XFilerRoute(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
 
-            Desktop = new(Strings.Routes_Desktop,
+            Desktop = new XFilerRoute(Strings.Routes_Desktop,
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Desktop);
 
-            Downloads = new(Strings.Routes_Downloads,
+            Downloads = new XFilerRoute(Strings.Routes_Downloads,
                 GetDownloadFolderPath(), RouteType.Downloads);
 
-            MyDocuments = new(Strings.Routes_MyDocuments,
+            MyDocuments = new XFilerRoute(Strings.Routes_MyDocuments,
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), RouteType.MyDocuments);
 
-            MyPictures = new(Strings.Routes_MyPictures,
+            MyPictures = new XFilerRoute(Strings.Routes_MyPictures,
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), RouteType.MyPictures);
 
-            MyMusic = new(Strings.Routes_MyMusic,
+            MyMusic = new XFilerRoute(Strings.Routes_MyMusic,
                 Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), RouteType.MyMusic);
 
-            MyVideos = new(Strings.Routes_MyVideos,
+            MyVideos = new XFilerRoute(Strings.Routes_MyVideos,
                 Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), RouteType.MyVideos);
+
+            RecycleBin = new XFilerRoute(Strings.Routes_RecycleBin,
+                @"C:\$Recycle.Bin", RouteType.RecycleBin);
 
             Routes = new Dictionary<string, XFilerRoute>
             {
@@ -68,7 +73,8 @@ namespace XFiler.SDK
                 { MyDocuments.FullName, MyDocuments },
                 { MyPictures.FullName, MyPictures },
                 { MyMusic.FullName, MyMusic },
-                { MyVideos.FullName, MyVideos }
+                { MyVideos.FullName, MyVideos },
+                { RecycleBin.FullName, RecycleBin },
             };
         }
 
@@ -84,7 +90,8 @@ namespace XFiler.SDK
         {
             Desktop, Downloads,
             MyDocuments, MyPictures,
-            MyMusic, MyVideos
+            MyMusic, MyVideos,
+            //RecycleBin
         };
 
         #endregion

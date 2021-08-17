@@ -10,8 +10,10 @@ namespace XFiler.Base
             IDragSource dragSource,
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
-            IExplorerOptions explorerOptions) :
-            base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService, explorerOptions)
+            IExplorerOptions explorerOptions,
+            IFileOperations fileOperations) :
+            base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService,
+                explorerOptions, fileOperations)
         {
         }
     }

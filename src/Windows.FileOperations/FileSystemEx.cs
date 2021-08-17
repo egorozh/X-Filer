@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -73,6 +72,10 @@ namespace Windows.FileOperations
         public static void DeleteFile(string file, UIOption showUi,
             RecycleOption recycle, UICancelOption onUserCancel = UICancelOption.ThrowException)
             => DeleteFileInternal(file, ToUiOptionInternal(showUi), recycle, onUserCancel);
+
+        public static void DeleteFiles(IReadOnlyList<string> items, UIOption showUi,
+            RecycleOption recycle, UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => DeleteFileInternal(items, showUi, recycle, onUserCancel);
 
         public static void MoveDirectory(string sourceDirectoryName, string destinationDirectoryName,
             bool overwrite = false)
@@ -211,9 +214,9 @@ namespace Windows.FileOperations
         {
             Debug.Assert(Enum.IsDefined(typeof(CopyOrMove), operation), "Invalid Operation");
             Debug.Assert(!string.IsNullOrEmpty(sourceDirectoryPath) &
-                Path.IsPathRooted(sourceDirectoryPath), "Invalid     Source");
+                         Path.IsPathRooted(sourceDirectoryPath), "Invalid     Source");
             Debug.Assert(!string.IsNullOrEmpty(targetDirectoryPath) &
-                Path.IsPathRooted(targetDirectoryPath), "Invalid Target");
+                         Path.IsPathRooted(targetDirectoryPath), "Invalid Target");
             if (operation == CopyOrMove.Move & !Directory.Exists(targetDirectoryPath) &
                 IsOnSameDrive(sourceDirectoryPath, targetDirectoryPath))
             {
@@ -233,12 +236,12 @@ namespace Windows.FileOperations
 
             Directory.CreateDirectory(targetDirectoryPath);
             Debug.Assert(Directory.Exists(targetDirectoryPath), "Should be able to create Target Directory");
-            DirectoryNode sourceDirectoryNode = new DirectoryNode(sourceDirectoryPath, targetDirectoryPath);
-            ListDictionary exceptions = new ListDictionary();
+            DirectoryNode sourceDirectoryNode = new(sourceDirectoryPath, targetDirectoryPath);
+            ListDictionary exceptions = new();
             CopyOrMoveDirectoryNode(operation, sourceDirectoryNode, overwrite, exceptions);
             if (exceptions.Count > 0)
             {
-                IOException ioException = new IOException(SR.IO_CopyMoveRecursive);
+                IOException ioException = new(SR.IO_CopyMoveRecursive);
                 foreach (object obj in exceptions)
                 {
                     DictionaryEntry dictionaryEntry = obj != null ? (DictionaryEntry)obj : new DictionaryEntry();
@@ -485,6 +488,18 @@ namespace Windows.FileOperations
                 File.Delete(str);
         }
 
+        private static void DeleteFileInternal(
+            IReadOnlyList<string> files,
+            UIOption showUi,
+            RecycleOption recycle,
+            UICancelOption onUserCancel)
+        {
+            VerifyRecycleOption(nameof(recycle), recycle);
+            VerifyUiCancelOption(nameof(onUserCancel), onUserCancel);
+
+            ShellDelete(files, showUi, recycle, onUserCancel);
+        }
+
         private static void EnsurePathNotExist(string path)
         {
             if (File.Exists(path))
@@ -493,91 +508,6 @@ namespace Windows.FileOperations
             if (Directory.Exists(path))
                 throw ExceptionUtils.GetIoException(
                     "Could not complete operation since a directory already exists in this path '{0}'.", path);
-        }
-
-        private static ReadOnlyCollection<string> FindFilesOrDirectories(
-            FileOrDirectory fileOrDirectory,
-            string directory,
-            SearchOption searchType,
-            string[] wildcards)
-        {
-            Collection<string> results = new();
-            FindFilesOrDirectories(fileOrDirectory, directory, searchType, wildcards, results);
-            return new ReadOnlyCollection<string>(results);
-        }
-
-        private static void FindFilesOrDirectories(
-            FileOrDirectory fileOrDirectory,
-            string directory,
-            SearchOption searchType,
-            string[] wildcards,
-            Collection<string> results)
-        {
-            Debug.Assert(results != null, "Results is NULL");
-            VerifySearchOption(nameof(searchType), searchType);
-            directory = NormalizePath(directory);
-            if (wildcards != null)
-            {
-                string[] strArray = wildcards;
-                int index = 0;
-                while (index < strArray.Length)
-                {
-                    if (string.IsNullOrEmpty(strArray[index].TrimEnd()))
-                        throw ExceptionUtils.GetArgumentNullException(nameof(wildcards),
-                            "One of the wildcards is Nothing or empty string.");
-                    checked
-                    {
-                        ++index;
-                    }
-                }
-            }
-
-            if (wildcards == null || wildcards.Length == 0)
-            {
-                AddToStringCollection(results, FindPaths(fileOrDirectory, directory, null));
-            }
-            else
-            {
-                string[] strArray = wildcards;
-                int index = 0;
-                while (index < strArray.Length)
-                {
-                    string wildCard = strArray[index];
-                    AddToStringCollection(results, FindPaths(fileOrDirectory, directory, wildCard));
-                    checked
-                    {
-                        ++index;
-                    }
-                }
-            }
-
-            if (searchType != SearchOption.SearchAllSubDirectories)
-                return;
-            string[] directories = Directory.GetDirectories(directory);
-            int index1 = 0;
-            while (index1 < directories.Length)
-            {
-                string directory1 = directories[index1];
-                FindFilesOrDirectories(fileOrDirectory, directory1, searchType, wildcards, results);
-                checked
-                {
-                    ++index1;
-                }
-            }
-        }
-
-        private static string[] FindPaths(
-            FileOrDirectory fileOrDirectory,
-            string directory,
-            string wildCard)
-        {
-            return fileOrDirectory == FileOrDirectory.Directory
-                ? string.IsNullOrEmpty(wildCard)
-                    ? Directory.GetDirectories(directory)
-                    : Directory.GetDirectories(directory, wildCard)
-                : string.IsNullOrEmpty(wildCard)
-                    ? Directory.GetFiles(directory)
-                    : Directory.GetFiles(directory, wildCard);
         }
 
         private static string GetFullPathFromNewName(string path, string newName, string argumentName)
@@ -611,7 +541,7 @@ namespace Windows.FileOperations
                 }
                 else
                 {
-                    DirectoryInfo directoryInfo = new DirectoryInfo(GetParentPath(fullPath));
+                    DirectoryInfo directoryInfo = new(GetParentPath(fullPath));
                     if (File.Exists(fullPath))
                     {
                         Debug.Assert(directoryInfo.GetFiles(Path.GetFileName(fullPath)).Length == 1,
@@ -769,6 +699,20 @@ namespace Windows.FileOperations
             //Directory.Delete(fullSourcePath, false);
         }
 
+        private static void ShellDelete(
+            IReadOnlyCollection<string> files,
+            UIOption showUi,
+            RecycleOption recycle,
+            UICancelOption onUserCancel)
+        {
+            var operationFlags = GetOperationFlags(ToUiOptionInternal(showUi));
+
+            if (recycle == RecycleOption.SendToRecycleBin)
+                operationFlags |= NativeMethods.ShFileOperationFlags.FOF_ALLOWUNDO;
+
+            ShellFileOperation(NativeMethods.SHFileOperationType.FO_DELETE, operationFlags, files, null,
+                onUserCancel);
+        }
 
         private static void ShellDelete(
             string fullPath,
@@ -824,7 +768,7 @@ namespace Windows.FileOperations
             NativeMethods.SHFileOperationType operationType,
             NativeMethods.ShFileOperationFlags operationFlags,
             IReadOnlyCollection<string>? sourcePaths,
-            string fullTarget,
+            string? fullTarget,
             UICancelOption onUserCancel)
         {
             Debug.Assert(Enum.IsDefined(typeof(NativeMethods.SHFileOperationType), operationType));
@@ -876,8 +820,8 @@ namespace Windows.FileOperations
         {
             Debug.Assert(Enum.IsDefined(typeof(NativeMethods.SHFileOperationType), operationType),
                 "Invalid OperationType");
-            Debug.Assert(!string.IsNullOrEmpty(targetPath) || Path.IsPathRooted(targetPath),
-                "Invalid TargetPath");
+            //Debug.Assert(Path.IsPathRooted(targetPath),
+            //    "Invalid TargetPath");
             Debug.Assert(sourcePaths is { Count: > 0 }, "Invalid SourcePaths");
 
             NativeMethods.SHFILEOPSTRUCT shfileopstruct = new()
@@ -885,7 +829,7 @@ namespace Windows.FileOperations
                 wFunc = (uint)operationType,
                 fFlags = (ushort)operationFlags,
                 pFrom = GetShellPath(sourcePaths),
-                pTo = GetShellPath(targetPath),
+                pTo = targetPath,
                 hNameMappings = IntPtr.Zero
             };
 

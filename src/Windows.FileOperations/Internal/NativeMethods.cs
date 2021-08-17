@@ -144,7 +144,7 @@ namespace Windows.FileOperations
             public IntPtr hwnd;
             public uint wFunc;
             [MarshalAs(UnmanagedType.LPTStr)] public string pFrom;
-            [MarshalAs(UnmanagedType.LPTStr)] public string pTo;
+            [MarshalAs(UnmanagedType.LPTStr)] public string? pTo;
             public ushort fFlags;
             public bool fAnyOperationsAborted;
             public IntPtr hNameMappings;

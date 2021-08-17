@@ -13908,6 +13908,24 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
+    <DrawingImage x:Key="_recycleBin">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                <DrawingGroup Opacity="1">
+                    <GeometryDrawing Brush="#FF80EAFF" Geometry="F1 M512,512z M0,0z M432,192L432,224 391.359,224 368,480 336,480 336,512 304,512 304,480 208,480 208,512 176,512 176,480 144,480 120.641,224 80,224 80,192 117.76,192 114.881,160 256,128 397.119,160 394.24,192z" />
+                    <GeometryDrawing Brush="#FF4DB5FF" Geometry="F1 M512,512z M0,0z M432,96L432,160 397.119,160 256,128 114.881,160 80,160 80,96 112,96 144,0 368,0 400,96z" />
+                    <GeometryDrawing Brush="#FF80EAFF" Geometry="F1 M512,512z M0,0z M314.666,32L197.334,32 176,96 336,96z" />
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF4DB5FF" Geometry="F1 M512,512z M0,0z M194.578,320.986C193.068,315.543 192,309.92 192,304 192,274.26 212.473,249.426 240,242.271L240,209.617C194.691,217.289 160,256.541 160,304 160,315.756 162.42,326.893 166.305,337.311z" />
+                        <GeometryDrawing Brush="#FF4DB5FF" Geometry="F1 M512,512z M0,0z M272,242.271C299.527,249.425 320,274.259 320,304 320,309.92 318.932,315.543 317.422,320.986L345.695,337.31C349.58,326.891 352,315.756 352,304 352,256.541 317.309,217.289 272,209.617z" />
+                        <GeometryDrawing Brush="#FF4DB5FF" Geometry="F1 M512,512z M0,0z M301.596,348.801C289.979,360.625 273.852,368 256,368 238.148,368 222.021,360.625 210.404,348.801L182.445,364.944C200.068,386.174 226.314,400 256,400 285.686,400 311.932,386.174 329.555,364.943z" />
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FF3377FF" Geometry="F1 M512,512z M0,0z M400,128L397.119,160 114.881,160 112,128z" />
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <!--#endregion-->
 
 </ResourceDictionary>

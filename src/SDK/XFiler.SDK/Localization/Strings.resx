@@ -128,4 +128,7 @@
   <data name="DriveType.Usb" xml:space="preserve">
     <value>Usb drive</value>
   </data>
+  <data name="Routes.RecycleBin" xml:space="preserve">
+    <value>Basket</value>
+  </data>
 </root>

@@ -70,7 +70,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Usb drive.
         /// </summary>
         public static string DriveType_Usb {
             get {
@@ -138,6 +138,15 @@ namespace XFiler.SDK.Localization {
         public static string Routes_MyVideos {
             get {
                 return ResourceManager.GetString("Routes.MyVideos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Routes_RecycleBin {
+            get {
+                return ResourceManager.GetString("Routes.RecycleBin", resourceCulture);
             }
         }
         

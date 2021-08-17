@@ -18,6 +18,7 @@ namespace XFiler.SDK
 
         private IFileEntityFactory _fileEntityFactory;
         private IExplorerOptions _settings;
+        private IFileOperations _fileOperations;
         private BackgroundWorker? _backgroundWorker;
 
         #endregion
@@ -54,6 +55,9 @@ namespace XFiler.SDK
         public DelegateCommand<object> CutCommand { get; private set; }
         public DelegateCommand<object> CopyCommand { get; private set; }
 
+        public DelegateCommand<object> DeleteCommand { get; }
+        public DelegateCommand<object> DeletePermanentlyCommand { get; }
+
         public DelegateCommand<object> OpenNewWindowCommand { get; private set; }
 
         #endregion
@@ -66,14 +70,20 @@ namespace XFiler.SDK
             IDragSource dragSource,
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
-            IExplorerOptions settings)
+            IExplorerOptions settings,
+            IFileOperations fileOperations)
         {
             _fileEntityFactory = fileEntityFactory;
             _settings = settings;
+            _fileOperations = fileOperations;
             DropTarget = dropTarget;
             DragSource = dragSource;
-            
+
             OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
+            DeleteCommand = new DelegateCommand<object>(OnDelete);
+            DeletePermanentlyCommand = new DelegateCommand<object>(OnPermanentlyDelete);
+
+
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
 
             OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
@@ -81,6 +91,8 @@ namespace XFiler.SDK
             PasteCommand = clipboardService.PasteCommand;
             CutCommand = clipboardService.CutCommand;
             CopyCommand = clipboardService.CopyCommand;
+
+            _fileOperations.OperationHappened += FileOperationsOnOperationHappened;
         }
 
         #endregion
@@ -106,8 +118,11 @@ namespace XFiler.SDK
             foreach (var model in DirectoriesAndFiles)
                 model.Dispose();
 
+            _fileOperations.OperationHappened -= FileOperationsOnOperationHappened;
+
             _fileEntityFactory = null!;
             _settings = null!;
+            _fileOperations = null!;
 
             DropTarget = null!;
             DragSource = null!;
@@ -142,6 +157,32 @@ namespace XFiler.SDK
                         tabsModel.OnOpenNewTab(e.OfType<IFileSystemModel>());
                         break;
                 }
+            }
+        }
+
+        private void OnDelete(object parameters)
+        {
+            switch (parameters)
+            {
+                case IFileSystemModel model:
+                    Delete(new[] { model.Info });
+                    break;
+                case IEnumerable e:
+                    Delete(e.OfType<IFileSystemModel>().Select(m => m.Info));
+                    break;
+            }
+        }
+
+        private void OnPermanentlyDelete(object parameters)
+        {
+            switch (parameters)
+            {
+                case IFileSystemModel model:
+                    Delete(new[] { model.Info }, true);
+                    break;
+                case IEnumerable e:
+                    Delete(e.OfType<IFileSystemModel>().Select(m => m.Info), true);
+                    break;
             }
         }
 
@@ -251,6 +292,32 @@ namespace XFiler.SDK
         private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             IsLoaded = false;
+        }
+
+        private void Delete(IEnumerable<FileSystemInfo> items, bool isPermanently = false)
+        {
+            _fileOperations.Delete(items.ToList(), DirectoryInfo, isPermanently);
+        }
+
+        private void FileOperationsOnOperationHappened(object? sender, FileOperationArgs e)
+        {
+            FullUpdate();
+        }
+
+        private void FullUpdate()
+        {
+            if (_backgroundWorker is { IsBusy: true })
+                _backgroundWorker.CancelAsync();
+
+            _backgroundWorker?.Dispose();
+            _backgroundWorker = null;
+
+            foreach (var model in DirectoriesAndFiles)
+                model.Dispose();
+
+            DirectoriesAndFiles.Clear();
+
+            InitItems();
         }
 
         #endregion

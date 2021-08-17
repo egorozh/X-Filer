@@ -39,6 +39,7 @@ namespace XFiler
                 RouteType.Drive => IconName.LogicalDrive,
                 RouteType.SystemDrive => IconName.SystemDrive,
                 RouteType.Directory => IconName.Folder,
+                RouteType.RecycleBin => IconName.RecycleBin,
                 RouteType.File => GetExtensionKey(route.FullName),
                 _ => IconName.Blank
             };
@@ -70,6 +71,7 @@ namespace XFiler
             public const string MyPictures = "_myPictures";
             public const string MyVideos = "_myVideos";
             public const string Settings = "_settings";
+            public const string RecycleBin = "_recycleBin";
         }
     }
 }

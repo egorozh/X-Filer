@@ -26,6 +26,8 @@ namespace XFiler.SDK
 
         MyMusic,
 
-        MyVideos
+        MyVideos,
+
+        RecycleBin
     }
 }

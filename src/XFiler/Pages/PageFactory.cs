@@ -48,6 +48,7 @@ namespace XFiler
                         RouteType.MyVideos => CreateExplorerPage(route),
                         RouteType.SystemDrive => CreateExplorerPage(route),
                         RouteType.Drive => CreateExplorerPage(route),
+                        RouteType.RecycleBin => CreateExplorerPage(route),
                         RouteType.MyComputer => new MyComputerPageModel(_iconLoader),
                         RouteType.Settings => new SettingsPageModel(),
                         _ => new SearchPageModel(route)
