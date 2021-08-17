@@ -20,6 +20,7 @@ namespace XFiler.SDK
         private IExplorerOptions _settings;
         private IFileOperations _fileOperations;
         private BackgroundWorker? _backgroundWorker;
+        private FileSystemWatcher _watcher = null!;
 
         #endregion
 
@@ -91,8 +92,6 @@ namespace XFiler.SDK
             PasteCommand = clipboardService.PasteCommand;
             CutCommand = clipboardService.CutCommand;
             CopyCommand = clipboardService.CopyCommand;
-
-            _fileOperations.OperationHappened += FileOperationsOnOperationHappened;
         }
 
         #endregion
@@ -104,21 +103,42 @@ namespace XFiler.SDK
             DirectoryInfo = directoryInfo;
             Info = directoryInfo;
 
+            _watcher = new FileSystemWatcher(directoryInfo.FullName);
+
+            _watcher.NotifyFilter = NotifyFilters.Attributes
+                                    | NotifyFilters.CreationTime
+                                    | NotifyFilters.DirectoryName
+                                    | NotifyFilters.FileName
+                                    | NotifyFilters.LastAccess
+                                    | NotifyFilters.LastWrite
+                                    | NotifyFilters.Security
+                                    | NotifyFilters.Size;
+
             InitItems();
+
+            _watcher.Changed += OnChanged;
+            _watcher.Created += OnCreated;
+            _watcher.Deleted += OnDeleted;
+            _watcher.Renamed += OnRenamed;
+            _watcher.Error += OnError;
+
+            _watcher.IncludeSubdirectories = false;
+            _watcher.EnableRaisingEvents = true;
         }
 
         public void Dispose()
         {
-            if (_backgroundWorker is { IsBusy: true })
-                _backgroundWorker.CancelAsync();
+            _watcher.Dispose();
 
-            _backgroundWorker?.Dispose();
-            _backgroundWorker = null;
+            _watcher.Changed -= OnChanged;
+            _watcher.Created -= OnCreated;
+            _watcher.Deleted -= OnDeleted;
+            _watcher.Renamed -= OnRenamed;
+            _watcher.Error -= OnError;
+            
+            _watcher = null!;
 
-            foreach (var model in DirectoriesAndFiles)
-                model.Dispose();
-
-            _fileOperations.OperationHappened -= FileOperationsOnOperationHappened;
+            BeforeUpdateDispose();
 
             _fileEntityFactory = null!;
             _settings = null!;
@@ -299,12 +319,48 @@ namespace XFiler.SDK
             _fileOperations.Delete(items.ToList(), DirectoryInfo, isPermanently);
         }
 
-        private void FileOperationsOnOperationHappened(object? sender, FileOperationArgs e)
+        private void OnError(object sender, ErrorEventArgs e)
+        {
+            FullUpdate();
+        }
+
+        private void OnRenamed(object sender, RenamedEventArgs e)
+        {
+            FullUpdate();
+        }
+
+        private void OnDeleted(object sender, FileSystemEventArgs e)
+        {
+            FullUpdate();
+        }
+
+        private void OnCreated(object sender, FileSystemEventArgs e)
+        {
+            FullUpdate();
+        }
+
+        private void OnChanged(object sender, FileSystemEventArgs e)
         {
             FullUpdate();
         }
 
         private void FullUpdate()
+        {
+            if (_backgroundWorker is { IsBusy: true })
+                return;
+
+            BeforeUpdateDispose();
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                DirectoriesAndFiles.Clear();
+            });
+           
+
+            InitItems();
+        }
+
+        private void BeforeUpdateDispose()
         {
             if (_backgroundWorker is { IsBusy: true })
                 _backgroundWorker.CancelAsync();
@@ -314,10 +370,6 @@ namespace XFiler.SDK
 
             foreach (var model in DirectoriesAndFiles)
                 model.Dispose();
-
-            DirectoriesAndFiles.Clear();
-
-            InitItems();
         }
 
         #endregion

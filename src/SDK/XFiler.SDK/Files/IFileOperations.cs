@@ -6,8 +6,6 @@ namespace XFiler.SDK
 {
     public interface IFileOperations
     {
-        event EventHandler<FileOperationArgs> OperationHappened;
-
         void Move(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
 
         void Copy(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
