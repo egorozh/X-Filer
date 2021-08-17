@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,15 +16,6 @@ namespace Windows.FileOperations
 {
     public class FileSystemEx
     {
-        private const NativeMethods.ShFileOperationFlags MShellOperationFlagsBase =
-            NativeMethods.ShFileOperationFlags.FOF_NOCONFIRMMKDIR |
-            NativeMethods.ShFileOperationFlags.FOF_NO_CONNECTED_ELEMENTS;
-
-        private const NativeMethods.ShFileOperationFlags MShellOperationFlagsHideUi =
-            NativeMethods.ShFileOperationFlags.FOF_SILENT | NativeMethods.ShFileOperationFlags.FOF_NOCONFIRMATION;
-
-        private const int MMovefileexFlags = 11;
-
         private static readonly char[] MSeparatorChars =
         {
             Path.DirectorySeparatorChar,
@@ -33,10 +23,7 @@ namespace Windows.FileOperations
             Path.VolumeSeparatorChar
         };
 
-        public static ReadOnlyCollection<string> GetFiles(string directory) =>
-            FindFilesOrDirectories(FileOrDirectory.File, directory, SearchOption.SearchTopLevelOnly, null);
-
-        public static string GetName(string path) => Path.GetFileName(path);
+        #region Public Methods
 
         public static string GetParentPath(string path)
         {
@@ -47,167 +34,68 @@ namespace Windows.FileOperations
             return Path.GetDirectoryName(path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
         }
 
-        public static void CopyDirectory(string sourceDirectoryName, string destinationDirectoryName) =>
-            CopyOrMoveDirectory(CopyOrMove.Copy, sourceDirectoryName, destinationDirectoryName, false,
+        public static void CopyDirectory(string sourceDirectoryName, string destinationDirectoryName,
+            bool overwrite = false)
+            => CopyOrMoveDirectory(CopyOrMove.Copy, sourceDirectoryName, destinationDirectoryName, overwrite,
                 UiOptionInternal.NO_UI, UICancelOption.ThrowException);
 
-        public static void CopyDirectory(
-            string sourceDirectoryName,
-            string destinationDirectoryName,
-            bool overwrite)
-        {
-            CopyOrMoveDirectory(CopyOrMove.Copy, sourceDirectoryName, destinationDirectoryName, overwrite,
-                UiOptionInternal.NO_UI, UICancelOption.ThrowException);
-        }
-
-        public static void CopyDirectory(
-            string sourceDirectoryName,
-            string destinationDirectoryName,
-            UIOption showUi)
-        {
-            CopyOrMoveDirectory(CopyOrMove.Copy, sourceDirectoryName, destinationDirectoryName, false,
-                ToUiOptionInternal(showUi), UICancelOption.ThrowException);
-        }
-
-        public static void CopyDirectory(
-            string sourceDirectoryName,
-            string destinationDirectoryName,
-            UIOption showUi,
-            UICancelOption onUserCancel)
-        {
-            CopyOrMoveDirectory(CopyOrMove.Copy, sourceDirectoryName, destinationDirectoryName, false,
+        public static void CopyDirectory(string sourceDirectoryName, string destinationDirectoryName,
+            UIOption showUi, UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => CopyOrMoveDirectory(CopyOrMove.Copy, sourceDirectoryName, destinationDirectoryName, false,
                 ToUiOptionInternal(showUi), onUserCancel);
-        }
 
-        public static void CopyFile(string sourceFileName, string destinationFileName) => CopyOrMoveFile(
-            CopyOrMove.Copy, sourceFileName, destinationFileName, false, UiOptionInternal.NO_UI,
-            UICancelOption.ThrowException);
-
-        public static void CopyFile(string sourceFileName, string destinationFileName, bool overwrite) =>
-            CopyOrMoveFile(CopyOrMove.Copy, sourceFileName, destinationFileName, overwrite, UiOptionInternal.NO_UI,
+        public static void CopyFile(string sourceFileName, string destinationFileName, bool overwrite = false)
+            => CopyOrMoveFile(CopyOrMove.Copy, sourceFileName, destinationFileName, overwrite, UiOptionInternal.NO_UI,
                 UICancelOption.ThrowException);
 
-        public static void CopyFile(string sourceFileName, string destinationFileName, UIOption showUi) =>
-            CopyOrMoveFile(CopyOrMove.Copy, sourceFileName, destinationFileName, false, ToUiOptionInternal(showUi),
-                UICancelOption.ThrowException);
+        public static void CopyFile(string sourceFileName, string destinationFileName,
+            UIOption showUi, UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => CopyOrMoveFile(CopyOrMove.Copy, sourceFileName, destinationFileName, false,
+                ToUiOptionInternal(showUi), onUserCancel);
 
-        public static void CopyFile(
-            string sourceFileName,
-            string destinationFileName,
-            UIOption showUi,
+        public static void CopyFiles(IReadOnlyList<string> sources, string destinationFileName,
             UICancelOption onUserCancel)
-        {
-            CopyOrMoveFile(CopyOrMove.Copy, sourceFileName, destinationFileName, false, ToUiOptionInternal(showUi),
-                onUserCancel);
-        }
-
-        public static void CopyFiles(
-            IReadOnlyList<string> sources,
-            string destinationFileName,
-            UICancelOption onUserCancel)
-        {
-            CopyOrMoveFiles(CopyOrMove.Copy, sources, destinationFileName, onUserCancel);
-        }
-
-        public static void CreateDirectory(string directory)
-        {
-            directory = Path.GetFullPath(directory);
-            if (File.Exists(directory))
-                throw ExceptionUtils.GetIoException("FileNotExists", directory);
-            Directory.CreateDirectory(directory);
-        }
+            => CopyOrMoveFiles(CopyOrMove.Copy, sources, destinationFileName, onUserCancel);
 
         public static void DeleteDirectory(string directory, DeleteDirectoryOption onDirectoryNotEmpty) =>
             DeleteDirectoryInternal(directory, onDirectoryNotEmpty, UiOptionInternal.NO_UI,
                 RecycleOption.DeletePermanently, UICancelOption.ThrowException);
 
-        public static void DeleteDirectory(string directory, UIOption showUi, RecycleOption recycle) =>
-            DeleteDirectoryInternal(directory, DeleteDirectoryOption.DeleteAllContents, ToUiOptionInternal(showUi),
-                recycle, UICancelOption.ThrowException);
-
-        public static void DeleteDirectory(
-            string directory,
-            UIOption showUi,
-            RecycleOption recycle,
-            UICancelOption onUserCancel)
-        {
-            DeleteDirectoryInternal(directory, DeleteDirectoryOption.DeleteAllContents, ToUiOptionInternal(showUi),
-                recycle, onUserCancel);
-        }
+        public static void DeleteDirectory(string directory, UIOption showUi,
+            RecycleOption recycle = RecycleOption.DeletePermanently,
+            UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => DeleteDirectoryInternal(directory, DeleteDirectoryOption.DeleteAllContents,
+                ToUiOptionInternal(showUi), recycle, onUserCancel);
 
         public static void DeleteFile(string file) => DeleteFileInternal(file, UiOptionInternal.NO_UI,
             RecycleOption.DeletePermanently, UICancelOption.ThrowException);
 
-        public static void DeleteFile(string file, UIOption showUi, RecycleOption recycle) =>
-            DeleteFileInternal(file, ToUiOptionInternal(showUi), recycle, UICancelOption.ThrowException);
+        public static void DeleteFile(string file, UIOption showUi,
+            RecycleOption recycle, UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => DeleteFileInternal(file, ToUiOptionInternal(showUi), recycle, onUserCancel);
 
-        public static void DeleteFile(
-            string file,
-            UIOption showUi,
-            RecycleOption recycle,
-            UICancelOption onUserCancel)
-        {
-            DeleteFileInternal(file, ToUiOptionInternal(showUi), recycle, onUserCancel);
-        }
-
-        public static void MoveDirectory(string sourceDirectoryName, string destinationDirectoryName) =>
-            CopyOrMoveDirectory(CopyOrMove.Move, sourceDirectoryName, destinationDirectoryName, false,
+        public static void MoveDirectory(string sourceDirectoryName, string destinationDirectoryName,
+            bool overwrite = false)
+            => CopyOrMoveDirectory(CopyOrMove.Move, sourceDirectoryName, destinationDirectoryName, overwrite,
                 UiOptionInternal.NO_UI, UICancelOption.ThrowException);
 
-        public static void MoveDirectory(
-            string sourceDirectoryName,
-            string destinationDirectoryName,
-            bool overwrite)
-        {
-            CopyOrMoveDirectory(CopyOrMove.Move, sourceDirectoryName, destinationDirectoryName, overwrite,
-                UiOptionInternal.NO_UI, UICancelOption.ThrowException);
-        }
-
-        public static void MoveDirectory(
-            string sourceDirectoryName,
-            string destinationDirectoryName,
-            UIOption showUi)
-        {
-            CopyOrMoveDirectory(CopyOrMove.Move, sourceDirectoryName, destinationDirectoryName, false,
-                ToUiOptionInternal(showUi), UICancelOption.ThrowException);
-        }
-
-        public static void MoveDirectory(
-            string sourceDirectoryName,
-            string destinationDirectoryName,
-            UIOption showUi,
-            UICancelOption onUserCancel)
-        {
-            CopyOrMoveDirectory(CopyOrMove.Move, sourceDirectoryName, destinationDirectoryName, false,
+        public static void MoveDirectory(string sourceDirectoryName, string destinationDirectoryName,
+            UIOption showUi, UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => CopyOrMoveDirectory(CopyOrMove.Move, sourceDirectoryName, destinationDirectoryName, false,
                 ToUiOptionInternal(showUi), onUserCancel);
-        }
 
-        public static void MoveFile(string sourceFileName, string destinationFileName) => CopyOrMoveFile(
-            CopyOrMove.Move, sourceFileName, destinationFileName, false, UiOptionInternal.NO_UI,
-            UICancelOption.ThrowException);
-
-        public static void MoveFile(string sourceFileName, string destinationFileName, bool overwrite) =>
-            CopyOrMoveFile(CopyOrMove.Move, sourceFileName, destinationFileName, overwrite, UiOptionInternal.NO_UI,
-                UICancelOption.ThrowException);
-
-        public static void MoveFile(string sourceFileName, string destinationFileName, UIOption showUi) =>
-            CopyOrMoveFile(CopyOrMove.Move, sourceFileName, destinationFileName, false, ToUiOptionInternal(showUi),
-                UICancelOption.ThrowException);
+        public static void MoveFile(string sourceFileName, string destinationFileName, bool overwrite = false)
+            => CopyOrMoveFile(CopyOrMove.Move, sourceFileName, destinationFileName, overwrite,
+                UiOptionInternal.NO_UI, UICancelOption.ThrowException);
 
         public static void MoveFile(string sourceFileName, string destinationFileName,
-            UIOption showUi, UICancelOption onUserCancel)
-        {
-            CopyOrMoveFile(CopyOrMove.Move, sourceFileName, destinationFileName, false, ToUiOptionInternal(showUi),
-                onUserCancel);
-        }
+            UIOption showUi, UICancelOption onUserCancel = UICancelOption.ThrowException)
+            => CopyOrMoveFile(CopyOrMove.Move, sourceFileName, destinationFileName,
+                false, ToUiOptionInternal(showUi), onUserCancel);
 
-        public static void MoveFiles(
-            IReadOnlyList<string> sources,
-            string destinationFileName,
+        public static void MoveFiles(IReadOnlyList<string> sources, string destinationFileName,
             UICancelOption onUserCancel)
-        {
-            CopyOrMoveFiles(CopyOrMove.Move, sources, destinationFileName, onUserCancel);
-        }
+            => CopyOrMoveFiles(CopyOrMove.Move, sources, destinationFileName, onUserCancel);
 
         public static void RenameDirectory(string directory, string newName)
         {
@@ -217,7 +105,7 @@ namespace Windows.FileOperations
                 throw ExceptionUtils.GetIoException(SR.IO_DirectoryIsRoot_Path, directory);
             if (!Directory.Exists(directory))
                 throw ExceptionUtils.GetDirectoryNotFoundException(SR.IO_DirectoryNotFound_Path, directory);
-            string str = Operators.CompareString(newName, "", false) != 0
+            string str = !string.IsNullOrEmpty(newName)
                 ? GetFullPathFromNewName(GetParentPath(directory), newName, nameof(newName))
                 : throw ExceptionUtils.GetArgumentNullException(nameof(newName), SR.General_ArgumentEmptyOrNothing_Name,
                     nameof(newName));
@@ -233,7 +121,7 @@ namespace Windows.FileOperations
             ThrowIfDevicePath(file);
             if (!File.Exists(file))
                 throw ExceptionUtils.GetFileNotFoundException(file, "Could not find file '{0}'.", file);
-            string str = Operators.CompareString(newName, "", false) != 0
+            string str = !string.IsNullOrEmpty(newName)
                 ? GetFullPathFromNewName(GetParentPath(file), newName, nameof(newName))
                 : throw ExceptionUtils.GetArgumentNullException(nameof(newName), SR.General_ArgumentEmptyOrNothing_Name,
                     nameof(newName));
@@ -243,15 +131,19 @@ namespace Windows.FileOperations
             File.Move(file, str);
         }
 
-        internal static string NormalizeFilePath(string path, string paramName)
+        #endregion
+
+        #region Private Methods
+
+        private static string NormalizeFilePath(string path, string paramName)
         {
             CheckFilePathTrailingSeparator(path, paramName);
             return NormalizePath(path);
         }
 
-        internal static string NormalizePath(string path) => GetLongPath(RemoveEndingSeparator(Path.GetFullPath(path)));
+        private static string NormalizePath(string path) => GetLongPath(RemoveEndingSeparator(Path.GetFullPath(path)));
 
-        internal static void CheckFilePathTrailingSeparator(string path, string paramName)
+        private static void CheckFilePathTrailingSeparator(string path, string paramName)
         {
             if (string.IsNullOrEmpty(path))
                 throw ExceptionUtils.GetArgumentNullException(paramName);
@@ -318,11 +210,9 @@ namespace Windows.FileOperations
             bool overwrite)
         {
             Debug.Assert(Enum.IsDefined(typeof(CopyOrMove), operation), "Invalid Operation");
-            Debug.Assert(
-                (uint)Operators.CompareString(sourceDirectoryPath, "", false) > 0U &
-                Path.IsPathRooted(sourceDirectoryPath), "Invalid Source");
-            Debug.Assert(
-                (uint)Operators.CompareString(targetDirectoryPath, "", false) > 0U &
+            Debug.Assert(!string.IsNullOrEmpty(sourceDirectoryPath) &
+                Path.IsPathRooted(sourceDirectoryPath), "Invalid     Source");
+            Debug.Assert(!string.IsNullOrEmpty(targetDirectoryPath) &
                 Path.IsPathRooted(targetDirectoryPath), "Invalid Target");
             if (operation == CopyOrMove.Move & !Directory.Exists(targetDirectoryPath) &
                 IsOnSameDrive(sourceDirectoryPath, targetDirectoryPath))
@@ -335,13 +225,9 @@ namespace Windows.FileOperations
                 }
                 catch (IOException ex)
                 {
-                    ProjectData.SetProjectError(ex);
-                    ProjectData.ClearProjectError();
                 }
                 catch (UnauthorizedAccessException ex)
                 {
-                    ProjectData.SetProjectError(ex);
-                    ProjectData.ClearProjectError();
                 }
             }
 
@@ -380,7 +266,6 @@ namespace Windows.FileOperations
             }
             catch (Exception ex)
             {
-                ProjectData.SetProjectError(ex);
                 Exception exception = ex;
                 int num;
                 switch (exception)
@@ -398,7 +283,6 @@ namespace Windows.FileOperations
                 if (num != 0)
                 {
                     exceptions.Add(sourceDirectoryNode.Path, exception.Message);
-                    ProjectData.ClearProjectError();
                     return;
                 }
 
@@ -428,7 +312,6 @@ namespace Windows.FileOperations
                     }
                     catch (Exception ex)
                     {
-                        ProjectData.SetProjectError(ex);
                         Exception exception = ex;
                         int num;
                         switch (exception)
@@ -446,7 +329,6 @@ namespace Windows.FileOperations
                         if (num != 0)
                         {
                             exceptions.Add(str, exception.Message);
-                            ProjectData.ClearProjectError();
                         }
                         else
                             throw;
@@ -469,7 +351,6 @@ namespace Windows.FileOperations
                     }
                     catch (Exception ex)
                     {
-                        ProjectData.SetProjectError(ex);
                         Exception exception = ex;
                         int num;
                         switch (exception)
@@ -487,7 +368,6 @@ namespace Windows.FileOperations
                         if (num != 0)
                         {
                             exceptions.Add(sourceDirectoryNode.Path, exception.Message);
-                            ProjectData.ClearProjectError();
                         }
                         else
                             throw;
@@ -642,7 +522,7 @@ namespace Windows.FileOperations
                 int index = 0;
                 while (index < strArray.Length)
                 {
-                    if (Operators.CompareString(strArray[index].TrimEnd(), "", false) == 0)
+                    if (string.IsNullOrEmpty(strArray[index].TrimEnd()))
                         throw ExceptionUtils.GetArgumentNullException(nameof(wildcards),
                             "One of the wildcards is Nothing or empty string.");
                     checked
@@ -692,20 +572,20 @@ namespace Windows.FileOperations
             string wildCard)
         {
             return fileOrDirectory == FileOrDirectory.Directory
-                ? (Operators.CompareString(wildCard, "", false) == 0
+                ? string.IsNullOrEmpty(wildCard)
                     ? Directory.GetDirectories(directory)
-                    : Directory.GetDirectories(directory, wildCard))
-                : (Operators.CompareString(wildCard, "", false) == 0
+                    : Directory.GetDirectories(directory, wildCard)
+                : string.IsNullOrEmpty(wildCard)
                     ? Directory.GetFiles(directory)
-                    : Directory.GetFiles(directory, wildCard));
+                    : Directory.GetFiles(directory, wildCard);
         }
 
         private static string GetFullPathFromNewName(string path, string newName, string argumentName)
         {
-            Debug.Assert(Operators.CompareString(path, "", false) != 0 && Path.IsPathRooted(path), path);
+            Debug.Assert(!string.IsNullOrEmpty(path) && Path.IsPathRooted(path), path);
             Debug.Assert(path.Equals(Path.GetFullPath(path)), path);
-            Debug.Assert((uint)Operators.CompareString(newName, "", false) > 0U, "Null NewName");
-            Debug.Assert((uint)Operators.CompareString(argumentName, "", false) > 0U, "Null argument name");
+            Debug.Assert(!string.IsNullOrEmpty(newName), "Null NewName");
+            Debug.Assert(!string.IsNullOrEmpty(argumentName), "Null argument name");
             string path2 = newName.IndexOfAny(MSeparatorChars) < 0
                 ? RemoveEndingSeparator(Path.GetFullPath(Path.Combine(path, newName)))
                 : throw ExceptionUtils.GetArgumentExceptionWithArgName(argumentName,
@@ -720,7 +600,7 @@ namespace Windows.FileOperations
 
         private static string GetLongPath(string fullPath)
         {
-            Debug.Assert(Operators.CompareString(fullPath, "", false) != 0 && Path.IsPathRooted(fullPath),
+            Debug.Assert(!string.IsNullOrEmpty(fullPath) && Path.IsPathRooted(fullPath),
                 "Must be full path");
             string str;
             try
@@ -750,7 +630,6 @@ namespace Windows.FileOperations
             }
             catch (Exception ex)
             {
-                ProjectData.SetProjectError(ex);
                 Exception exception = ex;
                 int num1;
                 switch (exception)
@@ -783,7 +662,6 @@ namespace Windows.FileOperations
 
                     Debug.Assert(num2 != 0, "These exceptions should be caught above");
                     str = fullPath;
-                    ProjectData.ClearProjectError();
                 }
                 else
                     throw;
@@ -826,10 +704,10 @@ namespace Windows.FileOperations
             Debug.Assert(Enum.IsDefined(typeof(CopyOrMove), operation));
             Debug.Assert(Enum.IsDefined(typeof(FileOrDirectory), targetType));
             Debug.Assert(
-                (uint)Operators.CompareString(fullSourcePath, "", false) > 0U & Path.IsPathRooted(fullSourcePath),
+                !string.IsNullOrEmpty(fullSourcePath) & Path.IsPathRooted(fullSourcePath),
                 "Invalid FullSourcePath");
             Debug.Assert(
-                (uint)Operators.CompareString(fullTargetPath, "", false) > 0U & Path.IsPathRooted(fullTargetPath),
+                !string.IsNullOrEmpty(fullTargetPath) & Path.IsPathRooted(fullTargetPath),
                 "Invalid FullTargetPath");
             Debug.Assert(showUi != UiOptionInternal.NO_UI, "Why call ShellDelete if ShowUI is NoUI???");
             NativeMethods.SHFileOperationType operationType = operation != CopyOrMove.Copy
@@ -899,7 +777,7 @@ namespace Windows.FileOperations
             UICancelOption onUserCancel,
             FileOrDirectory fileOrDirectory)
         {
-            Debug.Assert((uint)Operators.CompareString(fullPath, "", false) > 0U & Path.IsPathRooted(fullPath),
+            Debug.Assert(!string.IsNullOrEmpty(fullPath) && Path.IsPathRooted(fullPath),
                 "FullPath must be a full path");
             Debug.Assert(showUi != UiOptionInternal.NO_UI, "Why call ShellDelete if ShowUI is NoUI???");
             NativeMethods.ShFileOperationFlags operationFlags = GetOperationFlags(showUi);
@@ -1070,8 +948,10 @@ namespace Windows.FileOperations
             foreach (var fullPath in fullPaths)
                 multiString.Append(fullPath + nullChar);
 
-            Debug.Assert(multiString.ToString().EndsWith(nullChar, StringComparison.Ordinal));
-            return multiString.ToString();
+            var shellPath = multiString.ToString();
+
+            Debug.Assert(shellPath.EndsWith(nullChar, StringComparison.Ordinal));
+            return shellPath;
         }
 
         private static void ThrowIfDevicePath(string path)
@@ -1135,6 +1015,10 @@ namespace Windows.FileOperations
                 throw new InvalidEnumArgumentException(argName, (int)argValue, typeof(UICancelOption));
         }
 
+        #endregion
+
+        #region Structs
+
         private enum CopyOrMove
         {
             Copy,
@@ -1180,5 +1064,7 @@ namespace Windows.FileOperations
                 }
             }
         }
+
+        #endregion
     }
 }
