@@ -10,7 +10,7 @@
     <ProjectReference Include="..\Plugins\XFiler.Base\XFiler.Base.csproj" />
     <ProjectReference Include="..\Plugins\XFiler.GoogleChromeStyle\XFiler.GoogleChromeStyle.csproj" />
     <ProjectReference Include="..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
-    <ProjectReference Include="..\Windows.VB.FileOperations\Windows.VB.FileOperations.vbproj" />
+    <ProjectReference Include="..\Windows.FileOperations\Windows.FileOperations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

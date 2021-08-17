@@ -2,24 +2,11 @@
 
   <PropertyGroup>
     <RootNamespace />
-    <TargetFrameworks>net5.0-windows;net48</TargetFrameworks>
+    <TargetFrameworks>net5.0-windows</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\SR.Designer.vb">
-      <DependentUpon>SR.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\SR.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace>System</CustomToolNamespace>
-      <LastGenOutput>SR.Designer.vb</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Windows.FileOperations\Windows.FileOperations.csproj" />
   </ItemGroup>
 
 </Project>
