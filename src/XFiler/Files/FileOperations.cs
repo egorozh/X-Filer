@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Windows.FileOperations;
 using XFiler.SDK;
 
@@ -12,29 +11,12 @@ namespace XFiler
         {
             var targetDir = targetDirectory.FullName;
 
-            foreach (var fileSystemInfo in sourceItems)
-            {
-                switch (fileSystemInfo)
-                {
-                    case DirectoryInfo directoryInfo:
+            var srcPaths = new List<string>();
 
-                        FileSystemEx.MoveDirectory(
-                            directoryInfo.FullName,
-                            Path.Combine(targetDir, directoryInfo.Name),
-                            UIOption.AllDialogs,
-                            UICancelOption.DoNothing);
+            foreach (var source in sourceItems)
+                srcPaths.Add(source.FullName);
 
-                        break;
-                    case FileInfo fileInfo:
-
-                        FileSystemEx.MoveFile(fileInfo.FullName,
-                            Path.Combine(targetDir, fileInfo.Name),
-                            UIOption.AllDialogs,
-                            UICancelOption.DoNothing);
-
-                        break;
-                }
-            }
+            FileSystemEx.MoveFiles(srcPaths, targetDir, UICancelOption.DoNothing);
         }
 
         public void Copy(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory)

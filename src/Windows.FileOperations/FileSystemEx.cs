@@ -26,7 +26,7 @@ namespace Windows.FileOperations
 
         private const int MMovefileexFlags = 11;
 
-        private static readonly char[] MSeparatorChars = new char[3]
+        private static readonly char[] MSeparatorChars =
         {
             Path.DirectorySeparatorChar,
             Path.AltDirectorySeparatorChar,
@@ -106,8 +106,7 @@ namespace Windows.FileOperations
             string destinationFileName,
             UICancelOption onUserCancel)
         {
-            CopyOrMoveFiles(CopyOrMove.Copy, sources, destinationFileName,  ToUiOptionInternal(UIOption.AllDialogs),
-                onUserCancel);
+            CopyOrMoveFiles(CopyOrMove.Copy, sources, destinationFileName, onUserCancel);
         }
 
         public static void CreateDirectory(string directory)
@@ -200,6 +199,14 @@ namespace Windows.FileOperations
         {
             CopyOrMoveFile(CopyOrMove.Move, sourceFileName, destinationFileName, false, ToUiOptionInternal(showUi),
                 onUserCancel);
+        }
+
+        public static void MoveFiles(
+            IReadOnlyList<string> sources,
+            string destinationFileName,
+            UICancelOption onUserCancel)
+        {
+            CopyOrMoveFiles(CopyOrMove.Move, sources, destinationFileName, onUserCancel);
         }
 
         public static void RenameDirectory(string directory, string newName)
@@ -524,7 +531,6 @@ namespace Windows.FileOperations
                     }
                     catch (Exception ex)
                     {
-                        ProjectData.SetProjectError(ex);
                         throw;
                     }
                 }
@@ -542,19 +548,20 @@ namespace Windows.FileOperations
             CopyOrMove operation,
             IReadOnlyCollection<string> sourcePaths,
             string destinationFolderPath,
-            UiOptionInternal showUi,
-            UICancelOption onUserCancel)
+            UICancelOption onUserCancel,
+            UiOptionInternal options = UiOptionInternal.AllDialogs)
         {
             Debug.Assert(Enum.IsDefined(typeof(CopyOrMove), operation), "Invalid Operation");
             VerifyUiCancelOption(nameof(onUserCancel), onUserCancel);
 
             string str2 = NormalizePath(destinationFolderPath);
-            
+
             Directory.CreateDirectory(str2);
 
-            if (showUi != UiOptionInternal.NO_UI && Environment.UserInteractive)
+            if (Environment.UserInteractive)
             {
-                ShellCopyOrMove(operation, FileOrDirectory.File, sourcePaths, str2, showUi, onUserCancel);
+                ShellCopyOrMove(operation, FileOrDirectory.File, sourcePaths, str2,
+                    options, onUserCancel);
             }
         }
 
@@ -614,7 +621,7 @@ namespace Windows.FileOperations
             SearchOption searchType,
             string[] wildcards)
         {
-            Collection<string> results = new Collection<string>();
+            Collection<string> results = new();
             FindFilesOrDirectories(fileOrDirectory, directory, searchType, wildcards, results);
             return new ReadOnlyCollection<string>(results);
         }
