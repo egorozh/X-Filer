@@ -8,6 +8,7 @@
              xmlns:base="clr-namespace:XFiler.Base"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:views="clr-namespace:InplaceEditBoxLib.Views;assembly=InplaceEditBoxLib"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -46,7 +47,6 @@
         <sdk:CommandReference x:Key="DeleteCommand"
                               Command="{Binding DataContext.DeleteCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
-
 
         <sdk:CommandReference x:Key="CopyCommand"
                               Command="{Binding DataContext.CopyCommand, 
@@ -122,6 +122,13 @@
 
                 <Separator />
 
+                <MenuItem Header="Переименовать"
+                          Command="{Binding StartRenameCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="F2" />
+
+                <Separator />
+
                 <MenuItem Header="Вырезать"
                           Command="{StaticResource CutCommand}"
                           CommandParameter="{Binding}"
@@ -156,6 +163,13 @@
                 <MenuItem Header="Открыть в новом окне"
                           Command="{StaticResource  OpenNewWindowCommand}"
                           CommandParameter="{Binding}" />
+
+                <Separator />
+
+                <MenuItem Header="Переименовать"
+                          Command="{Binding StartRenameCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="F2" />
 
                 <Separator />
 
@@ -310,14 +324,23 @@
 
                         </Border>
 
-
-                        <TextBlock Grid.Row="1"
-                                   x:Name="TextBlock"
-                                   Margin="0 4 0 0"
-                                   TextAlignment="Center"
-                                   Foreground="#CCCCCC"
-                                   Text="{Binding Name}"
-                                   TextTrimming="CharacterEllipsis" />
+                        <views:EditBox Grid.Row="1"
+                                       x:Name="TextBlock"
+                                       Background="Transparent"
+                                       DisplayTextForegroundBrush="#CCCCCC"
+                                       Foreground="#CCCCCC"
+                                       IsEditableOnDoubleClick="True"
+                                       IsReadOnly="False"
+                                       MinimumClickTime="500"
+                                       MaximumClickTime="2000"
+                                       Focusable="True"
+                                       RenameCommand="{Binding RenameCommand}"
+                                       RenameCommandParameter="{Binding}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Margin="0 4 0 0"
+                                       DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Grid>
                 <DataTemplate.Triggers>
@@ -351,6 +374,7 @@
 
                         <Setter TargetName="Bd" Property="BorderBrush" Value="#cFcFcF" />
                         <Setter TargetName="TextBlock" Property="Foreground" Value="White" />
+                        <Setter TargetName="TextBlock" Property="DisplayTextForegroundBrush" Value="White" />
                     </DataTrigger>
 
                     <DataTrigger Value="True"
@@ -360,7 +384,7 @@
                     <DataTrigger Value="True"
                                  Binding="{Binding IsSystem}">
                         <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
-                    </DataTrigger> 
+                    </DataTrigger>
                     <DataTrigger Value="True"
                                  Binding="{Binding IsHidden}">
                         <Setter TargetName="Bd" Property="Opacity" Value="0.5" />

@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Windows.FileOperations", "Windows.FileOperations\Windows.FileOperations.csproj", "{AFBC4B3E-3A45-45EE-AEAD-A4769BE361BE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InplaceEditBoxLib", "..\..\InplaceEditBoxLib\source\InplaceEditBoxLib\InplaceEditBoxLib.csproj", "{2AAE8835-DB06-476E-824B-26187AF278C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,14 @@ Global
 		{AFBC4B3E-3A45-45EE-AEAD-A4769BE361BE}.Release|Any CPU.ActiveCfg = Release|x64
 		{AFBC4B3E-3A45-45EE-AEAD-A4769BE361BE}.Release|x64.ActiveCfg = Release|x64
 		{AFBC4B3E-3A45-45EE-AEAD-A4769BE361BE}.Release|x64.Build.0 = Release|x64
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Debug|x64.Build.0 = Debug|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{2AAE8835-DB06-476E-824B-26187AF278C9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

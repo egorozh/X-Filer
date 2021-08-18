@@ -53,7 +53,7 @@ namespace XFiler.SDK
 
         public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
         public DelegateCommand<object> OpenNewTabCommand { get; }
-
+        
         public DelegateCommand<object> PasteCommand { get; private set; }
         public DelegateCommand<object> CutCommand { get; private set; }
         public DelegateCommand<object> CopyCommand { get; private set; }
@@ -88,7 +88,7 @@ namespace XFiler.SDK
             OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
             DeleteCommand = new DelegateCommand<object>(OnDelete);
             DeletePermanentlyCommand = new DelegateCommand<object>(OnPermanentlyDelete);
-
+            
 
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
 
@@ -98,7 +98,7 @@ namespace XFiler.SDK
             CutCommand = clipboardService.CutCommand;
             CopyCommand = clipboardService.CopyCommand;
         }
-
+        
         #endregion
 
         #region Public Methods
@@ -216,6 +216,8 @@ namespace XFiler.SDK
                     break;
             }
         }
+
+       
 
         #endregion
 

@@ -1,9 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
-  <ItemGroup>
-    <None Remove="Fonts\Roboto-Black.ttf" />
-  </ItemGroup>
-
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  
   <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.10.0-alpha003" />
     <PackageReference Include="MahApps.Metro" Version="2.4.7" />
@@ -29,11 +25,5 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Themes\Others\Fonts.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-  </ItemGroup>
-
+  
 </Project>
