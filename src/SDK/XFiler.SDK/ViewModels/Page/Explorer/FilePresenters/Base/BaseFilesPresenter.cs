@@ -63,6 +63,9 @@ namespace XFiler.SDK
 
         public DelegateCommand<object> OpenNewWindowCommand { get; private set; }
 
+        public DelegateCommand<object> RenameCommand { get; private set; }
+        public DelegateCommand<object> StartRenameCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -75,7 +78,8 @@ namespace XFiler.SDK
             IClipboardService clipboardService,
             IExplorerOptions settings,
             IFileOperations fileOperations,
-            ILogger logger)
+            ILogger logger,
+            IRenameService renameService)
         {
             _fileEntityFactory = fileEntityFactory;
             _settings = settings;
@@ -97,6 +101,9 @@ namespace XFiler.SDK
             PasteCommand = clipboardService.PasteCommand;
             CutCommand = clipboardService.CutCommand;
             CopyCommand = clipboardService.CopyCommand;
+
+            RenameCommand = renameService.RenameCommand;
+            StartRenameCommand = renameService.StartRenameCommand;
         }
         
         #endregion
@@ -160,6 +167,9 @@ namespace XFiler.SDK
                 PasteCommand = null!;
                 CutCommand = null!;
                 CopyCommand = null!;
+
+                RenameCommand = null!;
+                StartRenameCommand = null!;
             }
 
             base.Dispose(disposing);
@@ -216,9 +226,7 @@ namespace XFiler.SDK
                     break;
             }
         }
-
-       
-
+        
         #endregion
 
         #region Private Methods

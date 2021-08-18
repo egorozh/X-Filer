@@ -51,6 +51,15 @@
         <sdk:CommandReference x:Key="CopyCommand"
                               Command="{Binding DataContext.CopyCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+
+        <sdk:CommandReference x:Key="RenameCommand"
+                              Command="{Binding DataContext.StartCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+
+        <sdk:CommandReference x:Key="StartRenameCommand"
+                              Command="{Binding DataContext.StartRenameCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+
     </UserControl.Resources>
 
     <sdk:RectSelectListBox ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
@@ -123,7 +132,7 @@
                 <Separator />
 
                 <MenuItem Header="Переименовать"
-                          Command="{Binding StartRenameCommand}"
+                          Command="{StaticResource StartRenameCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="F2" />
 
@@ -167,7 +176,7 @@
                 <Separator />
 
                 <MenuItem Header="Переименовать"
-                          Command="{Binding StartRenameCommand}"
+                          Command="{StaticResource StartRenameCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="F2" />
 
@@ -218,6 +227,9 @@
         </ListBox.Resources>
 
         <ListBox.InputBindings>
+            <KeyBinding Command="{StaticResource StartRenameCommand}"
+                        CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=sdk:RectSelectListBox}}"
+                        Key="F2" />
             <KeyBinding Command="{StaticResource CutManyCommand}"
                         Modifiers="Control" Key="X" />
             <KeyBinding Command="{StaticResource DeleteManyCommand}"
@@ -334,7 +346,7 @@
                                        MinimumClickTime="500"
                                        MaximumClickTime="2000"
                                        Focusable="True"
-                                       RenameCommand="{Binding RenameCommand}"
+                                       RenameCommand="{StaticResource RenameCommand}"
                                        RenameCommandParameter="{Binding}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"

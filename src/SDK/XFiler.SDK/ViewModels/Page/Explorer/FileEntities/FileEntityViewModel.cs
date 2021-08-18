@@ -1,11 +1,10 @@
-﻿using System;
+﻿using InplaceEditBoxLib.Events;
+using InplaceEditBoxLib.Interfaces;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using InplaceEditBoxLib.Events;
-using InplaceEditBoxLib.Interfaces;
-using Prism.Commands;
 using UserNotification.Events;
 
 namespace XFiler.SDK
@@ -45,14 +44,9 @@ namespace XFiler.SDK
 
         #endregion
 
-
         public event ShowNotificationEventHandler? ShowNotificationMessage;
 
         public event RequestEditEventHandler? RequestEdit;
-        
-        public DelegateCommand<object> RenameCommand { get; }
-
-        public DelegateCommand<object> StartRenameCommand { get; }
 
         #region Constructor
 
@@ -63,8 +57,6 @@ namespace XFiler.SDK
             _iconLoader = iconLoader;
             _clipboardService = clipboardService;
 
-            RenameCommand = new DelegateCommand<object>(OnRename);
-            StartRenameCommand = new DelegateCommand<object>(OnStartRename);
             _clipboardService.ClipboardChanged += ClipboardServiceOnClipboardChanged;
         }
 
@@ -85,6 +77,9 @@ namespace XFiler.SDK
             IsHidden = info.Attributes.HasFlag(FileAttributes.Hidden);
             //IsCopyProcess = info.Attributes.HasFlag(FileAttributes.Archive) && info is FileInfo;
         }
+
+        public void StartRename() => RequestEdit
+            ?.Invoke(this, new RequestEdit(RequestEditEvent.StartEditMode));
 
         protected override void Dispose(bool disposing)
         {
@@ -110,16 +105,6 @@ namespace XFiler.SDK
             }
 
             IsCutted = false;
-        }
-
-        private void OnRename(object model)
-        {
-
-        }
-
-        private void OnStartRename(object parameters)
-        {
-            RequestEdit?.Invoke(this, new RequestEdit(RequestEditEvent.StartEditMode));
         }
     }
 }

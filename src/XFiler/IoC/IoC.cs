@@ -31,6 +31,7 @@ namespace XFiler
             services.RegisterInstance(Log.Logger).As<ILogger>().SingleInstance();
 
             services.RegisterType<ExplorerOptions>().As<IExplorerOptions>().SingleInstance();
+            services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
 
             services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
             services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);
