@@ -360,10 +360,14 @@
                     <DataTrigger Value="True"
                                  Binding="{Binding IsSystem}">
                         <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
-                    </DataTrigger>
+                    </DataTrigger> 
                     <DataTrigger Value="True"
                                  Binding="{Binding IsHidden}">
                         <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                    </DataTrigger>
+                    <DataTrigger Value="True"
+                                 Binding="{Binding IsCopyProcess}">
+                        <Setter TargetName="Bd" Property="Opacity" Value="0.3" />
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>

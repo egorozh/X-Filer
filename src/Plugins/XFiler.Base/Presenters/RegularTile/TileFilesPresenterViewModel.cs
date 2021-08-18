@@ -1,4 +1,5 @@
 ﻿using GongSolutions.Wpf.DragDrop;
+using Serilog;
 using XFiler.SDK;
 
 namespace XFiler.Base
@@ -11,9 +12,10 @@ namespace XFiler.Base
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
             IExplorerOptions explorerOptions,
-            IFileOperations fileOperations) :
+            IFileOperations fileOperations,
+            ILogger logger) :
             base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService,
-                explorerOptions, fileOperations)
+                explorerOptions, fileOperations, logger)
         {
         }
     }

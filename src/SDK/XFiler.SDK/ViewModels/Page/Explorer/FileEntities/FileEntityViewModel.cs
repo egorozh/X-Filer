@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace XFiler.SDK
 {
-    public abstract class FileEntityViewModel : BaseViewModel, IFileSystemModel, IDisposable
+    public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemModel
     {
         #region Private Fields
 
@@ -37,6 +37,8 @@ namespace XFiler.SDK
 
         public bool IsHidden { get; private set; }
 
+        public bool IsCopyProcess { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -66,13 +68,19 @@ namespace XFiler.SDK
             IsCutted = _clipboardService.IsCutted(info);
             IsSystem = info.Attributes.HasFlag(FileAttributes.System);
             IsHidden = info.Attributes.HasFlag(FileAttributes.Hidden);
+            //IsCopyProcess = info.Attributes.HasFlag(FileAttributes.Archive) && info is FileInfo;
         }
-
-        public virtual void Dispose()
+        
+        protected override void Dispose(bool disposing)
         {
-            _clipboardService.ClipboardChanged -= ClipboardServiceOnClipboardChanged;
+            if (!Disposed && disposing)
+            {
+                _clipboardService.ClipboardChanged -= ClipboardServiceOnClipboardChanged;
 
-            _clipboardService = null!;
+                _clipboardService = null!;
+            }
+
+            base.Dispose(disposing);
         }
 
         private void ClipboardServiceOnClipboardChanged(object? sender, FileClipboardEventArgs e)

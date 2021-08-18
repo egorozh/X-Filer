@@ -1,5 +1,6 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Prism.Commands;
+using Serilog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,13 +13,14 @@ using System.Windows;
 
 namespace XFiler.SDK
 {
-    public abstract class BaseFilesPresenter : BaseViewModel, IFilesPresenter
+    public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
     {
         #region Private Fields
 
         private IFileEntityFactory _fileEntityFactory;
         private IExplorerOptions _settings;
         private IFileOperations _fileOperations;
+        private ILogger _logger;
         private BackgroundWorker? _backgroundWorker;
         private FileSystemWatcher _watcher = null!;
 
@@ -72,11 +74,14 @@ namespace XFiler.SDK
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
             IExplorerOptions settings,
-            IFileOperations fileOperations)
+            IFileOperations fileOperations,
+            ILogger logger)
         {
             _fileEntityFactory = fileEntityFactory;
             _settings = settings;
             _fileOperations = fileOperations;
+            _logger = logger;
+
             DropTarget = dropTarget;
             DragSource = dragSource;
 
@@ -126,32 +131,38 @@ namespace XFiler.SDK
             _watcher.EnableRaisingEvents = true;
         }
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            _watcher.Dispose();
+            if (!Disposed && disposing)
+            {
+                _watcher.Dispose();
 
-            _watcher.Changed -= OnChanged;
-            _watcher.Created -= OnCreated;
-            _watcher.Deleted -= OnDeleted;
-            _watcher.Renamed -= OnRenamed;
-            _watcher.Error -= OnError;
-            
-            _watcher = null!;
+                _watcher.Changed -= OnChanged;
+                _watcher.Created -= OnCreated;
+                _watcher.Deleted -= OnDeleted;
+                _watcher.Renamed -= OnRenamed;
+                _watcher.Error -= OnError;
 
-            BeforeUpdateDispose();
+                _watcher = null!;
 
-            _fileEntityFactory = null!;
-            _settings = null!;
-            _fileOperations = null!;
+                BeforeUpdateDispose();
 
-            DropTarget = null!;
-            DragSource = null!;
+                _fileEntityFactory = null!;
+                _settings = null!;
+                _fileOperations = null!;
+                _logger = null!;
 
-            OpenNewWindowCommand = null!;
+                DropTarget = null!;
+                DragSource = null!;
 
-            PasteCommand = null!;
-            CutCommand = null!;
-            CopyCommand = null!;
+                OpenNewWindowCommand = null!;
+
+                PasteCommand = null!;
+                CutCommand = null!;
+                CopyCommand = null!;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
@@ -257,6 +268,9 @@ namespace XFiler.SDK
         {
             List<(FileSystemInfo, EntityType)> list = new();
 
+            if (Disposed)
+                return list;
+
             var comparer = new NaturalSortComparer();
 
             var hideSystemFiles = !_settings.ShowSystemFiles;
@@ -319,53 +333,66 @@ namespace XFiler.SDK
             _fileOperations.Delete(items.ToList(), DirectoryInfo, isPermanently);
         }
 
-        private void OnError(object sender, ErrorEventArgs e)
-        {
-            FullUpdate();
-        }
-
-        private void OnRenamed(object sender, RenamedEventArgs e)
-        {
-            FullUpdate();
-        }
-
         private void OnDeleted(object sender, FileSystemEventArgs e)
         {
-            FullUpdate();
+            var deletedItem = DirectoriesAndFiles
+                .FirstOrDefault(vm => vm.Info.FullName == e.FullPath);
+
+            if (deletedItem != null)
+            {
+                Application.Current.Dispatcher.Invoke(() => { DirectoriesAndFiles.Remove(deletedItem); });
+            }
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
-            FullUpdate();
+            var info = e.FullPath.ToInfo();
+
+            switch (info)
+            {
+                case DirectoryInfo directoryInfo:
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateDirectory(directoryInfo));
+                    });
+                    break;
+                case FileInfo fileInfo:
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateFile(fileInfo));
+                    });
+                    break;
+            }
         }
 
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
-            FullUpdate();
         }
 
-        private void FullUpdate()
+        private void OnError(object sender, ErrorEventArgs e)
         {
-            if (_backgroundWorker is { IsBusy: true })
-                return;
+            _logger.Error(e.GetException(), "File Watcher Error in directory {0}", Info.FullName);
+        }
 
-            BeforeUpdateDispose();
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                DirectoriesAndFiles.Clear();
-            });
-           
-
-            InitItems();
+        private void OnRenamed(object sender, RenamedEventArgs e)
+        {
         }
 
         private void BeforeUpdateDispose()
         {
-            if (_backgroundWorker is { IsBusy: true })
-                _backgroundWorker.CancelAsync();
+            if (_backgroundWorker != null)
+            {
+                _backgroundWorker.RunWorkerCompleted -= BackgroundWorker_RunWorkerCompleted;
+                _backgroundWorker.DoWork -= BackgroundWorker_DoWork;
+                _backgroundWorker.ProgressChanged -= BackgroundWorker_ProgressChanged;
 
-            _backgroundWorker?.Dispose();
+                if (_backgroundWorker is { IsBusy: true })
+                    _backgroundWorker.CancelAsync();
+
+
+                _backgroundWorker.Dispose();
+            }
+
             _backgroundWorker = null;
 
             foreach (var model in DirectoriesAndFiles)
