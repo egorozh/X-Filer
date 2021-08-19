@@ -4,11 +4,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+             xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              xmlns:base="clr-namespace:XFiler.Base"
-             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
+             xmlns:controls="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls"
+             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -62,22 +63,22 @@
 
     </UserControl.Resources>
 
-    <sdk:RectSelectListBox ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
-                           dd:DragDrop.IsDragSource="True"
-                           dd:DragDrop.IsDropTarget="True"
-                           dd:DragDrop.UseDefaultDragAdorner="True"
-                           dd:DragDrop.UseDefaultEffectDataTemplate="True"
-                           dd:DragDrop.DragDirectlySelectedOnly="True"
-                           dd:DragDrop.ItemsPanelOrientation="Horizontal"
+    <controls:RectSelectListBox ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.UseDefaultDragAdorner="True"
+                                dd:DragDrop.UseDefaultEffectDataTemplate="True"
+                                dd:DragDrop.DragDirectlySelectedOnly="True"
+                                dd:DragDrop.ItemsPanelOrientation="Horizontal"
 
-                           dd:DragDrop.DropHandler="{Binding DropTarget}"
-                           dd:DragDrop.DragHandler="{Binding DragSource}"
+                                dd:DragDrop.DropHandler="{Binding DropTarget}"
+                                dd:DragDrop.DragHandler="{Binding DragSource}"
 
-                           VirtualizingPanel.IsVirtualizing="True"
-                           VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                           VirtualizingPanel.VirtualizationMode="Recycling"
+                                VirtualizingPanel.IsVirtualizing="True"
+                                VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                VirtualizingPanel.VirtualizationMode="Recycling"
 
-                           SelectionMode="Extended">
+                                SelectionMode="Extended">
         <ListBox.Resources>
             <sdk:CommandReference x:Key="OpenManyItemsNewTabCommand"
                                   Command="{Binding DataContext.OpenNewTabCommand, 
@@ -87,7 +88,7 @@
                         <Binding Path="DataContext"
                                  RelativeSource="{RelativeSource AncestorType={x:Type dragablz:TabablzControl}}" />
                         <Binding Path="SelectedItems"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
 
                     </MultiBinding>
                 </sdk:CommandReference.CommandParameter>
@@ -96,27 +97,27 @@
             <sdk:CommandReference x:Key="OpenManyItemsNewWindowCommand"
                                   Command="{Binding DataContext.OpenNewWindowCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
-                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
             <sdk:CommandReference x:Key="CutManyCommand"
                                   Command="{Binding DataContext.CutCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
-                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
             <sdk:CommandReference x:Key="CopyManyCommand"
                                   Command="{Binding DataContext.CopyCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
-                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
             <sdk:CommandReference x:Key="DeleteManyCommand"
                                   Command="{Binding DataContext.DeleteCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
-                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
             <sdk:CommandReference x:Key="DeleteManyPermanentlyCommand"
                                   Command="{Binding DataContext.DeletePermanentlyCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}"
-                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
             <ContextMenu x:Key="DirectoryContextMenu">
                 <MenuItem Header="Открыть"
@@ -228,7 +229,7 @@
 
         <ListBox.InputBindings>
             <KeyBinding Command="{StaticResource StartRenameCommand}"
-                        CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=sdk:RectSelectListBox}}"
+                        CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=controls:RectSelectListBox}}"
                         Key="F2" />
             <KeyBinding Command="{StaticResource CutManyCommand}"
                         Modifiers="Control" Key="X" />
@@ -243,9 +244,9 @@
                 <KeyBinding.CommandParameter>
                     <MultiBinding Converter="{sdk:CloneParamsConverter}">
                         <Binding Path="SelectedItem"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
                         <Binding Path="DataContext"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
                     </MultiBinding>
                 </KeyBinding.CommandParameter>
             </KeyBinding>
@@ -294,7 +295,7 @@
                     </DataTrigger>
                     <DataTrigger Value="True"
                                  Binding="{Binding IsManyItemsSelected,
-                        RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}">
+                        RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}">
                         <Setter Property="ContextMenu" Value="{StaticResource ManyItemsContextMenu}" />
                     </DataTrigger>
                 </Style.Triggers>
@@ -307,9 +308,9 @@
 
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <controls:VirtualizingWrapPanel Orientation="Vertical"
-                                                SpacingMode="Uniform"
-                                                ScrollUnit="Item" />
+                <vwp:VirtualizingWrapPanel Orientation="Vertical"
+                                           SpacingMode="Uniform"
+                                           ScrollUnit="Item" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
 
@@ -371,7 +372,7 @@
                             <Condition Value="False"
                                        Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
                             <Condition Value="True"
-                                       Binding="{Binding  HasSelectItems, RelativeSource={RelativeSource AncestorType={x:Type sdk:RectSelectListBox}}}" />
+                                       Binding="{Binding  HasSelectItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
                         </MultiDataTrigger.Conditions>
 
                         <Setter TargetName="TextBlock" Property="Foreground" Value="#888888" />
@@ -410,6 +411,6 @@
             </DataTemplate>
         </ListBox.ItemTemplate>
 
-    </sdk:RectSelectListBox>
+    </controls:RectSelectListBox>
 
 </UserControl>

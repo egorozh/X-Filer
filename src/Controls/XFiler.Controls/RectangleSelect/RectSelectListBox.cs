@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.RectangleSelect
 {
     public class RectSelectListBox : ListBox
     {

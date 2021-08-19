@@ -2,13 +2,13 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.RectangleSelect
 {
     public class RectSelectDataGrid : DataGrid
     {
         #region Private Fields
 
-        private RectSelectLogic<DataGridRow> _selectLogic;
+        private RectSelectLogic<DataGridRow>? _selectLogic;
 
         #endregion
 

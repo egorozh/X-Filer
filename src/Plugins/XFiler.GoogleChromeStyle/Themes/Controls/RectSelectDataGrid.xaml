@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:e="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:rectangleSelect="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls">
 
     <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="#FF000000" />
 
@@ -100,7 +101,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type e:RectSelectDataGrid}">
+    <Style TargetType="{x:Type rectangleSelect:RectSelectDataGrid}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0" />

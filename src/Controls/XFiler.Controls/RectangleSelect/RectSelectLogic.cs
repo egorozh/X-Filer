@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.RectangleSelect
 {
     internal class RectSelectLogic<T> : IDisposable where T : Control
     {
@@ -14,7 +14,7 @@ namespace XFiler.SDK
         private Canvas _canvas;
         private Action<T> _selectAction;
         private Action<T> _unSelectAction;
-        private System.Windows.Shapes.Rectangle _rectangleShape;
+        private readonly System.Windows.Shapes.Rectangle _rectangleShape;
         private Point _initPos;
         private bool _isRectSelected;
 
