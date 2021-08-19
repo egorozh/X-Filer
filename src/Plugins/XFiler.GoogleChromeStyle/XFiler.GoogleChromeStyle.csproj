@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   
   <ItemGroup>
-    <PackageReference Include="FluentWPF" Version="0.10.0-alpha003" />
+    <PackageReference Include="FluentWPF" Version="0.10.0" />
     <PackageReference Include="MahApps.Metro" Version="2.4.7" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.4" />
     <ProjectReference Include="..\..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
