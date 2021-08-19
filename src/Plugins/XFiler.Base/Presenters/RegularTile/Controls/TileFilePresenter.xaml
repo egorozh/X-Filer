@@ -53,7 +53,7 @@
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
 
         <sdk:CommandReference x:Key="RenameCommand"
-                              Command="{Binding DataContext.StartCommand, 
+                              Command="{Binding DataContext.RenameCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
 
         <sdk:CommandReference x:Key="StartRenameCommand"

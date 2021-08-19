@@ -13,5 +13,7 @@ namespace XFiler.SDK
             bool isDeletePermanently = false);
 
         void CreateLink(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
+
+        void Rename(FileSystemInfo modelInfo, string newName);
     }
 }

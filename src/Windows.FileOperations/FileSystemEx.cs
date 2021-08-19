@@ -134,6 +134,28 @@ namespace Windows.FileOperations
             File.Move(file, str);
         }
 
+        public static void RenameFile(string filePath, string newName, UIOption showUi,
+            UICancelOption onUserCancel = UICancelOption.ThrowException)
+        {
+            var operationFlags = GetOperationFlags(ToUiOptionInternal(showUi), true);
+
+            ShellFileOperation(NativeMethods.SHFileOperationType.FO_RENAME,
+                operationFlags,
+                NormalizeFilePath(filePath, nameof(filePath)),
+                NormalizeFilePath(newName, nameof(newName)),
+                onUserCancel);
+        }
+
+        public static void RenameDirectory(string directory, string newName, UIOption showUi,
+            UICancelOption onUserCancel = UICancelOption.ThrowException)
+        {
+            var operationFlags = GetOperationFlags(ToUiOptionInternal(showUi));
+
+            ShellFileOperation(NativeMethods.SHFileOperationType.FO_RENAME,
+                operationFlags, NormalizePath(directory),
+                NormalizeFilePath(newName, nameof(newName)), onUserCancel);
+        }
+
         #endregion
 
         #region Private Methods
@@ -439,7 +461,8 @@ namespace Windows.FileOperations
 
             string str2 = NormalizePath(destinationFolderPath);
 
-            Directory.CreateDirectory(str2);
+            if (!Directory.Exists(str2))
+                Directory.CreateDirectory(str2);
 
             if (Environment.UserInteractive)
             {
@@ -739,13 +762,13 @@ namespace Windows.FileOperations
             UICancelOption onUserCancel)
         {
             Debug.Assert(Enum.IsDefined(typeof(NativeMethods.SHFileOperationType), operationType));
-            Debug.Assert(operationType != NativeMethods.SHFileOperationType.FO_RENAME, "Don't call Shell to rename");
+            //Debug.Assert(operationType != NativeMethods.SHFileOperationType.FO_RENAME, "Don't call Shell to rename");
             Debug.Assert(!string.IsNullOrEmpty(fullSource) && Path.IsPathRooted(fullSource),
                 "Invalid FullSource path");
-            Debug.Assert(
-                operationType == NativeMethods.SHFileOperationType.FO_DELETE ||
-                !string.IsNullOrEmpty(fullTarget) && Path.IsPathRooted(fullTarget),
-                "Invalid FullTarget path");
+            //Debug.Assert(
+            //    operationType == NativeMethods.SHFileOperationType.FO_DELETE ||
+            //    !string.IsNullOrEmpty(fullTarget) && Path.IsPathRooted(fullTarget),
+            //    "Invalid FullTarget path");
 
             var shellOperationInfo = GetShellOperationInfo(
                 operationType, operationFlags, fullSource, fullTarget);
@@ -797,7 +820,6 @@ namespace Windows.FileOperations
             }
         }
 
-
         private static NativeMethods.SHFILEOPSTRUCT GetShellOperationInfo(
             NativeMethods.SHFileOperationType operationType,
             NativeMethods.ShFileOperationFlags operationFlags,
@@ -827,9 +849,9 @@ namespace Windows.FileOperations
             NativeMethods.SHFILEOPSTRUCT shfileopstruct = new()
             {
                 wFunc = (uint)operationType,
-                fFlags = (ushort)operationFlags,
+                fFlags = (uint)operationFlags,
                 pFrom = GetShellPath(sourcePaths),
-                pTo = targetPath,
+                pTo = targetPath != null ? GetShellPath(targetPath) : null,
                 hNameMappings = IntPtr.Zero
             };
 
@@ -855,14 +877,17 @@ namespace Windows.FileOperations
         }
 
         private static NativeMethods.ShFileOperationFlags GetOperationFlags(
-            UiOptionInternal showUi)
+            UiOptionInternal showUi, bool forRenameOp = false)
         {
-            var fileOperationFlags =
-                NativeMethods.ShFileOperationFlags.FOF_NOCONFIRMMKDIR |
-                NativeMethods.ShFileOperationFlags.FOF_NO_CONNECTED_ELEMENTS;
+            var fileOperationFlags = !forRenameOp
+                ? NativeMethods.ShFileOperationFlags.FOF_NOCONFIRMMKDIR |
+                  NativeMethods.ShFileOperationFlags.FOF_NO_CONNECTED_ELEMENTS
+                : NativeMethods.ShFileOperationFlags.FOFX_PRESERVEFILEEXTENSIONS;
+            
             if (showUi == UiOptionInternal.OnlyErrorDialogs)
                 fileOperationFlags |= NativeMethods.ShFileOperationFlags.FOF_SILENT |
                                       NativeMethods.ShFileOperationFlags.FOF_NOCONFIRMATION;
+
             return fileOperationFlags;
         }
 
@@ -892,9 +917,13 @@ namespace Windows.FileOperations
             foreach (var fullPath in fullPaths)
                 multiString.Append(fullPath + nullChar);
 
+            multiString.Append("\0");
+
             var shellPath = multiString.ToString();
 
             Debug.Assert(shellPath.EndsWith(nullChar, StringComparison.Ordinal));
+
+
             return shellPath;
         }
 

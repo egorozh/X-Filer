@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.FileOperations;
+using Windows.FileOperations.FileOperation;
 using XFiler.SDK;
 
 namespace XFiler
@@ -44,6 +44,21 @@ namespace XFiler
 
         public void CreateLink(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory)
         {
+        }
+
+        public void Rename(FileSystemInfo info, string? newName)
+        {
+            if (string.IsNullOrEmpty(newName))
+            {
+                return;
+            }
+            
+            Task.Run(() =>
+            {
+                using var renameOp = new RenameFilesOperation();
+
+                renameOp.Rename(info.FullName, newName);
+            });
         }
     }
 }

@@ -145,7 +145,7 @@ namespace Windows.FileOperations
             public uint wFunc;
             [MarshalAs(UnmanagedType.LPTStr)] public string pFrom;
             [MarshalAs(UnmanagedType.LPTStr)] public string? pTo;
-            public ushort fFlags;
+            public uint fFlags;
             public bool fAnyOperationsAborted;
             public IntPtr hNameMappings;
             [MarshalAs(UnmanagedType.LPTStr)] public string lpszProgressTitle;
@@ -162,7 +162,7 @@ namespace Windows.FileOperations
             internal uint wFunc;
             [MarshalAs(UnmanagedType.LPTStr)] internal string pFrom;
             [MarshalAs(UnmanagedType.LPTStr)] internal string pTo;
-            internal ushort fFlags;
+            internal uint fFlags;
             internal bool fAnyOperationsAborted;
             internal IntPtr hNameMappings;
             [MarshalAs(UnmanagedType.LPTStr)] internal string lpszProgressTitle;
@@ -183,8 +183,10 @@ namespace Windows.FileOperations
         /// Flags that control the file operation. Used in SHFILEOPSTRUCT.
         /// </summary>
         [Flags]
-        public enum ShFileOperationFlags : ushort
+        public enum ShFileOperationFlags : uint
         {
+            Default = 0,
+
             //The pTo member specifies multiple destination files (one for each source file)
             //rather than one directory where all source files are to be deposited.
             FOF_MULTIDESTFILES = 1,
@@ -237,7 +239,27 @@ namespace Windows.FileOperations
             FOF_WANTNUKEWARNING = 16384, // 0x4000
 
             // Treat reparse points as objects, not containers.
-            FOF_NORECURSEREPARSE = 32768, // 0x8000
+            FOF_NORECURSEREPARSE = 32768, // 0x8000,
+
+            FOFX_NOSKIPJUNCTIONS = 0x00010000, // Don't avoid binding to junctions (like Task folder, Recycle-Bin)
+            FOFX_PREFERHARDLINK = 0x00020000, // Create hard link if possible
+
+            FOFX_SHOWELEVATIONPROMPT =
+                0x00040000, // Show elevation prompts when error UI is disabled (use with FOF_NOERRORUI)
+
+            FOFX_EARLYFAILURE =
+                0x00100000, // Fail operation as soon as a single error occurs rather than trying to process other items (applies only when using FOF_NOERRORUI)
+
+            FOFX_PRESERVEFILEEXTENSIONS =
+                0x00200000, // Rename collisions preserve file extns (use with FOF_RENAMEONCOLLISION)
+            FOFX_KEEPNEWERFILE = 0x00400000, // Keep newer file on naming conflicts
+            FOFX_NOCOPYHOOKS = 0x00800000, // Don't use copy hooks
+            FOFX_NOMINIMIZEBOX = 0x01000000, // Don't allow minimizing the progress dialog
+
+            FOFX_MOVEACLSACROSSVOLUMES =
+                0x02000000, // Copy security information when performing a cross-volume move operation
+            FOFX_DONTDISPLAYSOURCEPATH = 0x04000000, // Don't display the path of source file in progress dialog
+            FOFX_DONTDISPLAYDESTPATH = 0x08000000, // Don't display the path of destination file in progress dialog
         }
 
         /// <summary>
@@ -261,6 +283,16 @@ namespace Windows.FileOperations
         {
             // The dwItem1 and dwItem2 parameters are DWORD values.
             SHCNF_DWORD = 3,
+        }
+
+        [Flags]
+        internal enum SIATTRIBFLAGS
+        {
+            SIATTRIBFLAGS_AND = 0x00000001,
+            SIATTRIBFLAGS_OR = 0x00000002,
+            SIATTRIBFLAGS_APPCOMPAT = 0x00000003,
+            SIATTRIBFLAGS_MASK = 0x00000003,
+            SIATTRIBFLAGS_ALLITEMS = 0x00004000
         }
     }
 }
