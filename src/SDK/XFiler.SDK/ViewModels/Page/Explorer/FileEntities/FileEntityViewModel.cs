@@ -78,6 +78,19 @@ namespace XFiler.SDK
             //IsCopyProcess = info.Attributes.HasFlag(FileAttributes.Archive) && info is FileInfo;
         }
 
+        public void FileSystemInfoChanged(FileSystemInfo? info)
+        {
+            switch (info)
+            {
+                case DirectoryInfo directoryInfo:
+                    Init(new XFilerRoute(directoryInfo), info);
+                    break;
+                case FileInfo fileInfo:
+                    Init(new XFilerRoute(fileInfo), info);
+                    break;
+            }
+        }
+
         public void StartRename() => RequestEdit
             ?.Invoke(this, new RequestEdit(RequestEditEvent.StartEditMode));
 

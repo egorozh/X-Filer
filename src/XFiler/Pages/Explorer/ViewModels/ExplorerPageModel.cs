@@ -60,7 +60,7 @@ namespace XFiler
 
                 factory.Dispose();
             }
-                
+
             _directory = null!;
             FilesPresenters = null!;
             CurrentPresenter = null!;
@@ -80,8 +80,8 @@ namespace XFiler
         {
             XFilerRoute route = e.FileEntityViewModel switch
             {
-                DirectoryViewModel directoryViewModel => directoryViewModel.Route,
-                FileViewModel fileViewModel => fileViewModel.Route,
+                DirectoryViewModel directoryViewModel => new XFilerRoute(directoryViewModel.DirectoryInfo),
+                FileViewModel fileViewModel => new XFilerRoute(fileViewModel.FileInfo),
                 _ => SpecialRoutes.MyComputer
             };
 

@@ -53,7 +53,7 @@ namespace XFiler.SDK
 
         public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
         public DelegateCommand<object> OpenNewTabCommand { get; }
-        
+
         public DelegateCommand<object> PasteCommand { get; private set; }
         public DelegateCommand<object> CutCommand { get; private set; }
         public DelegateCommand<object> CopyCommand { get; private set; }
@@ -92,7 +92,7 @@ namespace XFiler.SDK
             OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
             DeleteCommand = new DelegateCommand<object>(OnDelete);
             DeletePermanentlyCommand = new DelegateCommand<object>(OnPermanentlyDelete);
-            
+
 
             OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
 
@@ -105,7 +105,7 @@ namespace XFiler.SDK
             RenameCommand = renameService.RenameCommand;
             StartRenameCommand = renameService.StartRenameCommand;
         }
-        
+
         #endregion
 
         #region Public Methods
@@ -226,7 +226,7 @@ namespace XFiler.SDK
                     break;
             }
         }
-        
+
         #endregion
 
         #region Private Methods
@@ -386,6 +386,13 @@ namespace XFiler.SDK
 
         private void OnRenamed(object sender, RenamedEventArgs e)
         {
+            var renamedItem = DirectoriesAndFiles
+                .FirstOrDefault(vm => vm.Info.FullName == e.OldFullPath);
+
+            if (renamedItem != null)
+            {
+                Application.Current.Dispatcher.Invoke(() => { renamedItem.FileSystemInfoChanged(e.FullPath.ToInfo()); });
+            }
         }
 
         private void BeforeUpdateDispose()
