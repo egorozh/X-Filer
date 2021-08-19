@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.Windows.Behaviors
 {
     /// <summary>
     /// The dock position of the window

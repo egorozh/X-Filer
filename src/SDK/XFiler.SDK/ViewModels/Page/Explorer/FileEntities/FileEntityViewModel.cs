@@ -1,15 +1,13 @@
-﻿using InplaceEditBoxLib.Events;
-using InplaceEditBoxLib.Interfaces;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using UserNotification.Events;
+using XFiler.Controls.EditBox;
 
 namespace XFiler.SDK
 {
-    public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemModel, IEditBox
+    public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemModel, IEditBoxModel
     {
         #region Private Fields
 
@@ -44,9 +42,7 @@ namespace XFiler.SDK
 
         #endregion
 
-        public event ShowNotificationEventHandler? ShowNotificationMessage;
-
-        public event RequestEditEventHandler? RequestEdit;
+        public event EventHandler? RequestEdit;
 
         #region Constructor
 
@@ -91,8 +87,7 @@ namespace XFiler.SDK
             }
         }
 
-        public void StartRename() => RequestEdit
-            ?.Invoke(this, new RequestEdit(RequestEditEvent.StartEditMode));
+        public void StartRename() => RequestEdit?.Invoke(this, EventArgs.Empty);
 
         protected override void Dispose(bool disposing)
         {

@@ -3,7 +3,8 @@
                     xmlns:wpf="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
                     xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
                     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
-                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters">
+                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
+                    xmlns:windows="clr-namespace:XFiler.Controls.Windows;assembly=XFiler.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml" />
@@ -12,7 +13,7 @@
     <!--#region Main Window-->
 
     <ControlTemplate x:Key="GoogleChromeWindowTemplate"
-                     TargetType="{x:Type wpf:XFilerWindowBase}">
+                     TargetType="{x:Type windows:XFilerWindowBase}">
 
         <Grid Background="#01FFFFFF">
             <AdornerDecorator>
@@ -29,7 +30,7 @@
                             <ContentPresenter />
 
                             <!-- #region Title Bar-->
-                            <Grid HorizontalAlignment="Right"
+                            <Grid HorizontalAlignment="Stretch"
                                   VerticalAlignment="Top"
                                   Height="{Binding WindowState, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}} ,Converter={valueConverters:WindowTitleHeightConverter}}">
 
@@ -88,7 +89,7 @@
 
     </ControlTemplate>
 
-    <Style TargetType="{x:Type wpf:XFilerWindowBase}"
+    <Style TargetType="{x:Type windows:XFilerWindowBase}"
            x:Key="{x:Static themes:ResourceKeys.MainWindowStyle}">
 
         <Setter Property="WindowStyle" Value="None" />
@@ -105,10 +106,10 @@
 
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome CornerRadius="0"
+                <WindowChrome CornerRadius="0" 
                               CaptionHeight="{Binding WindowState, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}} ,Converter={valueConverters:WindowTitleHeightConverter}}"
                               ResizeBorderThickness="{Binding BorderThickness, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                              GlassFrameThickness="0" />
+                              GlassFrameThickness="0"/>
             </Setter.Value>
         </Setter>
     </Style>

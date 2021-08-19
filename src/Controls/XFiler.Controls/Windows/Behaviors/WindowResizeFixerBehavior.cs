@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.Windows.Behaviors
 {
     internal class WindowResizeFixerBehavior : Behavior<Window>
     {

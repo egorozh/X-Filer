@@ -8,7 +8,7 @@
              xmlns:base="clr-namespace:XFiler.Base"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
-             xmlns:views="clr-namespace:InplaceEditBoxLib.Views;assembly=InplaceEditBoxLib"
+             xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -316,7 +316,7 @@
         <ListBox.ItemTemplate>
             <DataTemplate DataType="{x:Type sdk:FileEntityViewModel}">
                 <Grid Background="Transparent">
-                    <Grid >
+                    <Grid>
 
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -336,24 +336,24 @@
 
                         </Border>
 
-                        <views:EditBox Grid.Row="1"
-                                       x:Name="TextBlock"
-                                       Style="{StaticResource TileEditBox}"
-                                       Background="Transparent"
-                                       DisplayTextForegroundBrush="#CCCCCC"
-                                       Foreground="#CCCCCC"
-                                       IsEditableOnDoubleClick="True"
-                                       IsReadOnly="False"
-                                       MinimumClickTime="500"
-                                       MaximumClickTime="1200"
-                                       Focusable="True"
-                                       RenameCommand="{StaticResource RenameCommand}"
-                                       RenameCommandParameter="{Binding}"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Stretch"
-                                       Margin="0 4 0 0"
-                                       DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                       Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <editBox:EditBox Grid.Row="1"
+                                         x:Name="TextBlock"
+                                         Style="{StaticResource TileEditBox}"
+                                         Background="Transparent"
+                                         DisplayTextForegroundBrush="#CCCCCC"
+                                         Foreground="#CCCCCC"
+                                         IsEditableOnDoubleClick="True"
+                                         IsReadOnly="False"
+                                         MinimumClickTime="500"
+                                         MaximumClickTime="1200"
+                                         Focusable="True"
+                                         RenameCommand="{StaticResource RenameCommand}"
+                                         RenameCommandParameter="{Binding}"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Stretch"
+                                         Margin="0 4 0 0"
+                                         DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Grid>
                 <DataTemplate.Triggers>

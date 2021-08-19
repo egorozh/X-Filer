@@ -1,13 +1,13 @@
-﻿<sdk:XFilerWindowBase x:Class="XFiler.MainWindow"
-                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                        xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
-                        xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-                        xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
-                        xmlns:xFiler="clr-namespace:XFiler"
-                        mc:Ignorable="d"
+﻿<windows:XFilerWindowBase x:Class="XFiler.MainWindow"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
+                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                          xmlns:xFiler="clr-namespace:XFiler"
+                          xmlns:windows="clr-namespace:XFiler.Controls.Windows;assembly=XFiler.Controls"
+                          xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
+                          mc:Ignorable="d"
 
                         Style="{DynamicResource {x:Static themes:ResourceKeys.MainWindowStyle}}"
                        
@@ -28,4 +28,4 @@
 
     </dockablz:Layout>
 
-</sdk:XFilerWindowBase>
+</windows:XFilerWindowBase>

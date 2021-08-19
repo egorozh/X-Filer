@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using XFiler.Controls.Windows;
 using XFiler.SDK;
 
 namespace XFiler.GoogleChromeStyle.ValueConverters

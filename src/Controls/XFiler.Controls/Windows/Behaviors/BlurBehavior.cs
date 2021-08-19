@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using Microsoft.Xaml.Behaviors;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.Windows.Behaviors
 {
     internal class BlurBehavior : Behavior<Window>
     {

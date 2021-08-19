@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using Prism.Commands;
+using System.Collections;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Prism.Commands;
+using XFiler.Controls.Windows.Behaviors;
 
-namespace XFiler.SDK
+namespace XFiler.Controls.Windows
 {
     public class XFilerWindowBase : Window
     {
