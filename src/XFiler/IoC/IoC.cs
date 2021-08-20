@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using Dragablz;
 using GongSolutions.Wpf.DragDrop;
-using System.Collections.Generic;
-using Serilog;
 using XFiler.Base;
 using XFiler.DragDrop;
 using XFiler.NotifyIcon;
@@ -23,34 +21,13 @@ namespace XFiler
 
         private static void RegisterServices(ContainerBuilder services)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.File("Logs\\app_logger.txt", rollingInterval: RollingInterval.Month)
-                .CreateLogger();
-
-            services.RegisterInstance(Log.Logger).As<ILogger>().SingleInstance();
-
-            services.RegisterType<ExplorerOptions>().As<IExplorerOptions>().SingleInstance();
-            services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
+            services.RegisterExternalServices();
+            services.RegisterSdkServices();
 
             services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
             services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);
-           
-            var imageProviders = new List<IImageProvider>
-            {
-                // Always Last
-                new BaseImageProvider()
-            };
-            services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
-            services.RegisterInstance(imageProviders).As<IEnumerable<IImageProvider>>().SingleInstance();
-
-            services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
-
-            services.RegisterType<MenuItemFactory>().As<IMenuItemFactory>().SingleInstance();
-            services.RegisterType<BookmarksManager>().As<IBookmarksManager>().SingleInstance();
 
             services.RegisterType<MainWindowTabClient>().As<IInterTabClient>().SingleInstance();
-            services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
 
             services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
 

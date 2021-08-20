@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Prism.Commands;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using Prism.Commands;
 using XFiler.SDK;
 
 namespace XFiler
@@ -85,7 +85,7 @@ namespace XFiler
             }
             else if (parameter is IEnumerable items)
             {
-                var tabs = items.OfType<IDirectoryModel>()
+                List<ITabItemModel> tabs = items.OfType<IDirectoryModel>()
                     .Select(directoryModel => _explorerTabFactory.Invoke()
                         .CreateExplorerTab(directoryModel.DirectoryInfo))
                     .OfType<ITabItemModel>()
