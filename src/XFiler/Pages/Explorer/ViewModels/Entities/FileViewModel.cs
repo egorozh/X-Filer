@@ -1,6 +1,7 @@
 ﻿using System.IO;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public sealed class FileViewModel : FileEntityViewModel
     {

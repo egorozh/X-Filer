@@ -4,8 +4,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using XFiler.Controls.EditBox;
+using XFiler.SDK;
 
-namespace XFiler.SDK
+namespace XFiler
 {
     public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemModel, IEditBoxModel
     {
@@ -74,7 +75,7 @@ namespace XFiler.SDK
             //IsCopyProcess = info.Attributes.HasFlag(FileAttributes.Archive) && info is FileInfo;
         }
 
-        public void FileSystemInfoChanged(FileSystemInfo? info)
+        public void InfoChanged(FileSystemInfo? info)
         {
             switch (info)
             {

@@ -28,7 +28,7 @@ namespace XFiler.SDK
 
         #region Public Properties
 
-        public ObservableCollection<FileEntityViewModel> DirectoriesAndFiles { get; set; } = new();
+        public ObservableCollection<IFileSystemModel> DirectoriesAndFiles { get; set; } = new();
 
         public IDropTarget DropTarget { get; private set; }
         public IDragSource DragSource { get; private set; }
@@ -51,7 +51,7 @@ namespace XFiler.SDK
 
         #region Commands
 
-        public DelegateCommand<FileEntityViewModel> OpenCommand { get; }
+        public DelegateCommand<IFileSystemModel> OpenCommand { get; }
         public DelegateCommand<object> OpenNewTabCommand { get; }
 
         public DelegateCommand<object> PasteCommand { get; private set; }
@@ -89,7 +89,7 @@ namespace XFiler.SDK
             DropTarget = dropTarget;
             DragSource = dragSource;
 
-            OpenCommand = new DelegateCommand<FileEntityViewModel>(Open);
+            OpenCommand = new DelegateCommand<IFileSystemModel>(Open);
             DeleteCommand = new DelegateCommand<object>(OnDelete);
             DeletePermanentlyCommand = new DelegateCommand<object>(OnPermanentlyDelete);
 
@@ -138,6 +138,10 @@ namespace XFiler.SDK
             _watcher.EnableRaisingEvents = true;
         }
 
+        public void InfoChanged(FileSystemInfo newInfo)
+        {
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (!Disposed && disposing)
@@ -179,7 +183,7 @@ namespace XFiler.SDK
 
         #region Command Methods
 
-        private void Open(FileEntityViewModel fileEntityViewModel)
+        private void Open(IFileSystemModel fileEntityViewModel)
         {
             DirectoryOrFileOpened?.Invoke(this, new OpenDirectoryEventArgs(fileEntityViewModel));
         }
@@ -191,7 +195,7 @@ namespace XFiler.SDK
             {
                 switch (parameters[1])
                 {
-                    case FileEntityViewModel fileEntityViewModel:
+                    case IFileSystemModel fileEntityViewModel:
                         tabsModel.OnOpenNewTab(fileEntityViewModel);
                         break;
                     case IEnumerable e:
@@ -262,7 +266,7 @@ namespace XFiler.SDK
             }
         }
 
-        private FileEntityViewModel CreateItem((FileSystemInfo, EntityType) item)
+        private IFileSystemModel CreateItem((FileSystemInfo, EntityType) item)
         {
             var (path, entityType) = item;
 
@@ -391,7 +395,10 @@ namespace XFiler.SDK
 
             if (renamedItem != null)
             {
-                Application.Current.Dispatcher.Invoke(() => { renamedItem.FileSystemInfoChanged(e.FullPath.ToInfo()); });
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    renamedItem.InfoChanged(e.FullPath.ToInfo());
+                });
             }
         }
 

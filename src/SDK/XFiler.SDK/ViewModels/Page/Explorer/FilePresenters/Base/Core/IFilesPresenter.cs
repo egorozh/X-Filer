@@ -3,7 +3,7 @@ using System.IO;
 
 namespace XFiler.SDK
 {
-    public interface IFilesPresenter : IDisposable, IDirectoryModel, IFileSystemModel
+    public interface IFilesPresenter : IDirectoryModel, IFileSystemModel
     {
         void Init(DirectoryInfo directoryInfo);
 

@@ -13,7 +13,7 @@ namespace XFiler
             _factory = factory;
         }
 
-        public FileEntityViewModel CreateDirectory(DirectoryInfo directoryInfo, string? @group = null)
+        public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, string? @group = null)
         {
             var model = _factory[EntityType.Directory];
             model.Init(new XFilerRoute(directoryInfo), directoryInfo);
@@ -21,7 +21,7 @@ namespace XFiler
             return model;
         }
 
-        public FileEntityViewModel CreateFile(FileInfo fileInfo, string? @group = null)
+        public IFileSystemModel CreateFile(FileInfo fileInfo, string? @group = null)
         {
             var model = _factory[EntityType.File];
             model.Init(new XFilerRoute(fileInfo), fileInfo);

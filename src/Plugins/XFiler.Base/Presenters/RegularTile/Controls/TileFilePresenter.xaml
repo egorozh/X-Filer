@@ -315,7 +315,7 @@
         </ListBox.ItemsPanel>
 
         <ListBox.ItemTemplate>
-            <DataTemplate DataType="{x:Type sdk:FileEntityViewModel}">
+            <DataTemplate DataType="{x:Type sdk:IFileSystemModel}">
                 <Grid Background="Transparent">
                     <Grid>
 

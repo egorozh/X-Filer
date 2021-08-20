@@ -4,9 +4,9 @@ namespace XFiler.SDK
 {
     public class OpenDirectoryEventArgs : EventArgs
     {
-        public FileEntityViewModel FileEntityViewModel { get; }
+        public IFileSystemModel FileEntityViewModel { get; }
 
-        public OpenDirectoryEventArgs(FileEntityViewModel fileEntityViewModel)
+        public OpenDirectoryEventArgs(IFileSystemModel fileEntityViewModel)
         {
             FileEntityViewModel = fileEntityViewModel;
         }
