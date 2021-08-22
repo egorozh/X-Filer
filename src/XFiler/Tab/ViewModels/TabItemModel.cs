@@ -1,6 +1,5 @@
-﻿using System;
-using System.IO;
-using Prism.Commands;
+﻿using Prism.Commands;
+using System;
 using XFiler.History;
 using XFiler.SDK;
 
@@ -38,7 +37,7 @@ namespace XFiler
 
         #region Commands
 
-        public DelegateCommand<string> AddBookmarkCommand { get; private set; }
+        public DelegateCommand<IPageModel> AddBookmarkCommand { get; private set; }
 
         public DelegateCommand MoveBackCommand { get; }
 

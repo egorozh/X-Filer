@@ -7,15 +7,19 @@ namespace XFiler.SDK
     {
         public DataTemplate Template { get; }
 
+        public XFilerRoute Route { get; }
+
         public event EventHandler<HyperlinkEventArgs>? GoToUrl;
 
-        protected BasePageModel(DataTemplate template)
+        protected BasePageModel(DataTemplate template, XFilerRoute route)
         {
             Template = template;
+            Route = route;
         }
 
-        protected BasePageModel(Type pageType)
+        protected BasePageModel(Type pageType, XFilerRoute route)
         {
+            Route = route;
             Template = CreateTemplate(pageType);
         }
 

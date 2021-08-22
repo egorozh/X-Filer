@@ -29,7 +29,7 @@ namespace XFiler
         public ExplorerPageModel(
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
             IClipboardService clipboardService,
-            DirectoryInfo directory) : base(typeof(ExplorerPage))
+            DirectoryInfo directory) : base(typeof(ExplorerPage), new XFilerRoute(directory))
         {
             _directory = directory;
 

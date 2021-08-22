@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class MenuItemViewModel : BaseViewModel, IMenuItemViewModel
+    internal class MenuItemViewModel : DisposableViewModel, IMenuItemViewModel
     {
         public string? Path { get; set; }
 
@@ -13,12 +15,16 @@ namespace XFiler
 
         public ICommand? Command { get; set; }
 
-        public XFilerRoute? Url { get; }
-
+        public XFilerRoute? Route { get; }        
+        
         public IList<IMenuItemViewModel> Items { get; set; }
 
         public IIconLoader IconLoader { get; }
 
+        public bool IsSelected { get; set; }
+
+        public event EventHandler? IsSelectedChanged;
+        
         public MenuItemViewModel(BookmarkItem bookmarkItem,
             ObservableCollection<IMenuItemViewModel> children,
             ICommand command, IIconLoader iconLoader)
@@ -35,9 +41,52 @@ namespace XFiler
             else
             {
                 Command = command;
-                Url = XFilerRoute.FromPath(Path);
-                Header = Url.Header;
+                Route = XFilerRoute.FromPath(Path);
+                Header = Route.Header;
             }
+
+            PropertyChanged += OnPropertyChanged;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!Disposed && disposing)
+            {
+                PropertyChanged -= OnPropertyChanged;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IsSelected))
+            {
+                IsSelectedChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public BookmarkItem GetItem()
+        {
+            if (Route == null)
+            {
+                IList<BookmarkItem> items = new List<BookmarkItem>();
+
+                foreach (var model in Items) 
+                    items.Add(model.GetItem());
+
+                return new BookmarkItem()
+                {
+                    Path = null,
+                    BookmarkFolderName = Header,
+                    Children = items
+                };
+            }
+
+            return new BookmarkItem()
+            {
+                Path = Route.FullName
+            };
         }
     }
 }

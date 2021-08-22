@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Autofac.Features.Indexed;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using XFiler.MyComputer;
 using XFiler.Resources.Localization;
 using XFiler.SDK;
 using XFiler.ViewModels;
@@ -12,18 +12,18 @@ namespace XFiler
 {
     internal class PageFactory : IPageFactory
     {
+        private readonly IIndex<PageType, IPageModel> _pageModelFactory;
         private readonly Func<IReadOnlyList<IFilesPresenterFactory>> _filesPresenters;
         private readonly IClipboardService _clipboardService;
-        private readonly IIconLoader _iconLoader;
 
         public PageFactory(
+            IIndex<PageType,IPageModel> pageModelFactory,
             Func<IReadOnlyList<IFilesPresenterFactory>> filesPresenters,
-            IClipboardService clipboardService,
-            IIconLoader iconLoader)
+            IClipboardService clipboardService)
         {
+            _pageModelFactory = pageModelFactory;
             _filesPresenters = filesPresenters;
             _clipboardService = clipboardService;
-            _iconLoader = iconLoader;
         }
 
         public IPageModel? CreatePage(XFilerRoute route)
@@ -49,8 +49,9 @@ namespace XFiler
                         RouteType.SystemDrive => CreateExplorerPage(route),
                         RouteType.Drive => CreateExplorerPage(route),
                         RouteType.RecycleBin => CreateExplorerPage(route),
-                        RouteType.MyComputer => new MyComputerPageModel(_iconLoader),
-                        RouteType.Settings => new SettingsPageModel(),
+                        RouteType.MyComputer => _pageModelFactory[PageType.MyComputer],
+                        RouteType.Settings => _pageModelFactory[PageType.Settings],
+                        RouteType.BookmarksDispatcher => _pageModelFactory[PageType.BookmarksDispatcher],
                         _ => new SearchPageModel(route)
                     };
             }

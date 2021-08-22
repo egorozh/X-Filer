@@ -28,6 +28,8 @@ namespace XFiler.SDK
 
         MyVideos,
 
-        RecycleBin
+        RecycleBin,
+
+        BookmarksDispatcher
     }
 }

@@ -8,5 +8,7 @@ namespace XFiler.SDK
         event EventHandler<HyperlinkEventArgs> GoToUrl;
 
         DataTemplate Template { get; }
+
+        XFilerRoute Route { get; }
     }
 }

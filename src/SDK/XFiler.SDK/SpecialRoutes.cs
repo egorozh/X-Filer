@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Win32;
 using XFiler.SDK.Localization;
 
@@ -19,6 +20,8 @@ namespace XFiler.SDK
 
         public static XFilerRoute Settings { get; }
 
+        public static XFilerRoute BookmarksDispatcher { get; }
+        
         public static XFilerRoute Desktop { get; }
 
         public static XFilerRoute Downloads { get; }
@@ -43,6 +46,9 @@ namespace XFiler.SDK
 
             Settings = new XFilerRoute(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
 
+            BookmarksDispatcher =
+                new XFilerRoute("Диспетчер закладок", "xfiler://bookmarks", RouteType.BookmarksDispatcher);
+
             Desktop = new XFilerRoute(Strings.Routes_Desktop,
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Desktop);
 
@@ -64,18 +70,17 @@ namespace XFiler.SDK
             RecycleBin = new XFilerRoute(Strings.Routes_RecycleBin,
                 @"C:\$Recycle.Bin", RouteType.RecycleBin);
 
-            Routes = new Dictionary<string, XFilerRoute>
+            var type = typeof(SpecialRoutes);
+
+            var routesProps = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+            Routes = new Dictionary<string, XFilerRoute>();
+
+            foreach (var prop in routesProps)
             {
-                { MyComputer.FullName, MyComputer },
-                { Settings.FullName, Settings },
-                { Desktop.FullName, Desktop },
-                { Downloads.FullName, Downloads },
-                { MyDocuments.FullName, MyDocuments },
-                { MyPictures.FullName, MyPictures },
-                { MyMusic.FullName, MyMusic },
-                { MyVideos.FullName, MyVideos },
-                { RecycleBin.FullName, RecycleBin },
-            };
+                if (prop.GetValue(null) is XFilerRoute value) 
+                    Routes.Add(value.FullName, value);
+            }
         }
 
         #endregion

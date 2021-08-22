@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -26,20 +27,22 @@ namespace XFiler
         #region Private Fields
 
         private readonly ObservableCollection<IMenuItemViewModel> _bookmarks;
-        private readonly List<BookmarkItem> _items;
 
         #endregion
 
         #region Public Properties
 
         public IReadOnlyCollection<IMenuItemViewModel> Bookmarks => _bookmarks;
+        public IMenuItemViewModel? SelectedItem { get; private set; }
 
         #endregion
 
         #region Commands
 
-        public DelegateCommand<string> AddBookmarkCommand { get; }
+        public DelegateCommand<IPageModel> AddBookmarkCommand { get; }
         public DelegateCommand<IList<object>> BookmarkClickCommand { get; }
+
+        public DelegateCommand RemoveCommand { get; }
 
         #endregion
 
@@ -50,11 +53,14 @@ namespace XFiler
             _itemFactory = itemFactory;
 
             BookmarkClickCommand = new DelegateCommand<IList<object>>(OnBookmarkClicked);
-            AddBookmarkCommand = new DelegateCommand<string>(OnAddBookmark);
+            AddBookmarkCommand = new DelegateCommand<IPageModel>(OnAddBookmark);
 
-            _items = OpenBookmarksFile();
+            RemoveCommand = new DelegateCommand(OnRemove, CanRemove);
 
-            _bookmarks = CreateMenuItemViewModels(_items);
+            var items = OpenBookmarksFile();
+
+            _bookmarks = CreateMenuItemViewModels(items);
+            _bookmarks.CollectionChanged += BookmarksOnCollectionChanged;
         }
 
         private ObservableCollection<IMenuItemViewModel> CreateMenuItemViewModels(IList<BookmarkItem>? items)
@@ -66,9 +72,7 @@ namespace XFiler
 
             foreach (var bookmarkItem in items)
             {
-                var vm = _itemFactory
-                    .CreateItem(bookmarkItem, CreateMenuItemViewModels(bookmarkItem.Children),
-                        BookmarkClickCommand);
+                var vm = CreateItem(bookmarkItem);
 
                 menuVms.Add(vm);
             }
@@ -95,6 +99,47 @@ namespace XFiler
             return new List<BookmarkItem>();
         }
 
+        private void BookmarksOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs args)
+        {
+            try
+            {
+                List<BookmarkItem> items = new();
+
+                foreach (var model in _bookmarks)
+                {
+                    items.Add(model.GetItem());
+                }
+
+                var json = JsonSerializer.Serialize(items);
+
+                File.WriteAllText(BookmarksFileName, json);
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        private void VmOnIsSelectedChanged(object? sender, EventArgs e)
+        {
+            if (sender is IMenuItemViewModel { IsSelected: true } menuItem)
+            {
+                SelectedItem = menuItem;
+            }
+
+            RemoveCommand.RaiseCanExecuteChanged();
+        }
+
+        private MenuItemViewModel CreateItem(BookmarkItem? bookmarkItem)
+        {
+            var vm = _itemFactory
+                .CreateItem(bookmarkItem, CreateMenuItemViewModels(bookmarkItem.Children),
+                    BookmarkClickCommand);
+
+            vm.IsSelectedChanged += VmOnIsSelectedChanged;
+
+            return vm;
+        }
+
         #endregion
 
         #region Commands Methods
@@ -109,32 +154,48 @@ namespace XFiler
             }
         }
 
-        private void OnAddBookmark(string path)
+        private void OnAddBookmark(IPageModel page)
         {
-            if (!Directory.Exists(path))
-                return;
+            var route = page.Route;
 
-            _items.Add(new BookmarkItem
+            _bookmarks.Add(CreateItem(new BookmarkItem
             {
-                Path = path
-            });
+                Path = route.FullName
+            }));
+        }
 
-            try
+        private bool CanRemove() => SelectedItem != null;
+
+        private void OnRemove()
+        {
+            var removedVm = SelectedItem;
+
+            removedVm.IsSelectedChanged -= VmOnIsSelectedChanged;
+            removedVm.Dispose();
+
+            var parent = FindParent(removedVm);
+
+            if (parent == null)
+                _bookmarks.Remove(removedVm);
+            else
+                parent.Items.Remove(removedVm);
+        }
+
+        private IMenuItemViewModel? FindParent(IMenuItemViewModel removedVm)
+        {
+            foreach (var model in _bookmarks)
             {
-                var json = JsonSerializer.Serialize(_items);
+                if (model == removedVm)
+                    return null;
 
-                File.WriteAllText(BookmarksFileName, json);
+                foreach (var child in model.Items)
+                {
+                    if (child == removedVm)
+                        return model;
+                }
             }
-            catch (Exception e)
-            {
-            }
 
-            _bookmarks.Clear();
-
-            foreach (var viewModel in CreateMenuItemViewModels(_items))
-            {
-                _bookmarks.Add(viewModel);
-            }
+            return null;
         }
 
         #endregion

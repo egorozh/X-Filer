@@ -42,6 +42,7 @@ namespace XFiler
         public DelegateCommand<object> DuplicateTabCommand { get; }
         public DelegateCommand<object> CloseOtherTabsCommand { get; }
         public DelegateCommand CreateSettingsTabCommand { get; }
+        public DelegateCommand CreateBookmarksDispatcherPageCommand { get; }
         public DelegateCommand CloseAllTabsCommand { get; }
 
         #endregion
@@ -67,6 +68,8 @@ namespace XFiler
             CloseOtherTabsCommand = new DelegateCommand<object>(OnCloseOtherTabs, CanCloseAllTabs);
 
             CreateSettingsTabCommand = new DelegateCommand(OnOpenSettings);
+            CreateBookmarksDispatcherPageCommand = new DelegateCommand(OnOpenBookmarksDispatcher);
+
             CloseAllTabsCommand = new DelegateCommand(OnCloseAllTabs);
 
 
@@ -76,7 +79,7 @@ namespace XFiler
 
             TabItems.CollectionChanged += TabItemsOnCollectionChanged;
         }
-
+        
         #endregion
 
         #region Public Methods
@@ -173,6 +176,17 @@ namespace XFiler
             var tab = _tabFactory.CreateTab(SpecialRoutes.Settings);
            
             if (tab == null) 
+                return;
+
+            TabItems.Add(tab);
+            CurrentTabItem = tab;
+        }
+
+        private void OnOpenBookmarksDispatcher()
+        {
+            var tab = _tabFactory.CreateTab(SpecialRoutes.BookmarksDispatcher);
+
+            if (tab == null)
                 return;
 
             TabItems.Add(tab);
