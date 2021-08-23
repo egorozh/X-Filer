@@ -40,8 +40,10 @@ namespace XFiler
         #region Commands
 
         public DelegateCommand<IPageModel> AddBookmarkCommand { get; }
+
         public DelegateCommand<IList<object>> BookmarkClickCommand { get; }
 
+        public DelegateCommand AddFolderCommand { get; }
         public DelegateCommand RemoveCommand { get; }
 
         #endregion
@@ -56,13 +58,14 @@ namespace XFiler
             AddBookmarkCommand = new DelegateCommand<IPageModel>(OnAddBookmark);
 
             RemoveCommand = new DelegateCommand(OnRemove, CanRemove);
+            AddFolderCommand = new DelegateCommand(OnAddFolder);
 
             var items = OpenBookmarksFile();
 
             _bookmarks = CreateMenuItemViewModels(items);
             _bookmarks.CollectionChanged += BookmarksOnCollectionChanged;
         }
-        
+
         #endregion
 
         #region Commands Methods
@@ -119,6 +122,27 @@ namespace XFiler
             }
 
             return null;
+        }
+        
+        private void OnAddFolder()
+        {
+            IList<IMenuItemViewModel> parentCollection = _bookmarks;
+            var insertIndex = _bookmarks.Count;
+
+            if (SelectedItem != null)
+            {
+                var parent = FindParent(_bookmarks, SelectedItem);
+
+                if (parent != null)
+                    parentCollection = parent.Items;
+
+                insertIndex = parentCollection.IndexOf(SelectedItem) + 1;
+            }
+            
+            parentCollection.Insert(insertIndex, CreateItem(new BookmarkItem
+            {
+                BookmarkFolderName = "Новая папка"
+            }));
         }
 
         #endregion

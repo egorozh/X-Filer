@@ -8,27 +8,17 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        <Grid DataContext="{Binding BookmarksManager}">
 
-        <ToolBar>
-            <Button Content="+" />
-            <Button Content="Удалить"
-                    Command="{Binding BookmarksManager.RemoveCommand}"/>
-
-            <Separator />
-
-            <Button Content="Вверх" />
-            <Button Content="Вниз" />
-        </ToolBar>
-
-        <Grid Grid.Row="1"
-              DataContext="{Binding BookmarksManager}">
-
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить папку"
+                              Command="{Binding AddFolderCommand}" />
+                    <MenuItem Header="Удалить"
+                              Command="{Binding RemoveCommand}" />
+                </ContextMenu>
+            </Grid.ContextMenu>
             <TreeView ItemsSource="{Binding Bookmarks}"
-
 
                       dd:DragDrop.DropScrollingMode="VerticalOnly"
                       dd:DragDrop.IsDragSource="True"
