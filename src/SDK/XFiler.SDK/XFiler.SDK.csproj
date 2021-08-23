@@ -3,12 +3,12 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="DragablzF" Version="0.1.0.1" />
+    <PackageReference Include="gong-wpf-dragdrop" Version="2.4.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\gong-wpf-dragdrop\src\GongSolutions.WPF.DragDrop\GongSolutions.WPF.DragDrop.csproj" />
     <ProjectReference Include="..\..\Controls\XFiler.Controls\XFiler.Controls.csproj" />
   </ItemGroup>
 

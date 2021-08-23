@@ -62,6 +62,68 @@ namespace XFiler
             _bookmarks = CreateMenuItemViewModels(items);
             _bookmarks.CollectionChanged += BookmarksOnCollectionChanged;
         }
+        
+        #endregion
+
+        #region Commands Methods
+
+        private void OnBookmarkClicked(IList<object> parameters)
+        {
+            if (parameters.Count == 2 &&
+                parameters[0] is XFilerRoute url &&
+                parameters[1] is ITabItemModel tabItemViewModel)
+            {
+                tabItemViewModel.Open(url);
+            }
+        }
+
+        private void OnAddBookmark(IPageModel page)
+        {
+            var route = page.Route;
+
+            _bookmarks.Add(CreateItem(new BookmarkItem
+            {
+                Path = route.FullName
+            }));
+        }
+
+        private bool CanRemove() => SelectedItem != null;
+
+        private void OnRemove()
+        {
+            var removedVm = SelectedItem;
+
+            removedVm.IsSelectedChanged -= VmOnIsSelectedChanged;
+            removedVm.Dispose();
+
+            var parent = FindParent(_bookmarks, removedVm);
+
+            if (parent == null)
+                _bookmarks.Remove(removedVm);
+            else
+                parent.Items.Remove(removedVm);
+        }
+
+        private static IMenuItemViewModel? FindParent(IEnumerable<IMenuItemViewModel> items,
+            IMenuItemViewModel removedVm, IMenuItemViewModel? parent = null)
+        {
+            foreach (var model in items)
+            {
+                if (model == removedVm)
+                    return parent;
+
+                var par = FindParent(model.Items, removedVm, model);
+
+                if (par != null)
+                    return par;
+            }
+
+            return null;
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private ObservableCollection<IMenuItemViewModel> CreateMenuItemViewModels(IList<BookmarkItem>? items)
         {
@@ -138,64 +200,6 @@ namespace XFiler
             vm.IsSelectedChanged += VmOnIsSelectedChanged;
 
             return vm;
-        }
-
-        #endregion
-
-        #region Commands Methods
-
-        private void OnBookmarkClicked(IList<object> parameters)
-        {
-            if (parameters.Count == 2 &&
-                parameters[0] is XFilerRoute url &&
-                parameters[1] is ITabItemModel tabItemViewModel)
-            {
-                tabItemViewModel.Open(url);
-            }
-        }
-
-        private void OnAddBookmark(IPageModel page)
-        {
-            var route = page.Route;
-
-            _bookmarks.Add(CreateItem(new BookmarkItem
-            {
-                Path = route.FullName
-            }));
-        }
-
-        private bool CanRemove() => SelectedItem != null;
-
-        private void OnRemove()
-        {
-            var removedVm = SelectedItem;
-
-            removedVm.IsSelectedChanged -= VmOnIsSelectedChanged;
-            removedVm.Dispose();
-
-            var parent = FindParent(_bookmarks, removedVm);
-
-            if (parent == null)
-                _bookmarks.Remove(removedVm);
-            else
-                parent.Items.Remove(removedVm);
-        }
-
-        private static IMenuItemViewModel? FindParent(IEnumerable<IMenuItemViewModel> items,
-            IMenuItemViewModel removedVm, IMenuItemViewModel? parent = null)
-        {
-            foreach (var model in items)
-            {
-                if (model == removedVm)
-                    return parent;
-
-                var par = FindParent(model.Items, removedVm, model);
-
-                if (par != null)
-                    return par;
-            }
-
-            return null;
         }
 
         #endregion

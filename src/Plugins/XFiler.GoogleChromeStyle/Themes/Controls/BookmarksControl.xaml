@@ -22,7 +22,7 @@
                                     <Setter Property="CommandParameter">
                                         <Setter.Value>
                                             <MultiBinding Converter="{sdk:CloneParamsConverter}">
-                                                <Binding Path="DataContext.Url"
+                                                <Binding Path="DataContext.Route"
                                                          RelativeSource="{RelativeSource Self}" />
                                                 <Binding Path="DataContext"
                                                          RelativeSource="{RelativeSource AncestorType={x:Type Menu}}" />

@@ -1,4 +1,5 @@
 ﻿using GongSolutions.Wpf.DragDrop;
+using XFiler.DragDrop;
 using XFiler.Pages.DispatcherPage.Views;
 using XFiler.SDK;
 
@@ -20,6 +21,4 @@ namespace XFiler.DispatcherPage
             DropTarget = dropTarget;
         }
     }
-
-    public interface IBookmarksDispatcherDropTarget : IDropTarget { }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using GongSolutions.Wpf.DragDrop;
 
-namespace XFiler.DispatcherPage
+namespace XFiler.DragDrop
 {
     internal class BookmarksDispatcherDropTarget : IBookmarksDispatcherDropTarget
     {
