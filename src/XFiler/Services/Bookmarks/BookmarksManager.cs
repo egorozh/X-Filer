@@ -173,7 +173,7 @@ namespace XFiler
             removedVm.IsSelectedChanged -= VmOnIsSelectedChanged;
             removedVm.Dispose();
 
-            var parent = FindParent(removedVm);
+            var parent = FindParent(_bookmarks, removedVm);
 
             if (parent == null)
                 _bookmarks.Remove(removedVm);
@@ -181,18 +181,18 @@ namespace XFiler
                 parent.Items.Remove(removedVm);
         }
 
-        private IMenuItemViewModel? FindParent(IMenuItemViewModel removedVm)
+        private static IMenuItemViewModel? FindParent(IEnumerable<IMenuItemViewModel> items,
+            IMenuItemViewModel removedVm, IMenuItemViewModel? parent = null)
         {
-            foreach (var model in _bookmarks)
+            foreach (var model in items)
             {
                 if (model == removedVm)
-                    return null;
+                    return parent;
 
-                foreach (var child in model.Items)
-                {
-                    if (child == removedVm)
-                        return model;
-                }
+                var par = FindParent(model.Items, removedVm, model);
+
+                if (par != null)
+                    return par;
             }
 
             return null;
