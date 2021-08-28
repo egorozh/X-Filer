@@ -422,11 +422,15 @@ namespace XFiler.Controls.EditBox
 
             var timeBetweenClicks = (DateTime.Now - _lastClicked).TotalMilliseconds;
 
-            e.Handled = true;
+          
             _lastClicked = DateTime.Now;
 
             if (timeBetweenClicks > MinimumClickTime && timeBetweenClicks < MaximumClickTime)
+            {
                 OnSwitchToEditingMode();
+                e.Handled = true;
+            }
+               
         }
 
         #endregion

@@ -5,6 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
+             xmlns:xFiler="clr-namespace:XFiler"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -47,8 +49,18 @@
                                     </MultiBinding>
                                 </ContentControl.Content>
                             </ContentControl>
-                            <TextBlock VerticalAlignment="Center"
-                                       Text="{Binding Header}" />
+
+                            <editBox:EditBox Style="{StaticResource TreeViewEditBox}"
+                                            
+                                             IsEditableOnDoubleClick="True"
+                                             IsReadOnly="{Binding ., Converter={xFiler:MenuItemIsReadonlyConverter}}"
+                                             Focusable="True"
+                                             RenameCommand="{Binding RenameCommand}"
+                                             RenameCommandParameter="{Binding}"
+                                             Margin="0 4 0 0"
+                                             DisplayText="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Text="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                          
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>

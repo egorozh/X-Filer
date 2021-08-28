@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Prism.Commands;
 using XFiler.SDK;
 
@@ -15,12 +16,19 @@ namespace XFiler.MyComputer
         public DriveItemModel(string drivePath, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
             : base(new XFilerRoute(new DriveInfo(drivePath)), iconLoader, openCommand)
         {
-            var driveInfo = new DriveInfo(drivePath);
+            try
+            {
+                var driveInfo = new DriveInfo(drivePath);
 
-            TotalSize = driveInfo.TotalSize;
-            TotalFreeSpace = driveInfo.TotalFreeSpace;
+                TotalSize = driveInfo.TotalSize;
+                TotalFreeSpace = driveInfo.TotalFreeSpace;
 
-            UsedPercentage = (TotalSize - TotalFreeSpace) / (double)TotalSize * 100;
+                UsedPercentage = (TotalSize - TotalFreeSpace) / (double)TotalSize * 100;
+            }
+            catch (Exception e)
+            {
+                // It is Empty CD-Rom
+            }
         }
     }
 }

@@ -25,16 +25,27 @@ namespace XFiler
 
         private void OnRename(object parameters)
         {
-            if (parameters is Tuple<string, object>(var newName, FileEntityViewModel model))
+            if (parameters is not Tuple<string, object>(var newName, var parameter))
+                return;
+
+            if (parameter is IFileSystemModel fileSystemModel)
             {
                 try
                 {
-                    _fileOperations.Rename(model.Info, newName);
+                    _fileOperations.Rename(fileSystemModel.Info, newName);
                 }
                 catch (Exception e)
                 {
                     _logger.Error(e, "Rename Error");
                 }
+            }
+
+            if (parameter is MenuItemViewModel menuModel)
+            {
+                if (string.IsNullOrEmpty(newName))
+                    return;
+
+                menuModel.Header = newName;
             }
         }
 

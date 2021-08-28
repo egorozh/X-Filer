@@ -7,10 +7,12 @@ namespace XFiler
     internal class MenuItemFactory : IMenuItemFactory
     {
         private readonly IIconLoader _iconLoader;
-       
-        public MenuItemFactory(IIconLoader iconLoader)
+        private readonly IRenameService _renameService;
+
+        public MenuItemFactory(IIconLoader iconLoader, IRenameService renameService)
         {
             _iconLoader = iconLoader;
+            _renameService = renameService;
         }
 
         public MenuItemViewModel CreateItem(
@@ -18,7 +20,7 @@ namespace XFiler
             ObservableCollection<IMenuItemViewModel> children,
             ICommand command)
         {
-            return new MenuItemViewModel(bookmarkItem, children,  command, _iconLoader);
+            return new MenuItemViewModel(bookmarkItem, children,  command, _iconLoader, _renameService);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using Prism.Commands;
 using XFiler.SDK;
 
 namespace XFiler
@@ -15,11 +16,13 @@ namespace XFiler
 
         public ICommand? Command { get; set; }
 
+        public DelegateCommand<object> RenameCommand { get; private set; }
+
         public XFilerRoute? Route { get; }        
         
         public IList<IMenuItemViewModel> Items { get; set; }
 
-        public IIconLoader IconLoader { get; }
+        public IIconLoader IconLoader { get; private set; }
 
         public bool IsSelected { get; set; }
 
@@ -27,12 +30,16 @@ namespace XFiler
         
         public MenuItemViewModel(BookmarkItem bookmarkItem,
             ObservableCollection<IMenuItemViewModel> children,
-            ICommand command, IIconLoader iconLoader)
+            ICommand command, 
+            IIconLoader iconLoader,
+            IRenameService renameService)
         {
             Path = bookmarkItem.Path;
 
             Items = children;
             IconLoader = iconLoader;
+
+            RenameCommand = renameService.RenameCommand;
 
             if (Path == null)
             {
@@ -53,6 +60,10 @@ namespace XFiler
             if (!Disposed && disposing)
             {
                 PropertyChanged -= OnPropertyChanged;
+
+                RenameCommand = null!;
+                Command = null!;
+                IconLoader = null!;
             }
 
             base.Dispose(disposing);
