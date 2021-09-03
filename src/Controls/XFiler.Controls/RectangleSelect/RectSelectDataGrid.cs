@@ -12,6 +12,33 @@ namespace XFiler.Controls.RectangleSelect
 
         #endregion
 
+        #region Dependency Properties
+
+        public static readonly DependencyProperty HasSelectItemsProperty = DependencyProperty.Register(
+            "HasSelectItems", typeof(bool), typeof(RectSelectDataGrid),
+            new PropertyMetadata(default(bool)));
+
+        public static readonly DependencyProperty IsManyItemsSelectedProperty = DependencyProperty.Register(
+            "IsManyItemsSelected", typeof(bool), typeof(RectSelectDataGrid), new PropertyMetadata(default(bool)));
+
+        #endregion
+
+        #region Public Properties
+
+        public bool HasSelectItems
+        {
+            get => (bool)GetValue(HasSelectItemsProperty);
+            set => SetValue(HasSelectItemsProperty, value);
+        }
+
+        public bool IsManyItemsSelected
+        {
+            get => (bool)GetValue(IsManyItemsSelectedProperty);
+            set => SetValue(IsManyItemsSelectedProperty, value);
+        }
+
+        #endregion
+
         #region Static Constructor
 
         static RectSelectDataGrid()
@@ -51,6 +78,14 @@ namespace XFiler.Controls.RectangleSelect
 
         #region Protected Methods
 
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+        {
+            base.OnSelectionChanged(e);
+
+            HasSelectItems = SelectedItems.Count > 0;
+            IsManyItemsSelected = SelectedItems.Count > 1;
+        }
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -76,8 +111,8 @@ namespace XFiler.Controls.RectangleSelect
         {
             base.OnMouseRightButtonDown(e);
 
-            _selectLogic?.OnMouseLeftButtonDown(e);
-            _selectLogic?.OnMouseLeftButtonUp(e);
+            //_selectLogic?.OnMouseLeftButtonDown(e);
+            //_selectLogic?.OnMouseLeftButtonUp(e);
         }
 
         #endregion

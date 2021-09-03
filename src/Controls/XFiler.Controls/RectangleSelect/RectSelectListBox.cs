@@ -12,25 +12,33 @@ namespace XFiler.Controls.RectangleSelect
 
         #endregion
 
+        #region Dependency Properties
+
         public static readonly DependencyProperty HasSelectItemsProperty = DependencyProperty.Register(
             "HasSelectItems", typeof(bool), typeof(RectSelectListBox),
             new PropertyMetadata(default(bool)));
+
+        public static readonly DependencyProperty IsManyItemsSelectedProperty = DependencyProperty.Register(
+            "IsManyItemsSelected", typeof(bool), typeof(RectSelectListBox), new PropertyMetadata(default(bool)));
+
+        #endregion
+
+        #region Public Properties
 
         public bool HasSelectItems
         {
             get => (bool)GetValue(HasSelectItemsProperty);
             set => SetValue(HasSelectItemsProperty, value);
         }
-
-        public static readonly DependencyProperty IsManyItemsSelectedProperty = DependencyProperty.Register(
-            "IsManyItemsSelected", typeof(bool), typeof(RectSelectListBox), new PropertyMetadata(default(bool)));
-
+        
         public bool IsManyItemsSelected
         {
             get => (bool)GetValue(IsManyItemsSelectedProperty);
             set => SetValue(IsManyItemsSelectedProperty, value);
         }
 
+        #endregion
+        
         #region Static Constructor
 
         static RectSelectListBox()

@@ -35,6 +35,30 @@
         <sdk:CommandReference x:Key="OpenNewWindowCommand"
                               Command="{Binding DataContext.OpenNewWindowCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
+
+        <sdk:CommandReference x:Key="PasteCommand"
+                              Command="{Binding DataContext.PasteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
+
+        <sdk:CommandReference x:Key="CutCommand"
+                              Command="{Binding DataContext.CutCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
+
+        <sdk:CommandReference x:Key="DeleteCommand"
+                              Command="{Binding DataContext.DeleteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
+
+        <sdk:CommandReference x:Key="CopyCommand"
+                              Command="{Binding DataContext.CopyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
+
+        <sdk:CommandReference x:Key="RenameCommand"
+                              Command="{Binding DataContext.RenameCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
+
+        <sdk:CommandReference x:Key="StartRenameCommand"
+                              Command="{Binding DataContext.StartRenameCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
     </UserControl.Resources>
 
     <controls:RectSelectDataGrid ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
@@ -66,6 +90,179 @@
                                  EnableColumnVirtualization="False"
                                  EnableRowVirtualization="True">
 
+        <DataGrid.Resources>
+            <sdk:CommandReference x:Key="OpenManyItemsNewTabCommand"
+                                  Command="{Binding DataContext.OpenNewTabCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}">
+                <sdk:CommandReference.CommandParameter>
+                    <MultiBinding Converter="{sdk:CloneParamsConverter}">
+                        <Binding Path="DataContext"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type dragablz:TabablzControl}}" />
+                        <Binding Path="SelectedItems"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}" />
+
+                    </MultiBinding>
+                </sdk:CommandReference.CommandParameter>
+            </sdk:CommandReference>
+
+            <sdk:CommandReference x:Key="OpenManyItemsNewWindowCommand"
+                                  Command="{Binding DataContext.OpenNewWindowCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}}" />
+
+            <sdk:CommandReference x:Key="CutManyCommand"
+                                  Command="{Binding DataContext.CutCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}}" />
+
+            <sdk:CommandReference x:Key="CopyManyCommand"
+                                  Command="{Binding DataContext.CopyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}}" />
+
+            <sdk:CommandReference x:Key="DeleteManyCommand"
+                                  Command="{Binding DataContext.DeleteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}}" />
+
+            <sdk:CommandReference x:Key="DeleteManyPermanentlyCommand"
+                                  Command="{Binding DataContext.DeletePermanentlyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}"
+                                  CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}}" />
+
+            <ContextMenu x:Key="DirectoryContextMenu">
+                <MenuItem Header="Открыть"
+                          Command="{StaticResource OpenCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новой вкладке"
+                          Command="{StaticResource  OpenNewTabCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новом окне"
+                          Command="{StaticResource  OpenNewWindowCommand}"
+                          CommandParameter="{Binding}" />
+
+                <Separator />
+
+                <MenuItem Header="Переименовать"
+                          Command="{StaticResource StartRenameCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="F2" />
+
+                <Separator />
+
+                <MenuItem Header="Вырезать"
+                          Command="{StaticResource CutCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + X" />
+
+                <MenuItem Header="Копировать"
+                          Command="{StaticResource CopyCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + C" />
+
+                <MenuItem Header="Вставить"
+                          Command="{StaticResource PasteCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + V" />
+
+                <Separator />
+
+                <MenuItem Header="Удалить"
+                          Command="{StaticResource DeleteCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Del" />
+
+            </ContextMenu>
+
+            <ContextMenu x:Key="FileContextMenu">
+                <MenuItem Header="Открыть"
+                          Command="{StaticResource OpenCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новой вкладке"
+                          Command="{StaticResource  OpenNewTabCommand}"
+                          CommandParameter="{Binding}" />
+                <MenuItem Header="Открыть в новом окне"
+                          Command="{StaticResource  OpenNewWindowCommand}"
+                          CommandParameter="{Binding}" />
+
+                <Separator />
+
+                <MenuItem Header="Переименовать"
+                          Command="{StaticResource StartRenameCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="F2" />
+
+                <Separator />
+
+                <MenuItem Header="Вырезать"
+                          Command="{StaticResource CutCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + X" />
+
+                <MenuItem Header="Копировать"
+                          Command="{StaticResource CopyCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Ctrl + C" />
+
+                <Separator />
+
+                <MenuItem Header="Удалить"
+                          Command="{StaticResource DeleteCommand}"
+                          CommandParameter="{Binding}"
+                          InputGestureText="Del" />
+            </ContextMenu>
+
+            <ContextMenu x:Key="ManyItemsContextMenu">
+                <MenuItem Header="Открыть в новой вкладке"
+                          Command="{StaticResource  OpenManyItemsNewTabCommand}" />
+
+                <MenuItem Header="Открыть в новом окне"
+                          Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
+
+                <Separator />
+
+                <MenuItem Header="Вырезать"
+                          Command="{StaticResource CutManyCommand}"
+                          InputGestureText="Ctrl + X" />
+
+                <MenuItem Header="Копировать"
+                          Command="{StaticResource CopyManyCommand}"
+                          InputGestureText="Ctrl + C" />
+
+                <Separator />
+
+                <MenuItem Header="Удалить"
+                          Command="{StaticResource DeleteManyCommand}"
+                          InputGestureText="Del" />
+            </ContextMenu>
+
+        </DataGrid.Resources>
+
+        <DataGrid.InputBindings>
+            <KeyBinding Command="{StaticResource StartRenameCommand}"
+                        CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=controls:RectSelectListBox}}"
+                        Key="F2" />
+            <KeyBinding Command="{StaticResource CutManyCommand}"
+                        Modifiers="Control" Key="X" />
+            <KeyBinding Command="{StaticResource DeleteManyCommand}"
+                        Key="Delete" />
+            <KeyBinding Command="{StaticResource DeleteManyPermanentlyCommand}"
+                        Modifiers="Shift" Key="Delete" />
+            <KeyBinding Command="{StaticResource CopyManyCommand}"
+                        Modifiers="Control" Key="C" />
+            <KeyBinding Command="{StaticResource PasteCommand}"
+                        Modifiers="Control" Key="V">
+                <KeyBinding.CommandParameter>
+                    <MultiBinding Converter="{sdk:CloneParamsConverter}">
+                        <Binding Path="SelectedItem"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
+                        <Binding Path="DataContext"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
+                    </MultiBinding>
+                </KeyBinding.CommandParameter>
+            </KeyBinding>
+        </DataGrid.InputBindings>
+
         <DataGrid.RowStyle>
             <Style TargetType="{x:Type DataGridRow}">
                 <Setter Property="Margin" Value="0" />
@@ -78,21 +275,8 @@
                 <Setter Property="mah:DataGridHelper.SelectionUnit"
                         Value="{Binding Path=SelectionUnit, FallbackValue={x:Static DataGridSelectionUnit.FullRow}, TargetNullValue={x:Static DataGridSelectionUnit.FullRow}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
 
-                <Setter Property="ContextMenu">
-                    <Setter.Value>
-                        <ContextMenu>
-                            <MenuItem Header="Открыть"
-                                      Command="{StaticResource OpenCommand}"
-                                      CommandParameter="{Binding}" />
-                            <MenuItem Header="Открыть в новой вкладке"
-                                      Command="{StaticResource  OpenNewTabCommand}"
-                                      CommandParameter="{Binding}" />
-                            <MenuItem Header="Открыть в новом окне"
-                                      Command="{StaticResource  OpenNewWindowCommand}"
-                                      CommandParameter="{Binding}" />
-                        </ContextMenu>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
+
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type DataGridRow}">
@@ -141,6 +325,17 @@
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
+
+                    <DataTrigger Value="True"
+                                 Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}">
+                        <Setter Property="ContextMenu" Value="{StaticResource FileContextMenu}" />
+                    </DataTrigger>
+                    <DataTrigger Value="True"
+                                 Binding="{Binding IsManyItemsSelected,
+                        RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectDataGrid}}}">
+                        <Setter Property="ContextMenu" Value="{StaticResource ManyItemsContextMenu}" />
+                    </DataTrigger>
+
                     <Trigger Property="IsNewItem" Value="True">
                         <Setter Property="Margin"
                                 Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=NewItemMargin}" />
@@ -227,10 +422,29 @@
                                     MinWidth="20"
                                     MaxWidth="20">
                 <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
+                    <DataTemplate >
                         <Image MaxWidth="18"
                                MaxHeight="18"
+                               x:Name="Bd"
                                Source="{Binding Icon}" />
+                        <DataTemplate.Triggers>
+                            <DataTrigger Value="True"
+                                         Binding="{Binding IsCutted}">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                            <DataTrigger Value="True"
+                                         Binding="{Binding IsSystem}">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                            <DataTrigger Value="True"
+                                         Binding="{Binding IsHidden}">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                            <DataTrigger Value="True"
+                                         Binding="{Binding IsCopyProcess}">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.3" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
