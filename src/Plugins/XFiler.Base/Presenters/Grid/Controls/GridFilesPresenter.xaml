@@ -63,7 +63,7 @@
                                  VirtualizingPanel.IsVirtualizing="True"
                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                  VirtualizingPanel.VirtualizationMode="Recycling"
-                                 EnableColumnVirtualization="True"
+                                 EnableColumnVirtualization="False"
                                  EnableRowVirtualization="True">
 
         <DataGrid.RowStyle>

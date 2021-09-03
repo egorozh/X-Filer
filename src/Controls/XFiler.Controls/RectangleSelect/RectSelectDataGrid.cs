@@ -72,6 +72,14 @@ namespace XFiler.Controls.RectangleSelect
             _selectLogic?.OnMouseLeftButtonUp(e);
         }
 
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseRightButtonDown(e);
+
+            _selectLogic?.OnMouseLeftButtonDown(e);
+            _selectLogic?.OnMouseLeftButtonUp(e);
+        }
+
         #endregion
 
         #region Private Methods
