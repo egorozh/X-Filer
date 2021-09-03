@@ -94,7 +94,8 @@ namespace XFiler
 
         private void OnRemove()
         {
-            var removedVm = SelectedItem;
+            var removedVm = SelectedItem 
+                            ?? throw new ArgumentNullException(nameof(SelectedItem));
 
             removedVm.IsSelectedChanged -= VmOnIsSelectedChanged;
             removedVm.Dispose();
@@ -166,7 +167,7 @@ namespace XFiler
             return menuVms;
         }
 
-        private List<BookmarkItem> OpenBookmarksFile()
+        private static List<BookmarkItem> OpenBookmarksFile()
         {
             if (File.Exists(BookmarksFileName))
             {
@@ -174,14 +175,16 @@ namespace XFiler
 
                 try
                 {
-                    return JsonSerializer.Deserialize<List<BookmarkItem>>(json);
+                    var res = JsonSerializer.Deserialize<List<BookmarkItem>>(json);
+                    if (res != null)
+                        return res;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
+                    // ignored
                 }
             }
-
-
+            
             return new List<BookmarkItem>();
         }
 
@@ -200,8 +203,9 @@ namespace XFiler
 
                 File.WriteAllText(BookmarksFileName, json);
             }
-            catch (Exception e)
+            catch (Exception)
             {
+                // ignored
             }
         }
 
@@ -215,7 +219,7 @@ namespace XFiler
             RemoveCommand.RaiseCanExecuteChanged();
         }
 
-        private MenuItemViewModel CreateItem(BookmarkItem? bookmarkItem)
+        private MenuItemViewModel CreateItem(BookmarkItem bookmarkItem)
         {
             var vm = _itemFactory
                 .CreateItem(bookmarkItem, CreateMenuItemViewModels(bookmarkItem.Children),

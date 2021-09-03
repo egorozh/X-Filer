@@ -65,7 +65,7 @@ namespace XFiler
             {
                 var access = dir.EnumerateFileSystemInfos();
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
                 MessageBox.Show($"{Strings.PageFactory_NotAccessText} \"{dir.FullName}\"",
                     Strings.PageFactory_NotAccessCaption,

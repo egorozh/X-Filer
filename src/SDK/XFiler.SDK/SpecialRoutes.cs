@@ -101,9 +101,9 @@ namespace XFiler.SDK
 
         #endregion
 
-        private static string? GetDownloadFolderPath() => Registry
+        private static string GetDownloadFolderPath() => Registry
             .GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders",
                 "{374DE290-123F-4565-9164-39C4925E467B}", string.Empty)
-            ?.ToString();
+            ?.ToString() ?? string.Empty;
     }
 }

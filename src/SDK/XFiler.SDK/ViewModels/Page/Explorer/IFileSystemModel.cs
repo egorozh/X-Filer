@@ -7,6 +7,6 @@ namespace XFiler.SDK
     {
         FileSystemInfo Info { get; }
 
-        void InfoChanged(FileSystemInfo newInfo);
+        void InfoChanged(FileSystemInfo? newInfo);
     }
 }   

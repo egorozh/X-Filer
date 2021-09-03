@@ -19,7 +19,7 @@ namespace XFiler.SDK
                 };
             }
 
-            return null;
+            return null!;
         }
     }
 }

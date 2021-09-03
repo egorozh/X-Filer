@@ -110,7 +110,7 @@ namespace XFiler.SDK
 
         #region Public Methods
 
-        public void Init(DirectoryInfo directoryInfo)
+        public async void Init(DirectoryInfo directoryInfo)
         {
             DirectoryInfo = directoryInfo;
             Info = directoryInfo;
@@ -126,7 +126,7 @@ namespace XFiler.SDK
                                     | NotifyFilters.Security
                                     | NotifyFilters.Size;
 
-            InitItems();
+            await InitItems();
 
             _watcher.Changed += OnChanged;
             _watcher.Created += OnCreated;
@@ -138,7 +138,7 @@ namespace XFiler.SDK
             _watcher.EnableRaisingEvents = true;
         }
 
-        public void InfoChanged(FileSystemInfo newInfo)
+        public void InfoChanged(FileSystemInfo? newInfo)
         {
         }
 
@@ -256,7 +256,7 @@ namespace XFiler.SDK
 
                 _backgroundWorker.RunWorkerAsync(items);
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
                 MessageBox.Show("У вас нет доступа к данной папке", "Нет доступа");
             }

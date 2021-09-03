@@ -38,7 +38,7 @@ namespace XFiler.History
         {
             var prev = Current.PreviousNode;
 
-            Current = prev;
+            Current = prev!;
 
             RaiseHistoryChanged();
         }
@@ -47,7 +47,7 @@ namespace XFiler.History
         {
             var next = Current.NextNode;
 
-            Current = next;
+            Current = next!;
 
             RaiseHistoryChanged();
         }

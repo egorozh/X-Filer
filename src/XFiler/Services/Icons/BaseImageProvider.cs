@@ -7,7 +7,7 @@ namespace XFiler
 {
     public class BaseImageProvider : IImageProvider
     {
-        public ImageSource? GetIcon(XFilerRoute route, double size)
+        public ImageSource? GetIcon(XFilerRoute? route, double size)
         {
             var key = GetResourceKey(route);
 

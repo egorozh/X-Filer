@@ -17,13 +17,13 @@ namespace XFiler
         #region Private Fields
 
         private XFilerTheme? _currentTheme;
-        private TaskbarIcon _notifyIcon;
+        private TaskbarIcon _notifyIcon = null!;
 
         #endregion
 
         #region Public Properties
 
-        public IContainer Host { get; private set; }
+        public IContainer Host { get; private set; } = null!;
 
         #endregion
 

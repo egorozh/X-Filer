@@ -8,7 +8,7 @@ namespace XFiler.Controls.RectangleSelect
     {
         #region Private Fields
 
-        private RectSelectLogic<ListBoxItem> _selectLogic;
+        private RectSelectLogic<ListBoxItem>? _selectLogic;
 
         #endregion
 

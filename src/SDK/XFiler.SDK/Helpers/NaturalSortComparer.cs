@@ -19,17 +19,23 @@ namespace XFiler.SDK
 
         public NaturalSortComparer(bool inAscendingOrder = true)
         {
-            this._isAscending = inAscendingOrder;
+            _isAscending = inAscendingOrder;
         }
 
         #endregion
 
         #region Public Methods
 
-        public int Compare(string x, string y)
+        public int Compare(object? x, object? y)
+            => Compare(x as string, y as string);
+
+        public int Compare(string? x, string? y)
         {
             if (x == y)
                 return 0;
+
+            if (x == null || y == null)
+                return string.Compare(x, y, StringComparison.Ordinal);
 
             if (!_table.TryGetValue(x, out var x1))
             {
@@ -73,7 +79,7 @@ namespace XFiler.SDK
         public void Dispose()
         {
             _table.Clear();
-            _table = null;
+            _table = null!;
         }
 
         #endregion
@@ -82,19 +88,15 @@ namespace XFiler.SDK
 
         private static int PartCompare(string left, string right)
         {
-            int x, y;
-            if (!int.TryParse(left, out x))
-                return left.CompareTo(right);
+            if (!int.TryParse(left, out var x))
+                return string.Compare(left, right, StringComparison.Ordinal);
 
-            if (!int.TryParse(right, out y))
-                return left.CompareTo(right);
+            if (!int.TryParse(right, out var y))
+                return string.Compare(left, right, StringComparison.Ordinal);
 
             return x.CompareTo(y);
         }
 
         #endregion
-
-        public int Compare(object? x, object? y) 
-            => Compare(x as string, y as string);
     }
 }

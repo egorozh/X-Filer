@@ -95,7 +95,7 @@ namespace XFiler.SDK
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // ignored
             }

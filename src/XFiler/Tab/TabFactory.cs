@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using XFiler.SDK;
 
 namespace XFiler
@@ -25,8 +26,7 @@ namespace XFiler
 
             return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
         }
-
-
+        
         public ITabItemModel? CreateTab(XFilerRoute route)
         {
             var page = _pageFactory.CreatePage(route);
@@ -37,13 +37,13 @@ namespace XFiler
             return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
         }
 
-        public ITabItemModel? CreateMyComputerTab()
+        public ITabItemModel CreateMyComputerTab()
         {
             var route = SpecialRoutes.MyComputer;
             var page = _pageFactory.CreatePage(route);
 
             if (page == null)
-                return null;
+                throw new ArgumentNullException($"My computer page is null");
 
             return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
         }

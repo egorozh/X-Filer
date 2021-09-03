@@ -26,7 +26,7 @@ namespace XFiler.SDK
 
                 return new FileInfo(path);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -35,7 +35,8 @@ namespace XFiler.SDK
         public static DirectoryInfo GetRootName(this FileSystemInfo info) => info switch
         {
             DirectoryInfo directoryInfo => directoryInfo.Root,
-            FileInfo fileInfo => fileInfo.Directory.Root,
+            FileInfo fileInfo => fileInfo.Directory?.Root ??
+                                 throw new Exception($"No root directory from file {fileInfo.FullName}"),
             _ => throw new NotImplementedException(nameof(GetRootName))
         };
     }

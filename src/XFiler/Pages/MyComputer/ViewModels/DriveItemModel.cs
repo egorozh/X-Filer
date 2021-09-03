@@ -25,7 +25,7 @@ namespace XFiler.MyComputer
 
                 UsedPercentage = (TotalSize - TotalFreeSpace) / (double)TotalSize * 100;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // It is Empty CD-Rom
             }
