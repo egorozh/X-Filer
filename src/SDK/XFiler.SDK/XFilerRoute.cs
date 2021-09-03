@@ -82,17 +82,17 @@ namespace XFiler.SDK
         {
             try
             {
-                var request = WebRequest.Create(url) as HttpWebRequest;
-
-                request.Method = "HEAD";
-
-                var response = request.GetResponse() as HttpWebResponse;
-
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (WebRequest.Create(url) is HttpWebRequest request)
                 {
-                    response.Close();
+                    request.Method = "HEAD";
 
-                    return new XFilerRoute(url, url, RouteType.WebLink);
+                    if (request.GetResponse() is HttpWebResponse 
+                        { StatusCode: HttpStatusCode.OK } response)
+                    {
+                        response.Close();
+
+                        return new XFilerRoute(url, url, RouteType.WebLink);
+                    }
                 }
             }
             catch (Exception e)
