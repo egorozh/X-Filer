@@ -3,6 +3,10 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>files.ico</ApplicationIcon>
+    <Version>1.0.1</Version>
+    <Company>X-Filer</Company>
+    <Product>X-Filer</Product>
+    <Authors>Egorozh</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" >
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
