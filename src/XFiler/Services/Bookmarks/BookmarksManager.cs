@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Prism.Commands;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Prism.Commands;
 using XFiler.SDK;
 
 namespace XFiler
@@ -15,15 +16,11 @@ namespace XFiler
         #region Private Fields
 
         private readonly IMenuItemFactory _itemFactory;
+        private readonly ILogger _logger;
+        private readonly IStorage _storage;
 
         #endregion
-
-        #region Constants
-
-        private const string BookmarksFileName = "bookmarks.json";
-
-        #endregion
-
+        
         #region Private Fields
 
         private readonly ObservableCollection<IMenuItemViewModel> _bookmarks;
@@ -50,9 +47,12 @@ namespace XFiler
 
         #region Constructor
 
-        public BookmarksManager(IMenuItemFactory itemFactory)
+        public BookmarksManager(IMenuItemFactory itemFactory, ILogger logger,
+            IStorage storage)
         {
             _itemFactory = itemFactory;
+            _logger = logger;
+            _storage = storage;
 
             BookmarkClickCommand = new DelegateCommand<IList<object>>(OnBookmarkClicked);
             AddBookmarkCommand = new DelegateCommand<IPageModel>(OnAddBookmark);
@@ -94,7 +94,7 @@ namespace XFiler
 
         private void OnRemove()
         {
-            var removedVm = SelectedItem 
+            var removedVm = SelectedItem
                             ?? throw new ArgumentNullException(nameof(SelectedItem));
 
             removedVm.IsSelectedChanged -= VmOnIsSelectedChanged;
@@ -124,7 +124,7 @@ namespace XFiler
 
             return null;
         }
-        
+
         private void OnAddFolder()
         {
             IList<IMenuItemViewModel> parentCollection = _bookmarks;
@@ -139,7 +139,7 @@ namespace XFiler
 
                 insertIndex = parentCollection.IndexOf(SelectedItem) + 1;
             }
-            
+
             parentCollection.Insert(insertIndex, CreateItem(new BookmarkItem
             {
                 BookmarkFolderName = "Новая папка"
@@ -167,11 +167,11 @@ namespace XFiler
             return menuVms;
         }
 
-        private static List<BookmarkItem> OpenBookmarksFile()
+        private List<BookmarkItem> OpenBookmarksFile()
         {
-            if (File.Exists(BookmarksFileName))
+            if (File.Exists(_storage.Bookmarks))
             {
-                var json = File.ReadAllText(BookmarksFileName);
+                var json = File.ReadAllText(_storage.Bookmarks);
 
                 try
                 {
@@ -179,12 +179,12 @@ namespace XFiler
                     if (res != null)
                         return res;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    // ignored
+                    _logger.Error(e, "OpenBookmarksFile");
                 }
             }
-            
+
             return new List<BookmarkItem>();
         }
 
@@ -201,11 +201,13 @@ namespace XFiler
 
                 var json = JsonSerializer.Serialize(items);
 
-                File.WriteAllText(BookmarksFileName, json);
+                File.WriteAllText(_storage.Bookmarks, json);
+
+                _logger.Debug("Save Bookmarks File success");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // ignored
+                _logger.Error(e, "Save Bookmarks File");
             }
         }
 

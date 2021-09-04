@@ -8,10 +8,12 @@ namespace XFiler
     {
         public static void RegisterSdkServices(this ContainerBuilder services)
         {
+            services.RegisterType<Storage>().As<IStorage>().SingleInstance();
+
             services.RegisterBookmarksServices();
 
             services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
-
+            
             services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
 
             services.RegisterIconServices();

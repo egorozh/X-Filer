@@ -1,5 +1,7 @@
-﻿using Autofac;
+﻿using System.IO;
+using Autofac;
 using Serilog;
+using XFiler.SDK;
 
 namespace XFiler
 {
@@ -12,12 +14,17 @@ namespace XFiler
 
         private static void RegisterLogger(this ContainerBuilder services)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.File("Logs\\app_logger.txt", rollingInterval: RollingInterval.Month)
-                .CreateLogger();
+            services.Register(c =>
+            {
+                var storage = c.Resolve<IStorage>();
 
-            services.RegisterInstance(Log.Logger).As<ILogger>().SingleInstance();
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .WriteTo.File(Path.Combine(storage.LogDirectory, "app_logger.txt"),
+                        rollingInterval: RollingInterval.Month)
+                    .CreateLogger();
+                return Log.Logger;
+            }).As<ILogger>().SingleInstance();
         }
     }
 }
