@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using System;
+using System.Collections.Generic;
 using XFiler.History;
 using XFiler.SDK;
 
@@ -32,6 +33,8 @@ namespace XFiler
             get => _searchText;
             set => SetSearchText(value);
         }
+        
+        public Func<string, IReadOnlyList<object>> GetResultsHandler { get; }
 
         #endregion
 
@@ -70,6 +73,8 @@ namespace XFiler
             _searchText = route.FullName;
             Page = initPage;
 
+            GetResultsHandler = GetResultsFilter;
+         
             Page.GoToUrl += PageOnGoToUrl;
             _history.HistoryChanged += History_HistoryChanged;
         }
@@ -188,6 +193,41 @@ namespace XFiler
             }
         }
 
+        private IReadOnlyList<object> GetResultsFilter(string currentRoute)
+        {
+            var results = new List<object>();
+
+            if (string.IsNullOrEmpty(currentRoute))
+                return results;
+
+            var route = XFilerRoute.FromPathEx(currentRoute);
+
+            if (route != null && route.FullName != Route.FullName) 
+                results.Add(new RouteModel($"Перейти в {route.Header}"));
+
+            results.Add(new ResultsModel($"Поиск {currentRoute} по текущей директории"));
+            results.Add(new ResultsModel($"Поиск {currentRoute} по всем директориям"));
+
+            return results;
+        }
+
         #endregion
+    }
+
+    public class ResultsModel : BaseViewModel
+    {
+        public string Text { get; }
+
+        public ResultsModel(string text)
+        {
+            Text = text;
+        }
+    }
+
+    public class RouteModel : ResultsModel
+    {
+        public RouteModel(string text) : base(text)
+        {
+        }
     }
 }

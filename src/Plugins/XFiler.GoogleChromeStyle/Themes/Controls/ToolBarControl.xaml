@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
                     xmlns:localization="clr-namespace:XFiler.GoogleChromeStyle.Localization"
-                    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz">
+                    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+                    xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml" />
         <ResourceDictionary Source="Icons.xaml" />
@@ -41,21 +42,36 @@
                                     Content="{StaticResource UpdateIcon}"
                                     Command="{Binding UpdateCommand}" />
 
-                            <sdk:SearchControl Grid.Column="3"
-                                               VerticalAlignment="Center"
-                                               Margin="10 0"
-                                               Text="{Binding SearchText}">
-                                <sdk:SearchControl.Resources>
+                            <controls:SearchControl Grid.Column="3"
+                                                    VerticalAlignment="Center"
+                                                    Margin="10 0"
+                                                    Text="{Binding SearchText}"
+                                                    GetResultsHandler="{Binding GetResultsHandler}">
+                                <controls:SearchControl.Resources>
                                     <Style TargetType="Button" BasedOn="{StaticResource SearchContentButton}" />
-                                </sdk:SearchControl.Resources>
-                                <sdk:SearchControl.ButtonsContent>
+                                </controls:SearchControl.Resources>
+                                <controls:SearchControl.ButtonsContent>
                                     <StackPanel Orientation="Horizontal">
                                         <Button Command="{Binding AddBookmarkCommand}"
                                                 CommandParameter="{Binding Page}"
                                                 Content="{StaticResource AddBookmarkIcon}" />
                                     </StackPanel>
-                                </sdk:SearchControl.ButtonsContent>
-                            </sdk:SearchControl>
+                                </controls:SearchControl.ButtonsContent>
+                                <controls:SearchControl.SearchResultTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="{Binding Text}" />
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </controls:SearchControl.SearchResultTemplate>
+                            </controls:SearchControl>
 
                             <Menu Grid.Column="4"
                                   DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}">
@@ -71,8 +87,8 @@
                                     <MenuItem Header="Параметры"
                                               Command="{Binding CreateSettingsTabCommand}" />
                                     <Separator />
-                                    <MenuItem Header="Закрыть все вкладки" 
-                                              Command="{Binding CloseAllTabsCommand}"/>
+                                    <MenuItem Header="Закрыть все вкладки"
+                                              Command="{Binding CloseAllTabsCommand}" />
                                 </MenuItem>
                             </Menu>
                         </Grid>

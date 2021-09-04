@@ -74,6 +74,26 @@ namespace XFiler.SDK
             return SpecialRoutes.MyComputer;
         }
 
+        public static XFilerRoute? FromPathEx(string path)
+        {
+            var special = SpecialRoutes.GetSpecialUrl(path);
+
+            if (special != null)
+                return special;
+
+            var fileSystem = IsFileSystemRoute(path);
+
+            if (fileSystem != null)
+                return fileSystem;
+
+            var webLink = IsWebLinkRoute(path);
+
+            if (webLink != null)
+                return webLink;
+
+            return null;
+        }
+
         #endregion
 
         #region Private Methods
