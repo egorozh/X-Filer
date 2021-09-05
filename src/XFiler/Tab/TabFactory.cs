@@ -7,13 +7,16 @@ namespace XFiler
     public class TabFactory : ITabFactory
     {
         private readonly IBookmarksManager _bookmarksManager;
+        private readonly ISearchHandler _searchHandler;
         private readonly IPageFactory _pageFactory;
 
         public TabFactory(IPageFactory pageFactory,
-            IBookmarksManager bookmarksManager)
+            IBookmarksManager bookmarksManager,
+            ISearchHandler searchHandler)
         {
             _pageFactory = pageFactory;
             _bookmarksManager = bookmarksManager;
+            _searchHandler = searchHandler;
         }
 
         public ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo)
@@ -24,9 +27,9 @@ namespace XFiler
             if (page == null)
                 return null;
 
-            return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
+            return new TabItemModel(_bookmarksManager, _pageFactory, _searchHandler, route, page);
         }
-        
+
         public ITabItemModel? CreateTab(XFilerRoute route)
         {
             var page = _pageFactory.CreatePage(route);
@@ -34,7 +37,7 @@ namespace XFiler
             if (page == null)
                 return null;
 
-            return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
+            return new TabItemModel(_bookmarksManager, _pageFactory, _searchHandler, route, page);
         }
 
         public ITabItemModel CreateMyComputerTab()
@@ -45,7 +48,7 @@ namespace XFiler
             if (page == null)
                 throw new ArgumentNullException($"My computer page is null");
 
-            return new TabItemModel(_bookmarksManager, _pageFactory, route, page);
+            return new TabItemModel(_bookmarksManager, _pageFactory, _searchHandler, route, page);
         }
     }
 }

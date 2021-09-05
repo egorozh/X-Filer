@@ -28,17 +28,18 @@ namespace XFiler
             services.RegisterSdkServices();
 
 
-
             services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
             services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);
-          
+
             services.RegisterType<MyComputerPageModel>().Keyed<IPageModel>(PageType.MyComputer);
             services.RegisterType<SettingsPageModel>().Keyed<IPageModel>(PageType.Settings);
             services.RegisterType<BookmarksDispatcherPageModel>().Keyed<IPageModel>(PageType.BookmarksDispatcher);
 
             services.RegisterType<MainWindowTabClient>().As<IInterTabClient>().SingleInstance();
 
-            services.RegisterType<BookmarksDispatcherDropTarget>().As<IBookmarksDispatcherDropTarget>().SingleInstance();
+
+            services.RegisterType<BookmarksDispatcherDropTarget>().As<IBookmarksDispatcherDropTarget>()
+                .SingleInstance();
 
             services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
 
@@ -46,6 +47,8 @@ namespace XFiler
             services.RegisterType<XFilerDragHandler>().As<IDragSource>().SingleInstance();
 
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
+
+            services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
 
             services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
             services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();

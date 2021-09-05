@@ -12,6 +12,7 @@ namespace XFiler
 
         private IDirectoryHistory _history;
         private IPageFactory _pageFactory;
+        private ISearchHandler _searchHandler;
         private string _searchText;
 
         #endregion
@@ -34,7 +35,7 @@ namespace XFiler
             set => SetSearchText(value);
         }
 
-        public Func<string, IReadOnlyList<object>> GetResultsHandler { get; }
+        public Func<string, IReadOnlyList<object>> GetResultsHandler { get; private set; }
 
         #endregion
 
@@ -57,10 +58,12 @@ namespace XFiler
         public TabItemModel(
             IBookmarksManager bookmarksManager,
             IPageFactory pageFactory,
+            ISearchHandler searchHandler,
             XFilerRoute route,
             IPageModel initPage)
         {
             _pageFactory = pageFactory;
+            _searchHandler = searchHandler;
 
             AddBookmarkCommand = bookmarksManager.AddBookmarkCommand;
 
@@ -101,6 +104,7 @@ namespace XFiler
             _history = null!;
             _pageFactory = null!;
             AddBookmarkCommand = null!;
+            _searchHandler = null!;
         }
 
         public void Open(XFilerRoute route)
@@ -205,44 +209,9 @@ namespace XFiler
             }
         }
 
-        private IReadOnlyList<object> GetResultsFilter(string currentRoute)
-        {
-            var results = new List<object>();
-
-            if (string.IsNullOrEmpty(currentRoute))
-                return results;
-
-            var route = XFilerRoute.FromPathEx(currentRoute);
-
-            if (route != null && route.FullName != Route.FullName)
-                results.Add(new RouteModel($"Перейти в {route.Header}", route));
-
-            results.Add(new ResultsModel($"Поиск {currentRoute} по текущей директории"));
-            results.Add(new ResultsModel($"Поиск {currentRoute} по всем директориям"));
-
-            return results;
-        }
+        private IReadOnlyList<object> GetResultsFilter(string arg) 
+            => _searchHandler.GetResultsFilter(arg, Route);
 
         #endregion
-    }
-
-    public class ResultsModel : BaseViewModel
-    {
-        public string Text { get; }
-
-        public ResultsModel(string text)
-        {
-            Text = text;
-        }
-    }
-
-    public class RouteModel : ResultsModel
-    {
-        public XFilerRoute Route { get; }
-
-        public RouteModel(string text, XFilerRoute route) : base(text)
-        {
-            Route = route;
-        }
     }
 }
