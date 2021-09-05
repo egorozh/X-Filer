@@ -160,7 +160,7 @@ namespace XFiler
         {
             if (result is RouteModel routeModel)
             {
-                UpdatePage(routeModel.Route);
+                Open(routeModel.Route);
             }
         }
 
