@@ -46,7 +46,8 @@
                                                     VerticalAlignment="Center"
                                                     Margin="10 0"
                                                     Text="{Binding SearchText}"
-                                                    GetResultsHandler="{Binding GetResultsHandler}">
+                                                    GetResultsHandler="{Binding GetResultsHandler}"
+                                                    GoToCommand="{Binding GoToCommand}">
                                 <controls:SearchControl.Resources>
                                     <Style TargetType="Button" BasedOn="{StaticResource SearchContentButton}" />
                                 </controls:SearchControl.Resources>

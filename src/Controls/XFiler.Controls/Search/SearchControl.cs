@@ -30,9 +30,11 @@ namespace XFiler.Controls
             "GetResultsHandler", typeof(Func<string, IReadOnlyList<object>>), typeof(SearchControl),
             new PropertyMetadata(default(Func<string, IReadOnlyList<object>>)));
 
+        public static readonly DependencyProperty GoToCommandProperty = DependencyProperty.Register(
+            "GoToCommand", typeof(ICommand), typeof(SearchControl), new PropertyMetadata(default(ICommand)));
+
         public static readonly DependencyProperty CurrentResultProperty = DependencyProperty.Register(
             "CurrentResult", typeof(object), typeof(SearchControl), new PropertyMetadata(default(object)));
-
 
         public static readonly DependencyProperty SearchResultTemplateProperty = DependencyProperty.Register(
             "SearchResultTemplate", typeof(DataTemplate), typeof(SearchControl),
@@ -72,6 +74,12 @@ namespace XFiler.Controls
             set => SetValue(GetResultsHandlerProperty, value);
         }
 
+        public ICommand? GoToCommand
+        {
+            get => (ICommand)GetValue(GoToCommandProperty);
+            set => SetValue(GoToCommandProperty, value);
+        }
+
         public DataTemplate SearchResultTemplate
         {
             get => (DataTemplate)GetValue(SearchResultTemplateProperty);
@@ -96,7 +104,7 @@ namespace XFiler.Controls
         {
             base.OnTextChanged(e);
 
-            if (IsKeyboardFocused) 
+            if (IsKeyboardFocused)
                 IsSelectResults = true;
 
             if (IsSelectResults)
@@ -105,7 +113,7 @@ namespace XFiler.Controls
                 CurrentResult = SearchResults?.FirstOrDefault();
             }
         }
-
+        
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
@@ -133,6 +141,12 @@ namespace XFiler.Controls
 
                     CurrentResult = results[newIndex];
 
+                    break;
+
+                case Key.Enter:
+
+                    GoToCommand?.Execute(CurrentResult);
+                    IsSelectResults = false;
                     break;
             }
         }

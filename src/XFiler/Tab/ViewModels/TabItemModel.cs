@@ -33,7 +33,7 @@ namespace XFiler
             get => _searchText;
             set => SetSearchText(value);
         }
-        
+
         public Func<string, IReadOnlyList<object>> GetResultsHandler { get; }
 
         #endregion
@@ -47,6 +47,8 @@ namespace XFiler
         public DelegateCommand MoveForwardCommand { get; }
 
         public DelegateCommand UpdateCommand { get; }
+
+        public DelegateCommand<ResultsModel> GoToCommand { get; }
 
         #endregion
 
@@ -68,13 +70,15 @@ namespace XFiler
             MoveForwardCommand = new DelegateCommand(OnMoveForward, OnCanMoveForward);
             UpdateCommand = new DelegateCommand(OnUpdate);
 
+            GoToCommand = new DelegateCommand<ResultsModel>(OnGoTo);
+
             Route = route;
             Header = route.Header;
             _searchText = route.FullName;
             Page = initPage;
 
             GetResultsHandler = GetResultsFilter;
-         
+
             Page.GoToUrl += PageOnGoToUrl;
             _history.HistoryChanged += History_HistoryChanged;
         }
@@ -152,6 +156,14 @@ namespace XFiler
             UpdatePage(_history.Current.Route);
         }
 
+        private void OnGoTo(ResultsModel result)
+        {
+            if (result is RouteModel routeModel)
+            {
+                UpdatePage(routeModel.Route);
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -202,8 +214,8 @@ namespace XFiler
 
             var route = XFilerRoute.FromPathEx(currentRoute);
 
-            if (route != null && route.FullName != Route.FullName) 
-                results.Add(new RouteModel($"Перейти в {route.Header}"));
+            if (route != null && route.FullName != Route.FullName)
+                results.Add(new RouteModel($"Перейти в {route.Header}", route));
 
             results.Add(new ResultsModel($"Поиск {currentRoute} по текущей директории"));
             results.Add(new ResultsModel($"Поиск {currentRoute} по всем директориям"));
@@ -226,8 +238,11 @@ namespace XFiler
 
     public class RouteModel : ResultsModel
     {
-        public RouteModel(string text) : base(text)
+        public XFilerRoute Route { get; }
+
+        public RouteModel(string text, XFilerRoute route) : base(text)
         {
+            Route = route;
         }
     }
 }
