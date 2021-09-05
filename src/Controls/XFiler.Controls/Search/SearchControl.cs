@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace XFiler.Controls
@@ -15,11 +16,11 @@ namespace XFiler.Controls
 
         #region Dependency Properties
 
-        public static readonly DependencyProperty ButtonsContentProperty = DependencyProperty.Register(
-            nameof(ButtonsContent), typeof(UIElement), typeof(SearchControl), new PropertyMetadata(default(UIElement)));
-
         public static readonly DependencyProperty IsSelectResultsProperty = DependencyProperty.Register(
             "IsSelectResults", typeof(bool), typeof(SearchControl), new PropertyMetadata(default(bool)));
+
+        public static readonly DependencyProperty ButtonsContentProperty = DependencyProperty.Register(
+            nameof(ButtonsContent), typeof(UIElement), typeof(SearchControl), new PropertyMetadata(default(UIElement)));
 
         public static readonly DependencyProperty SearchResultsProperty = DependencyProperty.Register(
             "SearchResults", typeof(IReadOnlyList<object>), typeof(SearchControl),
@@ -41,16 +42,16 @@ namespace XFiler.Controls
 
         #region Public Properties
 
-        public UIElement ButtonsContent
-        {
-            get => (UIElement)GetValue(ButtonsContentProperty);
-            set => SetValue(ButtonsContentProperty, value);
-        }
-
         public bool IsSelectResults
         {
             get => (bool)GetValue(IsSelectResultsProperty);
             set => SetValue(IsSelectResultsProperty, value);
+        }
+
+        public UIElement ButtonsContent
+        {
+            get => (UIElement)GetValue(ButtonsContentProperty);
+            set => SetValue(ButtonsContentProperty, value);
         }
 
         public IReadOnlyList<object>? SearchResults
@@ -95,24 +96,29 @@ namespace XFiler.Controls
         {
             base.OnTextChanged(e);
 
-            IsSelectResults = true;
+            if (IsKeyboardFocused) 
+                IsSelectResults = true;
 
-            SearchResults = GetResultsHandler?.Invoke(Text);
-            CurrentResult = SearchResults?.FirstOrDefault();
+            if (IsSelectResults)
+            {
+                SearchResults = GetResultsHandler?.Invoke(Text);
+                CurrentResult = SearchResults?.FirstOrDefault();
+            }
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
 
-            var current = CurrentResult;
+            if (!IsSelectResults)
+                return;
 
-            if (current == null || SearchResults == null)
+            if (CurrentResult == null || SearchResults == null)
                 return;
 
             var results = SearchResults.ToList();
 
-            var index = results.IndexOf(current);
+            var index = results.IndexOf(CurrentResult);
 
             switch (e.Key)
             {
