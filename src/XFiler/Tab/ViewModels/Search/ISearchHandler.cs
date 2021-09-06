@@ -5,6 +5,6 @@ namespace XFiler
 {
     public interface ISearchHandler 
     {
-        IReadOnlyList<object> GetResultsFilter(string newRoute, XFilerRoute route);
+        IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute);
     }
 }

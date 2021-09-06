@@ -48,6 +48,7 @@ namespace XFiler
 
             services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
 
+            services.RegisterType<ResultModelFactory>().As<IResultModelFactory>().SingleInstance();
             services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
 
             services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();

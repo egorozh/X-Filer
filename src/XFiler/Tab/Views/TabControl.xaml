@@ -7,8 +7,13 @@
              xmlns:xFiler="clr-namespace:XFiler"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ContentControl Content="{Binding Page}"
-                    x:Name="ContentControl">
+    <UserControl.Resources>
+       
+    </UserControl.Resources>
+
+    <ContentControl Style="{DynamicResource ContentControlStyle1}" Content="{Binding Page}"
+                    x:Name="ContentControl"
+                    FocusVisualStyle="{x:Null}">
         <ContentControl.InputBindings>
             <sdk:ExtendedMouseBinding Gesture="XButton1"
                                       Command="{Binding MoveBackCommand}" />

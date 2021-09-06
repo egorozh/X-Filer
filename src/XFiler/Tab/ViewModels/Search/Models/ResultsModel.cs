@@ -2,11 +2,11 @@
 
 namespace XFiler
 {
-    public class ResultsModel : BaseViewModel
+    public abstract class ResultsModel : BaseViewModel
     {
         public string Text { get; }
 
-        public ResultsModel(string text)
+        protected ResultsModel(string text)
         {
             Text = text;
         }

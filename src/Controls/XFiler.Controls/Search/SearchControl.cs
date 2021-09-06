@@ -98,7 +98,7 @@ namespace XFiler.Controls
 
         #endregion
 
-        #region Private Methods
+        #region Protected Methods
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {

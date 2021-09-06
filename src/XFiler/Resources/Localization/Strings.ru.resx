@@ -137,4 +137,16 @@
   <data name="PageFactory,NotAccessText" xml:space="preserve">
     <value>У вас нет доступа к папке</value>
   </data>
+  <data name="SearchHandler.RouteText" xml:space="preserve">
+    <value>Перейти в "{0}"</value>
+  </data>
+  <data name="SearchHandler.SearchAllDrivesText" xml:space="preserve">
+    <value>Поиск "{0}" по всем папкам</value>
+  </data>
+  <data name="SearchHandler.SearchDirectoryText" xml:space="preserve">
+    <value>Поиск "{0}" в текущей папке: "{1}"</value>
+  </data>
+  <data name="SearchHandler.SearchDriveText" xml:space="preserve">
+    <value>Поиск "{0}" в "{1}"</value>
+  </data>
 </root>

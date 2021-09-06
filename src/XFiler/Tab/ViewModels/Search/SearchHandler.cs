@@ -5,20 +5,39 @@ namespace XFiler
 {
     internal class SearchHandler : ISearchHandler
     {
-        public IReadOnlyList<object> GetResultsFilter(string newRouteS, XFilerRoute route)
-        {
-            var results = new List<object>();
+        private readonly IResultModelFactory _resultModelFactory;
 
-            if (string.IsNullOrEmpty(newRouteS))
+        public SearchHandler(IResultModelFactory resultModelFactory)
+        {
+            _resultModelFactory = resultModelFactory;
+        }
+
+        public IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute)
+        {
+            var results = new List<ResultsModel>();
+
+            if (string.IsNullOrEmpty(query))
                 return results;
 
-            var newRoute = XFilerRoute.FromPathEx(newRouteS);
+            var route = XFilerRoute.FromPathEx(query);
 
-            if (newRoute != null && newRoute.FullName != route.FullName)
-                results.Add(new RouteModel($"Перейти в {newRoute.Header}", newRoute));
+            if (route != null && route.FullName != currentRoute.FullName)
+                results.Add(_resultModelFactory.CreateRouteModel(route));
+            else
+            {
+                switch (currentRoute.Type)
+                {
+                    case RouteType.Directory:
+                        results.Add(_resultModelFactory.CreateSearchInDirectoryModel(query, currentRoute));
+                        break;
+                    case RouteType.Drive or RouteType.SystemDrive:
+                        results.Add(_resultModelFactory.CreateSearchInDriveModel(query, currentRoute));
+                        break;
+                }
 
-            results.Add(new ResultsModel($"Поиск {newRouteS} по текущей директории"));
-            results.Add(new ResultsModel($"Поиск {newRouteS} по всем директориям"));
+                results.Add(_resultModelFactory.CreateSearchInAllDrivesModel(query));
+            }
+
 
             return results;
         }

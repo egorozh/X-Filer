@@ -160,7 +160,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на No access.
         /// </summary>
         public static string PageFactory_NotAccessCaption {
             get {
@@ -169,11 +169,47 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на You do not have access to the folder.
         /// </summary>
         public static string PageFactory_NotAccessText {
             get {
                 return ResourceManager.GetString("PageFactory,NotAccessText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string SearchHandler_RouteText {
+            get {
+                return ResourceManager.GetString("SearchHandler.RouteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string SearchHandler_SearchAllDrivesText {
+            get {
+                return ResourceManager.GetString("SearchHandler.SearchAllDrivesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string SearchHandler_SearchDirectoryText {
+            get {
+                return ResourceManager.GetString("SearchHandler.SearchDirectoryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string SearchHandler_SearchDriveText {
+            get {
+                return ResourceManager.GetString("SearchHandler.SearchDriveText", resourceCulture);
             }
         }
     }
