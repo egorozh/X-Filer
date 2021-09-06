@@ -8,32 +8,35 @@
 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <Grid Background="{DynamicResource ToolBarBackground}">
 
-    <Grid Background="{DynamicResource ToolBarBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+            <GroupBox Header="{x:Static localization:Strings.MyComputer_FolderHeader}">
+                <ItemsControl ItemsSource="{Binding Folders}"
+                              Style="{DynamicResource FolderItemsControlStyle}" />
+            </GroupBox>
 
-        <GroupBox Header="{x:Static localization:Strings.MyComputer_FolderHeader}">
-            <ItemsControl ItemsSource="{Binding Folders}"
-                          Style="{DynamicResource FolderItemsControlStyle}" />
-        </GroupBox>
+            <GroupBox Grid.Row="1"
+                      Header="{x:Static localization:Strings.MyComputer_DrivesHeader}">
+                <ItemsControl ItemsSource="{Binding Drives}"
+                              Style="{DynamicResource FolderItemsControlStyle}"
+                              ItemTemplate="{DynamicResource DriveItemTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </GroupBox>
 
-        <GroupBox Grid.Row="1"
-                  Header="{x:Static localization:Strings.MyComputer_DrivesHeader}">
-            <ItemsControl ItemsSource="{Binding Drives}"
-                          Style="{DynamicResource FolderItemsControlStyle}"
-                          ItemTemplate="{DynamicResource DriveItemTemplate}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </GroupBox>
-
-    </Grid>
+        </Grid>
+    </ScrollViewer>
+    
 
 </UserControl>

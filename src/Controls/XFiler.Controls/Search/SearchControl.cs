@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace XFiler.Controls
@@ -39,7 +38,7 @@ namespace XFiler.Controls
         public static readonly DependencyProperty SearchResultTemplateProperty = DependencyProperty.Register(
             "SearchResultTemplate", typeof(DataTemplate), typeof(SearchControl),
             new PropertyMetadata(default(DataTemplate)));
-
+        
         #endregion
 
         #region Public Properties
@@ -98,13 +97,24 @@ namespace XFiler.Controls
 
         #endregion
 
+        #region Constructor
+
+        public SearchControl()
+        {
+            GotKeyboardFocus += TextBox_GotKeyboardFocus;
+            //LostMouseCapture += TextBox_LostMouseCapture;
+            LostKeyboardFocus += TextBox_LostKeyboardFocus;
+        }
+
+        #endregion
+
         #region Protected Methods
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             base.OnTextChanged(e);
 
-            if (IsKeyboardFocused)
+            if (IsKeyboardFocused) 
                 IsSelectResults = true;
 
             if (IsSelectResults)
@@ -113,7 +123,30 @@ namespace XFiler.Controls
                 CurrentResult = SearchResults?.FirstOrDefault();
             }
         }
+
+        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // Fixes issue when clicking cut/copy/paste in context menu
+            if (SelectionLength == 0)
+                SelectAll();
+        }
         
+        private void TextBox_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            // If user highlights some text, don't override it
+            if (SelectionLength == 0)
+                SelectAll();
+
+            // further clicks will not select all
+            LostMouseCapture -= TextBox_LostMouseCapture;
+        }
+
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // once we've left the TextBox, return the select all behavior
+            LostMouseCapture += TextBox_LostMouseCapture;
+        }
+
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
