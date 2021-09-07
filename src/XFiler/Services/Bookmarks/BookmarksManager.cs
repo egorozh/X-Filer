@@ -7,6 +7,8 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using GongSolutions.Wpf.DragDrop;
+using XFiler.DragDrop;
 using XFiler.SDK;
 
 namespace XFiler
@@ -32,6 +34,9 @@ namespace XFiler
         public IReadOnlyCollection<IMenuItemViewModel> Bookmarks => _bookmarks;
         public IMenuItemViewModel? SelectedItem { get; private set; }
 
+        public IDragSource DragSource { get; }
+        public IBookmarksDispatcherDropTarget DropTarget { get; }
+
         #endregion
 
         #region Commands
@@ -47,12 +52,18 @@ namespace XFiler
 
         #region Constructor
 
-        public BookmarksManager(IMenuItemFactory itemFactory, ILogger logger,
-            IStorage storage)
+        public BookmarksManager(IMenuItemFactory itemFactory,
+            ILogger logger,
+            IStorage storage, 
+            IDragSource dragSource,
+            IBookmarksDispatcherDropTarget dropTarget)
         {
             _itemFactory = itemFactory;
             _logger = logger;
             _storage = storage;
+
+            DragSource = dragSource;
+            DropTarget = dropTarget;
 
             BookmarkClickCommand = new DelegateCommand<IList<object>>(OnBookmarkClicked);
             AddBookmarkCommand = new DelegateCommand<IPageModel>(OnAddBookmark);

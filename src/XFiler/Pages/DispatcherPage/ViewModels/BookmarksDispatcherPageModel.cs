@@ -1,6 +1,4 @@
-﻿using GongSolutions.Wpf.DragDrop;
-using XFiler.DragDrop;
-using XFiler.Pages.DispatcherPage.Views;
+﻿using XFiler.Pages.DispatcherPage.Views;
 using XFiler.SDK;
 
 namespace XFiler.DispatcherPage
@@ -9,16 +7,10 @@ namespace XFiler.DispatcherPage
     {
         public IBookmarksManager BookmarksManager { get; }
 
-        public IDragSource DragSource { get; }
-        public IBookmarksDispatcherDropTarget DropTarget { get; }
-
-        public BookmarksDispatcherPageModel(IBookmarksManager bookmarksManager, IDragSource dragSource,
-            IBookmarksDispatcherDropTarget dropTarget) : base(typeof(BookmarksDispatcherPage),
-            SpecialRoutes.BookmarksDispatcher)
+        public BookmarksDispatcherPageModel(IBookmarksManager bookmarksManager)
+            : base(typeof(BookmarksDispatcherPage), SpecialRoutes.BookmarksDispatcher)
         {
             BookmarksManager = bookmarksManager;
-            DragSource = dragSource;
-            DropTarget = dropTarget;
         }
     }
 }

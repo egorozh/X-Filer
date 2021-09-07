@@ -10,6 +10,7 @@ namespace XFiler.SDK
         XFilerRoute? Route { get; }
 
         bool IsSelected { get; }
+        string? Header { get; }
 
         event EventHandler IsSelectedChanged;
 
