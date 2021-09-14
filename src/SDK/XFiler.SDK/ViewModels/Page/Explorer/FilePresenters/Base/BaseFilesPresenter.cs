@@ -285,7 +285,7 @@ namespace XFiler.SDK
             if (Disposed)
                 return list;
 
-            var comparer = new NaturalSortComparer();
+            var comparer = new WindowsNaturalStringComparer();
 
             var hideSystemFiles = !_settings.ShowSystemFiles;
             var hideHiddenFiles = !_settings.ShowHiddenFiles;
