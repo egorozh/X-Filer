@@ -4,5 +4,9 @@
     <UseWPF>true</UseWPF>
     <Nullable>Enable</Nullable>
     <Platforms>x64</Platforms>
+    <Version>1.0.6</Version>
+    <Company>X-Filer</Company>
+    <Product>X-Filer</Product>
+    <Authors>Egorozh</Authors>
   </PropertyGroup>
 </Project>
