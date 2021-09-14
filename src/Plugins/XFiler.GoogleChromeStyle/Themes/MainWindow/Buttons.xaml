@@ -109,15 +109,6 @@
            x:Key="ExpandButtonStyle">
 
         <Setter Property="ToolTip" Value="Восстановить" />
-        <Setter Property="Content">
-            <Setter.Value>
-                <Canvas Width="24" Height="24">
-                    <Path
-                        Fill="{Binding Foreground, RelativeSource={RelativeSource  AncestorType={x:Type Button}}}"
-                        Data="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" />
-                </Canvas>
-            </Setter.Value>
-        </Setter>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -131,7 +122,11 @@
                         <Viewbox Width="16"
                                  Height="16"
                                  Stretch="Uniform">
-                            <ContentPresenter />
+                            <Canvas Width="24" Height="24">
+                                <Path x:Name="Path"
+                                      Fill="{Binding Foreground, RelativeSource={RelativeSource  AncestorType={x:Type Button}}}"
+                                      Data="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" />
+                            </Canvas>
                         </Viewbox>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -158,16 +153,11 @@
                         </Trigger>
                         <DataTrigger Value="Normal"
                                      Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type windows:XFilerWindowBase}} }">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Canvas Width="24" Height="24">
-                                        <Path
-                                            Fill="{Binding Foreground, RelativeSource={RelativeSource  AncestorType={x:Type Button}}}"
-                                            Data="M4,4H20V20H4V4M6,8V18H18V8H6Z" />
-                                    </Canvas>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Data" TargetName="Path"
+                                    Value="M4,4H20V20H4V4M6,8V18H18V8H6Z"/>
+
                             <Setter Property="ToolTip" Value="Развернуть" />
+
                         </DataTrigger>
 
                     </ControlTemplate.Triggers>
