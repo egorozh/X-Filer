@@ -1,7 +1,4 @@
-﻿using XFiler.Pages.DispatcherPage.Views;
-using XFiler.SDK;
-
-namespace XFiler.DispatcherPage
+﻿namespace XFiler.DispatcherPage
 {
     internal class BookmarksDispatcherPageModel : BasePageModel
     {

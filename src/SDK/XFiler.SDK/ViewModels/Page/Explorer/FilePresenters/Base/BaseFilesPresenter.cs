@@ -278,7 +278,7 @@ namespace XFiler.SDK
             };
         }
 
-        private async Task<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems() => await Task.Run(() =>
+        private async ValueTask<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems() => await Task.Run(() =>
         {
             List<(FileSystemInfo, EntityType)> list = new();
 
