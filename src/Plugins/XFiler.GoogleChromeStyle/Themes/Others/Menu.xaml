@@ -142,7 +142,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Grid.IsSharedSizeScope" Value="true" />
-        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="HasDropShadow" Value="True" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
@@ -155,8 +155,8 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasDropShadow" Value="true">
-                            <Setter TargetName="Border" Property="Padding" Value="0,3,0,3" />
-                            <Setter TargetName="Border" Property="CornerRadius" Value="4" />
+                            <Setter TargetName="Border" Property="Padding" Value="0 8" />
+                            <Setter TargetName="Border" Property="CornerRadius" Value="8" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -555,8 +555,8 @@
                        PopupAnimation="Fade">
                     <Border Name="SubmenuBorder"
                             SnapsToDevicePixels="True"
-                            Background="{StaticResource WindowBackgroundBrush}"
                             BorderBrush="#3C4043"
+                            Background="#292A2D"
                             BorderThickness="1">
                         <ScrollViewer CanContentScroll="True"
                                       Style="{StaticResource MenuScrollViewer}">

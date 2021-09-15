@@ -15,9 +15,10 @@ namespace XFiler.Base
             IExplorerOptions explorerOptions,
             IFileOperations fileOperations,
             ILogger logger,
-            IRenameService renameService) :
+            IRenameService renameService,
+            IMainCommands mainCommands) :
             base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService, 
-                explorerOptions, fileOperations, logger, renameService)
+                explorerOptions, fileOperations, logger, renameService, mainCommands)
         {
         }
     }

@@ -10,6 +10,7 @@
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="Transparent" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="14" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="Center" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         
     </Style>

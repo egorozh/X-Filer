@@ -1,6 +1,5 @@
 ﻿using Autofac;
-using System.Collections.Generic;
-using XFiler.SDK;
+using XFiler.Commands;
 
 namespace XFiler
 {
@@ -11,6 +10,8 @@ namespace XFiler
             services.RegisterType<Storage>().As<IStorage>().SingleInstance();
 
             services.RegisterBookmarksServices();
+
+            services.RegisterType<MainCommands>().As<IMainCommands>().SingleInstance();
 
             services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
             

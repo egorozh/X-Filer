@@ -17,26 +17,23 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <GroupBox Header="{x:Static localization:Strings.MyComputer_FolderHeader}">
+            <GroupBox Grid.Row="0" 
+                      HorizontalAlignment="Center" 
+                      Header="{x:Static localization:Strings.MyComputer_FolderHeader}">
                 <ItemsControl ItemsSource="{Binding Folders}"
                               Style="{DynamicResource FolderItemsControlStyle}" />
             </GroupBox>
 
             <GroupBox Grid.Row="1"
+                      HorizontalAlignment="Center"
                       Header="{x:Static localization:Strings.MyComputer_DrivesHeader}">
                 <ItemsControl ItemsSource="{Binding Drives}"
                               Style="{DynamicResource FolderItemsControlStyle}"
-                              ItemTemplate="{DynamicResource DriveItemTemplate}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                              ItemTemplate="{DynamicResource DriveItemTemplate}" />
             </GroupBox>
 
         </Grid>
     </ScrollViewer>
-    
+
 
 </UserControl>

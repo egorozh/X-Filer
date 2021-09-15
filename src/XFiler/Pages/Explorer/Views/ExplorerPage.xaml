@@ -42,6 +42,12 @@
 
                         <Separator />
 
+                        <MenuItem Header="Открыть в проводнике Windows"
+                                  Command="{Binding OpenInNativeExplorerCommand}"
+                                  CommandParameter="{Binding CurrentPresenter.FilesPresenter}"/>
+
+                        <Separator />
+
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_View}">
                             <b:Interaction.Behaviors>
                                 <local:ComboBoxToMenuBehavior Items="{Binding FilesPresenters}"
@@ -58,6 +64,20 @@
                                   Command="{Binding PasteCommand}"
                                   CommandParameter="{Binding CurrentPresenter.FilesPresenter}"
                                   InputGestureText="Ctrl + V" />
+
+                        <Separator />
+
+                        <MenuItem Header="Создать">
+
+                            <MenuItem Header="Папку"
+                                      Command="{Binding CreateFolderCommand}"
+                                      CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
+                            <Separator />
+
+                            <MenuItem Header="Текстовый документ"
+                                      Command="{Binding CreateTextCommand}"
+                                      CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
+                        </MenuItem>
 
                         <Separator />
 

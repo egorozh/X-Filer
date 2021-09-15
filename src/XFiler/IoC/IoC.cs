@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Autofac;
+﻿using Autofac;
 using Dragablz;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;
@@ -7,7 +6,6 @@ using XFiler.DispatcherPage;
 using XFiler.DragDrop;
 using XFiler.MyComputer;
 using XFiler.NotifyIcon;
-using XFiler.SDK;
 
 namespace XFiler
 {

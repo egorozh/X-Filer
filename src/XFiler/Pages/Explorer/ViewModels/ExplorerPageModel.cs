@@ -1,9 +1,8 @@
 ﻿using Prism.Commands;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using XFiler.SDK;
+using XFiler.Commands;
 
 namespace XFiler
 {
@@ -23,18 +22,26 @@ namespace XFiler
         #endregion
 
         public DelegateCommand<object> PasteCommand { get; private set; }
+        public DelegateCommand<IFileSystemModel> CreateFolderCommand { get; private set; }
+        public DelegateCommand<IFileSystemModel> CreateTextCommand { get; private set; }
+        public DelegateCommand<IFileSystemModel> OpenInNativeExplorerCommand { get; private set; }
 
         #region Constructor
 
         public ExplorerPageModel(
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
             IClipboardService clipboardService,
+            IMainCommands mainCommands,
             DirectoryInfo directory) : base(typeof(ExplorerPage), new XFilerRoute(directory))
         {
             _directory = directory;
 
             FilesPresenters = filesPresenters;
             PasteCommand = clipboardService.PasteCommand;
+
+            CreateFolderCommand = mainCommands.CreateFolderCommand;
+            CreateTextCommand = mainCommands.CreateTextCommand;
+            OpenInNativeExplorerCommand = mainCommands.OpenInNativeExplorerCommand;
 
             PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
 
@@ -64,7 +71,11 @@ namespace XFiler
             _directory = null!;
             FilesPresenters = null!;
             CurrentPresenter = null!;
+
             PasteCommand = null!;
+            CreateFolderCommand = null!;
+            CreateTextCommand = null!;
+            OpenInNativeExplorerCommand = null!;
         }
 
         #endregion
@@ -87,7 +98,7 @@ namespace XFiler
 
             GoTo(route);
         }
-
+        
         private void DirectoryTabItemViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             PropertyChanged -= DirectoryTabItemViewModelOnPropertyChanged;

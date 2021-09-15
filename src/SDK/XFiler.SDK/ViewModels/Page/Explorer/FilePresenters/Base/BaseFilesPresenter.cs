@@ -52,7 +52,8 @@ namespace XFiler.SDK
         #region Commands
 
         public DelegateCommand<IFileSystemModel> OpenCommand { get; }
-        public DelegateCommand<object> OpenNewTabCommand { get; }
+        public DelegateCommand<object> OpenNewTabCommand { get; private set; }
+        public DelegateCommand<IFileSystemModel> OpenInNativeExplorerCommand { get; private set; }
 
         public DelegateCommand<object> PasteCommand { get; private set; }
         public DelegateCommand<object> CutCommand { get; private set; }
@@ -79,7 +80,8 @@ namespace XFiler.SDK
             IExplorerOptions settings,
             IFileOperations fileOperations,
             ILogger logger,
-            IRenameService renameService)
+            IRenameService renameService,
+            IMainCommands mainCommands)
         {
             _fileEntityFactory = fileEntityFactory;
             _settings = settings;
@@ -94,8 +96,8 @@ namespace XFiler.SDK
             DeletePermanentlyCommand = new DelegateCommand<object>(OnPermanentlyDelete);
 
 
-            OpenNewTabCommand = new DelegateCommand<object>(OpenNewTab);
-
+            OpenNewTabCommand = mainCommands.OpenNewTabCommand;
+            OpenInNativeExplorerCommand = mainCommands.OpenInNativeExplorerCommand;
             OpenNewWindowCommand = windowFactory.OpenNewWindowCommand;
 
             PasteCommand = clipboardService.PasteCommand;
@@ -166,7 +168,9 @@ namespace XFiler.SDK
                 DropTarget = null!;
                 DragSource = null!;
 
+                OpenNewTabCommand = null!;
                 OpenNewWindowCommand = null!;
+                OpenInNativeExplorerCommand = null!;
 
                 PasteCommand = null!;
                 CutCommand = null!;
@@ -187,24 +191,7 @@ namespace XFiler.SDK
         {
             DirectoryOrFileOpened?.Invoke(this, new OpenDirectoryEventArgs(fileEntityViewModel));
         }
-
-        private void OpenNewTab(object parameter)
-        {
-            if (parameter is object[] { Length: 2 } parameters &&
-                parameters[0] is ITabsViewModel tabsModel)
-            {
-                switch (parameters[1])
-                {
-                    case IFileSystemModel fileEntityViewModel:
-                        tabsModel.OnOpenNewTab(fileEntityViewModel);
-                        break;
-                    case IEnumerable e:
-                        tabsModel.OnOpenNewTab(e.OfType<IFileSystemModel>());
-                        break;
-                }
-            }
-        }
-
+        
         private void OnDelete(object parameters)
         {
             switch (parameters)

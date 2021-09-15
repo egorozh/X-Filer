@@ -15,5 +15,9 @@ namespace XFiler.SDK
         void CreateLink(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
 
         void Rename(FileSystemInfo modelInfo, string newName);
-    }
+
+        void CreateFolder(string targetFolder, string name = "Новая папка");
+
+        void CreateEmptyTextFile(string targetFolder, string name = "Новый текстовый документ");
+    }   
 }
