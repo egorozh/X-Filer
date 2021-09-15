@@ -73,7 +73,7 @@ namespace XFiler
                 while (Directory.Exists(folderPath))
                     folderPath = Path.Combine(targetFolder, $"{name} ({index++})");
 
-                Directory.CreateDirectory(folderPath);
+                TryAction(() => Directory.CreateDirectory(folderPath));
             });
         }
 
@@ -88,15 +88,20 @@ namespace XFiler
                 while (File.Exists(filePath))
                     filePath = Path.Combine(targetFolder, $"{name} ({index++}).txt");
 
-                try
-                {
-                    File.WriteAllText(filePath, "");
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Ошибка");
-                }
+                TryAction(() => File.WriteAllText(filePath, ""));
             });
+        }
+
+        private static void TryAction(Action action)
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка");
+            }
         }
     }
 }
