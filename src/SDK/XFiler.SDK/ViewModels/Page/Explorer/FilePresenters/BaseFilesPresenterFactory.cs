@@ -20,7 +20,7 @@ namespace XFiler.SDK
             Template = template;
         }
 
-        public void UpdatePresenter(DirectoryInfo directory)
+        public void UpdatePresenter(DirectoryInfo directory, IFilesGroup group)
         {
             if (FilesPresenter != null)
             {
@@ -28,7 +28,7 @@ namespace XFiler.SDK
                 FilesPresenter.Dispose();
             }
 
-            FilesPresenter = CreatePresenter(directory);
+            FilesPresenter = CreatePresenter(directory, group);
 
             FilesPresenter.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
         }
@@ -42,7 +42,7 @@ namespace XFiler.SDK
             }
         }
 
-        public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory);
+        public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group);
 
         private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
         {

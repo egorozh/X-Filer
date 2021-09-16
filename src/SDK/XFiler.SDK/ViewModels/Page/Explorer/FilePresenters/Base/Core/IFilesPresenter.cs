@@ -5,7 +5,7 @@ namespace XFiler.SDK
 {
     public interface IFilesPresenter : IDirectoryModel, IFileSystemModel
     {
-        void Init(DirectoryInfo directoryInfo);
+        void Init(DirectoryInfo directoryInfo, IFilesGroup filesGroup);
 
         event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
     }

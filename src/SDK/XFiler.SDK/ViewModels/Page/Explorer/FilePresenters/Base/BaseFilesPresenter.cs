@@ -35,6 +35,8 @@ namespace XFiler.SDK
 
         public DirectoryInfo DirectoryInfo { get; private set; } = null!;
 
+        public IFilesGroup Group { get; private set; } = null!;
+
         public FileSystemInfo Info { get; private set; } = null!;
 
         public bool IsLoaded { get; set; }
@@ -111,11 +113,12 @@ namespace XFiler.SDK
         #endregion
 
         #region Public Methods
-
-        public async void Init(DirectoryInfo directoryInfo)
+            
+        public async void Init(DirectoryInfo directoryInfo, IFilesGroup group)
         {
             DirectoryInfo = directoryInfo;
             Info = directoryInfo;
+            Group = group;
 
             _watcher = new FileSystemWatcher(directoryInfo.FullName);
 
@@ -164,6 +167,10 @@ namespace XFiler.SDK
                 _settings = null!;
                 _fileOperations = null!;
                 _logger = null!;
+
+                Group = null!;
+                DirectoryInfo = null!;
+                Info = null!;
 
                 DropTarget = null!;
                 DragSource = null!;
@@ -259,13 +266,14 @@ namespace XFiler.SDK
 
             return entityType switch
             {
-                EntityType.Directory => _fileEntityFactory.CreateDirectory((DirectoryInfo)path),
-                EntityType.File => _fileEntityFactory.CreateFile((FileInfo)path),
+                EntityType.Directory => _fileEntityFactory.CreateDirectory((DirectoryInfo)path, Group),
+                EntityType.File => _fileEntityFactory.CreateFile((FileInfo)path, Group),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        private async ValueTask<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems() => await Task.Run(() =>
+        private async ValueTask<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems() 
+            => await Task.Run(() =>
         {
             List<(FileSystemInfo, EntityType)> list = new();
 
@@ -354,13 +362,13 @@ namespace XFiler.SDK
                 case DirectoryInfo directoryInfo:
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateDirectory(directoryInfo));
+                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateDirectory(directoryInfo, Group));
                     });
                     break;
                 case FileInfo fileInfo:
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateFile(fileInfo));
+                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateFile(fileInfo, Group));
                     });
                     break;
             }

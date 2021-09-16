@@ -56,7 +56,12 @@
                         </MenuItem>
 
                         <MenuItem Header="Сортировка" />
-                        <MenuItem Header="Группировка" />
+                        <MenuItem Header="Группировка" >
+                            <b:Interaction.Behaviors>
+                                <local:ComboBoxToMenuBehavior Items="{Binding FilesGroups}"
+                                                              CurrentItem="{Binding CurrentGroup, Mode=TwoWay}" />
+                            </b:Interaction.Behaviors>
+                        </MenuItem>
 
                         <Separator />
 

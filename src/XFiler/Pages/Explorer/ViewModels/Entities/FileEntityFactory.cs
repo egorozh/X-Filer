@@ -1,6 +1,5 @@
-﻿using System.IO;
-using Autofac.Features.Indexed;
-using XFiler.SDK;
+﻿using Autofac.Features.Indexed;
+using System.IO;
 
 namespace XFiler
 {
@@ -13,19 +12,19 @@ namespace XFiler
             _factory = factory;
         }
 
-        public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, string? @group = null)
+        public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, IFilesGroup filesGroup)
         {
             var model = _factory[EntityType.Directory];
-            model.Init(new XFilerRoute(directoryInfo), directoryInfo);
-            model.Group = @group;
+            model.Init(new XFilerRoute(directoryInfo), directoryInfo, filesGroup);
+            
             return model;
         }
 
-        public IFileSystemModel CreateFile(FileInfo fileInfo, string? @group = null)
+        public IFileSystemModel CreateFile(FileInfo fileInfo, IFilesGroup filesGroup)
         {
             var model = _factory[EntityType.File];
-            model.Init(new XFilerRoute(fileInfo), fileInfo);
-            model.Group = @group;
+            model.Init(new XFilerRoute(fileInfo), fileInfo, filesGroup);
+          
             return model;
         }
     }

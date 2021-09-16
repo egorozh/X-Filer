@@ -17,10 +17,10 @@ namespace XFiler.Base
             _presenterFactory = presenterFactory;
         }
 
-        public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory)
+        public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group)
         {
             var presenter = _presenterFactory["grid"];
-            presenter.Init(currentDirectory);
+            presenter.Init(currentDirectory, group);
             return presenter;
         }
 

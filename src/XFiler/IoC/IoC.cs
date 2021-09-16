@@ -24,7 +24,9 @@ namespace XFiler
         {
             services.RegisterExternalServices();
             services.RegisterSdkServices();
-
+            
+            services.RegisterType<FilesGroupOfName>().As<IFilesGroup>();
+            services.RegisterType<FilesGroupOfType>().As<IFilesGroup>();
 
             services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
             services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);

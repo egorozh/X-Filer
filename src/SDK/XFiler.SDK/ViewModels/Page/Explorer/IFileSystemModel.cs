@@ -9,4 +9,11 @@ namespace XFiler.SDK
 
         void InfoChanged(FileSystemInfo? newInfo);
     }
-}   
+
+    public interface IFileItem
+    {
+        string Name { get; }
+
+        string Type { get; }
+    }
+}

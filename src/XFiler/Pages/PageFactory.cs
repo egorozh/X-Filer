@@ -1,7 +1,6 @@
 ﻿using Autofac.Features.Indexed;
 using System.Diagnostics;
 using System.IO;
-using XFiler.Commands;
 using XFiler.Resources.Localization;
 using XFiler.ViewModels;
 
@@ -11,17 +10,20 @@ namespace XFiler
     {
         private readonly IIndex<PageType, IPageModel> _pageModelFactory;
         private readonly Func<IReadOnlyList<IFilesPresenterFactory>> _filesPresenters;
+        private readonly Func<IReadOnlyList<IFilesGroup>> _groups;
         private readonly IClipboardService _clipboardService;
         private readonly IMainCommands _mainCommands;
-            
+
         public PageFactory(
-            IIndex<PageType,IPageModel> pageModelFactory,
+            IIndex<PageType, IPageModel> pageModelFactory,
             Func<IReadOnlyList<IFilesPresenterFactory>> filesPresenters,
+            Func<IReadOnlyList<IFilesGroup>> groups,
             IClipboardService clipboardService,
             IMainCommands mainCommands)
         {
             _pageModelFactory = pageModelFactory;
             _filesPresenters = filesPresenters;
+            _groups = groups;
             _clipboardService = clipboardService;
             _mainCommands = mainCommands;
         }
@@ -75,9 +77,14 @@ namespace XFiler
                 return null;
             }
 
-            return new ExplorerPageModel(_filesPresenters.Invoke(), _clipboardService, _mainCommands, dir);
+            return new ExplorerPageModel(
+                _filesPresenters.Invoke(),
+                _groups.Invoke(),
+                _clipboardService,
+                _mainCommands,
+                dir);
         }
-        
+
         private static void OpenFile(string path) => new Process
         {
             StartInfo = new ProcessStartInfo(path)

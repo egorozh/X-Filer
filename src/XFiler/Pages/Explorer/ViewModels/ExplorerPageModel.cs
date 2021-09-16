@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using XFiler.Commands;
 
 namespace XFiler
 {
@@ -19,6 +18,9 @@ namespace XFiler
         public IReadOnlyList<IFilesPresenterFactory> FilesPresenters { get; private set; }
         public IFilesPresenterFactory CurrentPresenter { get; set; }
 
+        public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; }
+        public IFilesGroup CurrentGroup { get; set; }
+
         #endregion
 
         public DelegateCommand<object> PasteCommand { get; private set; }
@@ -30,6 +32,7 @@ namespace XFiler
 
         public ExplorerPageModel(
             IReadOnlyList<IFilesPresenterFactory> filesPresenters,
+            IReadOnlyList<IFilesGroup> groups,
             IClipboardService clipboardService,
             IMainCommands mainCommands,
             DirectoryInfo directory) : base(typeof(ExplorerPage), new XFilerRoute(directory))
@@ -37,14 +40,17 @@ namespace XFiler
             _directory = directory;
 
             FilesPresenters = filesPresenters;
+            FilesGroups = groups;
             PasteCommand = clipboardService.PasteCommand;
 
             CreateFolderCommand = mainCommands.CreateFolderCommand;
             CreateTextCommand = mainCommands.CreateTextCommand;
             OpenInNativeExplorerCommand = mainCommands.OpenInNativeExplorerCommand;
 
-            PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
+            CurrentGroup = FilesGroups.First();
 
+            PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
+            
             foreach (var factory in filesPresenters)
                 factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
 
@@ -71,6 +77,8 @@ namespace XFiler
             _directory = null!;
             FilesPresenters = null!;
             CurrentPresenter = null!;
+            FilesGroups = null!;
+            CurrentGroup = null!;
 
             PasteCommand = null!;
             CreateFolderCommand = null!;
@@ -84,7 +92,7 @@ namespace XFiler
 
         private void OpenDirectory()
         {
-            CurrentPresenter.UpdatePresenter(_directory);
+            CurrentPresenter.UpdatePresenter(_directory, CurrentGroup);
         }
 
         private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
@@ -98,7 +106,7 @@ namespace XFiler
 
             GoTo(route);
         }
-        
+
         private void DirectoryTabItemViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             PropertyChanged -= DirectoryTabItemViewModelOnPropertyChanged;
@@ -106,9 +114,8 @@ namespace XFiler
             switch (e.PropertyName)
             {
                 case nameof(CurrentPresenter):
-
+                case nameof(CurrentGroup):
                     OpenDirectory();
-
                     break;
             }
 

@@ -1,14 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
 using XFiler.Controls.EditBox;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemModel, IEditBoxModel
+    public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemModel, IEditBoxModel, IFileItem
     {
         #region Private Fields
 
@@ -18,6 +15,8 @@ namespace XFiler
         #endregion
 
         #region Public Properties
+
+        public string Type { get; protected set; } = null!;
 
         public FileSystemInfo Info { get; private set; } = null!;
 
@@ -41,6 +40,8 @@ namespace XFiler
 
         public bool IsCopyProcess { get; private set; }
 
+        public IFilesGroup FilesGroup { get; private set; }
+
         #endregion
 
         public event EventHandler? RequestEdit;
@@ -59,11 +60,12 @@ namespace XFiler
 
         #endregion
 
-        public virtual void Init(XFilerRoute route, FileSystemInfo info)
+        public virtual void Init(XFilerRoute route, FileSystemInfo info, IFilesGroup filesGroup)
         {
             Name = route.Header;
             FullName = route.FullName;
-
+            FilesGroup = filesGroup;
+           
             Route = route;
             Info = info;
 
@@ -72,18 +74,23 @@ namespace XFiler
             IsCutted = _clipboardService.IsCutted(info);
             IsSystem = info.Attributes.HasFlag(FileAttributes.System);
             IsHidden = info.Attributes.HasFlag(FileAttributes.Hidden);
+
+            Type = GetTypeEx(route, info);
+
+            Group = filesGroup.GetGroup(this);
             //IsCopyProcess = info.Attributes.HasFlag(FileAttributes.Archive) && info is FileInfo;
         }
+
 
         public void InfoChanged(FileSystemInfo? info)
         {
             switch (info)
             {
                 case DirectoryInfo directoryInfo:
-                    Init(new XFilerRoute(directoryInfo), info);
+                    Init(new XFilerRoute(directoryInfo), info, FilesGroup);
                     break;
                 case FileInfo fileInfo:
-                    Init(new XFilerRoute(fileInfo), info);
+                    Init(new XFilerRoute(fileInfo), info, FilesGroup);
                     break;
             }
         }
@@ -97,6 +104,7 @@ namespace XFiler
                 _clipboardService.ClipboardChanged -= ClipboardServiceOnClipboardChanged;
 
                 _clipboardService = null!;
+                FilesGroup = null!;
             }
 
             base.Dispose(disposing);
@@ -114,6 +122,16 @@ namespace XFiler
             }
 
             IsCutted = false;
+        }
+
+        private string GetTypeEx(XFilerRoute route, FileSystemInfo info)
+        {
+            return info switch
+            {
+                DirectoryInfo directoryInfo => "Папки",
+                FileInfo fileInfo => fileInfo.Extension,
+                _ => throw new ArgumentOutOfRangeException(nameof(info))
+            };
         }
     }
 }

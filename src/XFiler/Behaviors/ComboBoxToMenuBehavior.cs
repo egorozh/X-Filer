@@ -1,9 +1,6 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Linq;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
-using XFiler.SDK;
 
 namespace XFiler
 {
@@ -11,44 +8,44 @@ namespace XFiler
     {
         #region Private Fields
 
-        private Dictionary<IFilesPresenterFactory, MenuItem> _dictionary = new();
+        private Dictionary<ICheckedItem, MenuItem> _dictionary = new();
 
         #endregion
 
         #region Dependency Properties
 
         public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register(
-            "Items", typeof(IReadOnlyList<IFilesPresenterFactory>), typeof(ComboBoxToMenuBehavior),
-            new PropertyMetadata(default(IReadOnlyList<IFilesPresenterFactory>),
+            "Items", typeof(IReadOnlyList<ICheckedItem>), typeof(ComboBoxToMenuBehavior),
+            new PropertyMetadata(default(IReadOnlyList<ICheckedItem>),
                 ItemsChangedCallback));
 
         private static void ItemsChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((ComboBoxToMenuBehavior)d).ItemsChanged((IReadOnlyList<IFilesPresenterFactory>)e.NewValue);
+            ((ComboBoxToMenuBehavior)d).ItemsChanged((IReadOnlyList<ICheckedItem>)e.NewValue);
         }
 
         public static readonly DependencyProperty CurrentItemProperty = DependencyProperty.Register(
-            "CurrentItem", typeof(IFilesPresenterFactory), typeof(ComboBoxToMenuBehavior),
-            new PropertyMetadata(default(IFilesPresenterFactory), CurrentItemChangedCallback));
+            "CurrentItem", typeof(ICheckedItem), typeof(ComboBoxToMenuBehavior),
+            new PropertyMetadata(default(ICheckedItem), CurrentItemChangedCallback));
 
         private static void CurrentItemChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((ComboBoxToMenuBehavior)d).CurrentItemChanged((IFilesPresenterFactory)e.NewValue);
+            ((ComboBoxToMenuBehavior)d).CurrentItemChanged((ICheckedItem)e.NewValue);
         }
 
         #endregion
 
         #region Public Properties
 
-        public IReadOnlyList<IFilesPresenterFactory> Items
+        public IReadOnlyList<ICheckedItem> Items
         {
-            get => (IReadOnlyList<IFilesPresenterFactory>)GetValue(ItemsProperty);
+            get => (IReadOnlyList<ICheckedItem>)GetValue(ItemsProperty);
             set => SetValue(ItemsProperty, value);
         }
 
-        public IFilesPresenterFactory CurrentItem
+        public ICheckedItem CurrentItem
         {
-            get => (IFilesPresenterFactory)GetValue(CurrentItemProperty);
+            get => (ICheckedItem)GetValue(CurrentItemProperty);
             set => SetValue(CurrentItemProperty, value);
         }
 
@@ -69,7 +66,7 @@ namespace XFiler
 
         #region Private Methods
 
-        private void ItemsChanged(IReadOnlyList<IFilesPresenterFactory>? items)
+        private void ItemsChanged(IReadOnlyList<ICheckedItem>? items)
         {
             if (items == null)
                 return;
@@ -91,7 +88,7 @@ namespace XFiler
             }
         }
 
-        private void CurrentItemChanged(IFilesPresenterFactory? current)
+        private void CurrentItemChanged(ICheckedItem? current)
         {
             if (current == null)
                 return;

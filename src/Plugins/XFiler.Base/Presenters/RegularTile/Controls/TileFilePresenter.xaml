@@ -80,7 +80,7 @@
 
                                 VirtualizingPanel.IsVirtualizing="True"
                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                VirtualizingPanel.VirtualizationMode="Recycling"
+                                VirtualizingPanel.VirtualizationMode="Standard"
 
                                 SelectionMode="Extended">
         <ListBox.Resources>
