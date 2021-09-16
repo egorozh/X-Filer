@@ -119,7 +119,7 @@
 
     <!-- SimpleStyles: Menu -->
 
-    <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">
+    <Style TargetType="{x:Type Menu}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Foreground" Value="White" />
@@ -129,7 +129,9 @@
                     <Border Background="Transparent"
                             BorderBrush="Transparent"
                             BorderThickness="0">
-                        <StackPanel ClipToBounds="True" Orientation="Horizontal" IsItemsHost="True" />
+                        <StackPanel ClipToBounds="True"
+                                    Orientation="Horizontal" 
+                                    IsItemsHost="True" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

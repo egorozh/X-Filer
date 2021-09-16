@@ -14,6 +14,7 @@
         <ResourceDictionary Source="MainWindow/Windows.xaml" />
 
         <ResourceDictionary Source="Controls/SearchControl.xaml" />
+        <ResourceDictionary Source="Controls/MenuEx.xaml" />
         <ResourceDictionary Source="Controls/RectSelectListBox.xaml" />
         <ResourceDictionary Source="Controls/RectSelectDataGrid.xaml" />
         <ResourceDictionary Source="Controls/ToolBarControl.xaml" />
