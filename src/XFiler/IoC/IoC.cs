@@ -25,6 +25,7 @@ namespace XFiler
             services.RegisterExternalServices();
             services.RegisterSdkServices();
             
+            services.RegisterType<FilesGroupOfNone>().As<IFilesGroup>();
             services.RegisterType<FilesGroupOfName>().As<IFilesGroup>();
             services.RegisterType<FilesGroupOfType>().As<IFilesGroup>();
 
