@@ -38,7 +38,9 @@ namespace XFiler.Controls
         public static readonly DependencyProperty SearchResultTemplateProperty = DependencyProperty.Register(
             "SearchResultTemplate", typeof(DataTemplate), typeof(SearchControl),
             new PropertyMetadata(default(DataTemplate)));
-        
+
+        private ListBox _resultsListBox;
+
         #endregion
 
         #region Public Properties
@@ -108,13 +110,23 @@ namespace XFiler.Controls
 
         #endregion
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _resultsListBox = GetTemplateChild("Part_ResultsListBox") as ListBox ??
+                              throw new NotImplementedException("Part_ResultsListBox not founded in style");
+
+            _resultsListBox.PreviewMouseLeftButtonDown += ResultsListBoxOnMouseLeftButtonDown;
+        }
+
         #region Protected Methods
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             base.OnTextChanged(e);
 
-            if (IsKeyboardFocused) 
+            if (IsKeyboardFocused)
                 IsSelectResults = true;
 
             if (IsSelectResults)
@@ -122,29 +134,6 @@ namespace XFiler.Controls
                 SearchResults = GetResultsHandler?.Invoke(Text);
                 CurrentResult = SearchResults?.FirstOrDefault();
             }
-        }
-
-        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            // Fixes issue when clicking cut/copy/paste in context menu
-            if (SelectionLength == 0)
-                SelectAll();
-        }
-        
-        private void TextBox_LostMouseCapture(object sender, MouseEventArgs e)
-        {
-            // If user highlights some text, don't override it
-            if (SelectionLength == 0)
-                SelectAll();
-
-            // further clicks will not select all
-            LostMouseCapture -= TextBox_LostMouseCapture;
-        }
-
-        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            // once we've left the TextBox, return the select all behavior
-            LostMouseCapture += TextBox_LostMouseCapture;
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -185,5 +174,39 @@ namespace XFiler.Controls
         }
 
         #endregion
+
+        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // Fixes issue when clicking cut/copy/paste in context menu
+            if (SelectionLength == 0)
+                SelectAll();
+        }
+
+        private void ResultsListBoxOnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ItemsControl.ContainerFromElement(_resultsListBox,
+                (DependencyObject)e.OriginalSource) is ListBoxItem item)
+            {
+                GoToCommand?.Execute(item.DataContext);
+                IsSelectResults = false;
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            // If user highlights some text, don't override it
+            if (SelectionLength == 0)
+                SelectAll();
+
+            // further clicks will not select all
+            LostMouseCapture -= TextBox_LostMouseCapture;
+        }
+
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // once we've left the TextBox, return the select all behavior
+            LostMouseCapture += TextBox_LostMouseCapture;
+        }
     }
 }

@@ -34,6 +34,8 @@ namespace XFiler
         {
             var imageProviders = new List<IImageProvider>
             {
+                new NativeImageProvider(),
+                //new ImageProviderForImages(),
                 // Always Last
                 new BaseImageProvider()
             };

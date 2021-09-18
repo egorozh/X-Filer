@@ -115,6 +115,7 @@
                                         </Grid>
 
                                         <ListBox Grid.Row="1"
+                                                 x:Name="Part_ResultsListBox"
                                                  SelectedItem="{TemplateBinding CurrentResult}"
                                                  ItemsSource="{TemplateBinding SearchResults}"
                                                  ItemTemplate="{TemplateBinding SearchResultTemplate}" />

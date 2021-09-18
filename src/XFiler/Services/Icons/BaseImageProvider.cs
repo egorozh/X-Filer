@@ -1,13 +1,11 @@
 ﻿using System.IO;
-using System.Windows;
 using System.Windows.Media;
-using XFiler.SDK;
 
 namespace XFiler
 {
     public class BaseImageProvider : IImageProvider
     {
-        public ImageSource? GetIcon(XFilerRoute? route, double size)
+        public ImageSource? GetIcon(XFilerRoute? route, int size)
         {
             var key = GetResourceKey(route);
 

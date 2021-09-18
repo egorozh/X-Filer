@@ -166,6 +166,10 @@ namespace XFiler
             {
                 Open(routeModel.Route);
             }
+            else if (result is SearchModel searchModel)
+            {
+                Open(searchModel.Route);
+            }
         }
 
         #endregion
@@ -209,7 +213,7 @@ namespace XFiler
             }
         }
 
-        private IReadOnlyList<object> GetResultsFilter(string arg) 
+        private IReadOnlyList<object> GetResultsFilter(string arg)
             => _searchHandler.GetResultsFilter(arg, Route);
 
         #endregion

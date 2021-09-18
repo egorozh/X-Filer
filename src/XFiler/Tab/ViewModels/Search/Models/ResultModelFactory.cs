@@ -10,13 +10,16 @@ namespace XFiler
 
         public SearchModel CreateSearchInDirectoryModel(string query,XFilerRoute currentRoute) 
             => new(string.Format(Strings.SearchHandler_SearchDirectoryText, query,
-                currentRoute.Header));
+                currentRoute.Header),
+                query,currentRoute.FullName);
 
         public SearchModel CreateSearchInDriveModel(string query, XFilerRoute currentRoute)
             => new(string.Format(Strings.SearchHandler_SearchDriveText, query,
-                currentRoute.Header));
+                currentRoute.Header),
+                query, currentRoute.FullName);
 
         public SearchModel CreateSearchInAllDrivesModel(string query) 
-            => new(string.Format(Strings.SearchHandler_SearchAllDrivesText, query));
+            => new(string.Format(Strings.SearchHandler_SearchAllDrivesText, query),
+                query);
     }
 }

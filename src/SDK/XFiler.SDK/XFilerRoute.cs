@@ -15,6 +15,10 @@ namespace XFiler.SDK
 
         public RouteType Type { get; }
 
+        public string? Query { get; }
+
+        public string? TargetSearchDirectory { get; }
+
         #endregion
 
         #region Constructors
@@ -48,6 +52,17 @@ namespace XFiler.SDK
             Type = FullName == "C:\\"
                 ? RouteType.SystemDrive
                 : RouteType.Drive;
+        }
+
+        public XFilerRoute(string query, string? targetSearchDirectory)
+        {
+            Query = query;
+            TargetSearchDirectory = targetSearchDirectory;
+
+            Header = "Поиск";
+            FullName = query;
+
+            Type = RouteType.Search;
         }
 
         #endregion

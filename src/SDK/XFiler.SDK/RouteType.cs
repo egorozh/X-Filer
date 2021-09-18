@@ -30,6 +30,8 @@ namespace XFiler.SDK
 
         RecycleBin,
 
-        BookmarksDispatcher
+        BookmarksDispatcher,
+
+        Search
     }
 }

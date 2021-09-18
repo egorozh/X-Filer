@@ -1,5 +1,4 @@
-﻿using XFiler.SDK;
-using XFiler.Views;
+﻿using XFiler.Views;
 
 namespace XFiler.ViewModels
 {

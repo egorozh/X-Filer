@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.Xaml.Behaviors;
+﻿using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
 
 namespace XFiler
