@@ -49,7 +49,7 @@ namespace XFiler
 
             return string.IsNullOrWhiteSpace(extension)
                 ? IconName.Blank
-                : extension.Substring(1).ToLower();
+                : extension[1..].ToLower();
         }
 
         private static class IconName

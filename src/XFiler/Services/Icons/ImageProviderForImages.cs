@@ -3,11 +3,16 @@ using SixLabors.ImageSharp.Processing;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using SixLabors.ImageSharp.Formats;
+using ResizeMode = SixLabors.ImageSharp.Processing.ResizeMode;
 
 namespace XFiler;
 
 public class ImageProviderForImages : IImageProvider
 {
+    private SixLabors.ImageSharp.Formats.Png.PngFormat _pngFormat
+        = SixLabors.ImageSharp.Formats.Png.PngFormat.Instance;
+
     public ImageSource? GetIcon(XFilerRoute? route, int size)
     {
         if (route == null)
@@ -25,28 +30,29 @@ public class ImageProviderForImages : IImageProvider
                 case ".png":
                 case ".bmp":
 
-                    using (Image image = Image.Load(fileInfo.FullName, out var format))
+                    using (Image image = Image.Load(fileInfo.FullName))
                     {
-                        image.Mutate(x => x.Resize(size, size));
+                        var (width, height) = GetNewStretchSize(image.Width, image.Height, size);
+                        
+                        image.Mutate(x => x.Resize(width, height));
 
-                        using (var ms = new MemoryStream())
-                        {
-                            image.Save(ms, format);
-                          
-                            ms.Seek(0, SeekOrigin.Begin);
+                        using var ms = new MemoryStream();
 
-                            var bitmapImage = new BitmapImage();
-                            bitmapImage.BeginInit();
-                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmapImage.StreamSource = ms;
-                            bitmapImage.EndInit();
+                        image.Save(ms, _pngFormat);
 
-                            return bitmapImage;
-                        }
+                        return XFiler.Helpers.ImageExtensions.FromStream(ms);
                     }
+
+                case ".ico":
+
+                    return new BitmapImage(new Uri(route.FullName));
             }
         }
 
         return null;
     }
+
+    private static (int width, int height) GetNewStretchSize(int width, int height, int targetSize) => width > height
+        ? (targetSize, height * targetSize / width)
+        : (width * targetSize / height, targetSize);
 }

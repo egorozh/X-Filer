@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Media;
-using XFiler.SDK;
+﻿using System.Windows.Media;
 
 namespace XFiler
 {

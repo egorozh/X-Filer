@@ -345,7 +345,7 @@
 
                                 <Image Stretch="Uniform"
                                        Source="{Binding Icon}" />
-
+                               
                             </Border>
 
                             <editBox:EditBox Grid.Row="1"
