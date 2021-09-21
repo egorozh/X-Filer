@@ -14,7 +14,7 @@ namespace XFiler
             services.RegisterType<MainCommands>().As<IMainCommands>().SingleInstance();
 
             services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
-            
+
             services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
 
             services.RegisterIconServices();
@@ -32,17 +32,21 @@ namespace XFiler
 
         private static void RegisterIconServices(this ContainerBuilder services)
         {
-            var imageProviders = new List<IImageProvider>
+            // Image icon pipeline
+            var imageProviders = new List<IIconProvider>
             {
-                new NativeImageProvider(),
-                new ImageProviderForImages(),
+                // Other icon providers insert begin pipeline
 
-
-                // Always Last
-                new BaseImageProvider()
+                new NativeExeIconProvider(),
+                new IconProviderForIcons(),
+                new BaseIconProvider(),
+                new NativeFileIconProvider(),
+                new BlankIconProvider()
             };
+
+            services.RegisterInstance(imageProviders).As<IEnumerable<IIconProvider>>().SingleInstance();
+
             services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
-            services.RegisterInstance(imageProviders).As<IEnumerable<IImageProvider>>().SingleInstance();
         }
     }
 }

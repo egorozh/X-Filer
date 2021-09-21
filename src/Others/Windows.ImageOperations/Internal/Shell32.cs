@@ -1,8 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
-namespace XFiler
+namespace Windows.ImageOperations.Internal
 {
-    public static class Shell32
+    internal static class Shell32
     {
         public const int SHIL_LARGE = 0x0;
         public const int SHIL_SMALL = 0x1;

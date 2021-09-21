@@ -2,7 +2,7 @@
 
 namespace XFiler.SDK
 {
-    public interface IImageProvider
+    public interface IIconProvider
     {
         ImageSource? GetIcon(XFilerRoute? route, int size);
     }

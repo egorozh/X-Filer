@@ -1,18 +1,19 @@
 ﻿using System.IO;
 using System.Windows.Media;
+using Windows.ImageOperations;
 
 namespace XFiler
 {
-    public class NativeImageProvider : IImageProvider
+    internal class NativeExeIconProvider : IIconProvider
     {
         public ImageSource? GetIcon(XFilerRoute? route, int size)
-        {
-            if (route is { Type: RouteType.File})
+        {   
+            if (route is { Type: RouteType.File })
             {
                 var info = new FileInfo(route.FullName);
 
                 if (info.Extension.ToLower() == ".exe")
-                    return NativeIconResolver.GetIcon(route.FullName);
+                    return ImageSystem.GetIcon(route.FullName);
             }
 
             return null;

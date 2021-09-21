@@ -3,20 +3,13 @@ using System.Windows.Media;
 
 namespace XFiler
 {
-    public class BaseImageProvider : IImageProvider
+    internal class BaseIconProvider : IIconProvider
     {
         public ImageSource? GetIcon(XFilerRoute? route, int size)
         {
             var key = GetResourceKey(route);
-
-            ImageSource? source;
-
-            if (Application.Current.TryFindResource(key) is ImageSource s)
-                source = s;
-            else
-                source = Application.Current.TryFindResource(IconName.Blank) as ImageSource;
-
-            return source;
+            
+            return Application.Current.TryFindResource(key) as ImageSource;
         }
 
         private static string GetResourceKey(XFilerRoute? route)
@@ -51,25 +44,25 @@ namespace XFiler
                 ? IconName.Blank
                 : extension[1..].ToLower();
         }
+    }
 
-        private static class IconName
-        {
-            public const string Blank = "_blank";
-            public const string Folder = "_folder";
-            public const string BookmarkFolder = "_bookmark_folder";
-            public const string LogicalDrive = "_logicalDrive";
-            public const string SystemDrive = "_systemDrive";
+    internal static class IconName
+    {
+        public const string Blank = "_blank";
+        public const string Folder = "_folder";
+        public const string BookmarkFolder = "_bookmark_folder";
+        public const string LogicalDrive = "_logicalDrive";
+        public const string SystemDrive = "_systemDrive";
 
 
-            public const string Desktop = "_desktop";
-            public const string Downloads = "_downloads";
-            public const string MyComputer = "_myComputer";
-            public const string MyDocuments = "_myDocuments";
-            public const string MyMusic = "_myMusic";
-            public const string MyPictures = "_myPictures";
-            public const string MyVideos = "_myVideos";
-            public const string Settings = "_settings";
-            public const string RecycleBin = "_recycleBin";
-        }
+        public const string Desktop = "_desktop";
+        public const string Downloads = "_downloads";
+        public const string MyComputer = "_myComputer";
+        public const string MyDocuments = "_myDocuments";
+        public const string MyMusic = "_myMusic";
+        public const string MyPictures = "_myPictures";
+        public const string MyVideos = "_myVideos";
+        public const string Settings = "_settings";
+        public const string RecycleBin = "_recycleBin";
     }
 }

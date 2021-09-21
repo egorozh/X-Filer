@@ -4,9 +4,9 @@ namespace XFiler
 {
     internal class IconLoader : IIconLoader
     {
-        private readonly IEnumerable<IImageProvider> _imageProviders;
+        private readonly IEnumerable<IIconProvider> _imageProviders;
 
-        public IconLoader(IEnumerable<IImageProvider> imageProviders)
+        public IconLoader(IEnumerable<IIconProvider> imageProviders)
         {
             _imageProviders = imageProviders;
         }
