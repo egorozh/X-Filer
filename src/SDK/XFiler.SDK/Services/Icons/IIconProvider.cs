@@ -4,6 +4,6 @@ namespace XFiler.SDK
 {
     public interface IIconProvider
     {
-        ImageSource? GetIcon(XFilerRoute? route, int size);
+        ImageSource? GetIcon(XFilerRoute? route, IconSize size);
     }
 }

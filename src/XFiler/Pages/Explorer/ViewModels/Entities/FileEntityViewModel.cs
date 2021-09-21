@@ -42,6 +42,8 @@ namespace XFiler
 
         public IFilesGroup FilesGroup { get; private set; }
 
+        public IconSize IconSize { get; private set; }
+
         #endregion
 
         public event EventHandler? RequestEdit;
@@ -60,16 +62,17 @@ namespace XFiler
 
         #endregion
 
-        public virtual void Init(XFilerRoute route, FileSystemInfo info, IFilesGroup filesGroup)
+        public virtual void Init(XFilerRoute route, FileSystemInfo info, IFilesGroup filesGroup,
+            IconSize iconSize)
         {
             Name = route.Header;
             FullName = route.FullName;
             FilesGroup = filesGroup;
-           
+            IconSize = iconSize;
             Route = route;
             Info = info;
 
-            Icon = _iconLoader.GetIcon(route, 64);
+            Icon = _iconLoader.GetIcon(route, iconSize);
 
             IsCutted = _clipboardService.IsCutted(info);
             IsSystem = info.Attributes.HasFlag(FileAttributes.System);
@@ -87,10 +90,10 @@ namespace XFiler
             switch (info)
             {
                 case DirectoryInfo directoryInfo:
-                    Init(new XFilerRoute(directoryInfo), info, FilesGroup);
+                    Init(new XFilerRoute(directoryInfo), info, FilesGroup, IconSize);
                     break;
                 case FileInfo fileInfo:
-                    Init(new XFilerRoute(fileInfo), info, FilesGroup);
+                    Init(new XFilerRoute(fileInfo), info, FilesGroup, IconSize);
                     break;
             }
         }

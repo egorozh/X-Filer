@@ -22,7 +22,7 @@ internal class IconProviderForIcons : IIconProvider
             .ToList();
     }
 
-    public ImageSource? GetIcon(XFilerRoute? route, int size)
+    public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
     {
         if (route == null)
             return null;
@@ -34,7 +34,7 @@ internal class IconProviderForIcons : IIconProvider
             var ext = fileInfo.Extension.ToLower();
 
             if (_supportedSixLaborsformats.Contains(ext[1..]))
-                return GetResizeImage(fileInfo.FullName, size);
+                return GetResizeImage(fileInfo.FullName, (int)size);
 
             if (ext == ".ico")
                 return new BitmapImage(new Uri(route.FullName));

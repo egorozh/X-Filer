@@ -12,26 +12,20 @@ namespace XFiler
             _factory = factory;
         }
 
-        public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, IFilesGroup filesGroup)
+        public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, IFilesGroup filesGroup, IconSize iconSize)
         {
             var model = _factory[EntityType.Directory];
-            model.Init(new XFilerRoute(directoryInfo), directoryInfo, filesGroup);
+            model.Init(new XFilerRoute(directoryInfo), directoryInfo, filesGroup, iconSize);
             
             return model;
         }
 
-        public IFileSystemModel CreateFile(FileInfo fileInfo, IFilesGroup filesGroup)
+        public IFileSystemModel CreateFile(FileInfo fileInfo, IFilesGroup filesGroup, IconSize iconSize)
         {
             var model = _factory[EntityType.File];
-            model.Init(new XFilerRoute(fileInfo), fileInfo, filesGroup);
+            model.Init(new XFilerRoute(fileInfo), fileInfo, filesGroup,iconSize);
           
             return model;
         }
-    }
-
-    public enum EntityType
-    {
-        File,
-        Directory
     }
 }

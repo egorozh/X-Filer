@@ -11,7 +11,7 @@ namespace XFiler
             _imageProviders = imageProviders;
         }
 
-        public ImageSource? GetIcon(XFilerRoute? route, int size)
+        public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
         {
             ImageSource? source = null;
 

@@ -14,7 +14,7 @@ namespace XFiler.SDK
             {
                 return new Image
                 {
-                    Source = iconLoader.GetIcon(menuItemView.Route, 64),
+                    Source = iconLoader.GetIcon(menuItemView.Route, IconSize.Small),
                     Stretch = Stretch.Uniform
                 };
             }

@@ -43,6 +43,8 @@ namespace XFiler.SDK
 
         public int Progress { get; set; }
 
+        public virtual IconSize IconSize { get; } = IconSize.Large;
+
         #endregion
 
         #region Events
@@ -266,8 +268,8 @@ namespace XFiler.SDK
 
             return entityType switch
             {
-                EntityType.Directory => _fileEntityFactory.CreateDirectory((DirectoryInfo)path, Group),
-                EntityType.File => _fileEntityFactory.CreateFile((FileInfo)path, Group),
+                EntityType.Directory => _fileEntityFactory.CreateDirectory((DirectoryInfo)path, Group, IconSize),
+                EntityType.File => _fileEntityFactory.CreateFile((FileInfo)path, Group, IconSize),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -362,13 +364,13 @@ namespace XFiler.SDK
                 case DirectoryInfo directoryInfo:
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateDirectory(directoryInfo, Group));
+                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateDirectory(directoryInfo, Group, IconSize));
                     });
                     break;
                 case FileInfo fileInfo:
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateFile(fileInfo, Group));
+                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateFile(fileInfo, Group, IconSize));
                     });
                     break;
             }

@@ -5,12 +5,8 @@ namespace XFiler
 {
     internal class NativeFileIconProvider : IIconProvider
     {
-        public ImageSource? GetIcon(XFilerRoute? route, int size)
-        {
-            if (route is { Type: RouteType.File })
-                return ImageSystem.GetIcon(route.FullName);
-
-            return null;
-        }
+        public ImageSource? GetIcon(XFilerRoute? route, IconSize size) => route is { Type: RouteType.File }
+            ? ImageSystem.GetIcon(route.FullName, size == IconSize.Small)
+            : null;
     }
 }

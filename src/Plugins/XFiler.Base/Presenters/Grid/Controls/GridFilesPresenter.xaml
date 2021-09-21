@@ -463,6 +463,9 @@
             <DataGridTextColumn Header="Дата изменения"
                                 IsReadOnly="True"
                                 Binding="{Binding ChangeDateTime, StringFormat=g}" />
+            <DataGridTextColumn Header="Тип"
+                                IsReadOnly="True"
+                                Binding="{Binding Type}" />
             <DataGridTextColumn Header="Размер"
                                 IsReadOnly="True"
                                 Binding="{Binding Size, StringFormat={}{0:0} КБ}" />

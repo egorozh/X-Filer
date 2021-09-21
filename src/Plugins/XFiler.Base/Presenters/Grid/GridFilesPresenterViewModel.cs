@@ -6,6 +6,8 @@ namespace XFiler.Base
 {
     public class GridFilesPresenterViewModel : BaseFilesPresenter
     {
+        public override IconSize IconSize => IconSize.Small;
+
         public GridFilesPresenterViewModel(
             IFileEntityFactory fileEntityFactory,
             IDropTarget dropTarget,

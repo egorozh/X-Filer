@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Prism.Commands;
 using System.Windows.Media;
-using Prism.Commands;
-using XFiler.SDK;
 
 namespace XFiler.MyComputer
 {
@@ -20,7 +18,7 @@ namespace XFiler.MyComputer
             Route = route;
             OpenCommand = openCommand;
             Name = route.Header;
-            Icon = iconLoader.GetIcon(route, 36);
+            Icon = iconLoader.GetIcon(route, IconSize.Large);
         }
 
         public virtual void Dispose()
