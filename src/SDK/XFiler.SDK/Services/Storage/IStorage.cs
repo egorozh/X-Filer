@@ -6,6 +6,8 @@
 
         string LogDirectory { get; }
 
+        string DbDirectory { get; }
+            
         string Bookmarks { get; }
     }
 }

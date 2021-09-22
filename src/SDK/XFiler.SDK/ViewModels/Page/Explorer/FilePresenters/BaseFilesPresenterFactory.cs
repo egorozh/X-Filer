@@ -15,13 +15,20 @@ namespace XFiler.SDK
 
         public DataTemplate Template { get; }
 
+        public string Id { get; }
+
         public event EventHandler<OpenDirectoryEventArgs>? DirectoryOrFileOpened;
 
-        protected BaseFilesPresenterFactory(string name, DataTemplate template, ImageSource iconSource)
+        protected BaseFilesPresenterFactory(
+            string name,
+            DataTemplate template, 
+            ImageSource iconSource, 
+            string id)
         {
             Name = name;
             Template = template;
             IconSource = iconSource;
+            Id = id;
         }
 
         public void UpdatePresenter(DirectoryInfo directory, IFilesGroup group)

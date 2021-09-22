@@ -22,12 +22,12 @@ namespace XFiler.SDK
             Route = route;
             Template = CreateTemplate(pageType);
         }
-
+        
         protected void GoTo(XFilerRoute route, bool isOpenInNewTab = false)
         {
             GoToUrl?.Invoke(this, new HyperlinkEventArgs(route, isOpenInNewTab));
         }
-
+        
         public virtual void Dispose()
         {
         }

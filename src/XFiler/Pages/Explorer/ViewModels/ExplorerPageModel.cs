@@ -9,6 +9,7 @@ namespace XFiler
     {
         #region Private Fields
 
+        private IDirectorySettings _directorySettings;
         private DirectoryInfo _directory;
 
         #endregion
@@ -35,8 +36,10 @@ namespace XFiler
             IReadOnlyList<IFilesGroup> groups,
             IClipboardService clipboardService,
             IMainCommands mainCommands,
+            IDirectorySettings directorySettings,
             DirectoryInfo directory) : base(typeof(ExplorerPage), new DirectoryRoute(directory))
         {
+            _directorySettings = directorySettings;
             _directory = directory;
 
             FilesPresenters = filesPresenters;
@@ -47,14 +50,18 @@ namespace XFiler
             CreateTextCommand = mainCommands.CreateTextCommand;
             OpenInNativeExplorerCommand = mainCommands.OpenInNativeExplorerCommand;
 
-            CurrentGroup = FilesGroups.First();
+            var dirSettings = directorySettings.GetSettings(directory.FullName);
+
+            CurrentGroup = FilesGroups.FirstOrDefault(g => g.Id == dirSettings.GroupId) ??
+                           FilesGroups.First();
 
             PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
             
             foreach (var factory in filesPresenters)
                 factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
 
-            CurrentPresenter = FilesPresenters.First();
+            CurrentPresenter = FilesPresenters.FirstOrDefault(p => p.Id == dirSettings.PresenterId) ??
+                               FilesPresenters.First();
         }
 
         #endregion
@@ -75,6 +82,7 @@ namespace XFiler
             }
 
             _directory = null!;
+            _directorySettings = null!;
             FilesPresenters = null!;
             CurrentPresenter = null!;
             FilesGroups = null!;
@@ -116,6 +124,8 @@ namespace XFiler
                 case nameof(CurrentPresenter):
                 case nameof(CurrentGroup):
                     OpenDirectory();
+                    _directorySettings.SetSettings(_directory.FullName,
+                        new DirectorySettingsInfo(CurrentGroup.Id, CurrentPresenter.Id));
                     break;
             }
 

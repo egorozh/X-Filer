@@ -13,7 +13,7 @@ namespace XFiler.Base
         private IIndex<string, IFilesPresenter> _presenterFactory;
 
         public GridFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
-            : base("Таблица", CreateTemplate(), CreateIcon())
+            : base("Таблица", CreateTemplate(), CreateIcon(), "9a5d97b9-628d-45fd-b36f-89936f3c9506")
         {
             _presenterFactory = presenterFactory;
         }

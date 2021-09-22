@@ -27,7 +27,8 @@ namespace XFiler.MyComputer
 
         #region Constructor
 
-        public MyComputerPageModel(IIconLoader iconLoader) : base(typeof(MyComputerPage), SpecialRoutes.MyComputer)
+        public MyComputerPageModel(IIconLoader iconLoader) 
+            : base(typeof(MyComputerPage), SpecialRoutes.MyComputer)
         {
             OpenCommand = new DelegateCommand<XFilerRoute>(OnOpen);
 

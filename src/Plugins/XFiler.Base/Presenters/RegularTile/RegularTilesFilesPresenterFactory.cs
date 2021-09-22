@@ -11,7 +11,7 @@ namespace XFiler.Base
         private IIndex<string, IFilesPresenter> _presenterFactory;
 
         public RegularTilesFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
-            : base("Крупные значки", CreateTemplate(), CreateIcon())
+            : base("Крупные значки", CreateTemplate(), CreateIcon(), "2e60a960-5261-413c-b046-278f5753140b")
         {
             _presenterFactory = presenterFactory;
         }

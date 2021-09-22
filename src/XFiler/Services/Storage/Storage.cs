@@ -10,6 +10,8 @@ namespace XFiler
 
         public string LogDirectory { get; }
 
+        public string DbDirectory { get; }
+
         public string Bookmarks { get; }
 
         #endregion
@@ -24,6 +26,9 @@ namespace XFiler
 
             LogDirectory = Path.Combine(BaseDirectory, "Logs");
             Directory.CreateDirectory(LogDirectory);
+
+            DbDirectory = Path.Combine(BaseDirectory, "Data");
+            Directory.CreateDirectory(DbDirectory);
 
             Bookmarks = Path.Combine(BaseDirectory, "bookmarks.json");
         }

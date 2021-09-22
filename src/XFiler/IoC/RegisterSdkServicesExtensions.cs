@@ -22,6 +22,8 @@ namespace XFiler
             services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
 
             services.RegisterType<ExplorerOptions>().As<IExplorerOptions>().SingleInstance();
+
+            services.RegisterType<DirectorySettings>().As<IDirectorySettings>().SingleInstance();
         }
 
         private static void RegisterBookmarksServices(this ContainerBuilder services)

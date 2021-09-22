@@ -10,6 +10,8 @@ namespace XFiler.SDK
         IFilesPresenter? FilesPresenter { get; }
         
         DataTemplate Template { get; }
+        
+        string Id { get; }
 
         event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
 
