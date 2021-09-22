@@ -2,14 +2,13 @@
 using System.Linq;
 using Windows.FileOperations;
 using Windows.FileOperations.FileOperation;
-using Microsoft.VisualBasic.FileIO;
 using RecycleOption = Windows.FileOperations.RecycleOption;
 using UICancelOption = Windows.FileOperations.UICancelOption;
 using UIOption = Windows.FileOperations.UIOption;
 
 namespace XFiler
 {
-    internal class FileOperations : IFileOperations
+    internal sealed class FileOperations : IFileOperations
     {
         public void Move(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory)
         {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
 using XFiler.SDK;
 
 namespace XFiler.Base
@@ -12,10 +13,11 @@ namespace XFiler.Base
         private IIndex<string, IFilesPresenter> _presenterFactory;
 
         public GridFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
-            : base("Таблица", CreateTemplate())
+            : base("Таблица", CreateTemplate(), CreateIcon())
         {
             _presenterFactory = presenterFactory;
         }
+
 
         public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group)
         {
@@ -42,6 +44,14 @@ namespace XFiler.Base
                     </DataTemplate>"));
 
             return (DataTemplate)XamlReader.Load(ms);
+        }
+
+        private static ImageSource CreateIcon()
+        {
+            const string? data = "M0 262.5A37.5 37.5 0 0 0 37.5 300H262.5A37.5 37.5 0 0 0 300 262.5V37.5A37.5 37.5 0 0 0 262.5 0H37.5A37.5 37.5 0 0 0 0 37.5V262.5zM281.25 225H206.25V168.75H281.25V225zM281.25 150H206.25V93.75H281.25V150zM281.25 75H206.25V18.75H262.5A18.75 18.75 0 0 1 281.25 37.5V75zM187.5 18.75V75H112.5V18.75H187.5zM93.75 18.75V75H18.75V37.5A18.75 18.75 0 0 1 37.5 18.75H93.75zM18.75 93.75H93.75V150H18.75V93.75zM18.75 168.75H93.75V225H18.75V168.75zM112.5 225V168.75H187.5V225H112.5zM187.5 150H112.5V93.75H187.5V150z";
+
+            return new DrawingImage(new GeometryDrawing(Brushes.White, 
+                new Pen(Brushes.White, 0), Geometry.Parse(data)));
         }
     }
 }

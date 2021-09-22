@@ -18,7 +18,7 @@ namespace XFiler.SDK
                     Stretch = Stretch.Uniform
                 };
             }
-
+            
             return null!;
         }
     }

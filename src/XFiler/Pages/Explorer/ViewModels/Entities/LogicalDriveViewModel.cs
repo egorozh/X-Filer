@@ -1,6 +1,4 @@
-﻿using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
     public sealed class LogicalDriveViewModel : DirectoryViewModel
     {

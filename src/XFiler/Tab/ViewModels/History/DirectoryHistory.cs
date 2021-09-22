@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using XFiler.SDK;
+﻿using System.Collections;
 
 namespace XFiler.History
 {
-    internal class DirectoryHistory : IDirectoryHistory
+    internal sealed class DirectoryHistory : IDirectoryHistory
     {
         #region Properties
 

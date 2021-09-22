@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using Prism.Commands;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class MenuItemViewModel : DisposableViewModel, IMenuItemViewModel
+    internal sealed class MenuItemViewModel : DisposableViewModel, IMenuItemViewModel
     {
         public string? Path { get; set; }
 

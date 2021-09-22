@@ -1,11 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace XFiler
 {
-    public partial class TabControl
+    public sealed partial class TabControl
     {
         public TabControl()
         {

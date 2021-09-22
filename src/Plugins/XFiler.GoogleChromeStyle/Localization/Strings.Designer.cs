@@ -19,7 +19,7 @@ namespace XFiler.GoogleChromeStyle.Localization {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -61,56 +61,11 @@ namespace XFiler.GoogleChromeStyle.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на B.
-        /// </summary>
-        public static string B {
-            get {
-                return ResourceManager.GetString("B", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на GB.
-        /// </summary>
-        public static string Gb {
-            get {
-                return ResourceManager.GetString("Gb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на KB.
-        /// </summary>
-        public static string KB {
-            get {
-                return ResourceManager.GetString("KB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на MB.
-        /// </summary>
-        public static string MB {
-            get {
-                return ResourceManager.GetString("MB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на free of.
         /// </summary>
         public static string MyComputer_FreeFromText {
             get {
                 return ResourceManager.GetString("MyComputer.FreeFromText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на .
-        /// </summary>
-        public static string TB {
-            get {
-                return ResourceManager.GetString("TB", resourceCulture);
             }
         }
         

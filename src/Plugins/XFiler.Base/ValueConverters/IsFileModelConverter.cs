@@ -5,7 +5,7 @@ using XFiler.SDK;
 
 namespace XFiler.Base
 {
-    internal class IsFileModelConverter : BaseValueConverter
+    internal sealed class IsFileModelConverter : BaseValueConverter
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

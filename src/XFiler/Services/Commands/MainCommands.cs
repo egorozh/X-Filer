@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace XFiler.Commands
 {
-    internal class MainCommands : IMainCommands
+    internal sealed class MainCommands : IMainCommands
     {
         private readonly IFileOperations _fileOperations;
 

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Builder;
 using Dragablz;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;
@@ -6,25 +7,32 @@ using XFiler.DispatcherPage;
 using XFiler.DragDrop;
 using XFiler.MyComputer;
 using XFiler.NotifyIcon;
+using XFiler.SDK.Plugins;
 
 namespace XFiler
 {
-    internal class IoC
+    internal sealed class IoC
     {
         public IContainer Build()
         {
             var services = new ContainerBuilder();
 
-            RegisterServices(services);
+            RegisterServices(services, new []
+            {
+                new BasePlugin()
+            });
 
             return services.Build();
         }
 
-        private static void RegisterServices(ContainerBuilder services)
+        private static void RegisterServices(ContainerBuilder services, IEnumerable<IPlugin> plugins)
         {
+            foreach (var plugin in plugins) 
+                plugin.Load(services);
+          
             services.RegisterExternalServices();
             services.RegisterSdkServices();
-            
+
             services.RegisterType<FilesGroupOfNone>().As<IFilesGroup>();
             services.RegisterType<FilesGroupOfName>().As<IFilesGroup>();
             services.RegisterType<FilesGroupOfType>().As<IFilesGroup>();
@@ -58,8 +66,6 @@ namespace XFiler
             services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
 
             services.RegisterType<NotifyIconViewModel>().AsSelf().SingleInstance();
-
-            services.RegisterModule<BasePlugin>();
         }
     }
 }

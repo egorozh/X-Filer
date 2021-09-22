@@ -32,19 +32,24 @@ namespace XFiler
 
         private static void RegisterIconServices(this ContainerBuilder services)
         {
-            // Image icon pipeline
-            var imageProviders = new List<IIconProvider>
-            {
-                // Other icon providers insert begin pipeline
+            // Image icon pipeline:
+            services.RegisterType<NativeExeIconProvider>().As<IIconProvider>().SingleInstance();
+            services.RegisterType<IconProviderForIcons>().As<IIconProvider>().SingleInstance();
+            services.RegisterType<BaseIconProvider>().As<IIconProvider>().SingleInstance();
+            services.RegisterType<NativeFileIconProvider>().As<IIconProvider>().SingleInstance();
+            services.RegisterType<BlankIconProvider>().As<IIconProvider>().SingleInstance();
+            //var imageProviders = new List<IIconProvider>
+            //{
+            //    // Other icon providers insert begin pipeline
 
-                new NativeExeIconProvider(),
-                new IconProviderForIcons(),
-                new BaseIconProvider(),
-                new NativeFileIconProvider(),
-                new BlankIconProvider()
-            };
+            //    new NativeExeIconProvider(),
+            //    new IconProviderForIcons(),
+            //    new BaseIconProvider(),
+            //    new NativeFileIconProvider(),
+            //    new BlankIconProvider()
+            //};
 
-            services.RegisterInstance(imageProviders).As<IEnumerable<IIconProvider>>().SingleInstance();
+            //services.RegisterInstance(imageProviders).As<IEnumerable<IIconProvider>>().SingleInstance();
 
             services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
         }

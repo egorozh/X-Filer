@@ -1,8 +1,6 @@
-﻿using XFiler.SDK;
-
-namespace XFiler.MyComputer
+﻿namespace XFiler.MyComputer
 {
-    public partial class MyComputerPage : IExplorerPage
+    public sealed partial class MyComputerPage : IExplorerPage
     {
         public MyComputerPage()
         {

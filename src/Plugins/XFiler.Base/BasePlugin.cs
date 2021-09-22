@@ -1,19 +1,21 @@
 using Autofac;
+using XFiler.Base.Icons;
 using XFiler.SDK;
+using XFiler.SDK.Plugins;
 
 namespace XFiler.Base
 {
-    public class BasePlugin : Module
+    public sealed class BasePlugin : IPlugin
     {
-        protected override void Load(ContainerBuilder services)
+        public void Load(ContainerBuilder services)
         {
-            base.Load(services);
-
             services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>("grid");
             services.RegisterType<TileFilesPresenterViewModel>().Keyed<IFilesPresenter>("regularTile");
-
-            services.RegisterType<RegularTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
+           
             services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<RegularTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
+            
+            services.RegisterType<SvgIconProvider>().As<IIconProvider>().SingleInstance();
         }
     }
 }

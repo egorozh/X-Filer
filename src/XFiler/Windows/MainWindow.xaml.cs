@@ -1,9 +1,6 @@
-﻿using System.Windows;
-using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
-    public partial class MainWindow : IXFilerWindow
+    public sealed partial class MainWindow : IXFilerWindow
     {
         public MainWindow()
         {

@@ -1,9 +1,10 @@
-﻿using Microsoft.Xaml.Behaviors;
+﻿using System.Linq;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
 
 namespace XFiler
 {
-    internal class ComboBoxToMenuBehavior : Behavior<MenuItem>
+    internal sealed class ComboBoxToMenuBehavior : Behavior<MenuItem>
     {
         #region Private Fields
 

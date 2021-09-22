@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class MenuItemFactory : IMenuItemFactory
+    internal sealed class MenuItemFactory : IMenuItemFactory
     {
         private readonly IIconLoader _iconLoader;
         private readonly IRenameService _renameService;

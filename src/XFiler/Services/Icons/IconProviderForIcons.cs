@@ -10,7 +10,7 @@ using Windows.ImageOperations;
 
 namespace XFiler;
 
-internal class IconProviderForIcons : IIconProvider
+internal sealed class IconProviderForIcons : IIconProvider
 {
     private readonly PngEncoder _pngFormat = new();
     private readonly IReadOnlyList<string> _supportedSixLaborsformats;
@@ -24,12 +24,9 @@ internal class IconProviderForIcons : IIconProvider
 
     public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
     {
-        if (route == null)
-            return null;
-
-        if (route.Type == RouteType.File)
+        if (route is FileRoute fileRoute)
         {
-            var fileInfo = new FileInfo(route.FullName);
+            var fileInfo = fileRoute.File;
 
             var ext = fileInfo.Extension.ToLower();
 

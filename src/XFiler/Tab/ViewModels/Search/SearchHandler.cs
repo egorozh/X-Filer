@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
-    internal class SearchHandler : ISearchHandler
+    internal sealed class SearchHandler : ISearchHandler
     {
         private readonly IResultModelFactory _resultModelFactory;
 

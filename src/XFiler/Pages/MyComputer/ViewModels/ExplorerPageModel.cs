@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using Prism.Commands;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using Prism.Commands;
-using XFiler.SDK;
 
 namespace XFiler.MyComputer
 {
-    public class MyComputerPageModel : BasePageModel
+    public sealed class MyComputerPageModel : BasePageModel
     {
         #region Private Fields
 

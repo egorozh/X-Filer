@@ -1,9 +1,8 @@
 ﻿using XFiler.Resources.Localization;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class ResultModelFactory : IResultModelFactory
+    internal sealed class ResultModelFactory : IResultModelFactory
     {
         public RouteModel CreateRouteModel(XFilerRoute route) 
             => new(string.Format(Strings.SearchHandler_RouteText, route.Header), route);

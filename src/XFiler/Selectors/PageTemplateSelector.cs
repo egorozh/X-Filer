@@ -1,12 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using XFiler.SDK;
+﻿using System.Windows.Controls;
 
 namespace XFiler
 {
-    internal class PageTemplateSelector : DataTemplateSelector
+    internal sealed class PageTemplateSelector : DataTemplateSelector
     {
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        public override DataTemplate? SelectTemplate(object item, DependencyObject container)
         {
             if (item is IPageModel page)
                 return page.Template;

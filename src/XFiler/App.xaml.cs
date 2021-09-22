@@ -9,7 +9,7 @@ using XFiler.SDK.Themes;
 
 namespace XFiler
 {
-    internal partial class App : IXFilerApp
+    internal sealed partial class App : IXFilerApp
     {
         #region Private Fields
 

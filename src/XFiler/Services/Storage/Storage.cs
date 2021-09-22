@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
-using XFiler.SDK;
+﻿using System.IO;
 
 namespace XFiler
 {
-    public class Storage : IStorage
+    public sealed class Storage : IStorage
     {
         #region Public Properties
 

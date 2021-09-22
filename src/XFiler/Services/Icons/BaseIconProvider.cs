@@ -1,14 +1,13 @@
-﻿using System.IO;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace XFiler
 {
-    internal class BaseIconProvider : IIconProvider
+    internal sealed class BaseIconProvider : IIconProvider
     {
         public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
         {
             var key = GetResourceKey(route);
-            
+
             return Application.Current.TryFindResource(key) as ImageSource;
         }
 
@@ -16,6 +15,9 @@ namespace XFiler
         {
             if (route == null)
                 return IconName.BookmarkFolder;
+
+            if (route is FileRoute fileRoute)
+                return GetExtensionKey(fileRoute.File.Extension);
 
             return route.Type switch
             {
@@ -31,19 +33,13 @@ namespace XFiler
                 RouteType.SystemDrive => IconName.SystemDrive,
                 RouteType.Directory => IconName.Folder,
                 RouteType.RecycleBin => IconName.RecycleBin,
-                RouteType.File => GetExtensionKey(route.FullName),
                 _ => IconName.Blank
             };
         }
 
-        private static string GetExtensionKey(string path)
-        {
-            var extension = new FileInfo(path).Extension;
-
-            return string.IsNullOrWhiteSpace(extension)
-                ? IconName.Blank
-                : extension[1..].ToLower();
-        }
+        private static string GetExtensionKey(string extension) => string.IsNullOrWhiteSpace(extension)
+            ? IconName.Blank
+            : extension[1..].ToLower();
     }
 
     internal static class IconName

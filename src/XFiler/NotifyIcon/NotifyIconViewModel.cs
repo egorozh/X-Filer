@@ -1,12 +1,10 @@
 ﻿using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using Prism.Commands;
-using XFiler.SDK;
+using System.Windows.Input;
 
 namespace XFiler.NotifyIcon
 {
-    public class NotifyIconViewModel
+    public sealed class NotifyIconViewModel
     {
         private readonly IWindowFactory _windowFactory;
 

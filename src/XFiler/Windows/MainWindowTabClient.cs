@@ -1,11 +1,8 @@
 ﻿using Dragablz;
-using System;
-using System.Windows;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    public class MainWindowTabClient : IInterTabClient
+    public sealed class MainWindowTabClient : IInterTabClient
     {
         private readonly Func<ITabsFactory> _tabsFactory;
 

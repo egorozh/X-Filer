@@ -1,15 +1,13 @@
 ﻿using GongSolutions.Wpf.DragDrop;
-using System;
 using System.Collections;
 using System.Linq;
-using System.Windows;
 
 namespace XFiler.DragDrop
 {
-    internal class XFilerDragHandler : IDragSource
+    internal sealed class XFilerDragHandler : IDragSource
     {   
         /// <inheritdoc />
-        public virtual void StartDrag(IDragInfo dragInfo)
+        public void StartDrag(IDragInfo dragInfo)
         {
             var items = dragInfo.SourceItems.Cast<object>().ToList();
           
@@ -30,29 +28,29 @@ namespace XFiler.DragDrop
         }
 
         /// <inheritdoc />
-        public virtual bool CanStartDrag(IDragInfo dragInfo)
+        public bool CanStartDrag(IDragInfo dragInfo)
         {
             return true;
         }
 
         /// <inheritdoc />
-        public virtual void Dropped(IDropInfo dropInfo)
+        public void Dropped(IDropInfo dropInfo)
         {
         }
 
         /// <inheritdoc />
-        public virtual void DragDropOperationFinished(DragDropEffects operationResult, IDragInfo dragInfo)
+        public void DragDropOperationFinished(DragDropEffects operationResult, IDragInfo dragInfo)
         {
             // nothing here
         }
 
         /// <inheritdoc />
-        public virtual void DragCancelled()
+        public void DragCancelled()
         {
         }
 
         /// <inheritdoc />
-        public virtual bool TryCatchOccurredException(Exception exception)
+        public bool TryCatchOccurredException(Exception exception)
         {
             return false;
         }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace XFiler
 {
-    public class ExplorerPageModel : BasePageModel, IExplorerPageModel
+    public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     {
         #region Private Fields
 
@@ -35,7 +35,7 @@ namespace XFiler
             IReadOnlyList<IFilesGroup> groups,
             IClipboardService clipboardService,
             IMainCommands mainCommands,
-            DirectoryInfo directory) : base(typeof(ExplorerPage), new XFilerRoute(directory))
+            DirectoryInfo directory) : base(typeof(ExplorerPage), new DirectoryRoute(directory))
         {
             _directory = directory;
 
@@ -99,8 +99,8 @@ namespace XFiler
         {
             XFilerRoute route = e.FileEntityViewModel switch
             {
-                DirectoryViewModel directoryViewModel => new XFilerRoute(directoryViewModel.DirectoryInfo),
-                FileViewModel fileViewModel => new XFilerRoute(fileViewModel.FileInfo),
+                DirectoryViewModel directoryViewModel => new DirectoryRoute(directoryViewModel.DirectoryInfo),
+                FileViewModel fileViewModel => new FileRoute(fileViewModel.FileInfo),
                 _ => SpecialRoutes.MyComputer
             };
 

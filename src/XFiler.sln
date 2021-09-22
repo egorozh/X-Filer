@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.Controls", "Controls
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{BD6EC9D1-551A-4334-8FC9-089E78C9F7DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.ImageOperations", "Others\Windows.ImageOperations\Windows.ImageOperations.csproj", "{6020B3EC-84F5-491F-AECF-63C10A7E2C4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Windows.ImageOperations", "Others\Windows.ImageOperations\Windows.ImageOperations.csproj", "{6020B3EC-84F5-491F-AECF-63C10A7E2C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

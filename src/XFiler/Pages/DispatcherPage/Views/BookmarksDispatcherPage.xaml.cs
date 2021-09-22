@@ -1,6 +1,6 @@
 ﻿namespace XFiler.DispatcherPage
 {
-    public partial class BookmarksDispatcherPage
+    public sealed partial class BookmarksDispatcherPage
     {
         public BookmarksDispatcherPage()
         {

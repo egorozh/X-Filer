@@ -1,7 +1,6 @@
-﻿using System.IO;
-using Autofac;
+﻿using Autofac;
 using Serilog;
-using XFiler.SDK;
+using System.IO;
 
 namespace XFiler
 {

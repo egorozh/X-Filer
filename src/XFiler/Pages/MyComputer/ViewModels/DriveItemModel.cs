@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Prism.Commands;
 using System.IO;
-using Prism.Commands;
-using XFiler.SDK;
 
 namespace XFiler.MyComputer
 {
-    public class DriveItemModel : BaseItemModel
+    public sealed class DriveItemModel : BaseItemModel
     {
         public long TotalFreeSpace { get; }
 

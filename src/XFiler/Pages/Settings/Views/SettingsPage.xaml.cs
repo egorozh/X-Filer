@@ -1,6 +1,6 @@
 ﻿namespace XFiler
 {
-    public partial class SettingsPage 
+    public sealed partial class SettingsPage 
     {
         public SettingsPage()
         {

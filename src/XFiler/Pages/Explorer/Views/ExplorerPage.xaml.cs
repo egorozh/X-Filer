@@ -1,8 +1,6 @@
-﻿using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
-    public partial class ExplorerPage : IExplorerPage
+    public sealed partial class ExplorerPage : IExplorerPage
     {
         public ExplorerPage()
         {

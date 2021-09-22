@@ -9,6 +9,7 @@
              xmlns:controls="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -249,7 +250,7 @@
 
         <DataGrid.InputBindings>
             <KeyBinding Command="{StaticResource StartRenameCommand}"
-                        CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=controls:RectSelectListBox}}"
+                        CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=DataGrid}}"
                         Key="F2" />
             <KeyBinding Command="{StaticResource CutManyCommand}"
                         Modifiers="Control" Key="X" />
@@ -457,9 +458,33 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTextColumn Header="Имя"
-                                CanUserSort="True"
-                                Binding="{Binding Name, Mode=TwoWay}" />
+            <DataGridTemplateColumn Header="Имя"
+                                    Width="250"
+                                    CanUserSort="True" 
+                                    SortMemberPath="Name">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <editBox:EditBox x:Name="TextBlock"
+                                         Style="{StaticResource TreeViewEditBox}"
+                                         Background="Transparent"
+                                         DisplayTextForegroundBrush="White"
+                                         Foreground="White"
+                                         IsEditableOnDoubleClick="True"
+                                         IsReadOnly="False"
+                                         MinimumClickTime="500"
+                                         MaximumClickTime="1200"
+                                         Focusable="True"
+                                         RenameCommand="{StaticResource RenameCommand}"
+                                         RenameCommandParameter="{Binding}"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Left"
+                                         Margin="5 0"
+                                         DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+               
+            </DataGridTemplateColumn>
             <DataGridTextColumn Header="Дата изменения"
                                 IsReadOnly="True"
                                 Binding="{Binding ChangeDateTime, StringFormat=g}" />
@@ -468,7 +493,7 @@
                                 Binding="{Binding Type}" />
             <DataGridTextColumn Header="Размер"
                                 IsReadOnly="True"
-                                Binding="{Binding Size, StringFormat={}{0:0} КБ}" />
+                                Binding="{Binding Size, Converter={sdk:FileSizeToStringConverter}}" />
         </DataGrid.Columns>
 
     </controls:RectSelectDataGrid>

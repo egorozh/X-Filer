@@ -1,6 +1,6 @@
 ﻿namespace XFiler
 {
-    public partial class TabsControl
+    public sealed partial class TabsControl
     {
         public TabsControl()
         {

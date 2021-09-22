@@ -1,14 +1,10 @@
 ﻿using Prism.Commands;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class WindowFactory : IWindowFactory
+    internal sealed class WindowFactory : IWindowFactory
     {
         private readonly Func<ITabsFactory> _tabsFactory;
         private readonly Func<ITabFactory> _explorerTabFactory;

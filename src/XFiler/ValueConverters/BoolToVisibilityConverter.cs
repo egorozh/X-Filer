@@ -1,11 +1,6 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
-    public class BoolToVisibilityConverter : BaseValueConverter
+    public sealed class BoolToVisibilityConverter : BaseValueConverter
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

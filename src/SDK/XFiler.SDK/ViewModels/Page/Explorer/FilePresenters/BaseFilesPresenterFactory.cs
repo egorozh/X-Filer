@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 
 namespace XFiler.SDK
 {
@@ -8,16 +9,19 @@ namespace XFiler.SDK
     {
         public IFilesPresenter? FilesPresenter { get; private set; }
 
+        public ImageSource IconSource { get; }
+
         public string Name { get; }
 
         public DataTemplate Template { get; }
 
         public event EventHandler<OpenDirectoryEventArgs>? DirectoryOrFileOpened;
 
-        protected BaseFilesPresenterFactory(string name, DataTemplate template)
+        protected BaseFilesPresenterFactory(string name, DataTemplate template, ImageSource iconSource)
         {
             Name = name;
             Template = template;
+            IconSource = iconSource;
         }
 
         public void UpdatePresenter(DirectoryInfo directory, IFilesGroup group)

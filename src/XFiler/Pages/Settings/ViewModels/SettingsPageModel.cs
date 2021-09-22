@@ -1,8 +1,6 @@
-﻿using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
-    internal class SettingsPageModel : BasePageModel, ISettingsPageModel
+    internal sealed class SettingsPageModel : BasePageModel, ISettingsPageModel
     {
         public SettingsPageModel() : base(typeof(SettingsPage), SpecialRoutes.Settings)
         {

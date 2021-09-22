@@ -2,11 +2,11 @@
 
 namespace XFiler
 {
-    internal class IconLoader : IIconLoader
+    internal sealed class IconLoader : IIconLoader
     {
-        private readonly IEnumerable<IIconProvider> _imageProviders;
+        private readonly IReadOnlyList<IIconProvider> _imageProviders;
 
-        public IconLoader(IEnumerable<IIconProvider> imageProviders)
+        public IconLoader(IReadOnlyList<IIconProvider> imageProviders)
         {
             _imageProviders = imageProviders;
         }

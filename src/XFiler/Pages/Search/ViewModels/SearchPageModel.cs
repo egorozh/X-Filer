@@ -2,7 +2,7 @@
 
 namespace XFiler.ViewModels
 {
-    internal class SearchPageModel : BasePageModel
+    internal sealed class SearchPageModel : BasePageModel
     {
         public SearchPageModel(XFilerRoute route) : base(typeof(SearchPage), route)
         {

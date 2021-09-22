@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Dragablz;
-using XFiler.SDK;
+﻿using Dragablz;
 
 namespace XFiler
 {
-    public class TabsFactory : ITabsFactory
+    public sealed class TabsFactory : ITabsFactory
     {
         private readonly IInterTabClient _tabClient;
         private readonly ITabFactory _tabFactory;

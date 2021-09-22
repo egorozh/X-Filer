@@ -3,7 +3,7 @@ using System.IO;
 
 namespace XFiler
 {
-    public class FileEntityFactory : IFileEntityFactory
+    public sealed class FileEntityFactory : IFileEntityFactory
     {
         private readonly IIndex<EntityType, FileEntityViewModel> _factory;
 
@@ -15,7 +15,7 @@ namespace XFiler
         public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, IFilesGroup filesGroup, IconSize iconSize)
         {
             var model = _factory[EntityType.Directory];
-            model.Init(new XFilerRoute(directoryInfo), directoryInfo, filesGroup, iconSize);
+            model.Init(new DirectoryRoute(directoryInfo), directoryInfo, filesGroup, iconSize);
             
             return model;
         }
@@ -23,7 +23,7 @@ namespace XFiler
         public IFileSystemModel CreateFile(FileInfo fileInfo, IFilesGroup filesGroup, IconSize iconSize)
         {
             var model = _factory[EntityType.File];
-            model.Init(new XFilerRoute(fileInfo), fileInfo, filesGroup,iconSize);
+            model.Init(new FileRoute(fileInfo), fileInfo, filesGroup,iconSize);
           
             return model;
         }

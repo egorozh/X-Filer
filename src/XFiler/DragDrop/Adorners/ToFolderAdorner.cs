@@ -1,10 +1,9 @@
 ﻿using GongSolutions.Wpf.DragDrop;
-using System.Windows;
 using System.Windows.Media;
 
 namespace XFiler.DragDrop
 {
-    public class ToFolderAdorner : DropTargetInsertionAdorner
+    public sealed class ToFolderAdorner : DropTargetInsertionAdorner
     {
         public ToFolderAdorner(UIElement adornedElement, DropInfo dropInfo) : base(adornedElement,
             dropInfo)

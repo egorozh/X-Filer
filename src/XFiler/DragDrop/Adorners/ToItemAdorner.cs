@@ -1,11 +1,10 @@
 ﻿using GongSolutions.Wpf.DragDrop;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace XFiler.DragDrop
 {
-    public class ToItemAdorner : DropTargetAdorner
+    public sealed class ToItemAdorner : DropTargetAdorner
     {   
         public ToItemAdorner(UIElement adornedElement, DropInfo dropInfo)
             : base(adornedElement, dropInfo)

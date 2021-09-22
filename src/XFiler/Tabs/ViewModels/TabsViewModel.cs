@@ -1,16 +1,13 @@
 ﻿using Dragablz;
 using Prism.Commands;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    public class TabsViewModel : BaseViewModel, ITabsViewModel
+    public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
     {
         #region Private Fields
 

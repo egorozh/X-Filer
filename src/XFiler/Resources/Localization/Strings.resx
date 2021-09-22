@@ -141,12 +141,15 @@
     <value>Go to "{0}"</value>
   </data>
   <data name="SearchHandler.SearchDirectoryText" xml:space="preserve">
-    <value>Поиск "{0}" в текущей папке: "{1}"</value>
+    <value>Search "{0}" in the "{1}"</value>
   </data>
   <data name="SearchHandler.SearchDriveText" xml:space="preserve">
-    <value>Поиск "{0}" в текущем диске: "{1}"</value>
+    <value>Search "{0}" in the "{1}"</value>
   </data>
   <data name="SearchHandler.SearchAllDrivesText" xml:space="preserve">
-    <value>Поиск "{0}" по всем папкам</value>
+    <value>Search "{0}" in all folders</value>
+  </data>
+  <data name="ExlporerTab.ContextMenu.OpenInNativeExplorer" xml:space="preserve">
+    <value>Open in Windows Explorer</value>
   </data>
 </root>

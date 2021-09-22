@@ -1,11 +1,8 @@
 ﻿using GongSolutions.Wpf.DragDrop;
-using System.Collections.Generic;
-using System.Windows;
-using XFiler.SDK;
 
 namespace XFiler.DragDrop
 {
-    internal class BookmarksDispatcherDropTarget : IBookmarksDispatcherDropTarget
+    internal sealed class BookmarksDispatcherDropTarget : IBookmarksDispatcherDropTarget
     {
         public void DragOver(IDropInfo dropInfo)
         {

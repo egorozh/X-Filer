@@ -1,13 +1,12 @@
-﻿using Prism.Commands;
+﻿using System;
+using Prism.Commands;
 using Serilog;
-using System;
 using System.Collections;
 using System.Linq;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class RenameService : IRenameService
+    internal sealed class RenameService : IRenameService
     {
         private readonly IFileOperations _fileOperations;
         private readonly ILogger _logger;

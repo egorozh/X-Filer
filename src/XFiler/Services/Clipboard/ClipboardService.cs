@@ -1,17 +1,14 @@
 ﻿using Prism.Commands;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using WK.Libraries.SharpClipboardNS;
 using XFiler.SDK;
 
 namespace XFiler
 {
-    public class ClipboardService : IClipboardService
+    public sealed class ClipboardService : IClipboardService
     {
         #region Private Fields
 

@@ -144,9 +144,12 @@
     <value>Поиск "{0}" по всем папкам</value>
   </data>
   <data name="SearchHandler.SearchDirectoryText" xml:space="preserve">
-    <value>Поиск "{0}" в текущей папке: "{1}"</value>
+    <value>Поиск "{0}" в "{1}"</value>
   </data>
   <data name="SearchHandler.SearchDriveText" xml:space="preserve">
     <value>Поиск "{0}" в "{1}"</value>
+  </data>
+  <data name="ExlporerTab.ContextMenu.OpenInNativeExplorer" xml:space="preserve">
+    <value>Открыть в проводнике Windows</value>
   </data>
 </root>

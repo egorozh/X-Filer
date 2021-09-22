@@ -90,10 +90,10 @@ namespace XFiler
             switch (info)
             {
                 case DirectoryInfo directoryInfo:
-                    Init(new XFilerRoute(directoryInfo), info, FilesGroup, IconSize);
+                    Init(new DirectoryRoute(directoryInfo), info, FilesGroup, IconSize);
                     break;
                 case FileInfo fileInfo:
-                    Init(new XFilerRoute(fileInfo), info, FilesGroup, IconSize);
+                    Init(new FileRoute(fileInfo), info, FilesGroup, IconSize);
                     break;
             }
         }
@@ -131,8 +131,8 @@ namespace XFiler
         {
             return info switch
             {
-                DirectoryInfo directoryInfo => "Папки",
-                FileInfo fileInfo => fileInfo.Extension,
+                DirectoryInfo directoryInfo => "Папка с файлами",
+                FileInfo fileInfo => fileInfo.Extension[1..].ToUpper(),
                 _ => throw new ArgumentOutOfRangeException(nameof(info))
             };
         }

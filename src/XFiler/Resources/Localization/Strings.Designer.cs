@@ -19,7 +19,7 @@ namespace XFiler.Resources.Localization {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -57,6 +57,15 @@ namespace XFiler.Resources.Localization {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string ExlporerTab_ContextMenu_OpenInNativeExplorer {
+            get {
+                return ResourceManager.GetString("ExlporerTab.ContextMenu.OpenInNativeExplorer", resourceCulture);
             }
         }
         
@@ -178,7 +187,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Go to &quot;{0}&quot;.
         /// </summary>
         public static string SearchHandler_RouteText {
             get {
@@ -187,7 +196,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Search &quot;{0}&quot; in all folders.
         /// </summary>
         public static string SearchHandler_SearchAllDrivesText {
             get {
@@ -196,7 +205,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Search &quot;{0}&quot; in the &quot;{1}&quot;.
         /// </summary>
         public static string SearchHandler_SearchDirectoryText {
             get {
@@ -205,7 +214,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Search &quot;{0}&quot; in the &quot;{1}&quot;.
         /// </summary>
         public static string SearchHandler_SearchDriveText {
             get {

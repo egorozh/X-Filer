@@ -19,7 +19,7 @@ namespace XFiler.SDK.Localization {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -61,6 +61,15 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на B.
+        /// </summary>
+        public static string B {
+            get {
+                return ResourceManager.GetString("B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Local drive.
         /// </summary>
         public static string DriveType_Fixed {
@@ -75,6 +84,33 @@ namespace XFiler.SDK.Localization {
         public static string DriveType_Usb {
             get {
                 return ResourceManager.GetString("DriveType.Usb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на GB.
+        /// </summary>
+        public static string Gb {
+            get {
+                return ResourceManager.GetString("Gb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на KB.
+        /// </summary>
+        public static string KB {
+            get {
+                return ResourceManager.GetString("KB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на MB.
+        /// </summary>
+        public static string MB {
+            get {
+                return ResourceManager.GetString("MB", resourceCulture);
             }
         }
         
@@ -142,7 +178,7 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Basket.
         /// </summary>
         public static string Routes_RecycleBin {
             get {
@@ -156,6 +192,15 @@ namespace XFiler.SDK.Localization {
         public static string Routes_Settings {
             get {
                 return ResourceManager.GetString("Routes.Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на TB.
+        /// </summary>
+        public static string TB {
+            get {
+                return ResourceManager.GetString("TB", resourceCulture);
             }
         }
     }

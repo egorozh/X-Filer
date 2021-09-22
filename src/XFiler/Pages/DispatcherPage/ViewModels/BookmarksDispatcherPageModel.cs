@@ -1,6 +1,6 @@
 ﻿namespace XFiler.DispatcherPage
 {
-    internal class BookmarksDispatcherPageModel : BasePageModel
+    internal sealed class BookmarksDispatcherPageModel : BasePageModel
     {
         public IBookmarksManager BookmarksManager { get; }
 

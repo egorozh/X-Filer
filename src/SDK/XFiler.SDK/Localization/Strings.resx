@@ -131,4 +131,19 @@
   <data name="Routes.RecycleBin" xml:space="preserve">
     <value>Basket</value>
   </data>
+  <data name="B" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Gb" xml:space="preserve">
+    <value>GB</value>
+  </data>
+  <data name="KB" xml:space="preserve">
+    <value>KB</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="TB" xml:space="preserve">
+    <value>TB</value>
+  </data>
 </root>

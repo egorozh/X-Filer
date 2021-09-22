@@ -11,9 +11,23 @@
 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <sdk:CommandReference x:Key="MoveForwardCommand" 
+                              Command="{Binding DataContext.MoveForwardCommand,
+            RelativeSource={RelativeSource AncestorType={x:Type local:TabControl}}}"/>
+        <sdk:CommandReference x:Key="MoveBackCommand" 
+                              Command="{Binding DataContext.MoveBackCommand,
+            RelativeSource={RelativeSource AncestorType={x:Type local:TabControl}}}"/>
+
+        <sdk:CommandReference x:Key="UpdateCommand" 
+                              Command="{Binding DataContext.UpdateCommand,
+            RelativeSource={RelativeSource AncestorType={x:Type local:TabControl}}}"/>
+    </UserControl.Resources>
+
     <Grid Background="{DynamicResource ToolBarBackground}">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -22,7 +36,7 @@
                                   Visibility="{Binding CurrentPresenter.FilesPresenter.IsLoaded, Converter={local:BoolToVisibilityConverter}}"
                                   Value="{Binding CurrentPresenter.FilesPresenter.Progress}" />
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <ContentControl x:Name="ContentControl"
                             Content="{Binding CurrentPresenter}">
 
@@ -31,20 +45,21 @@
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonHeader}"
                                   InputGestureText="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonGesture}"
-                                  Command="{Binding MoveBackCommand}" />
+                                  Command="{StaticResource MoveBackCommand}" />
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_ForwardButtonHeader}"
                                   InputGestureText="{x:Static localization:Strings.ExplorerTab_ContextMenu_ForwardButtonGesture}"
-                                  Command="{Binding MoveForwardCommand}" />
+                                  Command="{StaticResource MoveForwardCommand}" />
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_UpdateButtonHeader}"
-                                  InputGestureText="Ctrl + R" />
+                                  InputGestureText="Ctrl + R"
+                                  Command="{StaticResource UpdateCommand}" />
 
                         <Separator />
 
-                        <MenuItem Header="Открыть в проводнике Windows"
+                        <MenuItem Header="{x:Static localization:Strings.ExlporerTab_ContextMenu_OpenInNativeExplorer}"
                                   Command="{Binding OpenInNativeExplorerCommand}"
-                                  CommandParameter="{Binding CurrentPresenter.FilesPresenter}"/>
+                                  CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
 
                         <Separator />
 
@@ -56,7 +71,7 @@
                         </MenuItem>
 
                         <MenuItem Header="Сортировка" />
-                        <MenuItem Header="Группировка" >
+                        <MenuItem Header="Группировка">
                             <b:Interaction.Behaviors>
                                 <local:ComboBoxToMenuBehavior Items="{Binding FilesGroups}"
                                                               CurrentItem="{Binding CurrentGroup, Mode=TwoWay}" />
@@ -95,41 +110,7 @@
 
             </ContentControl>
 
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        Margin="20">
 
-                <ComboBox ItemsSource="{Binding FilesPresenters}"
-                          SelectedItem="{Binding CurrentPresenter}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
-                <!--<RadioButton GroupName="PresenterView"
-                             Style="{StaticResource SelectPresenterButton}"
-                             IsChecked="{Binding IsTilePresenter, Mode=TwoWay}">
-                    <Image Width="26"
-                           Height="26"
-                           Stretch="Uniform"
-                           Source="{StaticResource TileIcon}" />
-
-                </RadioButton>
-
-                <RadioButton GroupName="PresenterView"
-                             Style="{StaticResource SelectPresenterButton}"
-                             IsChecked="{Binding IsGridPresenter, Mode=TwoWay}">
-                    <Image Width="26"
-                           Height="26"
-                           Stretch="Uniform"
-                           Source="{StaticResource GridIcon}" />
-
-                </RadioButton>-->
-
-            </StackPanel>
         </Grid>
 
     </Grid>

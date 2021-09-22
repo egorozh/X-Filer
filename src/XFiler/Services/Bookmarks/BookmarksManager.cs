@@ -1,19 +1,16 @@
-﻿using Prism.Commands;
+﻿using GongSolutions.Wpf.DragDrop;
+using Prism.Commands;
 using Serilog;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using GongSolutions.Wpf.DragDrop;
 using XFiler.DragDrop;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    internal class BookmarksManager : BaseViewModel, IBookmarksManager
+    internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
     {
         #region Private Fields
 

@@ -1,12 +1,9 @@
 ﻿using Prism.Commands;
-using System;
-using System.Collections.Generic;
 using XFiler.History;
-using XFiler.SDK;
 
 namespace XFiler
 {
-    public class TabItemModel : BaseViewModel, ITabItemModel
+    public sealed class TabItemModel : BaseViewModel, ITabItemModel
     {
         #region Private Fields
 

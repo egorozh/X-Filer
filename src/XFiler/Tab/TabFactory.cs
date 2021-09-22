@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
-using XFiler.SDK;
+﻿using System.IO;
 
 namespace XFiler
 {
-    public class TabFactory : ITabFactory
+    public sealed class TabFactory : ITabFactory
     {
         private readonly IBookmarksManager _bookmarksManager;
         private readonly ISearchHandler _searchHandler;
@@ -21,7 +19,7 @@ namespace XFiler
 
         public ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo)
         {
-            var route = new XFilerRoute(directoryInfo);
+            var route = new DirectoryRoute(directoryInfo);
             var page = _pageFactory.CreatePage(route);
 
             if (page == null)

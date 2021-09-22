@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using XFiler.SDK;
 
 namespace XFiler
 {
@@ -7,7 +6,7 @@ namespace XFiler
     {
         public FileInfo FileInfo => (FileInfo)Info;
 
-        public double Size => FileInfo.Length / 1024.0;
+        public long Size => FileInfo.Length;
 
         public FileViewModel(IIconLoader iconLoader, 
             IClipboardService clipboardService)

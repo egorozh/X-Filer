@@ -9,12 +9,12 @@ using System.Windows.Media;
 
 namespace XFiler.Controls.MenuEx
 {
-    [TemplatePart(Name = "PART_Panel", Type = typeof(Panel))]
+    [TemplatePart(Name = "PART_Panel", Type = typeof(StackPanel))]
     public class MenuEx : Menu
     {
         #region Private Fields
 
-        private Panel _panel = null!;
+        private StackPanel _panel = null!;
 
         #endregion
 
@@ -68,12 +68,12 @@ namespace XFiler.Controls.MenuEx
         {
             base.OnApplyTemplate();
 
-            _panel = GetTemplateChild("PART_Panel") as Panel
+            _panel = GetTemplateChild("PART_Panel") as StackPanel
                      ?? throw new NotImplementedException();
         }
 
         #endregion
-        
+
         #region Protected Methods
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -95,7 +95,7 @@ namespace XFiler.Controls.MenuEx
             ItemsSource = MainItems;
 
             var layoutBounds = LayoutInformation.GetLayoutSlot(_panel);
-            
+
             var hidenModels = new List<object>();
 
             foreach (var visualChild in _panel.GetChildren())
@@ -124,7 +124,7 @@ namespace XFiler.Controls.MenuEx
             var numberOfChildren = VisualTreeHelper.GetChildrenCount(dependencyObject);
             
             return (from index in Enumerable.Range(0, numberOfChildren)
-                select VisualTreeHelper.GetChild(dependencyObject, index)).Cast<FrameworkElement>();
+                select VisualTreeHelper.GetChild(dependencyObject, index)).OfType<FrameworkElement>();
         }
     }
 }

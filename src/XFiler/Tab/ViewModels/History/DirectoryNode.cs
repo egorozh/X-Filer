@@ -1,8 +1,6 @@
-﻿using XFiler.SDK;
-
-namespace XFiler.History
+﻿namespace XFiler.History
 {
-    internal class DirectoryNode
+    internal sealed class DirectoryNode
     {
         public XFilerRoute Route { get; }
 

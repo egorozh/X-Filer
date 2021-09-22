@@ -6,7 +6,7 @@ using XFiler.ViewModels;
 
 namespace XFiler
 {
-    internal class PageFactory : IPageFactory
+    internal sealed class PageFactory : IPageFactory
     {
         private readonly IIndex<PageType, IPageModel> _pageModelFactory;
         private readonly Func<IReadOnlyList<IFilesPresenterFactory>> _filesPresenters;
@@ -85,12 +85,22 @@ namespace XFiler
                 dir);
         }
 
-        private static void OpenFile(string path) => new Process
+        private static void OpenFile(string path)
         {
-            StartInfo = new ProcessStartInfo(path)
+            try
             {
-                UseShellExecute = true
+                new Process
+                {
+                    StartInfo = new ProcessStartInfo(path)
+                    {
+                        UseShellExecute = true
+                    }
+                }.Start();
             }
-        }.Start();
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error");
+            }
+        }
     }
 }

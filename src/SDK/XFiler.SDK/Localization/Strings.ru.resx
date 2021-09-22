@@ -131,4 +131,19 @@
   <data name="Routes.RecycleBin" xml:space="preserve">
     <value>Корзина</value>
   </data>
+  <data name="B" xml:space="preserve">
+    <value>Б</value>
+  </data>
+  <data name="Gb" xml:space="preserve">
+    <value>ГБ</value>
+  </data>
+  <data name="KB" xml:space="preserve">
+    <value>КБ</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>МБ</value>
+  </data>
+  <data name="TB" xml:space="preserve">
+    <value>ТБ</value>
+  </data>
 </root>

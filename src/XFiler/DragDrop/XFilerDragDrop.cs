@@ -1,11 +1,9 @@
-﻿using GongSolutions.Wpf.DragDrop;
-using System.Linq;
-using System.Windows;
-using XFiler.SDK;
+﻿using System.Linq;
+using GongSolutions.Wpf.DragDrop;
 
 namespace XFiler.DragDrop
 {
-    internal class XFilerDragDrop : IDropTarget
+    internal sealed class XFilerDragDrop : IDropTarget
     {
         #region Private Fields
 
