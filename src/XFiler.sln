@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Windows.FileOperations", "Windows.FileOperations\Windows.FileOperations.csproj", "{AFBC4B3E-3A45-45EE-AEAD-A4769BE361BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Windows.FileOperations", "Others\Windows.FileOperations\Windows.FileOperations.csproj", "{AFBC4B3E-3A45-45EE-AEAD-A4769BE361BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{558F1916-1B04-43DD-A85B-D6A6507C9A1A}"
 EndProject
