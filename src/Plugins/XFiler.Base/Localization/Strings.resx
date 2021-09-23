@@ -102,7 +102,7 @@
     <value>Table</value>
   </data>
   <data name="Presenters.RegularTiles" xml:space="preserve">
-    <value>Regular Tiles</value>
+    <value>Regular icons</value>
   </data>
   <data name="ContextMenu.Open" xml:space="preserve">
     <value>Open</value>
@@ -144,9 +144,12 @@
     <value>Date of change</value>
   </data>
   <data name="Presenters.SmallTiles" xml:space="preserve">
-    <value>Small Tiles</value>
+    <value>Small icons</value>
   </data>
   <data name="ContextMenu.AddToBookmarks" xml:space="preserve">
     <value>Add to bookmarks</value>
+  </data>
+  <data name="Presenters.LargeTiles" xml:space="preserve">
+    <value>Large icons</value>
   </data>
 </root>

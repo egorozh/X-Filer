@@ -12,7 +12,7 @@ namespace XFiler
                 var info = fileRoute.File;
 
                 if (info.Extension.ToLower() == ".exe")
-                    return ImageSystem.GetIcon(route.FullName, size == IconSize.Large);
+                    return ImageSystem.GetIcon(route.FullName, size != IconSize.Small);
             }
 
             return null;

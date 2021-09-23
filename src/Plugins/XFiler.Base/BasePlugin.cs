@@ -12,11 +12,13 @@ namespace XFiler.Base
             services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>("grid");
             services.RegisterType<SmallTileFilesPresenterViewModel>().Keyed<IFilesPresenter>("smallTile");
             services.RegisterType<TileFilesPresenterViewModel>().Keyed<IFilesPresenter>("regularTile");
+            services.RegisterType<LargeTileFilesPresenterViewModel>().Keyed<IFilesPresenter>("largeTile");
 
             
             services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>();
             services.RegisterType<SmallTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
             services.RegisterType<RegularTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<LargeTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
             
             services.RegisterType<SvgIconProvider>().As<IIconProvider>().SingleInstance();
         }

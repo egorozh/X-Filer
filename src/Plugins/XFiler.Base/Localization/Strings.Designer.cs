@@ -61,7 +61,7 @@ namespace XFiler.Base.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Add to bookmarks.
         /// </summary>
         public static string ContextMenu_AddToBookmarks {
             get {
@@ -147,6 +147,15 @@ namespace XFiler.Base.Localization {
         public static string ContextMenu_Rename {
             get {
                 return ResourceManager.GetString("ContextMenu.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Presenters_LargeTiles {
+            get {
+                return ResourceManager.GetString("Presenters.LargeTiles", resourceCulture);
             }
         }
         

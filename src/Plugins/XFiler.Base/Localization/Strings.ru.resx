@@ -149,4 +149,7 @@
   <data name="ContextMenu.AddToBookmarks" xml:space="preserve">
     <value>Добавить в закладки</value>
   </data>
+  <data name="Presenters.LargeTiles" xml:space="preserve">
+    <value>Огромные значки</value>
+  </data>
 </root>
