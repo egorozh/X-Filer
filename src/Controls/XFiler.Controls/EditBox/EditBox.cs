@@ -285,8 +285,7 @@ namespace XFiler.Controls.EditBox
         public EditBox()
         {
             DataContextChanged += OnDataContextChanged;
-
-            Loaded += EditBox_Loaded;
+            
             Unloaded += OnEditBox_Unloaded;
         }
 
@@ -327,15 +326,7 @@ namespace XFiler.Controls.EditBox
         #region Private Methods
 
         #region EditBox Handlers
-
-        private void EditBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            Loaded -= EditBox_Loaded;
-
-            if (DataContext is IEditBoxModel editBoxModel)
-                editBoxModel.RequestEdit += ViewModel_RequestEdit;
-        }
-
+        
         /// <summary>
         /// Free notification resources when parent window is being closed.
         /// </summary>

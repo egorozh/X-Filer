@@ -10,7 +10,7 @@ namespace XFiler
     {
         #region Private Fields
 
-        private readonly IIconLoader _iconLoader;
+        private IIconLoader _iconLoader;
         private IClipboardService _clipboardService;
 
         #endregion
@@ -41,7 +41,7 @@ namespace XFiler
 
         public bool IsCopyProcess { get; private set; }
 
-        public IFilesGroup FilesGroup { get; private set; }
+        public IFilesGroup FilesGroup { get; private set; } = null!;
 
         public IconSize IconSize { get; private set; }
 
@@ -108,6 +108,7 @@ namespace XFiler
                 _clipboardService.ClipboardChanged -= ClipboardServiceOnClipboardChanged;
 
                 _clipboardService = null!;
+                _iconLoader = null!;
                 FilesGroup = null!;
             }
 
