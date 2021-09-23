@@ -2,7 +2,7 @@
 {
     public enum IconSize
     {
-        Small = 32,
+        Small = 48,
 
         Large = 128
     }

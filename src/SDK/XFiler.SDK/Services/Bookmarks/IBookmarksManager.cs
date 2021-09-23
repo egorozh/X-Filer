@@ -9,6 +9,6 @@ namespace XFiler.SDK
     public interface IBookmarksManager
     {
         IReadOnlyCollection<IMenuItemViewModel> Bookmarks { get; }
-        DelegateCommand<IPageModel> AddBookmarkCommand { get; }
+        DelegateCommand<object> AddBookmarkCommand { get; }
     }
 }

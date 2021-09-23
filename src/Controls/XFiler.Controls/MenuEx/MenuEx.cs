@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,7 @@ namespace XFiler.Controls.MenuEx
         private static void MainItemsChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is MenuEx menu)
-                menu.SliceItems();
+                menu.MainItemsChanged(e.OldValue, e.NewValue);
         }
 
         public static readonly DependencyProperty HidenItemsProperty = DependencyProperty.Register(
@@ -37,6 +38,8 @@ namespace XFiler.Controls.MenuEx
         public static readonly DependencyProperty HiddenAnyProperty = DependencyProperty.Register(
             nameof(HiddenAny), typeof(bool), typeof(MenuEx),
             new PropertyMetadata(default(bool)));
+
+        private bool _lock;
 
         #endregion
 
@@ -79,18 +82,37 @@ namespace XFiler.Controls.MenuEx
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
             base.OnRenderSizeChanged(sizeInfo);
-
-            SliceItems();
+            
+            if (!_lock)
+                SliceItems();
         }
 
         #endregion
 
         #region Private Methods
 
+        private void MainItemsChanged(object oldValue, object newValue)
+        {
+            if (oldValue is INotifyCollectionChanged oldVm)
+                oldVm.CollectionChanged -= NotifyVmOnCollectionChanged;
+
+            if (newValue is INotifyCollectionChanged newVm)
+                newVm.CollectionChanged += NotifyVmOnCollectionChanged;
+
+            SliceItems();
+        }
+
+        private void NotifyVmOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            SliceItems();
+        }
+
         private void SliceItems()
         {
             if (MainItems == null)
                 return;
+
+            _lock = true;
 
             ItemsSource = MainItems;
 
@@ -112,6 +134,8 @@ namespace XFiler.Controls.MenuEx
 
             HidenItems = hidenModels;
             ItemsSource = MainItems.Cast<object>().Except(hidenModels).ToList();
+
+            _lock = false;
         }
 
         #endregion
@@ -122,9 +146,23 @@ namespace XFiler.Controls.MenuEx
         public static IEnumerable<FrameworkElement> GetChildren(this DependencyObject dependencyObject)
         {
             var numberOfChildren = VisualTreeHelper.GetChildrenCount(dependencyObject);
-            
-            return (from index in Enumerable.Range(0, numberOfChildren)
-                select VisualTreeHelper.GetChild(dependencyObject, index)).OfType<FrameworkElement>();
+
+            for (var index = 0; index < numberOfChildren; index++)
+            {
+                FrameworkElement? element = null;
+
+                try
+                {
+                    element = VisualTreeHelper.GetChild(dependencyObject, index) as FrameworkElement;
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+
+                if (element != null)
+                    yield return element;
+            }
         }
     }
 }

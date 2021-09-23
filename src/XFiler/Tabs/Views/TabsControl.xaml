@@ -6,6 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:xFiler="clr-namespace:XFiler"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+             xmlns:localization="clr-namespace:XFiler.Resources.Localization"
              mc:Ignorable="d"
 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -13,15 +14,17 @@
     <UserControl.Resources>
 
         <sdk:CommandReference x:Key="CreateNewTabItemCommand"
-                              Command="{Binding DataContext.CreateNewTabItemCommand,ElementName=InitialTabablzControl}" />
+                              Command="{Binding CreateNewTabItemCommand}" />
         <sdk:CommandReference x:Key="OpenTabItemInNewWindowCommand"
-                              Command="{Binding DataContext.OpenTabItemInNewWindowCommand,ElementName=InitialTabablzControl}" />
+                              Command="{Binding OpenTabItemInNewWindowCommand}" />
         <sdk:CommandReference x:Key="DuplicateTabCommand"
-                              Command="{Binding DataContext.DuplicateTabCommand,ElementName=InitialTabablzControl}" />
+                              Command="{Binding DuplicateTabCommand}" />
 
         <sdk:CommandReference x:Key="CloseOtherTabsCommand"
-                              Command="{Binding DataContext.CloseOtherTabsCommand,ElementName=InitialTabablzControl}" />
+                              Command="{Binding CloseOtherTabsCommand}" />
 
+        <sdk:CommandReference x:Key="UpdateCommand"
+                              Command="{Binding CurrentTabItem.UpdateCommand}" />
     </UserControl.Resources>
 
     <dragablz:TabablzControl x:Name="InitialTabablzControl"
@@ -48,29 +51,30 @@
                 <Setter Property="ContextMenu">
                     <Setter.Value>
                         <ContextMenu>
-                            <MenuItem Header="Новая вкладка справа"
+                            <MenuItem Header="{x:Static localization:Strings.TabsControl_ContextMenu_NewTabOnRight}"
                                       Command="{StaticResource CreateNewTabItemCommand}"
                                       CommandParameter="{Binding}" />
-                            <MenuItem Header="Открыть вкладку в новом окне"
+                            <MenuItem Header="{x:Static localization:Strings.TabsControl_ContextMenu_OpenTabInNewWindow}"
                                       Command="{StaticResource OpenTabItemInNewWindowCommand}"
                                       CommandParameter="{Binding}" />
 
                             <Separator />
 
-                            <MenuItem Header="Обновить"
-                                      InputGestureText="Ctrl + R" />
-                            <MenuItem Header="Дублировать"
+                            <MenuItem Header="{x:Static localization:Strings.TabsControl_ContextMenu_Refresh}"
+                                      InputGestureText="Ctrl + R"
+                                      Command="{StaticResource UpdateCommand}"/>
+                            <MenuItem Header="{x:Static localization:Strings.TabsControl_ContextMenu_Duplicate}"
                                       Command="{StaticResource DuplicateTabCommand}"
                                       CommandParameter="{Binding}" />
 
                             <Separator />
 
-                            <MenuItem Header="Закрыть"
+                            <MenuItem Header="{x:Static localization:Strings.TabsControl_ContextMenu_Close}"
                                       InputGestureText="Ctrl + W"
                                       Command="{x:Static dragablz:TabablzControl.CloseItemCommand}"
                                       CommandParameter="{Binding  RelativeSource={RelativeSource TemplatedParent}}" />
 
-                            <MenuItem Header="Закрыть другие вкладки"
+                            <MenuItem Header="{x:Static localization:Strings.TabsControl_ContextMenu_CloseOtherTabs}"
                                       Command="{StaticResource CloseOtherTabsCommand}"
                                       CommandParameter="{Binding}" />
 

@@ -37,6 +37,7 @@ namespace XFiler
             IClipboardService clipboardService,
             IMainCommands mainCommands,
             IDirectorySettings directorySettings,
+            IExplorerOptions explorerOptions,
             DirectoryInfo directory) : base(typeof(ExplorerPage), new DirectoryRoute(directory))
         {
             _directorySettings = directorySettings;
@@ -56,12 +57,11 @@ namespace XFiler
                            FilesGroups.First();
 
             PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
-            
+
             foreach (var factory in filesPresenters)
                 factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
 
-            CurrentPresenter = FilesPresenters.FirstOrDefault(p => p.Id == dirSettings.PresenterId) ??
-                               FilesPresenters.First();
+            CurrentPresenter = SelectInitPresenter(dirSettings, explorerOptions);
         }
 
         #endregion
@@ -130,6 +130,18 @@ namespace XFiler
             }
 
             PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
+        }
+
+        private IFilesPresenterFactory SelectInitPresenter(DirectorySettingsInfo dirSettings,
+            IExplorerOptions options)
+        {
+            var presenterId = options.DefaultPresenterId;
+
+            if (!options.AlwaysOpenDirectoryInDefaultPresenter) 
+                presenterId = dirSettings.PresenterId ?? presenterId;
+
+            return FilesPresenters.FirstOrDefault(p => p.Id == presenterId) ??
+                   FilesPresenters.First();
         }
 
         #endregion

@@ -14,6 +14,7 @@ namespace XFiler
         private readonly IClipboardService _clipboardService;
         private readonly IMainCommands _mainCommands;
         private readonly IDirectorySettings _directorySettings;
+        private readonly IExplorerOptions _explorerOptions;
 
         public PageFactory(
             IIndex<PageType, IPageModel> pageModelFactory,
@@ -21,7 +22,8 @@ namespace XFiler
             Func<IReadOnlyList<IFilesGroup>> groups,
             IClipboardService clipboardService,
             IMainCommands mainCommands,
-            IDirectorySettings directorySettings)
+            IDirectorySettings directorySettings,
+            IExplorerOptions explorerOptions)
         {
             _pageModelFactory = pageModelFactory;
             _filesPresenters = filesPresenters;
@@ -29,6 +31,7 @@ namespace XFiler
             _clipboardService = clipboardService;
             _mainCommands = mainCommands;
             _directorySettings = directorySettings;
+            _explorerOptions = explorerOptions;
         }
 
         public IPageModel? CreatePage(XFilerRoute route)
@@ -86,6 +89,7 @@ namespace XFiler
                 _clipboardService,
                 _mainCommands,
                 _directorySettings,
+                _explorerOptions,
                 dir);
         }
 

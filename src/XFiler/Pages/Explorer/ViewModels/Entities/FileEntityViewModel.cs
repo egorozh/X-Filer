@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Media;
 using XFiler.Controls.EditBox;
+using XFiler.Resources.Localization;
 
 namespace XFiler
 {
@@ -131,7 +132,7 @@ namespace XFiler
         {
             return info switch
             {
-                DirectoryInfo directoryInfo => "Папка с файлами",
+                DirectoryInfo directoryInfo => Strings.FileVm_DirectoryTypeName,
                 FileInfo fileInfo => fileInfo.Extension[1..].ToUpper(),
                 _ => throw new ArgumentOutOfRangeException(nameof(info))
             };

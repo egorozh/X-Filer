@@ -4,5 +4,8 @@
     {
         bool ShowSystemFiles { get; }
         bool ShowHiddenFiles { get; }
+
+        string DefaultPresenterId { get; }
+        bool AlwaysOpenDirectoryInDefaultPresenter { get; }
     }
 }

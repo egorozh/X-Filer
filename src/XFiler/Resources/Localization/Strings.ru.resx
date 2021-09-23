@@ -152,4 +152,55 @@
   <data name="ExlporerTab.ContextMenu.OpenInNativeExplorer" xml:space="preserve">
     <value>Открыть в проводнике Windows</value>
   </data>
+  <data name="TabsControl.ContextMenu.NewTabOnRight" xml:space="preserve">
+    <value>Новая вкладка справа</value>
+  </data>
+  <data name="TabsControl.ContextMenu.OpenTabInNewWindow" xml:space="preserve">
+    <value>Открыть вкладку в новом окне</value>
+  </data>
+  <data name="TabsControl.ContextMenu.Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="TabsControl.ContextMenu.Duplicate" xml:space="preserve">
+    <value>Дублировать</value>
+  </data>
+  <data name="TabsControl.ContextMenu.Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="TabsControl.ContextMenu.CloseOtherTabs" xml:space="preserve">
+    <value>Закрыть другие вкладки</value>
+  </data>
+  <data name="FileVm.DirectoryTypeName" xml:space="preserve">
+    <value>Папка с файлами</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Grouping" xml:space="preserve">
+    <value>Группировка</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Sorting" xml:space="preserve">
+    <value>Сортировка</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Paste" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Properties" xml:space="preserve">
+    <value>Свойства</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Create.Folder" xml:space="preserve">
+    <value>Папку</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Create.TextFile" xml:space="preserve">
+    <value>Текстовый документ</value>
+  </data>
+  <data name="Grouping,Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="Grouping,None" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Grouping,Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
 </root>

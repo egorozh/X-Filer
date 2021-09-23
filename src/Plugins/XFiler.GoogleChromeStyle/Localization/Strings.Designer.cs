@@ -61,6 +61,51 @@ namespace XFiler.GoogleChromeStyle.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Close.
+        /// </summary>
+        public static string MainWindow_Buttons_CloseTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow.Buttons.CloseTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Minimize.
+        /// </summary>
+        public static string MainWindow_Buttons_CollapseTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow.Buttons.CollapseTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Maximize.
+        /// </summary>
+        public static string MainWindow_Buttons_MaximizeTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow.Buttons.MaximizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string MainWindow_Buttons_NewTabTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow.Buttons.NewTabTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Restore.
+        /// </summary>
+        public static string MainWindow_Buttons_RestoreTooltip {
+            get {
+                return ResourceManager.GetString("MainWindow.Buttons.RestoreTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на free of.
         /// </summary>
         public static string MyComputer_FreeFromText {
@@ -79,6 +124,24 @@ namespace XFiler.GoogleChromeStyle.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Display options.
+        /// </summary>
+        public static string ToolBarControl_ExplorerSettings_Display_options {
+            get {
+                return ResourceManager.GetString("ToolBarControl.ExplorerSettings.Display options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Icon view.
+        /// </summary>
+        public static string ToolBarControl_ExplorerSettings_Display_options_IconView {
+            get {
+                return ResourceManager.GetString("ToolBarControl.ExplorerSettings.Display options.IconView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to go forward..
         /// </summary>
         public static string ToolBarControl_ForwardButtonTooltip {
@@ -93,6 +156,24 @@ namespace XFiler.GoogleChromeStyle.Localization {
         public static string ToolBarControl_RefreshButtonTooltip {
             get {
                 return ResourceManager.GetString("ToolBarControl.RefreshButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Settings and more.
+        /// </summary>
+        public static string ToolBarControl_Settings {
+            get {
+                return ResourceManager.GetString("ToolBarControl.Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Close all tabs.
+        /// </summary>
+        public static string ToolBarControl_Settings_CloseAllTabs {
+            get {
+                return ResourceManager.GetString("ToolBarControl.Settings.CloseAllTabs", resourceCulture);
             }
         }
     }

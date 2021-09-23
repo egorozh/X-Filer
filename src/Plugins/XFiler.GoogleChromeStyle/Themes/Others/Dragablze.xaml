@@ -3,7 +3,8 @@
                     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
-                    xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK">
+                    xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+                    xmlns:loc="clr-namespace:XFiler.GoogleChromeStyle.Localization">
 
     <Style TargetType="{x:Type Thumb}" x:Key="ChromerInvisibleThumbStyle">
         <Setter Property="Background" Value="Transparent" />
@@ -76,7 +77,7 @@
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemWindowButton}"
            x:Key="ChromerAddItemCommandButtonStyle">
 
-        <Setter Property="ToolTip" Value="Новая вкладка" />
+        <Setter Property="ToolTip" Value="{x:Static loc:Strings.MainWindow_Buttons_NewTabTooltip}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -139,7 +140,7 @@
            x:Key="CloseItemButtonStyle">
         <Setter Property="Width" Value="16" />
         <Setter Property="Height" Value="16" />
-        <Setter Property="ToolTip" Value="Закрыть" />
+        <Setter Property="ToolTip" Value="{x:Static loc:Strings.MainWindow_Buttons_CloseTooltip}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
 

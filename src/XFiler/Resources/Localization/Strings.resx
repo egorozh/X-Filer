@@ -152,4 +152,55 @@
   <data name="ExlporerTab.ContextMenu.OpenInNativeExplorer" xml:space="preserve">
     <value>Open in Windows Explorer</value>
   </data>
+  <data name="TabsControl.ContextMenu.NewTabOnRight" xml:space="preserve">
+    <value>New tab on the right</value>
+  </data>
+  <data name="TabsControl.ContextMenu.OpenTabInNewWindow" xml:space="preserve">
+    <value>Open a tab in a new window</value>
+  </data>
+  <data name="TabsControl.ContextMenu.Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="TabsControl.ContextMenu.Duplicate" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="TabsControl.ContextMenu.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="TabsControl.ContextMenu.CloseOtherTabs" xml:space="preserve">
+    <value>Close other tabs</value>
+  </data>
+  <data name="FileVm.DirectoryTypeName" xml:space="preserve">
+    <value>File folder</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Grouping" xml:space="preserve">
+    <value>Grouping</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Sorting" xml:space="preserve">
+    <value>Sorting</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Create.Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="ExplorerTab.ContextMenu.Create.TextFile" xml:space="preserve">
+    <value>Text File</value>
+  </data>
+  <data name="Grouping,Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Grouping,None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Grouping,Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

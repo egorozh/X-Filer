@@ -1,10 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-                    xmlns:localization="clr-namespace:XFiler.GoogleChromeStyle.Localization"
+                    xmlns:loc="clr-namespace:XFiler.GoogleChromeStyle.Localization"
                     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
                     xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls"
-                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters">
+                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
+                    xmlns:sdkLoc="clr-namespace:XFiler.SDK.Localization;assembly=XFiler.SDK">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml" />
         <ResourceDictionary Source="Icons.xaml" />
@@ -27,20 +28,20 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Button ToolTip="{x:Static localization:Strings.ToolBarControl_BackButtonTooltip}"
+                            <Button ToolTip="{x:Static loc:Strings.ToolBarControl_BackButtonTooltip}"
                                     Style="{StaticResource ToolButton}"
                                     Command="{Binding MoveBackCommand}"
                                     Content="{StaticResource BackIcon}" />
 
                             <Button Grid.Column="1"
                                     Style="{StaticResource ToolButton}"
-                                    ToolTip="{x:Static localization:Strings.ToolBarControl_ForwardButtonTooltip}"
+                                    ToolTip="{x:Static loc:Strings.ToolBarControl_ForwardButtonTooltip}"
                                     Command="{Binding MoveForwardCommand}"
                                     Content="{StaticResource ForwardIcon}" />
 
                             <Button Grid.Column="2"
                                     Style="{StaticResource ToolButton}"
-                                    ToolTip="{x:Static localization:Strings.ToolBarControl_RefreshButtonTooltip}"
+                                    ToolTip="{x:Static loc:Strings.ToolBarControl_RefreshButtonTooltip}"
                                     Content="{StaticResource UpdateIcon}"
                                     Command="{Binding UpdateCommand}" />
 
@@ -85,8 +86,9 @@
                                     <StackPanel>
                                         <ToggleButton Style="{DynamicResource ToolToggleButton}"
                                                       x:Name="SettingsViewButton"
-                                                      ToolTip="Параметры отображения">
+                                                      ToolTip="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options}">
                                             <Path Fill="White"
+                                                  Margin="2"
                                                   Stretch="Uniform"
                                                   Data="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C16.86,4.5 21.22,7.5 23,12C20.61,18.08 13.75,21.06 7.67,18.67C4.62,17.47 2.2,15.06 1,12C2.78,7.5 7.14,4.5 12,4.5M3.18,12C5.56,16.87 11.45,18.89 16.32,16.5C18.28,15.54 19.86,13.96 20.82,12C18.44,7.13 12.55,5.11 7.68,7.5C5.72,8.46 4.14,10.04 3.18,12M9,22H7V24H9V22M13,22H11V24H13V22M17,22H15V24H17V22Z" />
                                         </ToggleButton>
@@ -101,11 +103,11 @@
                                                 Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
                                             <StackPanel>
-                                                <TextBlock Text="Параметры отображения"
+                                                <TextBlock Text="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options}"
                                                            Margin="0 5"
                                                            FontSize="16" />
 
-                                                <TextBlock Text="Вид значков"
+                                                <TextBlock Text="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options_IconView}"
                                                            Margin="0 5"
                                                            FontSize="14" />
 
@@ -139,19 +141,19 @@
                             <Menu Grid.Column="5"
                                   DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}">
                                 <MenuItem Template="{DynamicResource MenuDotsMenuTemplate}"
-                                          ToolTip="Настройки">
+                                          ToolTip="{x:Static loc:Strings.ToolBarControl_Settings}">
                                     <MenuItem.Icon>
                                         <Path Stretch="Uniform"
                                               Fill="White"
                                               Data="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z" />
                                     </MenuItem.Icon>
-                                    <MenuItem Header="Диспетчер закладок"
+                                    <MenuItem Header="{x:Static sdkLoc:Strings.Routes_BookmarksDispatcher}"
                                               Command="{Binding CreateBookmarksDispatcherPageCommand}" />
                                     <Separator />
-                                    <MenuItem Header="Параметры"
+                                    <MenuItem Header="{x:Static sdkLoc:Strings.Routes_Settings}"
                                               Command="{Binding CreateSettingsTabCommand}" />
                                     <Separator />
-                                    <MenuItem Header="Закрыть все вкладки"
+                                    <MenuItem Header="{x:Static loc:Strings.ToolBarControl_Settings_CloseAllTabs}"
                                               Command="{Binding CloseAllTabsCommand}" />
                                 </MenuItem>
                             </Menu>

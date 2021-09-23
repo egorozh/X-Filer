@@ -47,7 +47,7 @@ namespace XFiler.SDK
             Settings = new XFilerRoute(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
 
             BookmarksDispatcher =
-                new XFilerRoute("Диспетчер закладок", "xfiler://bookmarks", RouteType.BookmarksDispatcher);
+                new XFilerRoute(Strings.Routes_BookmarksDispatcher, "xfiler://bookmarks", RouteType.BookmarksDispatcher);
 
             Desktop = new XFilerRoute(Strings.Routes_Desktop,
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Desktop);

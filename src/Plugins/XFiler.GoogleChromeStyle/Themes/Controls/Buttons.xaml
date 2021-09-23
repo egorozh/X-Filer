@@ -38,7 +38,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="ToolButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -52,17 +52,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
-                                        Height="28"
-                                        Width="28"
-                                        CornerRadius="14"
-                                        Background="{TemplateBinding Background}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        SnapsToDevicePixels="true">
+                            Height="28"
+                            Width="28"
+                            CornerRadius="14"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
 
                         <Viewbox Width="22"
-                                             Height="22"
-                                             Stretch="Uniform">
+                                 Height="22"
+                                 Stretch="Uniform">
                             <ContentPresenter />
                         </Viewbox>
                     </Border>
@@ -95,17 +95,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border x:Name="border"
-                                        Height="28"
-                                        Width="28"
-                                        CornerRadius="14"
-                                        Background="{TemplateBinding Background}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        SnapsToDevicePixels="true">
+                            Height="28"
+                            Width="28"
+                            CornerRadius="14"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
 
                         <Viewbox Width="22"
-                                             Height="22"
-                                             Stretch="Uniform">
+                                 Height="22"
+                                 Stretch="Uniform">
                             <ContentPresenter />
                         </Viewbox>
                     </Border>
@@ -124,8 +124,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Style x:Key="SearchContentButton" 
+
+    <Style x:Key="SearchContentButton"
            TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -139,17 +139,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
-                                            Height="24"
-                                            Width="24"
-                                            CornerRadius="14"
-                                            Background="{TemplateBinding Background}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            SnapsToDevicePixels="true">
+                            Height="24"
+                            Width="24"
+                            CornerRadius="14"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
 
                         <Viewbox Width="18"
-                                                 Height="18"
-                                                 Stretch="Uniform">
+                                 Height="18"
+                                 Stretch="Uniform">
                             <ContentPresenter />
                         </Viewbox>
                     </Border>

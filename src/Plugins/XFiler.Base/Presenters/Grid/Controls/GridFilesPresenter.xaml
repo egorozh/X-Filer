@@ -10,6 +10,7 @@
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
+             xmlns:loc="clr-namespace:XFiler.Base.Localization"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -136,48 +137,48 @@
                                   CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
 
             <ContextMenu x:Key="DirectoryContextMenu">
-                <MenuItem Header="Открыть"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                           Command="{StaticResource OpenCommand}"
                           CommandParameter="{Binding}" />
-                <MenuItem Header="Открыть в новой вкладке"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                           Command="{StaticResource  OpenNewTabCommand}"
                           CommandParameter="{Binding}" />
-                <MenuItem Header="Открыть в новом окне"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                           Command="{StaticResource  OpenNewWindowCommand}"
                           CommandParameter="{Binding}" />
                 <Separator />
 
-                <MenuItem Header="Открыть в проводнике Windows"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNativeExplorer}"
                           Command="{StaticResource OpenInNativeExplorerCommand}"
                           CommandParameter="{Binding }"/>
 
                 <Separator />
 
-                <MenuItem Header="Переименовать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Rename}"
                           Command="{StaticResource StartRenameCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="F2" />
 
                 <Separator />
 
-                <MenuItem Header="Вырезать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
                           Command="{StaticResource CutCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + X" />
 
-                <MenuItem Header="Копировать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
                           Command="{StaticResource CopyCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + C" />
 
-                <MenuItem Header="Вставить"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Paste}"
                           Command="{StaticResource PasteCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + V" />
 
                 <Separator />
 
-                <MenuItem Header="Удалить"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
                           Command="{StaticResource DeleteCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Del" />
@@ -185,63 +186,63 @@
             </ContextMenu>
 
             <ContextMenu x:Key="FileContextMenu">
-                <MenuItem Header="Открыть"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                           Command="{StaticResource OpenCommand}"
                           CommandParameter="{Binding}" />
-                <MenuItem Header="Открыть в новой вкладке"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                           Command="{StaticResource  OpenNewTabCommand}"
                           CommandParameter="{Binding}" />
-                <MenuItem Header="Открыть в новом окне"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                           Command="{StaticResource  OpenNewWindowCommand}"
                           CommandParameter="{Binding}" />
 
                 <Separator />
 
-                <MenuItem Header="Переименовать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Rename}"
                           Command="{StaticResource StartRenameCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="F2" />
 
                 <Separator />
 
-                <MenuItem Header="Вырезать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
                           Command="{StaticResource CutCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + X" />
 
-                <MenuItem Header="Копировать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
                           Command="{StaticResource CopyCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Ctrl + C" />
 
                 <Separator />
 
-                <MenuItem Header="Удалить"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
                           Command="{StaticResource DeleteCommand}"
                           CommandParameter="{Binding}"
                           InputGestureText="Del" />
             </ContextMenu>
 
             <ContextMenu x:Key="ManyItemsContextMenu">
-                <MenuItem Header="Открыть в новой вкладке"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                           Command="{StaticResource  OpenManyItemsNewTabCommand}" />
 
-                <MenuItem Header="Открыть в новом окне"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                           Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
 
                 <Separator />
 
-                <MenuItem Header="Вырезать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
                           Command="{StaticResource CutManyCommand}"
                           InputGestureText="Ctrl + X" />
 
-                <MenuItem Header="Копировать"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
                           Command="{StaticResource CopyManyCommand}"
                           InputGestureText="Ctrl + C" />
 
                 <Separator />
 
-                <MenuItem Header="Удалить"
+                <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
                           Command="{StaticResource DeleteManyCommand}"
                           InputGestureText="Del" />
             </ContextMenu>
@@ -458,7 +459,7 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Имя"
+            <DataGridTemplateColumn Header="{x:Static loc:Strings.Presenters_Table_NameRow}"
                                     Width="250"
                                     CanUserSort="True" 
                                     SortMemberPath="Name">
@@ -485,13 +486,13 @@
                 </DataGridTemplateColumn.CellTemplate>
                
             </DataGridTemplateColumn>
-            <DataGridTextColumn Header="Дата изменения"
+            <DataGridTextColumn Header="{x:Static loc:Strings.Presenters_Table_DateOfChangeRow}"
                                 IsReadOnly="True"
                                 Binding="{Binding ChangeDateTime, StringFormat=g}" />
-            <DataGridTextColumn Header="Тип"
+            <DataGridTextColumn Header="{x:Static loc:Strings.Presenters_Table_TypeRow}"
                                 IsReadOnly="True"
                                 Binding="{Binding Type}" />
-            <DataGridTextColumn Header="Размер"
+            <DataGridTextColumn Header="{x:Static loc:Strings.Presenters_Table_SizeRow}"
                                 IsReadOnly="True"
                                 Binding="{Binding Size, Converter={sdk:FileSizeToStringConverter}}" />
         </DataGrid.Columns>

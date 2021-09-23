@@ -110,4 +110,31 @@
   <data name="MyComputer.FreeFromText" xml:space="preserve">
     <value>free of</value>
   </data>
+  <data name="ToolBarControl.ExplorerSettings.Display options" xml:space="preserve">
+    <value>Display options</value>
+  </data>
+  <data name="ToolBarControl.ExplorerSettings.Display options.IconView" xml:space="preserve">
+    <value>Icon view</value>
+  </data>
+  <data name="ToolBarControl.Settings" xml:space="preserve">
+    <value>Settings and more</value>
+  </data>
+  <data name="ToolBarControl.Settings.CloseAllTabs" xml:space="preserve">
+    <value>Close all tabs</value>
+  </data>
+  <data name="MainWindow.Buttons.CollapseTooltip" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="MainWindow.Buttons.CloseTooltip" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MainWindow.Buttons.RestoreTooltip" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="MainWindow.Buttons.MaximizeTooltip" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="MainWindow.Buttons.NewTabTooltip" xml:space="preserve">
+    <value>New tab</value>
+  </data>
 </root>

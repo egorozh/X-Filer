@@ -33,23 +33,21 @@ namespace XFiler
             if (!first)
                 Shutdown();
 
-            _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-
-            Host = new IoC().Build();
-
             //var availableCultures = new[]
             //{
             //    "Ru-ru",
             //    "En-us"
             //};
 
-            //var currentLanguage = CultureInfo.CurrentCulture;
-
             //SetCulture(availableCultures[1]);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
+            _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+
+            Host = new IoC().Build();
+            
             SetTheme(new GoogleChromeTheme());
 
             _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
@@ -76,6 +74,9 @@ namespace XFiler
         public static void SetCulture(string culture)
         {
             CultureInfo currentCulture = new(culture);
+
+            CultureInfo.DefaultThreadCurrentCulture = currentCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = currentCulture;
             CultureInfo.CurrentCulture = currentCulture;
             CultureInfo.CurrentUICulture = currentCulture;
         }

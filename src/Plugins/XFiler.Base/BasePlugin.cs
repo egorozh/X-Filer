@@ -10,9 +10,12 @@ namespace XFiler.Base
         public void Load(ContainerBuilder services)
         {
             services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>("grid");
+            services.RegisterType<SmallTileFilesPresenterViewModel>().Keyed<IFilesPresenter>("smallTile");
             services.RegisterType<TileFilesPresenterViewModel>().Keyed<IFilesPresenter>("regularTile");
-           
+
+            
             services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<SmallTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
             services.RegisterType<RegularTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
             
             services.RegisterType<SvgIconProvider>().As<IIconProvider>().SingleInstance();

@@ -98,43 +98,55 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-  <data name="ToolBarControl.BackButtonTooltip" xml:space="preserve">
-    <value>Нажмите, чтобы вернуться.</value>
+  <data name="Presenters.Table" xml:space="preserve">
+    <value>Таблица</value>
   </data>
-  <data name="ToolBarControl.ForwardButtonTooltip" xml:space="preserve">
-    <value>Нажмите, чтобы перейти вперёд.</value>
+  <data name="Presenters.RegularTiles" xml:space="preserve">
+    <value>Нормальные значки</value>
   </data>
-  <data name="ToolBarControl.RefreshButtonTooltip" xml:space="preserve">
-    <value>Обновить</value>
+  <data name="ContextMenu.Open" xml:space="preserve">
+    <value>Открыть</value>
   </data>
-  <data name="MyComputer.FreeFromText" xml:space="preserve">
-    <value>свободно из</value>
+  <data name="ContextMenu.OpenInNewTab" xml:space="preserve">
+    <value>Открыть в новой вкладке</value>
   </data>
-  <data name="ToolBarControl.ExplorerSettings.Display options" xml:space="preserve">
-    <value>Параметры отображения</value>
+  <data name="ContextMenu.OpenInNewWindow" xml:space="preserve">
+    <value>Открыть в новом окне</value>
   </data>
-  <data name="ToolBarControl.ExplorerSettings.Display options.IconView" xml:space="preserve">
-    <value>Вид значков</value>
+  <data name="ContextMenu.OpenInNativeExplorer" xml:space="preserve">
+    <value>Открыть в проводнике Windows</value>
   </data>
-  <data name="ToolBarControl.Settings" xml:space="preserve">
-    <value>Настройки и прочее</value>
+  <data name="ContextMenu.Rename" xml:space="preserve">
+    <value>Переименовать</value>
   </data>
-  <data name="ToolBarControl.Settings.CloseAllTabs" xml:space="preserve">
-    <value>Закрыть все вкладки</value>
+  <data name="ContextMenu.Paste" xml:space="preserve">
+    <value>Вставить</value>
   </data>
-  <data name="MainWindow.Buttons.CollapseTooltip" xml:space="preserve">
-    <value>Свернуть</value>
+  <data name="ContextMenu.Copy" xml:space="preserve">
+    <value>Копировать</value>
   </data>
-  <data name="MainWindow.Buttons.CloseTooltip" xml:space="preserve">
-    <value>Закрыть</value>
+  <data name="ContextMenu.Cut" xml:space="preserve">
+    <value>Вырезать</value>
   </data>
-  <data name="MainWindow.Buttons.RestoreTooltip" xml:space="preserve">
-    <value>Восстановить</value>
+  <data name="ContextMenu.Delete" xml:space="preserve">
+    <value>Удалить</value>
   </data>
-  <data name="MainWindow.Buttons.MaximizeTooltip" xml:space="preserve">
-    <value>Развернуть</value>
+  <data name="Presenters.Table.NameRow" xml:space="preserve">
+    <value>Имя</value>
   </data>
-  <data name="MainWindow.Buttons.NewTabTooltip" xml:space="preserve">
-    <value>Новая вкладка</value>
+  <data name="Presenters.Table.DateOfChangeRow" xml:space="preserve">
+    <value>Дата изменения</value>
+  </data>
+  <data name="Presenters.Table.SizeRow" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="Presenters.Table.TypeRow" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="Presenters.SmallTiles" xml:space="preserve">
+    <value>Маленькие значки</value>
+  </data>
+  <data name="ContextMenu.AddToBookmarks" xml:space="preserve">
+    <value>Добавить в закладки</value>
   </data>
 </root>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace XFiler.SDK.Localization {
+namespace XFiler.Base.Localization {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace XFiler.SDK.Localization {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("XFiler.SDK.Localization.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("XFiler.Base.Localization.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,155 +61,155 @@ namespace XFiler.SDK.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на B.
-        /// </summary>
-        public static string B {
-            get {
-                return ResourceManager.GetString("B", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Local drive.
-        /// </summary>
-        public static string DriveType_Fixed {
-            get {
-                return ResourceManager.GetString("DriveType.Fixed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Usb drive.
-        /// </summary>
-        public static string DriveType_Usb {
-            get {
-                return ResourceManager.GetString("DriveType.Usb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на GB.
-        /// </summary>
-        public static string Gb {
-            get {
-                return ResourceManager.GetString("Gb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на KB.
-        /// </summary>
-        public static string KB {
-            get {
-                return ResourceManager.GetString("KB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на MB.
-        /// </summary>
-        public static string MB {
-            get {
-                return ResourceManager.GetString("MB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string Routes_BookmarksDispatcher {
+        public static string ContextMenu_AddToBookmarks {
             get {
-                return ResourceManager.GetString("Routes.BookmarksDispatcher", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.AddToBookmarks", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Desktop.
+        ///   Ищет локализованную строку, похожую на Copy.
         /// </summary>
-        public static string Routes_Desktop {
+        public static string ContextMenu_Copy {
             get {
-                return ResourceManager.GetString("Routes.Desktop", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.Copy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Downloads.
+        ///   Ищет локализованную строку, похожую на Cut.
         /// </summary>
-        public static string Routes_Downloads {
+        public static string ContextMenu_Cut {
             get {
-                return ResourceManager.GetString("Routes.Downloads", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.Cut", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на My Computer.
+        ///   Ищет локализованную строку, похожую на Delete.
         /// </summary>
-        public static string Routes_MyComputer {
+        public static string ContextMenu_Delete {
             get {
-                return ResourceManager.GetString("Routes.MyComputer", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.Delete", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на My Documents.
+        ///   Ищет локализованную строку, похожую на Open.
         /// </summary>
-        public static string Routes_MyDocuments {
+        public static string ContextMenu_Open {
             get {
-                return ResourceManager.GetString("Routes.MyDocuments", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.Open", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на My Music.
+        ///   Ищет локализованную строку, похожую на Open in Windows Explorer.
         /// </summary>
-        public static string Routes_MyMusic {
+        public static string ContextMenu_OpenInNativeExplorer {
             get {
-                return ResourceManager.GetString("Routes.MyMusic", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.OpenInNativeExplorer", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на My Pictures.
+        ///   Ищет локализованную строку, похожую на Open in new tab.
         /// </summary>
-        public static string Routes_MyPictures {
+        public static string ContextMenu_OpenInNewTab {
             get {
-                return ResourceManager.GetString("Routes.MyPictures", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.OpenInNewTab", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на My Videos.
+        ///   Ищет локализованную строку, похожую на Open in new window.
         /// </summary>
-        public static string Routes_MyVideos {
+        public static string ContextMenu_OpenInNewWindow {
             get {
-                return ResourceManager.GetString("Routes.MyVideos", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.OpenInNewWindow", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Basket.
+        ///   Ищет локализованную строку, похожую на Paste.
         /// </summary>
-        public static string Routes_RecycleBin {
+        public static string ContextMenu_Paste {
             get {
-                return ResourceManager.GetString("Routes.RecycleBin", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.Paste", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Settings.
+        ///   Ищет локализованную строку, похожую на Rename.
         /// </summary>
-        public static string Routes_Settings {
+        public static string ContextMenu_Rename {
             get {
-                return ResourceManager.GetString("Routes.Settings", resourceCulture);
+                return ResourceManager.GetString("ContextMenu.Rename", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на TB.
+        ///   Ищет локализованную строку, похожую на Regular Tiles.
         /// </summary>
-        public static string TB {
+        public static string Presenters_RegularTiles {
             get {
-                return ResourceManager.GetString("TB", resourceCulture);
+                return ResourceManager.GetString("Presenters.RegularTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Small Tiles.
+        /// </summary>
+        public static string Presenters_SmallTiles {
+            get {
+                return ResourceManager.GetString("Presenters.SmallTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Table.
+        /// </summary>
+        public static string Presenters_Table {
+            get {
+                return ResourceManager.GetString("Presenters.Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Date of change.
+        /// </summary>
+        public static string Presenters_Table_DateOfChangeRow {
+            get {
+                return ResourceManager.GetString("Presenters.Table.DateOfChangeRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name.
+        /// </summary>
+        public static string Presenters_Table_NameRow {
+            get {
+                return ResourceManager.GetString("Presenters.Table.NameRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Size.
+        /// </summary>
+        public static string Presenters_Table_SizeRow {
+            get {
+                return ResourceManager.GetString("Presenters.Table.SizeRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Type.
+        /// </summary>
+        public static string Presenters_Table_TypeRow {
+            get {
+                return ResourceManager.GetString("Presenters.Table.TypeRow", resourceCulture);
             }
         }
     }

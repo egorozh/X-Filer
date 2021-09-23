@@ -10,6 +10,7 @@
              xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
              xmlns:controls="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+             xmlns:loc="clr-namespace:XFiler.Base.Localization"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -26,6 +27,10 @@
         <sdk:CommandReference x:Key="OpenCommand"
                               Command="{Binding DataContext.OpenCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+    
+        <sdk:CommandReference x:Key="AddToBookmarksCommand"
+                              Command="{Binding SelectedItem.AddBookmarkCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" />
 
         <sdk:CommandReference x:Key="OpenInNativeExplorerCommand"
                               Command="{Binding DataContext.OpenInNativeExplorerCommand, 
@@ -125,49 +130,55 @@
                                       CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
                 <ContextMenu x:Key="DirectoryContextMenu">
-                    <MenuItem Header="Открыть"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                               Command="{StaticResource OpenCommand}"
                               CommandParameter="{Binding}" />
-                    <MenuItem Header="Открыть в новой вкладке"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                               Command="{StaticResource  OpenNewTabCommand}"
                               CommandParameter="{Binding}" />
-                    <MenuItem Header="Открыть в новом окне"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                               Command="{StaticResource  OpenNewWindowCommand}"
                               CommandParameter="{Binding}" />
 
                     <Separator />
 
-                    <MenuItem Header="Открыть в проводнике Windows"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNativeExplorer}"
                               Command="{StaticResource OpenInNativeExplorerCommand}"
                               CommandParameter="{Binding }" />
 
                     <Separator />
 
-                    <MenuItem Header="Переименовать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_AddToBookmarks}"
+                              Command="{StaticResource AddToBookmarksCommand}"
+                              CommandParameter="{Binding }" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Rename}"
                               Command="{StaticResource StartRenameCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="F2" />
 
                     <Separator />
 
-                    <MenuItem Header="Вырезать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
                               Command="{StaticResource CutCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Ctrl + X" />
 
-                    <MenuItem Header="Копировать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
                               Command="{StaticResource CopyCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Ctrl + C" />
 
-                    <MenuItem Header="Вставить"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Paste}"
                               Command="{StaticResource PasteCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Ctrl + V" />
 
                     <Separator />
 
-                    <MenuItem Header="Удалить"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
                               Command="{StaticResource DeleteCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Del" />
@@ -175,63 +186,69 @@
                 </ContextMenu>
 
                 <ContextMenu x:Key="FileContextMenu">
-                    <MenuItem Header="Открыть"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                               Command="{StaticResource OpenCommand}"
                               CommandParameter="{Binding}" />
-                    <MenuItem Header="Открыть в новой вкладке"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                               Command="{StaticResource  OpenNewTabCommand}"
                               CommandParameter="{Binding}" />
-                    <MenuItem Header="Открыть в новом окне"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                               Command="{StaticResource  OpenNewWindowCommand}"
                               CommandParameter="{Binding}" />
 
                     <Separator />
 
-                    <MenuItem Header="Переименовать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_AddToBookmarks}"
+                              Command="{StaticResource AddToBookmarksCommand}"
+                              CommandParameter="{Binding }" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Rename}"
                               Command="{StaticResource StartRenameCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="F2" />
 
                     <Separator />
 
-                    <MenuItem Header="Вырезать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
                               Command="{StaticResource CutCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Ctrl + X" />
 
-                    <MenuItem Header="Копировать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
                               Command="{StaticResource CopyCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Ctrl + C" />
 
                     <Separator />
 
-                    <MenuItem Header="Удалить"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
                               Command="{StaticResource DeleteCommand}"
                               CommandParameter="{Binding}"
                               InputGestureText="Del" />
                 </ContextMenu>
 
                 <ContextMenu x:Key="ManyItemsContextMenu">
-                    <MenuItem Header="Открыть в новой вкладке"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                               Command="{StaticResource  OpenManyItemsNewTabCommand}" />
 
-                    <MenuItem Header="Открыть в новом окне"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                               Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
 
                     <Separator />
 
-                    <MenuItem Header="Вырезать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
                               Command="{StaticResource CutManyCommand}"
                               InputGestureText="Ctrl + X" />
 
-                    <MenuItem Header="Копировать"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
                               Command="{StaticResource CopyManyCommand}"
                               InputGestureText="Ctrl + C" />
 
                     <Separator />
 
-                    <MenuItem Header="Удалить"
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
                               Command="{StaticResource DeleteManyCommand}"
                               InputGestureText="Del" />
                 </ContextMenu>
@@ -266,18 +283,15 @@
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource EntityItemStyle}">
                     <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
+                    <Setter Property="Width" Value="{Binding TileSize, RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+                    <Setter Property="ToolTip" Value="{Binding Name}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
 
                                 <Grid>
 
-                                    <Border x:Name="Bd"
-                                            CornerRadius="8"
-                                            Margin="{TemplateBinding Padding}"
-                                            Background="Transparent"
-                                            BorderThickness="2"
-                                            BorderBrush="Transparent"
+                                    <Border Margin="{TemplateBinding Padding}"
                                             SnapsToDevicePixels="true">
 
                                         <Border.InputBindings>
@@ -328,7 +342,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type sdk:IFileSystemModel}">
                     <Grid Background="Transparent">
-                        <Grid>
+                        <Grid >
 
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -336,10 +350,11 @@
                             </Grid.RowDefinitions>
 
                             <Border x:Name="Bd"
+                                   
                                     CornerRadius="8"
                                     BorderThickness="2"
-                                    Width="{Binding ActualHeight,RelativeSource={RelativeSource Self}}"
-                                    Margin="4"
+                                    Height="{Binding ActualWidth,RelativeSource={RelativeSource Self}}"
+                                    Margin="0"
                                     Padding="8"
                                     SnapsToDevicePixels="true">
 

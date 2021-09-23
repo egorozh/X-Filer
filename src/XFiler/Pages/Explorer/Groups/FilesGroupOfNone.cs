@@ -1,8 +1,10 @@
-﻿namespace XFiler.SDK
+﻿using XFiler.Resources.Localization;
+
+namespace XFiler
 {
     public class FilesGroupOfNone : DisposableViewModel, IFilesGroup
     {
-        public string Name { get; } = "Нет";
+        public string Name { get; } = Strings.Grouping_None;
 
         public string GetGroup(IFileItem item)
         {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
+using XFiler.Base.Localization;
 using XFiler.SDK;
 
 namespace XFiler.Base
@@ -11,7 +12,7 @@ namespace XFiler.Base
         private IIndex<string, IFilesPresenter> _presenterFactory;
 
         public RegularTilesFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
-            : base("Крупные значки", CreateTemplate(), CreateIcon(), "2e60a960-5261-413c-b046-278f5753140b")
+            : base(Strings.Presenters_RegularTiles, CreateTemplate(), CreateIcon(), "2e60a960-5261-413c-b046-278f5753140b")
         {
             _presenterFactory = presenterFactory;
         }

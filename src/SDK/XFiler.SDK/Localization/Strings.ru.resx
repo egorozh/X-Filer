@@ -146,4 +146,7 @@
   <data name="TB" xml:space="preserve">
     <value>ТБ</value>
   </data>
+  <data name="Routes.BookmarksDispatcher" xml:space="preserve">
+    <value>Диспетчер закладок</value>
+  </data>
 </root>

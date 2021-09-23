@@ -4,7 +4,8 @@
                     xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
                     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
                     xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
-                    xmlns:windows="clr-namespace:XFiler.Controls.Windows;assembly=XFiler.Controls">
+                    xmlns:windows="clr-namespace:XFiler.Controls.Windows;assembly=XFiler.Controls"
+                    xmlns:loc="clr-namespace:XFiler.GoogleChromeStyle.Localization">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml" />
@@ -41,7 +42,7 @@
 
                                     <Button Command="{TemplateBinding CollapseCommand}"
                                             Style="{StaticResource SystemWindowButton}"
-                                            ToolTip="Свернуть">
+                                            ToolTip="{x:Static loc:Strings.MainWindow_Buttons_CollapseTooltip}">
 
                                         <Canvas Width="24" Height="24">
                                             <Path
@@ -54,7 +55,7 @@
                                             Style="{StaticResource ExpandButtonStyle}" />
 
                                     <Button Command="{TemplateBinding CloseCommand}"
-                                            ToolTip="Закрыть"
+                                            ToolTip="{x:Static loc:Strings.MainWindow_Buttons_CloseTooltip}"
                                             Style="{StaticResource MainCloseButtonStyle}">
 
                                         <Canvas Width="24" Height="24">

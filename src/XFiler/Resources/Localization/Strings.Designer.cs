@@ -61,7 +61,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Open in Windows Explorer.
         /// </summary>
         public static string ExlporerTab_ContextMenu_OpenInNativeExplorer {
             get {
@@ -88,6 +88,33 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Create.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Create {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Folder.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Create_Folder {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Create.Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Text File.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Create_TextFile {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Create.TextFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Alt + Right Arrow.
         /// </summary>
         public static string ExplorerTab_ContextMenu_ForwardButtonGesture {
@@ -106,6 +133,42 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Grouping.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Grouping {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Grouping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Paste.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Paste {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Properties.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Properties {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Sorting.
+        /// </summary>
+        public static string ExplorerTab_ContextMenu_Sorting {
+            get {
+                return ResourceManager.GetString("ExplorerTab.ContextMenu.Sorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Refresh.
         /// </summary>
         public static string ExplorerTab_ContextMenu_UpdateButtonHeader {
@@ -120,6 +183,42 @@ namespace XFiler.Resources.Localization {
         public static string ExplorerTab_ContextMenu_View {
             get {
                 return ResourceManager.GetString("ExplorerTab.ContextMenu.View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на File folder.
+        /// </summary>
+        public static string FileVm_DirectoryTypeName {
+            get {
+                return ResourceManager.GetString("FileVm.DirectoryTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name.
+        /// </summary>
+        public static string Grouping_Name {
+            get {
+                return ResourceManager.GetString("Grouping,Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на None.
+        /// </summary>
+        public static string Grouping_None {
+            get {
+                return ResourceManager.GetString("Grouping,None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Grouping_Type {
+            get {
+                return ResourceManager.GetString("Grouping,Type", resourceCulture);
             }
         }
         
@@ -219,6 +318,60 @@ namespace XFiler.Resources.Localization {
         public static string SearchHandler_SearchDriveText {
             get {
                 return ResourceManager.GetString("SearchHandler.SearchDriveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Close.
+        /// </summary>
+        public static string TabsControl_ContextMenu_Close {
+            get {
+                return ResourceManager.GetString("TabsControl.ContextMenu.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Close other tabs.
+        /// </summary>
+        public static string TabsControl_ContextMenu_CloseOtherTabs {
+            get {
+                return ResourceManager.GetString("TabsControl.ContextMenu.CloseOtherTabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Duplicate.
+        /// </summary>
+        public static string TabsControl_ContextMenu_Duplicate {
+            get {
+                return ResourceManager.GetString("TabsControl.ContextMenu.Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на New tab on the right.
+        /// </summary>
+        public static string TabsControl_ContextMenu_NewTabOnRight {
+            get {
+                return ResourceManager.GetString("TabsControl.ContextMenu.NewTabOnRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Open a tab in a new window.
+        /// </summary>
+        public static string TabsControl_ContextMenu_OpenTabInNewWindow {
+            get {
+                return ResourceManager.GetString("TabsControl.ContextMenu.OpenTabInNewWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Refresh.
+        /// </summary>
+        public static string TabsControl_ContextMenu_Refresh {
+            get {
+                return ResourceManager.GetString("TabsControl.ContextMenu.Refresh", resourceCulture);
             }
         }
     }

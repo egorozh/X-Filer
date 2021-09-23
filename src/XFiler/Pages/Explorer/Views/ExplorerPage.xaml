@@ -70,8 +70,8 @@
                             </b:Interaction.Behaviors>
                         </MenuItem>
 
-                        <MenuItem Header="Сортировка" />
-                        <MenuItem Header="Группировка">
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Sorting}" />
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Grouping}">
                             <b:Interaction.Behaviors>
                                 <local:ComboBoxToMenuBehavior Items="{Binding FilesGroups}"
                                                               CurrentItem="{Binding CurrentGroup, Mode=TwoWay}" />
@@ -80,28 +80,28 @@
 
                         <Separator />
 
-                        <MenuItem Header="Вставить"
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Paste}"
                                   Command="{Binding PasteCommand}"
                                   CommandParameter="{Binding CurrentPresenter.FilesPresenter}"
                                   InputGestureText="Ctrl + V" />
 
                         <Separator />
 
-                        <MenuItem Header="Создать">
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Create}">
 
-                            <MenuItem Header="Папку"
+                            <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Create_Folder}"
                                       Command="{Binding CreateFolderCommand}"
                                       CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
                             <Separator />
 
-                            <MenuItem Header="Текстовый документ"
+                            <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Create_TextFile}"
                                       Command="{Binding CreateTextCommand}"
                                       CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
                         </MenuItem>
 
                         <Separator />
 
-                        <MenuItem Header="Свойства" />
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Properties}" />
                     </ContextMenu>
                 </ContentControl.ContextMenu>
                 <ContentControl.ContentTemplateSelector>

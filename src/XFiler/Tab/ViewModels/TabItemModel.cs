@@ -38,7 +38,7 @@ namespace XFiler
 
         #region Commands
 
-        public DelegateCommand<IPageModel> AddBookmarkCommand { get; private set; }
+        public DelegateCommand<object> AddBookmarkCommand { get; private set; }
 
         public DelegateCommand MoveBackCommand { get; }
 

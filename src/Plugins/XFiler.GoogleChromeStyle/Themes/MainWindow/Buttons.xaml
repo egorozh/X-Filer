@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:windows="clr-namespace:XFiler.Controls.Windows;assembly=XFiler.Controls">
+                    xmlns:windows="clr-namespace:XFiler.Controls.Windows;assembly=XFiler.Controls"
+                    xmlns:loc="clr-namespace:XFiler.GoogleChromeStyle.Localization">
 
     <Style TargetType="{x:Type Button}"
            x:Key="SystemWindowButton">
@@ -108,7 +109,7 @@
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemWindowButton}"
            x:Key="ExpandButtonStyle">
 
-        <Setter Property="ToolTip" Value="Восстановить" />
+        <Setter Property="ToolTip" Value="{x:Static loc:Strings.MainWindow_Buttons_RestoreTooltip}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -156,7 +157,7 @@
                             <Setter Property="Data" TargetName="Path"
                                     Value="M4,4H20V20H4V4M6,8V18H18V8H6Z"/>
 
-                            <Setter Property="ToolTip" Value="Развернуть" />
+                            <Setter Property="ToolTip" Value="{x:Static loc:Strings.MainWindow_Buttons_MaximizeTooltip}" />
 
                         </DataTrigger>
 
@@ -165,137 +166,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemWindowButton}"
-           x:Key="AddTabButtonStyle">
-
-        <Setter Property="ToolTip" Value="Новая вкладка" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            Height="28"
-                            Width="28"
-                            CornerRadius="14"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            SnapsToDevicePixels="true">
-
-                        <Viewbox Width="20"
-                                 Height="20"
-                                 Stretch="Uniform">
-                            <Canvas Width="24" Height="24">
-                                <Path Fill="{TemplateBinding Foreground}"
-                                      Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                            </Canvas>
-                        </Viewbox>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsDefaulted" Value="true" />
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#292929" />
-                        </Trigger>
-                        <DataTrigger
-                            Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                            Value="False">
-                            <Setter Property="Foreground" Value="#BFBFBF" />
-                        </DataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition
-                                    Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                                    Value="False" />
-                                <Condition
-                                    Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
-                                    Value="true" />
-                            </MultiDataTrigger.Conditions>
-
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Foreground"
-                                        Value="#C9C9C9" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" Value="#333333" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false" />
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemWindowButton}"
-           x:Key="CloseTabButtonStyle">
-
-        <Setter Property="Width" Value="16" />
-        <Setter Property="Height" Value="16" />
-        <Setter Property="ToolTip" Value="Закрыть" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            CornerRadius="8"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            SnapsToDevicePixels="true">
-
-                        <Viewbox Width="8"
-                                 Height="8">
-                            <Path Stretch="Uniform"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" />
-                        </Viewbox>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter Property="Background"
-                                    Value="#555555" />
-                        </Trigger>
-                        <DataTrigger Value="False"
-                                     Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type windows:XFilerWindowBase}} }">
-                            <Setter Property="Foreground" Value="#BFBFBF" />
-                        </DataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Value="False"
-                                           Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type windows:XFilerWindowBase}} }" />
-                                <Condition Value="True"
-                                           Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Background" Value="#414141" />
-                                <Setter Property="Foreground" Value="#C4C4C4" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition
-                                    Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType={x:Type windows:XFilerWindowBase}} }"
-                                    Value="False" />
-                                <Condition
-                                    Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
-                                    Value="true" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Foreground" Value="White" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter Property="Background"
-                                    Value="#6D6D6D" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
+   
 </ResourceDictionary>

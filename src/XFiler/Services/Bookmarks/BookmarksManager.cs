@@ -38,7 +38,7 @@ namespace XFiler
 
         #region Commands
 
-        public DelegateCommand<IPageModel> AddBookmarkCommand { get; }
+        public DelegateCommand<object> AddBookmarkCommand { get; }
 
         public DelegateCommand<IList<object>> BookmarkClickCommand { get; }
 
@@ -63,7 +63,7 @@ namespace XFiler
             DropTarget = dropTarget;
 
             BookmarkClickCommand = new DelegateCommand<IList<object>>(OnBookmarkClicked);
-            AddBookmarkCommand = new DelegateCommand<IPageModel>(OnAddBookmark);
+            AddBookmarkCommand = new DelegateCommand<object>(OnAddBookmark);
 
             RemoveCommand = new DelegateCommand(OnRemove, CanRemove);
             AddFolderCommand = new DelegateCommand(OnAddFolder);
@@ -88,14 +88,24 @@ namespace XFiler
             }
         }
 
-        private void OnAddBookmark(IPageModel page)
+        private void OnAddBookmark(object parameter)
         {
-            var route = page.Route;
-
-            _bookmarks.Add(CreateItem(new BookmarkItem
+            if (parameter is IPageModel page)
             {
-                Path = route.FullName
-            }));
+                var route = page.Route;
+
+                _bookmarks.Add(CreateItem(new BookmarkItem
+                {
+                    Path = route.FullName
+                }));
+            }
+            else if (parameter is IFileSystemModel fileSystemModel)
+            {
+                _bookmarks.Add(CreateItem(new BookmarkItem
+                {
+                    Path = fileSystemModel.Info.FullName
+                }));
+            }
         }
 
         private bool CanRemove() => SelectedItem != null;
