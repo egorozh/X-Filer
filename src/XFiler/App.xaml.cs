@@ -3,6 +3,7 @@ using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using XFiler.GoogleChromeStyle;
 using XFiler.NotifyIcon;
 using XFiler.SDK.Themes;
@@ -47,7 +48,7 @@ namespace XFiler
             _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
 
             Host = new IoC().Build();
-            
+
             SetTheme(new GoogleChromeTheme());
 
             _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
@@ -115,6 +116,12 @@ namespace XFiler
 
                 windowFactory.GetWindowWithRootTab().Show();
             }
+        }
+
+        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("An unhandled exception just occurred: " + e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            e.Handled = true;
         }
 
         #endregion

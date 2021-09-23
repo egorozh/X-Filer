@@ -284,6 +284,8 @@
                 <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource EntityItemStyle}">
                     <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
                     <Setter Property="Width" Value="{Binding TileSize, RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}}}" />
+                    <Setter Property="Height" Value="{Binding TileSize, RelativeSource={RelativeSource AncestorType={x:Type base:TileFilePresenter}},
+                        Converter={base:SizeToHeightConverter}}" />
                     <Setter Property="ToolTip" Value="{Binding Name}" />
                     <Setter Property="Template">
                         <Setter.Value>
