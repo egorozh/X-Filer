@@ -1,5 +1,5 @@
-﻿using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.IO;
+using System.Windows.Media;
 using XFiler.Resize;
 
 namespace XFiler;
@@ -23,9 +23,19 @@ internal sealed class IconProviderForImages : IIconProvider
 
             if (_resizeImageService.IsSupportExtension(fileInfo.Extension))
                 return _resizeImageService.ResizeImage(fileInfo.FullName, (int)size);
+        }
 
-            if (ext == ".ico")
-                return new BitmapImage(new Uri(route.FullName));
+        return null;
+    }
+
+    public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+    {
+        if (route is FileRoute fileRoute)
+        {
+            var fileInfo = fileRoute.File;
+            
+            if (_resizeImageService.IsSupportExtension(fileInfo.Extension))
+                return await _resizeImageService.ResizeImageAsync(fileInfo.FullName, (int)size);
         }
 
         return null;

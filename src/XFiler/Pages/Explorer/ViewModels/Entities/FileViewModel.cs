@@ -9,8 +9,9 @@ namespace XFiler
         public long Size => FileInfo.Length;
 
         public FileViewModel(IIconLoader iconLoader, 
-            IClipboardService clipboardService)
-            : base(iconLoader, clipboardService)
+            IClipboardService clipboardService,
+            IFileTypeResolver fileTypeResolver)
+            : base(iconLoader, clipboardService, fileTypeResolver)
         {
         }
     }

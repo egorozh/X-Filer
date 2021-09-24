@@ -38,5 +38,10 @@ namespace XFiler.Resize
 
             return ImageSystem.FromStream(ms);
         }
+
+        public Task<Stream?> ResizeImageAsync(string fullName, int size)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

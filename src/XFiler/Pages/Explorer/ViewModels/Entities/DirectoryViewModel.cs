@@ -7,8 +7,9 @@ namespace XFiler
         public DirectoryInfo DirectoryInfo => (DirectoryInfo)Info;
 
         public DirectoryViewModel(IIconLoader iconLoader,
-            IClipboardService clipboardService)
-            : base(iconLoader, clipboardService)
+            IClipboardService clipboardService,
+            IFileTypeResolver fileTypeResolver)
+            : base(iconLoader, clipboardService, fileTypeResolver)
         {
         }
     }

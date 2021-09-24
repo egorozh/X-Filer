@@ -153,27 +153,36 @@ namespace XFiler.Base.Localization {
         /// <summary>
         ///   Ищет локализованную строку, похожую на .
         /// </summary>
-        public static string Presenters_LargeTiles {
+        public static string Presenters_Content {
             get {
-                return ResourceManager.GetString("Presenters.LargeTiles", resourceCulture);
+                return ResourceManager.GetString("Presenters.Content", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Regular Tiles.
+        ///   Ищет локализованную строку, похожую на Large icons.
         /// </summary>
-        public static string Presenters_RegularTiles {
+        public static string Presenters_LargeIcons {
             get {
-                return ResourceManager.GetString("Presenters.RegularTiles", resourceCulture);
+                return ResourceManager.GetString("Presenters.LargeIcons", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Small Tiles.
+        ///   Ищет локализованную строку, похожую на Regular icons.
         /// </summary>
-        public static string Presenters_SmallTiles {
+        public static string Presenters_RegularIcons {
             get {
-                return ResourceManager.GetString("Presenters.SmallTiles", resourceCulture);
+                return ResourceManager.GetString("Presenters.RegularIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Small icons.
+        /// </summary>
+        public static string Presenters_SmallIcons {
+            get {
+                return ResourceManager.GetString("Presenters.SmallIcons", resourceCulture);
             }
         }
         
@@ -219,6 +228,15 @@ namespace XFiler.Base.Localization {
         public static string Presenters_Table_TypeRow {
             get {
                 return ResourceManager.GetString("Presenters.Table.TypeRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tiles.
+        /// </summary>
+        public static string Presenters_Tiles {
+            get {
+                return ResourceManager.GetString("Presenters.Tiles", resourceCulture);
             }
         }
     }

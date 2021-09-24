@@ -112,6 +112,7 @@
                                                            FontSize="14" />
 
                                                 <ListBox ItemsSource="{Binding FilesPresenters}"
+                                                         
                                                          SelectedItem="{Binding CurrentPresenter}"
                                                          ItemContainerStyle="{DynamicResource SelectPresenterListBoxItemStyle}">
                                                     <ListBox.ItemsPanel>

@@ -12,19 +12,20 @@ namespace XFiler
             _factory = factory;
         }
 
-        public IFileSystemModel CreateDirectory(DirectoryInfo directoryInfo, IFilesGroup filesGroup, IconSize iconSize)
+        public async Task<IFileSystemModel> CreateDirectory(DirectoryInfo directoryInfo, IFilesGroup filesGroup,
+            IconSize iconSize)
         {
             var model = _factory[EntityType.Directory];
-            model.Init(new DirectoryRoute(directoryInfo), directoryInfo, filesGroup, iconSize);
-            
+            await model.Init(new DirectoryRoute(directoryInfo), directoryInfo, filesGroup, iconSize);
+
             return model;
         }
 
-        public IFileSystemModel CreateFile(FileInfo fileInfo, IFilesGroup filesGroup, IconSize iconSize)
+        public async Task<IFileSystemModel> CreateFile(FileInfo fileInfo, IFilesGroup filesGroup, IconSize iconSize)
         {
             var model = _factory[EntityType.File];
-            model.Init(new FileRoute(fileInfo), fileInfo, filesGroup,iconSize);
-          
+            await model.Init(new FileRoute(fileInfo), fileInfo, filesGroup, iconSize);
+
             return model;
         }
     }

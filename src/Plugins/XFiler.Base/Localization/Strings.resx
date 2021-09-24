@@ -101,7 +101,7 @@
   <data name="Presenters.Table" xml:space="preserve">
     <value>Table</value>
   </data>
-  <data name="Presenters.RegularTiles" xml:space="preserve">
+  <data name="Presenters.RegularIcons" xml:space="preserve">
     <value>Regular icons</value>
   </data>
   <data name="ContextMenu.Open" xml:space="preserve">
@@ -143,13 +143,19 @@
   <data name="Presenters.Table.DateOfChangeRow" xml:space="preserve">
     <value>Date of change</value>
   </data>
-  <data name="Presenters.SmallTiles" xml:space="preserve">
+  <data name="Presenters.SmallIcons" xml:space="preserve">
     <value>Small icons</value>
   </data>
   <data name="ContextMenu.AddToBookmarks" xml:space="preserve">
     <value>Add to bookmarks</value>
   </data>
-  <data name="Presenters.LargeTiles" xml:space="preserve">
+  <data name="Presenters.LargeIcons" xml:space="preserve">
     <value>Large icons</value>
+  </data>
+  <data name="Presenters.Tiles" xml:space="preserve">
+    <value>Tiles</value>
+  </data>
+  <data name="Presenters.Content" xml:space="preserve">
+    <value>Content</value>
   </data>
 </root>

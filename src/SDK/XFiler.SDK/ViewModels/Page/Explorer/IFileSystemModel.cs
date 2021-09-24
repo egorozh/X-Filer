@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace XFiler.SDK
 {
@@ -7,9 +8,9 @@ namespace XFiler.SDK
     {
         FileSystemInfo Info { get; }
 
-        void InfoChanged(FileSystemInfo? newInfo);
+        Task InfoChanged(FileSystemInfo? newInfo);
     }
-
+        
     public interface IFileItem
     {
         string Name { get; }

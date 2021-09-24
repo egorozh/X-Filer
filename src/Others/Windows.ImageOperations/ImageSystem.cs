@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Windows.ImageOperations.Internal;
 
@@ -27,12 +28,39 @@ namespace Windows.ImageOperations
                 : GetXlIcon(iIndex);
 
             var bmp = Icon.FromHandle(hIcon).ToBitmap();
-            
+
             Shell32.DestroyIcon(hIcon);
 
             return bmp.ToBitmapImage();
         }
-        
+
+        public static async Task<Stream?> GetIconStream(string fileName, bool isExtraLarge = true)
+        {
+            var iIndex = GetIconIndex(fileName);
+
+            var hIcon = isExtraLarge
+                ? GetJumboIcon(iIndex)
+                : GetXlIcon(iIndex);
+            
+            var bmp = Icon.FromHandle(hIcon).ToBitmap();
+
+            Shell32.DestroyIcon(hIcon);
+
+            var ms = new MemoryStream();
+            bmp.Save(ms, ImageFormat.Png);
+
+            return ms;
+        }
+
+        public static Stream ToStream(this Bitmap bitmap)
+        {
+            var ms = new MemoryStream();
+
+            bitmap.Save(ms, ImageFormat.Png);
+
+            return ms;
+        }
+
         public static BitmapImage ToBitmapImage(this Bitmap bitmap)
         {
             using var ms = new MemoryStream();
@@ -92,12 +120,12 @@ namespace Windows.ImageOperations
         {
             IImageList imageList = null!;
 
-            Guid guid = new (IdIImageList2);
-                
+            Guid guid = new(IdIImageList2);
+
             Shell32.SHGetImageList(Shell32.SHIL_JUMBO, ref guid, ref imageList);
-            
+
             var hIcon = IntPtr.Zero;
-            imageList.GetIcon(iImage, Shell32.ILD_TRANSPARENT | Shell32.ILD_IMAGE, ref hIcon); 
+            imageList.GetIcon(iImage, Shell32.ILD_TRANSPARENT | Shell32.ILD_IMAGE, ref hIcon);
 
             return hIcon;
         }

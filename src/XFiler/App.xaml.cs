@@ -4,6 +4,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using Serilog;
 using XFiler.GoogleChromeStyle;
 using XFiler.NotifyIcon;
 using XFiler.SDK.Themes;
@@ -120,7 +121,7 @@ namespace XFiler
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show("An unhandled exception just occurred: " + e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            Host.Resolve<ILogger>()?.Error(e.Exception, "Global unhandled exception");
             e.Handled = true;
         }
 

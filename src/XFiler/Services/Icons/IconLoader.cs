@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.IO;
+using System.Windows.Media;
 
 namespace XFiler
 {
@@ -26,6 +27,23 @@ namespace XFiler
             }
 
             return source;
+        }
+
+        public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+        {
+            Stream? stream = null;
+
+            foreach (var imageProvider in _imageProviders)
+            {
+                stream = await imageProvider.GetIconStream(route, size);
+
+                if (stream == null)
+                    continue;
+
+                break;
+            }
+
+            return stream;
         }
     }
 }

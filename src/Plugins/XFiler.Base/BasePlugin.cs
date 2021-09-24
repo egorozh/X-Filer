@@ -9,18 +9,37 @@ namespace XFiler.Base
     {
         public void Load(ContainerBuilder services)
         {
-            services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>("grid");
-            services.RegisterType<SmallTileFilesPresenterViewModel>().Keyed<IFilesPresenter>("smallTile");
-            services.RegisterType<TileFilesPresenterViewModel>().Keyed<IFilesPresenter>("regularTile");
-            services.RegisterType<LargeTileFilesPresenterViewModel>().Keyed<IFilesPresenter>("largeTile");
+            services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Grid);
+            services.RegisterType<SmallIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.SmallIcons);
+            services.RegisterType<RegularIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.RegularIcons);
+            services.RegisterType<LargeIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.LargeIcons);
+            services.RegisterType<TilesPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Tiles);
+            services.RegisterType<ContentPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Content);
 
-            
+
             services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>();
-            services.RegisterType<SmallTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
-            services.RegisterType<RegularTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
-            services.RegisterType<LargeTilesFilesPresenterFactory>().As<IFilesPresenterFactory>();
-            
+            services.RegisterType<SmallIconsPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<RegularIconsPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<LargeIconsPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<TilesPresenterFactory>().As<IFilesPresenterFactory>();
+            services.RegisterType<ContentPresenterFactory>().As<IFilesPresenterFactory>();
+
             services.RegisterType<SvgIconProvider>().As<IIconProvider>().SingleInstance();
         }
+    }
+
+    internal enum PresenterType
+    {
+        Grid,
+
+        SmallIcons,
+
+        RegularIcons,
+
+        LargeIcons,
+
+        Tiles,
+
+        Content
     }
 }

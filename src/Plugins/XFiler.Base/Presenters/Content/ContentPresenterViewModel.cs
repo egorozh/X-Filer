@@ -4,11 +4,11 @@ using XFiler.SDK;
 
 namespace XFiler.Base
 {
-    public class SmallTileFilesPresenterViewModel : BaseFilesPresenter
+    public class ContentPresenterViewModel : BaseFilesPresenter
     {
         public override IconSize IconSize => IconSize.Small;
 
-        public SmallTileFilesPresenterViewModel(IFileEntityFactory fileEntityFactory,
+        public ContentPresenterViewModel(IFileEntityFactory fileEntityFactory,
             IDropTarget dropTarget,
             IDragSource dragSource,
             IWindowFactory windowFactory,

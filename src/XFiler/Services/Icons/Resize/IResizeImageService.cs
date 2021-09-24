@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.IO;
+using System.Windows.Media;
 
 namespace XFiler.Resize
 {
@@ -12,5 +13,7 @@ namespace XFiler.Resize
             width > height
                 ? (targetSize, height * targetSize / width)
                 : (width * targetSize / height, targetSize);
+
+        Task<Stream?> ResizeImageAsync(string fullName, int size);
     }
 }

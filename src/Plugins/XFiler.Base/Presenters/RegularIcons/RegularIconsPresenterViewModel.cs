@@ -4,11 +4,9 @@ using XFiler.SDK;
 
 namespace XFiler.Base
 {
-    public class LargeTileFilesPresenterViewModel : BaseFilesPresenter
+    public class RegularIconsPresenterViewModel : BaseFilesPresenter
     {
-        public override IconSize IconSize => IconSize.ExtraLarge;
-
-        public LargeTileFilesPresenterViewModel(IFileEntityFactory fileEntityFactory,
+        public RegularIconsPresenterViewModel(IFileEntityFactory fileEntityFactory,
             IDropTarget dropTarget,
             IDragSource dragSource,
             IWindowFactory windowFactory,

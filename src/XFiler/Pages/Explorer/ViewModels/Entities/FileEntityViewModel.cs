@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Windows.Media;
+using Windows.ImageOperations;
 using XFiler.Controls.EditBox;
 using XFiler.Resources.Localization;
 
@@ -12,6 +13,7 @@ namespace XFiler
 
         private IIconLoader _iconLoader;
         private IClipboardService _clipboardService;
+        private IFileTypeResolver _fileTypeResolver;
 
         #endregion
 
@@ -47,23 +49,31 @@ namespace XFiler
 
         #endregion
 
+        #region Events
+
         public event EventHandler? RequestEdit;
+
+        #endregion
 
         #region Constructor
 
         protected FileEntityViewModel(
             IIconLoader iconLoader,
-            IClipboardService clipboardService)
+            IClipboardService clipboardService,
+            IFileTypeResolver fileTypeResolver)
         {
             _iconLoader = iconLoader;
             _clipboardService = clipboardService;
+            _fileTypeResolver = fileTypeResolver;
 
             _clipboardService.ClipboardChanged += ClipboardServiceOnClipboardChanged;
         }
 
         #endregion
 
-        public virtual void Init(XFilerRoute route, FileSystemInfo info, IFilesGroup filesGroup,
+        #region Public Methods
+
+        public async Task Init(XFilerRoute route, FileSystemInfo info, IFilesGroup filesGroup,
             IconSize iconSize)
         {
             Name = route.Header;
@@ -73,33 +83,36 @@ namespace XFiler
             Route = route;
             Info = info;
 
-            Icon = _iconLoader.GetIcon(route, iconSize);
 
             IsCutted = _clipboardService.IsCutted(info);
             IsSystem = info.Attributes.HasFlag(FileAttributes.System);
             IsHidden = info.Attributes.HasFlag(FileAttributes.Hidden);
 
-            Type = GetTypeEx(route, info);
+            Type = _fileTypeResolver.GetFileType(info);
 
             Group = filesGroup.GetGroup(this);
             //IsCopyProcess = info.Attributes.HasFlag(FileAttributes.Archive) && info is FileInfo;
+            await LoadIcon(route, iconSize);
         }
 
-
-        public void InfoChanged(FileSystemInfo? info)
+        public async Task InfoChanged(FileSystemInfo? info)
         {
             switch (info)
             {
                 case DirectoryInfo directoryInfo:
-                    Init(new DirectoryRoute(directoryInfo), info, FilesGroup, IconSize);
+                    await Init(new DirectoryRoute(directoryInfo), info, FilesGroup, IconSize);
                     break;
                 case FileInfo fileInfo:
-                    Init(new FileRoute(fileInfo), info, FilesGroup, IconSize);
+                    await Init(new FileRoute(fileInfo), info, FilesGroup, IconSize);
                     break;
             }
         }
 
         public void StartRename() => RequestEdit?.Invoke(this, EventArgs.Empty);
+
+        #endregion
+
+        #region Protected Methods
 
         protected override void Dispose(bool disposing)
         {
@@ -108,11 +121,31 @@ namespace XFiler
                 _clipboardService.ClipboardChanged -= ClipboardServiceOnClipboardChanged;
 
                 _clipboardService = null!;
+                _fileTypeResolver = null!;
                 _iconLoader = null!;
                 FilesGroup = null!;
             }
 
             base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task LoadIcon(XFilerRoute route, IconSize iconSize)
+        {
+            var iconStream = await _iconLoader.GetIconStream(route, iconSize);
+
+            if (iconStream != null)
+            {
+                Icon = ImageSystem.FromStream(iconStream);
+                await iconStream.DisposeAsync();
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() => { Icon = _iconLoader.GetIcon(route, iconSize); });
+            }
         }
 
         private void ClipboardServiceOnClipboardChanged(object? sender, FileClipboardEventArgs e)
@@ -129,14 +162,6 @@ namespace XFiler
             IsCutted = false;
         }
 
-        private string GetTypeEx(XFilerRoute route, FileSystemInfo info)
-        {
-            return info switch
-            {
-                DirectoryInfo directoryInfo => Strings.FileVm_DirectoryTypeName,
-                FileInfo fileInfo => fileInfo.Extension[1..].ToUpper(),
-                _ => throw new ArgumentOutOfRangeException(nameof(info))
-            };
-        }
+        #endregion
     }
 }

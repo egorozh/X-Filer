@@ -1,0 +1,450 @@
+﻿<UserControl x:Class="XFiler.Base.IconsPresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+             xmlns:base="clr-namespace:XFiler.Base"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
+             xmlns:controls="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls"
+             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+             xmlns:loc="clr-namespace:XFiler.Base.Localization"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+
+             DataContext="{Binding FilesPresenter}">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="GroupedCollectionViewSource"
+                              Source="{Binding DirectoriesAndFiles}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Group" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <sdk:CommandReference x:Key="OpenCommand"
+                              Command="{Binding DataContext.OpenCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="AddToBookmarksCommand"
+                              Command="{Binding SelectedItem.AddBookmarkCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" />
+
+        <sdk:CommandReference x:Key="OpenInNativeExplorerCommand"
+                              Command="{Binding DataContext.OpenInNativeExplorerCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="OpenNewTabCommand"
+                              Command="{Binding DataContext.OpenNewTabCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}"
+                              CommandParameter="{Binding DataContext,
+                                                        RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" />
+
+        <sdk:CommandReference x:Key="OpenNewWindowCommand"
+                              Command="{Binding DataContext.OpenNewWindowCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="PasteCommand"
+                              Command="{Binding DataContext.PasteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="CutCommand"
+                              Command="{Binding DataContext.CutCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="DeleteCommand"
+                              Command="{Binding DataContext.DeleteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="CopyCommand"
+                              Command="{Binding DataContext.CopyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="RenameCommand"
+                              Command="{Binding DataContext.RenameCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+        <sdk:CommandReference x:Key="StartRenameCommand"
+                              Command="{Binding DataContext.StartRenameCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+
+    </UserControl.Resources>
+
+    <Grid>
+        <controls:RectSelectListBox ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
+                                    dd:DragDrop.IsDragSource="True"
+                                    dd:DragDrop.IsDropTarget="True"
+                                    dd:DragDrop.UseDefaultDragAdorner="True"
+                                    dd:DragDrop.UseDefaultEffectDataTemplate="True"
+                                    dd:DragDrop.DragDirectlySelectedOnly="True"
+                                    dd:DragDrop.ItemsPanelOrientation="Horizontal"
+
+                                    dd:DragDrop.DropHandler="{Binding DropTarget}"
+                                    dd:DragDrop.DragHandler="{Binding DragSource}"
+
+                                    VirtualizingPanel.IsVirtualizing="True"
+                                    VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                    VirtualizingPanel.VirtualizationMode="Standard"
+
+                                    SelectionMode="Extended">
+            <ListBox.Resources>
+                <sdk:CommandReference x:Key="OpenManyItemsNewTabCommand"
+                                      Command="{Binding DataContext.OpenNewTabCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}">
+                    <sdk:CommandReference.CommandParameter>
+                        <MultiBinding Converter="{sdk:CloneParamsConverter}">
+                            <Binding Path="DataContext"
+                                     RelativeSource="{RelativeSource AncestorType={x:Type dragablz:TabablzControl}}" />
+                            <Binding Path="SelectedItems"
+                                     RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
+
+                        </MultiBinding>
+                    </sdk:CommandReference.CommandParameter>
+                </sdk:CommandReference>
+
+                <sdk:CommandReference x:Key="OpenManyItemsNewWindowCommand"
+                                      Command="{Binding DataContext.OpenNewWindowCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}"
+                                      CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+
+                <sdk:CommandReference x:Key="CutManyCommand"
+                                      Command="{Binding DataContext.CutCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}"
+                                      CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+
+                <sdk:CommandReference x:Key="CopyManyCommand"
+                                      Command="{Binding DataContext.CopyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}"
+                                      CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+
+                <sdk:CommandReference x:Key="DeleteManyCommand"
+                                      Command="{Binding DataContext.DeleteCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}"
+                                      CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+
+                <sdk:CommandReference x:Key="DeleteManyPermanentlyCommand"
+                                      Command="{Binding DataContext.DeletePermanentlyCommand, 
+                                                RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}"
+                                      CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+
+                <ContextMenu x:Key="DirectoryContextMenu">
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
+                              Command="{StaticResource OpenCommand}"
+                              CommandParameter="{Binding}" />
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
+                              Command="{StaticResource  OpenNewTabCommand}"
+                              CommandParameter="{Binding}" />
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
+                              Command="{StaticResource  OpenNewWindowCommand}"
+                              CommandParameter="{Binding}" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNativeExplorer}"
+                              Command="{StaticResource OpenInNativeExplorerCommand}"
+                              CommandParameter="{Binding }" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_AddToBookmarks}"
+                              Command="{StaticResource AddToBookmarksCommand}"
+                              CommandParameter="{Binding }" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Rename}"
+                              Command="{StaticResource StartRenameCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="F2" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
+                              Command="{StaticResource CutCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Ctrl + X" />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
+                              Command="{StaticResource CopyCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Ctrl + C" />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Paste}"
+                              Command="{StaticResource PasteCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Ctrl + V" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
+                              Command="{StaticResource DeleteCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Del" />
+
+                </ContextMenu>
+
+                <ContextMenu x:Key="FileContextMenu">
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
+                              Command="{StaticResource OpenCommand}"
+                              CommandParameter="{Binding}" />
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
+                              Command="{StaticResource  OpenNewTabCommand}"
+                              CommandParameter="{Binding}" />
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
+                              Command="{StaticResource  OpenNewWindowCommand}"
+                              CommandParameter="{Binding}" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_AddToBookmarks}"
+                              Command="{StaticResource AddToBookmarksCommand}"
+                              CommandParameter="{Binding }" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Rename}"
+                              Command="{StaticResource StartRenameCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="F2" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
+                              Command="{StaticResource CutCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Ctrl + X" />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
+                              Command="{StaticResource CopyCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Ctrl + C" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
+                              Command="{StaticResource DeleteCommand}"
+                              CommandParameter="{Binding}"
+                              InputGestureText="Del" />
+                </ContextMenu>
+
+                <ContextMenu x:Key="ManyItemsContextMenu">
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
+                              Command="{StaticResource  OpenManyItemsNewTabCommand}" />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
+                              Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
+                              Command="{StaticResource CutManyCommand}"
+                              InputGestureText="Ctrl + X" />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Copy}"
+                              Command="{StaticResource CopyManyCommand}"
+                              InputGestureText="Ctrl + C" />
+
+                    <Separator />
+
+                    <MenuItem Header="{x:Static loc:Strings.ContextMenu_Delete}"
+                              Command="{StaticResource DeleteManyCommand}"
+                              InputGestureText="Del" />
+                </ContextMenu>
+
+            </ListBox.Resources>
+
+            <ListBox.InputBindings>
+                <KeyBinding Command="{StaticResource StartRenameCommand}"
+                            CommandParameter="{Binding SelectedItems,RelativeSource={RelativeSource AncestorType=controls:RectSelectListBox}}"
+                            Key="F2" />
+                <KeyBinding Command="{StaticResource CutManyCommand}"
+                            Modifiers="Control" Key="X" />
+                <KeyBinding Command="{StaticResource DeleteManyCommand}"
+                            Key="Delete" />
+                <KeyBinding Command="{StaticResource DeleteManyPermanentlyCommand}"
+                            Modifiers="Shift" Key="Delete" />
+                <KeyBinding Command="{StaticResource CopyManyCommand}"
+                            Modifiers="Control" Key="C" />
+                <KeyBinding Command="{StaticResource PasteCommand}"
+                            Modifiers="Control" Key="V">
+                    <KeyBinding.CommandParameter>
+                        <MultiBinding Converter="{sdk:CloneParamsConverter}">
+                            <Binding Path="SelectedItem"
+                                     RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
+                            <Binding Path="DataContext"
+                                     RelativeSource="{RelativeSource AncestorType={x:Type controls:RectSelectListBox}}" />
+                        </MultiBinding>
+                    </KeyBinding.CommandParameter>
+                </KeyBinding>
+            </ListBox.InputBindings>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource EntityItemStyle}">
+                    <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
+                    <Setter Property="Width"
+                            Value="{Binding TileSize, RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}}}" />
+                    <Setter Property="Height"
+                            Value="{Binding TileSize, RelativeSource={RelativeSource AncestorType={x:Type base:IconsPresenter}},
+                        Converter={base:SizeToHeightConverter}}" />
+                    <Setter Property="ToolTip" Value="{Binding Name}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                                <Grid>
+
+                                    <Border Margin="{TemplateBinding Padding}"
+                                            SnapsToDevicePixels="true">
+
+                                        <Border.InputBindings>
+                                            <MouseBinding MouseAction="MiddleClick"
+                                                          Command="{StaticResource OpenNewTabCommand}"
+                                                          CommandParameter="{Binding}" />
+                                            <MouseBinding MouseAction="LeftDoubleClick"
+                                                          Command="{StaticResource  OpenCommand}"
+                                                          CommandParameter="{Binding }" />
+                                        </Border.InputBindings>
+
+                                        <ContentPresenter HorizontalAlignment="Stretch"
+                                                          VerticalAlignment="Stretch"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                                    </Border>
+
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Value="True"
+                                     Binding="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={base:IsFileModelConverter}}">
+                            <Setter Property="ContextMenu" Value="{StaticResource FileContextMenu}" />
+                        </DataTrigger>
+                        <DataTrigger Value="True"
+                                     Binding="{Binding IsManyItemsSelected,
+                        RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}">
+                            <Setter Property="ContextMenu" Value="{StaticResource ManyItemsContextMenu}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource ExpanderGroupItem}" />
+            </ListBox.GroupStyle>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <vwp:VirtualizingWrapPanel Orientation="Vertical"
+                                               SpacingMode="Uniform"
+                                               ScrollUnit="Pixel" />
+                    <!--<VirtualizingStackPanel Orientation="Vertical" />-->
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type sdk:IFileSystemModel}">
+                    <Grid Background="Transparent">
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Border x:Name="Bd"
+
+                                    CornerRadius="8"
+                                    BorderThickness="2"
+                                    Height="{Binding ActualWidth,RelativeSource={RelativeSource Self}}"
+                                    Margin="0"
+                                    Padding="8"
+                                    SnapsToDevicePixels="true">
+
+                                <Image Stretch="Uniform"
+                                       Source="{Binding Icon}" />
+
+                            </Border>
+
+                            <editBox:EditBox Grid.Row="1"
+                                             x:Name="TextBlock"
+                                             Style="{StaticResource TileEditBox}"
+                                             Background="Transparent"
+                                             DisplayTextForegroundBrush="#CCCCCC"
+                                             Foreground="#CCCCCC"
+                                             IsEditableOnDoubleClick="True"
+                                             IsReadOnly="False"
+                                             MinimumClickTime="500"
+                                             MaximumClickTime="1200"
+                                             Focusable="True"
+                                             RenameCommand="{StaticResource RenameCommand}"
+                                             RenameCommandParameter="{Binding}"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             Margin="0 4 0 0"
+                                             DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="#A9A9A9" />
+                        </MultiTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Value="False"
+                                           Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
+                                <Condition Value="False"
+                                           Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" />
+                                <Condition Value="True"
+                                           Binding="{Binding  HasSelectItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="TextBlock" Property="Foreground" Value="#888888" />
+                            <Setter TargetName="Bd" Property="Effect">
+                                <Setter.Value>
+                                    <BlurEffect Radius="8" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Value="True"
+                                     Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="#cFcFcF" />
+                            <Setter TargetName="TextBlock" Property="Foreground" Value="White" />
+                            <Setter TargetName="TextBlock" Property="DisplayTextForegroundBrush" Value="White" />
+                        </DataTrigger>
+
+                        <DataTrigger Value="True"
+                                     Binding="{Binding IsCutted}">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                        </DataTrigger>
+                        <DataTrigger Value="True"
+                                     Binding="{Binding IsSystem}">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                        </DataTrigger>
+                        <DataTrigger Value="True"
+                                     Binding="{Binding IsHidden}">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.5" />
+                        </DataTrigger>
+                        <DataTrigger Value="True"
+                                     Binding="{Binding IsCopyProcess}">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.3" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </controls:RectSelectListBox>
+    </Grid>
+
+
+</UserControl>

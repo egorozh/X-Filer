@@ -7,19 +7,20 @@ using XFiler.SDK;
 
 namespace XFiler.Base
 {
-    public class RegularTilesFilesPresenterFactory : BaseFilesPresenterFactory
+    internal class TilesPresenterFactory : BaseFilesPresenterFactory
     {
-        private IIndex<string, IFilesPresenter> _presenterFactory;
+        private IIndex<PresenterType, IFilesPresenter> _presenterFactory;
 
-        public RegularTilesFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
-            : base(Strings.Presenters_RegularTiles, CreateTemplate(), CreateIcon(), "2e60a960-5261-413c-b046-278f5753140b")
+        public TilesPresenterFactory(IIndex<PresenterType, IFilesPresenter> presenterFactory)
+            : base(Strings.Presenters_Tiles, CreateTemplate(), CreateIcon(),
+                "f8588c78-18d0-4c39-a4ca-d637f7e46321")
         {
             _presenterFactory = presenterFactory;
         }
 
         public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group)
         {
-            var presenter = _presenterFactory["regularTile"];
+            var presenter = _presenterFactory[PresenterType.Tiles];
             presenter.Init(currentDirectory, group);
             return presenter;
         }
@@ -33,13 +34,14 @@ namespace XFiler.Base
 
         private static DataTemplate CreateTemplate() => new()
         {
-            DataType = typeof(TileFilesPresenterViewModel),
+            DataType = typeof(TilesPresenterViewModel),
             VisualTree = new FrameworkElementFactory(typeof(TileFilePresenter))
         };
 
         private static ImageSource CreateIcon()
         {
-            const string? data = "M8,4H5C4.447,4,4,4.447,4,5v3c0,0.552,0.447,1,1,1h3c0.553,0,1-0.448,1-1V5  C9,4.448,8.553,4,8,4z M15,4h-3c-0.553,0-1,0.447-1,1v3c0,0.552,0.447,1,1,1h3c0.553,0,1-0.448,1-1V5C16,4.448,15.553,4,15,4z M8,11  H5c-0.553,0-1,0.447-1,1v3c0,0.552,0.447,1,1,1h3c0.553,0,1-0.448,1-1v-3C9,11.448,8.553,11,8,11z M15,11h-3c-0.553,0-1,0.447-1,1v3  c0,0.552,0.447,1,1,1h3c0.553,0,1-0.448,1-1v-3C16,11.448,15.553,11,15,11z";
+            const string? data =
+                "M960 832v-128h-576v128h576zM1024 896h-704v-256h704v256zM0 896h256v-256h-256v256zM960 512v-128h-576v128h576zM1024 576h-704v-256h704v256zM0 576h256v-256h-256v256zM960 192v-128h-576v128h576zM1024 256h-704v-256h704v256zM0 256h256v-256h-256v256z";
 
             return new DrawingImage(new GeometryDrawing(Brushes.White,
                 new Pen(Brushes.White, 0), Geometry.Parse(data)));

@@ -9,11 +9,11 @@ using XFiler.SDK;
 
 namespace XFiler.Base
 {
-    public class GridFilesPresenterFactory : BaseFilesPresenterFactory
+    internal class GridFilesPresenterFactory : BaseFilesPresenterFactory
     {
-        private IIndex<string, IFilesPresenter> _presenterFactory;
+        private IIndex<PresenterType, IFilesPresenter> _presenterFactory;
 
-        public GridFilesPresenterFactory(IIndex<string, IFilesPresenter> presenterFactory)
+        public GridFilesPresenterFactory(IIndex<PresenterType, IFilesPresenter> presenterFactory)
             : base(Strings.Presenters_Table, CreateTemplate(), CreateIcon(), "9a5d97b9-628d-45fd-b36f-89936f3c9506")
         {
             _presenterFactory = presenterFactory;
@@ -21,7 +21,7 @@ namespace XFiler.Base
         
         public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group)
         {
-            var presenter = _presenterFactory["grid"];
+            var presenter = _presenterFactory[PresenterType.Grid];
             presenter.Init(currentDirectory, group);
             return presenter;
         }

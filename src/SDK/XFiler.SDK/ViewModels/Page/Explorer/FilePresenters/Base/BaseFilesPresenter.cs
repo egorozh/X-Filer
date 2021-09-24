@@ -115,9 +115,9 @@ namespace XFiler.SDK
         #endregion
 
         #region Public Methods
-            
+
         public async void Init(DirectoryInfo directoryInfo, IFilesGroup group)
-        {
+        {   
             DirectoryInfo = directoryInfo;
             Info = directoryInfo;
             Group = group;
@@ -145,7 +145,7 @@ namespace XFiler.SDK
             _watcher.EnableRaisingEvents = true;
         }
 
-        public void InfoChanged(FileSystemInfo? newInfo)
+        public async Task InfoChanged(FileSystemInfo? newInfo)
         {
         }
 
@@ -200,7 +200,7 @@ namespace XFiler.SDK
         {
             DirectoryOrFileOpened?.Invoke(this, new OpenDirectoryEventArgs(fileEntityViewModel));
         }
-        
+
         private void OnDelete(object parameters)
         {
             switch (parameters)
@@ -262,45 +262,45 @@ namespace XFiler.SDK
             }
         }
 
-        private IFileSystemModel CreateItem((FileSystemInfo, EntityType) item)
+        private async Task<IFileSystemModel> CreateItem((FileSystemInfo, EntityType) item)
         {
             var (path, entityType) = item;
 
             return entityType switch
             {
-                EntityType.Directory => _fileEntityFactory.CreateDirectory((DirectoryInfo)path, Group, IconSize),
-                EntityType.File => _fileEntityFactory.CreateFile((FileInfo)path, Group, IconSize),
+                EntityType.Directory => await _fileEntityFactory.CreateDirectory((DirectoryInfo)path, Group, IconSize),
+                EntityType.File => await _fileEntityFactory.CreateFile((FileInfo)path, Group, IconSize),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        private async ValueTask<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems() 
+        private async ValueTask<IReadOnlyList<(FileSystemInfo, EntityType)>> GetItems()
             => await Task.Run(() =>
-        {
-            List<(FileSystemInfo, EntityType)> list = new();
+            {
+                List<(FileSystemInfo, EntityType)> list = new();
 
-            if (Disposed)
+                if (Disposed)
+                    return list;
+
+                var comparer = new WindowsNaturalStringComparer();
+
+                var hideSystemFiles = !_settings.ShowSystemFiles;
+                var hideHiddenFiles = !_settings.ShowHiddenFiles;
+
+                list.AddRange(DirectoryInfo.EnumerateDirectories()
+                    .Where(f => NotSystemFilter(f, hideSystemFiles))
+                    .Where(f => NotHidenFilter(f, hideHiddenFiles))
+                    .OrderBy(d => d.Name, comparer)
+                    .Select(d => ((FileSystemInfo)d, EntityType.Directory)));
+
+                list.AddRange(DirectoryInfo.EnumerateFiles()
+                    .Where(f => NotSystemFilter(f, hideSystemFiles))
+                    .Where(f => NotHidenFilter(f, hideHiddenFiles))
+                    .OrderBy(d => d.Name, comparer)
+                    .Select(d => ((FileSystemInfo)d, EntityType.File)));
+
                 return list;
-
-            var comparer = new WindowsNaturalStringComparer();
-
-            var hideSystemFiles = !_settings.ShowSystemFiles;
-            var hideHiddenFiles = !_settings.ShowHiddenFiles;
-
-            list.AddRange(DirectoryInfo.EnumerateDirectories()
-                .Where(f => NotSystemFilter(f, hideSystemFiles))
-                .Where(f => NotHidenFilter(f, hideHiddenFiles))
-                .OrderBy(d => d.Name, comparer)
-                .Select(d => ((FileSystemInfo)d, EntityType.Directory)));
-
-            list.AddRange(DirectoryInfo.EnumerateFiles()
-                .Where(f => NotSystemFilter(f, hideSystemFiles))
-                .Where(f => NotHidenFilter(f, hideHiddenFiles))
-                .OrderBy(d => d.Name, comparer)
-                .Select(d => ((FileSystemInfo)d, EntityType.File)));
-
-            return list;
-        });
+            });
 
         private static bool NotHidenFilter(FileSystemInfo info, bool hideHiddenFiles)
             => !hideHiddenFiles || !info.Attributes.HasFlag(FileAttributes.Hidden);
@@ -330,7 +330,10 @@ namespace XFiler.SDK
 
                 bw.ReportProgress((int)(i / (double)count * 100.0));
 
-                Application.Current.Dispatcher.Invoke(() => { DirectoriesAndFiles.Add(CreateItem(items[i])); });
+                Application.Current.Dispatcher.Invoke(async () =>
+                {
+                    DirectoriesAndFiles.Add(await CreateItem(items[i]));
+                });
             }
         }
 
@@ -362,15 +365,15 @@ namespace XFiler.SDK
             switch (info)
             {
                 case DirectoryInfo directoryInfo:
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(async () =>
                     {
-                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateDirectory(directoryInfo, Group, IconSize));
+                        DirectoriesAndFiles.Add(await _fileEntityFactory.CreateDirectory(directoryInfo, Group, IconSize));
                     });
                     break;
                 case FileInfo fileInfo:
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(async () =>
                     {
-                        DirectoriesAndFiles.Add(_fileEntityFactory.CreateFile(fileInfo, Group, IconSize));
+                        DirectoriesAndFiles.Add(await _fileEntityFactory.CreateFile(fileInfo, Group, IconSize));
                     });
                     break;
             }
@@ -392,9 +395,9 @@ namespace XFiler.SDK
 
             if (renamedItem != null)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(async () =>
                 {
-                    renamedItem.InfoChanged(e.FullPath.ToInfo());
+                    await renamedItem.InfoChanged(e.FullPath.ToInfo());
                 });
             }
         }

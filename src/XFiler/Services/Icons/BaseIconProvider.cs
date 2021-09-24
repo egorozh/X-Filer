@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.IO;
+using System.Windows.Media;
 
 namespace XFiler
 {
@@ -9,6 +10,11 @@ namespace XFiler
             var key = GetResourceKey(route);
 
             return Application.Current.TryFindResource(key) as ImageSource;
+        }
+
+        public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+        {
+            return null;
         }
 
         private static string GetResourceKey(XFilerRoute? route)

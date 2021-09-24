@@ -101,7 +101,7 @@
   <data name="Presenters.Table" xml:space="preserve">
     <value>Таблица</value>
   </data>
-  <data name="Presenters.RegularTiles" xml:space="preserve">
+  <data name="Presenters.RegularIcons" xml:space="preserve">
     <value>Нормальные значки</value>
   </data>
   <data name="ContextMenu.Open" xml:space="preserve">
@@ -143,13 +143,19 @@
   <data name="Presenters.Table.TypeRow" xml:space="preserve">
     <value>Тип</value>
   </data>
-  <data name="Presenters.SmallTiles" xml:space="preserve">
+  <data name="Presenters.SmallIcons" xml:space="preserve">
     <value>Маленькие значки</value>
   </data>
   <data name="ContextMenu.AddToBookmarks" xml:space="preserve">
     <value>Добавить в закладки</value>
   </data>
-  <data name="Presenters.LargeTiles" xml:space="preserve">
+  <data name="Presenters.LargeIcons" xml:space="preserve">
     <value>Огромные значки</value>
+  </data>
+  <data name="Presenters.Tiles" xml:space="preserve">
+    <value>Плитка</value>
+  </data>
+  <data name="Presenters.Content" xml:space="preserve">
+    <value>Содержимое</value>
   </data>
 </root>

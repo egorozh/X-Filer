@@ -5,7 +5,6 @@
     <Style x:Key="EntityItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Padding" Value="6" />
-        <Setter Property="Width" Value="140" />
     </Style>
 
     <Style TargetType="{x:Type rectangleSelect:RectSelectListBox}">
@@ -29,16 +28,18 @@
                             SnapsToDevicePixels="true">
                         <Grid>
 
-                            <ScrollViewer Focusable="false" 
+                            <ScrollViewer Focusable="false"
                                           Padding="{TemplateBinding Padding}"
                                           CanContentScroll="True"
-                                         
+
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           HorizontalScrollBarVisibility="Disabled"
                                           VerticalScrollBarVisibility="Auto">
-                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                             </ScrollViewer>
 
-                            <Canvas ClipToBounds="True" 
+                            <Canvas ClipToBounds="True"
                                     x:Name="PART_Canvas" />
                         </Grid>
                     </Border>
