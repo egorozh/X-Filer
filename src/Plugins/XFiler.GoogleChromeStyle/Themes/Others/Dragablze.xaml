@@ -508,7 +508,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}"
-
+                               
                                 KeyboardNavigation.DirectionalNavigation="Contained"
 
                                 KeyboardNavigation.TabIndex="2"

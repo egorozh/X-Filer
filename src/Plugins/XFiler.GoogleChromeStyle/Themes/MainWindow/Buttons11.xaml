@@ -65,7 +65,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-   
+
+    
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SystemWindowButton}"
            x:Key="ExpandButtonStyle">
 
@@ -115,9 +116,10 @@
                         <DataTrigger Value="Normal"
                                      Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window} }">
                             <Setter Property="Data" TargetName="Path"
-                                    Value="M4,4H20V20H4V4M6,8V18H18V8H6Z"/>
+                                    Value="M4,4H20V20H4V4M6,8V18H18V8H6Z" />
 
-                            <Setter Property="ToolTip" Value="{x:Static loc:Strings.MainWindow_Buttons_MaximizeTooltip}" />
+                            <Setter Property="ToolTip"
+                                    Value="{x:Static loc:Strings.MainWindow_Buttons_MaximizeTooltip}" />
 
                         </DataTrigger>
 
@@ -144,9 +146,8 @@
                                  Height="16"
                                  Stretch="Uniform">
                             <Canvas Width="24" Height="24">
-                                <Path
-                                    Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                    Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" />
+                                <Path Fill="{TemplateBinding Foreground}"
+                                      Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" />
                             </Canvas>
                         </Viewbox>
                     </Border>
@@ -157,6 +158,10 @@
                         <DataTrigger Value="False"
                                      Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window} }">
                             <Setter Property="Foreground" Value="#666666" />
+                        </DataTrigger>
+                        <DataTrigger Value="Normal"
+                                     Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window} }">
+                            <Setter Property="CornerRadius" TargetName="border" Value="0 8 0 0" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>

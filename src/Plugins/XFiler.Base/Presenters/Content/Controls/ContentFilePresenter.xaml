@@ -356,6 +356,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Image Stretch="Uniform"
+                                       x:Name="IconImage"
                                        Source="{Binding Icon}" />
 
                                 <editBox:EditBox Grid.Column="1"
@@ -399,9 +400,9 @@
                             </MultiDataTrigger.Conditions>
 
                             <Setter TargetName="TextBlock" Property="Foreground" Value="#888888" />
-                            <Setter TargetName="Bd" Property="Effect">
+                            <Setter TargetName="IconImage" Property="Effect">
                                 <Setter.Value>
-                                    <BlurEffect Radius="8" />
+                                    <BlurEffect Radius="4" />
                                 </Setter.Value>
                             </Setter>
                         </MultiDataTrigger>

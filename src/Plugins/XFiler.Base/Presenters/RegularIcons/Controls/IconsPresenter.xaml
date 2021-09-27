@@ -410,7 +410,7 @@
                             <Setter TargetName="TextBlock" Property="Foreground" Value="#888888" />
                             <Setter TargetName="Bd" Property="Effect">
                                 <Setter.Value>
-                                    <BlurEffect Radius="8" />
+                                    <BlurEffect Radius="4" />
                                 </Setter.Value>
                             </Setter>
                         </MultiDataTrigger>

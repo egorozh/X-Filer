@@ -2,11 +2,10 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using Microsoft.Xaml.Behaviors;
 
-namespace XFiler.Controls.Windows.Behaviors
+namespace XFiler.GoogleChromeStyle
 {
-    internal class BlurBehavior : Behavior<Window>
+    internal class BlurBehavior : AttachableForStyleBehavior<Window, BlurBehavior>
     {
         protected override void OnAttached()
         {

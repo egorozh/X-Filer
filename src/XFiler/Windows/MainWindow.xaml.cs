@@ -2,11 +2,8 @@
 {
     public sealed partial class MainWindow : IXFilerWindow
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-            
+        public MainWindow() => InitializeComponent();
+
         public void NormalizeAndActivate()
         {
             if (WindowState == WindowState.Minimized)
