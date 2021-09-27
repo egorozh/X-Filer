@@ -14,13 +14,13 @@ namespace XFiler.Base
             IDragSource dragSource,
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
-            IExplorerOptions explorerOptions,
+            IReactiveOptions reactiveOptions,
             IFileOperations fileOperations,
             ILogger logger,
             IRenameService renameService,
             IMainCommands mainCommands) :
             base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService, 
-                explorerOptions, fileOperations, logger, renameService, mainCommands)
+                reactiveOptions, fileOperations, logger, renameService, mainCommands)
         {
         }
     }

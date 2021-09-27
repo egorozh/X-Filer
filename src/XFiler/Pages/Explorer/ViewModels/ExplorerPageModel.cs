@@ -37,7 +37,7 @@ namespace XFiler
             IClipboardService clipboardService,
             IMainCommands mainCommands,
             IDirectorySettings directorySettings,
-            IExplorerOptions explorerOptions,
+            IReactiveOptions reactiveOptions,
             DirectoryInfo directory) : base(typeof(ExplorerPage), new DirectoryRoute(directory))
         {
             _directorySettings = directorySettings;
@@ -61,7 +61,7 @@ namespace XFiler
             foreach (var factory in filesPresenters)
                 factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
 
-            CurrentPresenter = SelectInitPresenter(dirSettings, explorerOptions);
+            CurrentPresenter = SelectInitPresenter(dirSettings, reactiveOptions);
         }
 
         #endregion
@@ -133,7 +133,7 @@ namespace XFiler
         }
 
         private IFilesPresenterFactory SelectInitPresenter(DirectorySettingsInfo dirSettings,
-            IExplorerOptions options)
+            IReactiveOptions options)
         {
             var presenterId = options.DefaultPresenterId;
 

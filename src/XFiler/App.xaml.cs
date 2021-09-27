@@ -1,19 +1,17 @@
-﻿using Autofac;
+﻿using System.Linq;
+using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using Serilog;
 using SingleInstanceHelper;
 using System.Windows.Threading;
-using XFiler.GoogleChromeStyle;
 using XFiler.NotifyIcon;
-using XFiler.SDK.Themes;
 
 namespace XFiler
 {
     internal sealed partial class App : IXFilerApp
     {
         #region Private Fields
-
-        private XFilerTheme? _currentTheme;
+        
         private TaskbarIcon _notifyIcon = null!;
 
         #endregion
@@ -36,20 +34,20 @@ namespace XFiler
             Host = new IoC().Build();
 
             Host.Resolve<ILanguageService>().Init();
-
-            SetTheme(new GoogleChromeTheme());
-
-            _notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
+            Host.Resolve<IThemeService>().Init();
+            
+            _notifyIcon = FindResource("NotifyIcon") as TaskbarIcon
+                          ?? throw new NotImplementedException("NotifyIcon not found in Resources");
 
             _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
-            
+
 #if DEBUG
             var windowFactory = Host.Resolve<IWindowFactory>();
             var window = windowFactory.GetWindowWithRootTab();
 
             window.Show();
 #endif
-            
+
             base.OnStartup(e);
         }
 
@@ -62,23 +60,7 @@ namespace XFiler
         #endregion
 
         #region Private Methods
-
-        private void SetTheme(XFilerTheme newTheme)
-        {
-            if (_currentTheme != null)
-            {
-                var resourceDictionaryToRemove =
-                    Resources.MergedDictionaries.FirstOrDefault(r => r.Source == _currentTheme.GetResourceUri());
-                if (resourceDictionaryToRemove != null)
-                    Resources.MergedDictionaries.Remove(resourceDictionaryToRemove);
-            }
-
-            _currentTheme = newTheme;
-
-            if (LoadComponent(_currentTheme.GetResourceUri()) is ResourceDictionary resourceDict)
-                Resources.MergedDictionaries.Add(resourceDict);
-        }
-
+        
         private void OnNextInstanceRunned(string[] commandArgs)
         {
             var window = Windows.OfType<IXFilerWindow>().FirstOrDefault();

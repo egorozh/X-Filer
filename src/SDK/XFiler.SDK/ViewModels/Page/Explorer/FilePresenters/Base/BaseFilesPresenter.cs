@@ -18,7 +18,7 @@ namespace XFiler.SDK
         #region Private Fields
 
         private IFileEntityFactory _fileEntityFactory;
-        private IExplorerOptions _settings;
+        private IReactiveOptions _settings;
         private IFileOperations _fileOperations;
         private ILogger _logger;
         private BackgroundWorker? _backgroundWorker;
@@ -81,7 +81,7 @@ namespace XFiler.SDK
             IDragSource dragSource,
             IWindowFactory windowFactory,
             IClipboardService clipboardService,
-            IExplorerOptions settings,
+            IReactiveOptions settings,
             IFileOperations fileOperations,
             ILogger logger,
             IRenameService renameService,

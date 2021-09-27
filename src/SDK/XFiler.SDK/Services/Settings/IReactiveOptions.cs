@@ -1,11 +1,13 @@
 ﻿namespace XFiler.SDK
 {
-    public interface IExplorerOptions
+    public interface IReactiveOptions
     {
         bool ShowSystemFiles { get; }
-        bool ShowHiddenFiles { get; }
+        bool ShowHiddenFiles { get; }   
 
         string DefaultPresenterId { get; }
         bool AlwaysOpenDirectoryInDefaultPresenter { get; }
+            
+        string? CurrentThemeId { get; }
     }
 }

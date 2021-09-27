@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using XFiler.Commands;
+using XFiler.GoogleChromeStyle;
 using XFiler.Resize;
+using XFiler.SDK.Themes;
 
 namespace XFiler
 {
@@ -17,7 +19,7 @@ namespace XFiler
             services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
 
             services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
-           
+
             services.RegisterType<FileTypeResolver>().As<IFileTypeResolver>().SingleInstance();
 
             services.RegisterIconServices();
@@ -25,10 +27,14 @@ namespace XFiler
             services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
 
             services.RegisterStartupOptions();
-            services.RegisterType<ExplorerOptions>().As<IExplorerOptions>().SingleInstance();
+            services.RegisterType<ReactiveOptions>().As<IReactiveOptions>().SingleInstance();
 
             services.RegisterType<DirectorySettings>().As<IDirectorySettings>().SingleInstance();
             services.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
+
+            services.RegisterThemes();
+
+            services.RegisterType<ThemeService>().As<IThemeService>().SingleInstance();
         }
 
         private static void RegisterBookmarksServices(this ContainerBuilder services)
@@ -40,7 +46,7 @@ namespace XFiler
         private static void RegisterIconServices(this ContainerBuilder services)
         {
             services.RegisterType<FastResizeImageService>().As<IResizeImageService>().SingleInstance();
-           
+
             // Image icon pipeline:
             services.RegisterType<NativeExeIconProvider>().As<IIconProvider>().SingleInstance();
             services.RegisterType<IconProviderForImages>().As<IIconProvider>().SingleInstance();
@@ -56,6 +62,11 @@ namespace XFiler
             IStartupOptions startupOptions = new StartupOptions();
 
             services.RegisterInstance(startupOptions).As<IStartupOptions>().SingleInstance();
+        }
+
+        private static void RegisterThemes(this ContainerBuilder services)
+        {
+            services.RegisterInstance(new GoogleChromeTheme()).As<ITheme>().SingleInstance();
         }
     }
 }

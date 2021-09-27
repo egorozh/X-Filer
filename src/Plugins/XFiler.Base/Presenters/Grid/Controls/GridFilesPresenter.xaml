@@ -11,6 +11,7 @@
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
              xmlns:loc="clr-namespace:XFiler.Base.Localization"
+             xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -68,6 +69,8 @@
     </UserControl.Resources>
 
     <controls:RectSelectDataGrid ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
+
+                                 Style="{DynamicResource {x:Static themes:ResourceKeys.RectSelectDataGridStyle}}"
 
                                  AutoGenerateColumns="False"
 
@@ -150,7 +153,7 @@
 
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNativeExplorer}"
                           Command="{StaticResource OpenInNativeExplorerCommand}"
-                          CommandParameter="{Binding }"/>
+                          CommandParameter="{Binding }" />
 
                 <Separator />
 
@@ -425,7 +428,42 @@
         </DataGrid.RowStyle>
 
         <DataGrid.GroupStyle>
-            <GroupStyle ContainerStyle="{StaticResource ExpanderGroupItem}" />
+            <GroupStyle>
+                <GroupStyle.ContainerStyle>
+                    <Style TargetType="{x:Type GroupItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                    <Grid>
+                                        <Expander IsExpanded="True"
+                                                  Foreground="White"
+                                                  x:Name="Expander">
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}"
+                                                           FontSize="16" />
+                                            </Expander.Header>
+
+                                            <ItemsPresenter />
+                                        </Expander>
+
+                                        <ItemsPresenter x:Name="Presenter"
+                                                        Visibility="Collapsed" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Name}"
+                                                     Value="{x:Null}">
+                                            <Setter TargetName="Presenter" Property="Visibility"
+                                                    Value="Visible" />
+                                            <Setter TargetName="Expander" Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </GroupStyle.ContainerStyle>
+            </GroupStyle>
         </DataGrid.GroupStyle>
 
         <DataGrid.Columns>
@@ -461,12 +499,12 @@
             </DataGridTemplateColumn>
             <DataGridTemplateColumn Header="{x:Static loc:Strings.Presenters_Table_NameRow}"
                                     Width="250"
-                                    CanUserSort="True" 
+                                    CanUserSort="True"
                                     SortMemberPath="Name">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <editBox:EditBox x:Name="TextBlock"
-                                         Style="{StaticResource TreeViewEditBox}"
+                                         Style="{DynamicResource TreeViewEditBox}"
                                          Background="Transparent"
                                          DisplayTextForegroundBrush="White"
                                          Foreground="White"
@@ -484,7 +522,7 @@
                                          Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
-               
+
             </DataGridTemplateColumn>
             <DataGridTextColumn Header="{x:Static loc:Strings.Presenters_Table_DateOfChangeRow}"
                                 IsReadOnly="True"
