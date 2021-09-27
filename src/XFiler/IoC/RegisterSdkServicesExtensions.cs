@@ -24,9 +24,11 @@ namespace XFiler
 
             services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
 
+            services.RegisterStartupOptions();
             services.RegisterType<ExplorerOptions>().As<IExplorerOptions>().SingleInstance();
 
             services.RegisterType<DirectorySettings>().As<IDirectorySettings>().SingleInstance();
+            services.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
         }
 
         private static void RegisterBookmarksServices(this ContainerBuilder services)
@@ -38,8 +40,7 @@ namespace XFiler
         private static void RegisterIconServices(this ContainerBuilder services)
         {
             services.RegisterType<FastResizeImageService>().As<IResizeImageService>().SingleInstance();
-            //services.RegisterType<SixLaborsResizeImageService>().As<IResizeImageService>().SingleInstance();
-
+           
             // Image icon pipeline:
             services.RegisterType<NativeExeIconProvider>().As<IIconProvider>().SingleInstance();
             services.RegisterType<IconProviderForImages>().As<IIconProvider>().SingleInstance();
@@ -48,6 +49,13 @@ namespace XFiler
             services.RegisterType<BlankIconProvider>().As<IIconProvider>().SingleInstance();
 
             services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
+        }
+
+        private static void RegisterStartupOptions(this ContainerBuilder services)
+        {
+            IStartupOptions startupOptions = new StartupOptions();
+
+            services.RegisterInstance(startupOptions).As<IStartupOptions>().SingleInstance();
         }
     }
 }

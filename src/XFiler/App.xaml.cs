@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using Autofac;
+﻿using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
-using SingleInstanceHelper;
-using System.Windows.Markup;
-using System.Windows.Threading;
 using Serilog;
+using SingleInstanceHelper;
+using System.Windows.Threading;
 using XFiler.GoogleChromeStyle;
 using XFiler.NotifyIcon;
 using XFiler.SDK.Themes;
@@ -35,31 +33,23 @@ namespace XFiler
             if (!first)
                 Shutdown();
 
-            //var availableCultures = new[]
-            //{
-            //    "Ru-ru",
-            //    "En-us"
-            //};
-
-            //SetCulture(availableCultures[1]);
-
-            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
-
-            _notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
-
             Host = new IoC().Build();
+
+            Host.Resolve<ILanguageService>().Init();
 
             SetTheme(new GoogleChromeTheme());
 
+            _notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
+
             _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
-
+            
+#if DEBUG
             var windowFactory = Host.Resolve<IWindowFactory>();
-
             var window = windowFactory.GetWindowWithRootTab();
 
             window.Show();
-
+#endif
+            
             base.OnStartup(e);
         }
 
@@ -67,20 +57,6 @@ namespace XFiler
         {
             _notifyIcon.Dispose();
             base.OnExit(e);
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public static void SetCulture(string culture)
-        {
-            CultureInfo currentCulture = new(culture);
-
-            CultureInfo.DefaultThreadCurrentCulture = currentCulture;
-            CultureInfo.DefaultThreadCurrentUICulture = currentCulture;
-            CultureInfo.CurrentCulture = currentCulture;
-            CultureInfo.CurrentUICulture = currentCulture;
         }
 
         #endregion
