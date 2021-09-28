@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:XFiler.GoogleChromeStyle"
                     xmlns:loc="clr-namespace:XFiler.GoogleChromeStyle.Localization"
                     xmlns:vc="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
-                    xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK">
+                    xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons11.xaml" />
@@ -21,22 +22,15 @@
                         Margin="{TemplateBinding Margin}"
                         BorderThickness="{TemplateBinding BorderThickness}">
 
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="{Binding Path=(local:WindowProperties.CornerRadius),
+                    <mah:ClipBorder BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="{Binding Path=(local:WindowProperties.CornerRadius),
                                 RelativeSource={RelativeSource AncestorType=Window}}"
-
-                            BorderThickness="{Binding WindowState,
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="{Binding WindowState,
                         RelativeSource={RelativeSource AncestorType={x:Type Window}},
                         Converter={vc:WindowBorderThicknessConverter},
                         ConverterParameter=1}">
                         <Grid>
-                            <Grid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=clipMask}" Stretch="None" />
-                            </Grid.OpacityMask>
-                            <Border x:Name="clipMask"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="{Binding Path=(local:WindowProperties.CornerRadius),
-                                RelativeSource={RelativeSource AncestorType=Window}}" />
 
                             <ContentPresenter />
 
@@ -68,7 +62,7 @@
                             </Grid>
                             <!--#endregion-->
                         </Grid>
-                    </Border>
+                    </mah:ClipBorder>
                 </Border>
             </AdornerDecorator>
         </Grid>
@@ -101,9 +95,9 @@
         <Setter Property="MinHeight" Value="120" />
         <Setter Property="Width" Value="1024" />
         <Setter Property="Height" Value="720" />
-        <Setter Property="BorderBrush" Value="#353535" />
+        <Setter Property="BorderBrush" Value="#555555" />
 
-        <Setter Property="Background" Value="#000000" />
+        <Setter Property="Background" Value="#111111" />
 
         <Setter Property="Template" Value="{StaticResource GoogleChromeWindowTemplate}" />
 
@@ -115,6 +109,7 @@
                               GlassFrameThickness="0" />
             </Setter.Value>
         </Setter>
+
         <Setter Property="local:WindowResizeFixerBehavior.IsEnabledForStyle" Value="True" />
     </Style>
 

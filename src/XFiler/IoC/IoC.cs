@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Builder;
 using Dragablz;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;

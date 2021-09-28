@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
     public interface ISearchHandler 
     {

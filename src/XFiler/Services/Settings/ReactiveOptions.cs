@@ -1,6 +1,6 @@
 ﻿namespace XFiler
 {
-    public class ReactiveOptions : IReactiveOptions
+    internal class ReactiveOptions : BaseViewModel, IReactiveOptions
     {
         public bool ShowSystemFiles { get; set; } = false;
 

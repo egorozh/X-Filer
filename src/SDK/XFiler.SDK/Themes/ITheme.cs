@@ -4,8 +4,8 @@ namespace XFiler.SDK.Themes
 {
     public interface ITheme
     {
-        string Guid { get; }
-        
-        Uri GetResourceUri();
+        string Id { get; }
+
+        Uri ResourceUri { get; }
     }
 }

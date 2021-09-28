@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-namespace XFiler.Controls.RectangleSelect
+﻿namespace XFiler.Controls.RectangleSelect
 {
     public class RectSelectDataGrid : DataGrid
     {

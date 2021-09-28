@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.SDK", "SDK\XFiler.SD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.Base", "Plugins\XFiler.Base\XFiler.Base.csproj", "{30EE3604-B9CF-4F0C-AD10-9259D8BEF0A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.GoogleChromeStyle", "Plugins\XFiler.GoogleChromeStyle\XFiler.GoogleChromeStyle.csproj", "{B99E18DE-A09E-43DD-A152-2E1B4727A053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.GoogleChromeStyle", "Themes\XFiler.GoogleChromeStyle\XFiler.GoogleChromeStyle.csproj", "{B99E18DE-A09E-43DD-A152-2E1B4727A053}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.BaseStyle", "Plugins\XFiler.BaseStyle\XFiler.BaseStyle.csproj", "{B0E649D5-A8DC-48D6-B702-0DC386905AA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XFiler.BaseStyle", "Themes\XFiler.BaseStyle\XFiler.BaseStyle.csproj", "{B0E649D5-A8DC-48D6-B702-0DC386905AA6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{119F32D5-EAB1-425A-8732-D2E39C746408}"
 	ProjectSection(SolutionItems) = preProject

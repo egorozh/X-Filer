@@ -2,7 +2,7 @@
 
 namespace XFiler
 {
-    public sealed class Storage : IStorage
+    internal sealed class Storage : IStorage
     {
         #region Public Properties
 

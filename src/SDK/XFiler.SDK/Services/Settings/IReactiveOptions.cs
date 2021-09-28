@@ -1,6 +1,8 @@
-﻿namespace XFiler.SDK
+﻿using System.ComponentModel;
+
+namespace XFiler.SDK
 {
-    public interface IReactiveOptions
+    public interface IReactiveOptions : INotifyPropertyChanged
     {
         bool ShowSystemFiles { get; }
         bool ShowHiddenFiles { get; }   

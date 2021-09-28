@@ -10,6 +10,6 @@ namespace XFiler.SDK
         void OpenTabInNewWindow(ITabItemModel tabItem);
         void OpenTabInNewWindow(IEnumerable<ITabItemModel> tabs);
 
-        IXFilerWindow GetWindowWithRootTab();
+        IMainWindow GetWindowWithRootTab();
     }
 }

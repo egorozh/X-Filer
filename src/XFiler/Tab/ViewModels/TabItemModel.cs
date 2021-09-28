@@ -1,5 +1,4 @@
-﻿using Prism.Commands;
-using XFiler.History;
+﻿using XFiler.History;
 
 namespace XFiler
 {

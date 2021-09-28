@@ -1,6 +1,4 @@
-﻿using XFiler.SDK;
-
-namespace XFiler
+﻿namespace XFiler
 {
     public class RouteModel : ResultsModel
     {

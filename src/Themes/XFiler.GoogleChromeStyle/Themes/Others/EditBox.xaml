@@ -89,7 +89,7 @@
                             <Popup x:Name="PART_Popup"
                                    AllowsTransparency="True"
                                    IsOpen="False"
-                                   Placement="Left"
+                                   Placement="Right"
                                    PlacementTarget="{Binding ElementName=PlacementTargetBorder}"
                                    StaysOpen="True">
                                 <TextBox x:Name="PART_EditTextBox"

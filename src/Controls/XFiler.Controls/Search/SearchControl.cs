@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-namespace XFiler.Controls
+﻿namespace XFiler.Controls
 {
     public class SearchControl : TextBox
     {

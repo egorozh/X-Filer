@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XFiler.Controls.EditBox
+﻿namespace XFiler.Controls.EditBox
 {
     /// <summary>
     /// Implement an interface that enables a viewmodel to interact

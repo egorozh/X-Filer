@@ -3,7 +3,6 @@ using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using Serilog;
 using SingleInstanceHelper;
-using System.Windows.Threading;
 using XFiler.NotifyIcon;
 
 namespace XFiler
@@ -11,7 +10,7 @@ namespace XFiler
     internal sealed partial class App : IXFilerApp
     {
         #region Private Fields
-        
+
         private TaskbarIcon _notifyIcon = null!;
 
         #endregion
@@ -35,7 +34,7 @@ namespace XFiler
 
             Host.Resolve<ILanguageService>().Init();
             Host.Resolve<IThemeService>().Init();
-            
+
             _notifyIcon = FindResource("NotifyIcon") as TaskbarIcon
                           ?? throw new NotImplementedException("NotifyIcon not found in Resources");
 
@@ -60,21 +59,17 @@ namespace XFiler
         #endregion
 
         #region Private Methods
-        
+
         private void OnNextInstanceRunned(string[] commandArgs)
         {
-            var window = Windows.OfType<IXFilerWindow>().FirstOrDefault();
+            var window = Windows.OfType<IMainWindow>().FirstOrDefault();
 
             if (window != null)
-            {
                 window.NormalizeAndActivate();
-            }
             else
-            {
-                var windowFactory = Host.Resolve<IWindowFactory>();
-
-                windowFactory.GetWindowWithRootTab().Show();
-            }
+                Host.Resolve<IWindowFactory>()
+                    .GetWindowWithRootTab()
+                    .Show();
         }
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using Prism.Commands;
 using System.Diagnostics;
-using System.Linq;
 
 namespace XFiler.Commands
 {

@@ -26,7 +26,7 @@ namespace XFiler.NotifyIcon
         
         private void OnShowWindow()
         {
-            var window = Application.Current.Windows.OfType<IXFilerWindow>().FirstOrDefault();
+            var window = Application.Current.Windows.OfType<IMainWindow>().FirstOrDefault();
 
             if (window != null)
             {

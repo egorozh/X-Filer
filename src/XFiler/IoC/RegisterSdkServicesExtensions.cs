@@ -19,6 +19,7 @@ namespace XFiler
             services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
 
             services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
+            services.RegisterType<WindowsNaturalStringComparer>().As<INaturalStringComparer>().SingleInstance();
 
             services.RegisterType<FileTypeResolver>().As<IFileTypeResolver>().SingleInstance();
 

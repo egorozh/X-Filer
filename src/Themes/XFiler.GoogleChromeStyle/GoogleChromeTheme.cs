@@ -12,7 +12,7 @@ namespace XFiler.GoogleChromeStyle
             ? new Uri(Win11GenericPath, UriKind.Relative)
             : new Uri(GenericPath, UriKind.Relative);
 
-        public override string GetGuid() => "e394f339-5907-4c5f-9113-6e49368b3d22";
+        public override string GetId() => "e394f339-5907-4c5f-9113-6e49368b3d22";
 
         private static bool IsWindows11()
             => Environment.OSVersion.Version.Build.ToString().StartsWith("22");

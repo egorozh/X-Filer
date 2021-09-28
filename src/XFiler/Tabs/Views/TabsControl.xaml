@@ -28,7 +28,7 @@
     </UserControl.Resources>
 
     <dragablz:TabablzControl x:Name="InitialTabablzControl"
-                             Style="{StaticResource TabablzControlStyle}"
+                             Style="{DynamicResource TabablzControlStyle}"
 
                              ItemsSource="{Binding TabItems}"
 

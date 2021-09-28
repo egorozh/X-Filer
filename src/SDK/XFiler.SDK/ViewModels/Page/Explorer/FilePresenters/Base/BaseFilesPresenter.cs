@@ -21,12 +21,15 @@ namespace XFiler.SDK
         private IReactiveOptions _settings;
         private IFileOperations _fileOperations;
         private ILogger _logger;
+
         private BackgroundWorker? _backgroundWorker;
         private FileSystemWatcher _watcher = null!;
 
         #endregion
 
         #region Public Properties
+
+        public INaturalStringComparer NaturalStringComparer { get; private set; }
 
         public ObservableCollection<IFileSystemModel> DirectoriesAndFiles { get; set; } = new();
 
@@ -85,12 +88,14 @@ namespace XFiler.SDK
             IFileOperations fileOperations,
             ILogger logger,
             IRenameService renameService,
-            IMainCommands mainCommands)
+            IMainCommands mainCommands,
+            INaturalStringComparer naturalStringComparer)
         {
             _fileEntityFactory = fileEntityFactory;
             _settings = settings;
             _fileOperations = fileOperations;
             _logger = logger;
+            NaturalStringComparer = naturalStringComparer;
 
             DropTarget = dropTarget;
             DragSource = dragSource;
@@ -117,7 +122,7 @@ namespace XFiler.SDK
         #region Public Methods
 
         public async void Init(DirectoryInfo directoryInfo, IFilesGroup group)
-        {   
+        {
             DirectoryInfo = directoryInfo;
             Info = directoryInfo;
             Group = group;
@@ -169,6 +174,7 @@ namespace XFiler.SDK
                 _settings = null!;
                 _fileOperations = null!;
                 _logger = null!;
+                NaturalStringComparer = null!;
 
                 Group = null!;
                 DirectoryInfo = null!;
@@ -206,7 +212,7 @@ namespace XFiler.SDK
             switch (parameters)
             {
                 case IFileSystemModel model:
-                    Delete(new[] { model.Info });
+                    Delete(new[] {model.Info});
                     break;
                 case IEnumerable e:
                     Delete(e.OfType<IFileSystemModel>().Select(m => m.Info));
@@ -219,7 +225,7 @@ namespace XFiler.SDK
             switch (parameters)
             {
                 case IFileSystemModel model:
-                    Delete(new[] { model.Info }, true);
+                    Delete(new[] {model.Info}, true);
                     break;
                 case IEnumerable e:
                     Delete(e.OfType<IFileSystemModel>().Select(m => m.Info), true);
@@ -268,8 +274,8 @@ namespace XFiler.SDK
 
             return entityType switch
             {
-                EntityType.Directory => await _fileEntityFactory.CreateDirectory((DirectoryInfo)path, Group, IconSize),
-                EntityType.File => await _fileEntityFactory.CreateFile((FileInfo)path, Group, IconSize),
+                EntityType.Directory => await _fileEntityFactory.CreateDirectory((DirectoryInfo) path, Group, IconSize),
+                EntityType.File => await _fileEntityFactory.CreateFile((FileInfo) path, Group, IconSize),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -282,22 +288,20 @@ namespace XFiler.SDK
                 if (Disposed)
                     return list;
 
-                var comparer = new WindowsNaturalStringComparer();
-
                 var hideSystemFiles = !_settings.ShowSystemFiles;
                 var hideHiddenFiles = !_settings.ShowHiddenFiles;
 
                 list.AddRange(DirectoryInfo.EnumerateDirectories()
                     .Where(f => NotSystemFilter(f, hideSystemFiles))
                     .Where(f => NotHidenFilter(f, hideHiddenFiles))
-                    .OrderBy(d => d.Name, comparer)
-                    .Select(d => ((FileSystemInfo)d, EntityType.Directory)));
+                    .OrderBy(d => d.Name, NaturalStringComparer)
+                    .Select(d => ((FileSystemInfo) d, EntityType.Directory)));
 
                 list.AddRange(DirectoryInfo.EnumerateFiles()
                     .Where(f => NotSystemFilter(f, hideSystemFiles))
                     .Where(f => NotHidenFilter(f, hideHiddenFiles))
-                    .OrderBy(d => d.Name, comparer)
-                    .Select(d => ((FileSystemInfo)d, EntityType.File)));
+                    .OrderBy(d => d.Name, NaturalStringComparer)
+                    .Select(d => ((FileSystemInfo) d, EntityType.File)));
 
                 return list;
             });
@@ -316,7 +320,7 @@ namespace XFiler.SDK
             if (e.Argument is not IReadOnlyList<(FileSystemInfo, EntityType)> items)
                 return;
 
-            var bw = (BackgroundWorker)sender!;
+            var bw = (BackgroundWorker) sender!;
 
             var count = items.Count;
 
@@ -328,7 +332,7 @@ namespace XFiler.SDK
                     return;
                 }
 
-                bw.ReportProgress((int)(i / (double)count * 100.0));
+                bw.ReportProgress((int) (i / (double) count * 100.0));
 
                 Application.Current.Dispatcher.Invoke(async () =>
                 {
@@ -367,7 +371,8 @@ namespace XFiler.SDK
                 case DirectoryInfo directoryInfo:
                     Application.Current.Dispatcher.Invoke(async () =>
                     {
-                        DirectoriesAndFiles.Add(await _fileEntityFactory.CreateDirectory(directoryInfo, Group, IconSize));
+                        DirectoriesAndFiles.Add(
+                            await _fileEntityFactory.CreateDirectory(directoryInfo, Group, IconSize));
                     });
                     break;
                 case FileInfo fileInfo:
@@ -410,7 +415,7 @@ namespace XFiler.SDK
                 _backgroundWorker.DoWork -= BackgroundWorker_DoWork;
                 _backgroundWorker.ProgressChanged -= BackgroundWorker_ProgressChanged;
 
-                if (_backgroundWorker is { IsBusy: true })
+                if (_backgroundWorker is {IsBusy: true})
                     _backgroundWorker.CancelAsync();
 
 

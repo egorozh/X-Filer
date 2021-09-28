@@ -1,5 +1,4 @@
-﻿using Prism.Commands;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
@@ -8,7 +7,7 @@ using XFiler.SDK;
 
 namespace XFiler
 {
-    public sealed class ClipboardService : IClipboardService
+    internal sealed class ClipboardService : IClipboardService
     {
         #region Private Fields
 

@@ -25,6 +25,9 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
 
+        <sdk:ComparerReference x:Key="NaturalComparer"
+                               Comparer="{Binding NaturalStringComparer}"/>
+
         <sdk:CommandReference x:Key="OpenCommand"
                               Command="{Binding DataContext.OpenCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
@@ -97,7 +100,9 @@
                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                  VirtualizingPanel.VirtualizationMode="Recycling"
                                  EnableColumnVirtualization="False"
-                                 EnableRowVirtualization="True">
+                                 EnableRowVirtualization="True"
+
+                                 base:CustomSortBehaviour.AllowCustomSort="True">
 
         <DataGrid.Resources>
             <sdk:CommandReference x:Key="OpenManyItemsNewTabCommand"
@@ -500,7 +505,8 @@
             <DataGridTemplateColumn Header="{x:Static loc:Strings.Presenters_Table_NameRow}"
                                     Width="250"
                                     CanUserSort="True"
-                                    SortMemberPath="Name">
+                                    SortMemberPath="Name"
+                                    base:CustomSortBehaviour.CustomSorter="{StaticResource NaturalComparer}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <editBox:EditBox x:Name="TextBlock"

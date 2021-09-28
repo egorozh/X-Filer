@@ -1,6 +1,6 @@
 ﻿namespace XFiler
 {
-    public sealed class BoolToVisibilityConverter : BaseValueConverter
+    internal sealed class BoolToVisibilityConverter : BaseValueConverter
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -1,7 +1,5 @@
-﻿using Prism.Commands;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
 
 namespace XFiler
 {

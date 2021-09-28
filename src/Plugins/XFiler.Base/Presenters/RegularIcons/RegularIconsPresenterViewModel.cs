@@ -15,9 +15,10 @@ namespace XFiler.Base
             IFileOperations fileOperations,
             ILogger logger,
             IRenameService renameService,
-            IMainCommands mainCommands) :
+            IMainCommands mainCommands,
+            INaturalStringComparer naturalStringComparer) :
             base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService,
-                reactiveOptions, fileOperations, logger, renameService, mainCommands)
+                reactiveOptions, fileOperations, logger, renameService, mainCommands, naturalStringComparer)
         {
         }
     }

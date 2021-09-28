@@ -1,45 +1,75 @@
-﻿using System.Linq;
-using XFiler.GoogleChromeStyle;
+﻿using System.ComponentModel;
+using System.Linq;
 using XFiler.SDK.Themes;
 
 namespace XFiler
 {
-    internal class ThemeService : IThemeService
+    internal sealed class ThemeService : IThemeService
     {
+        #region Private Fields
+
+        private ITheme? _currentTheme;
+
         private readonly IReadOnlyList<ITheme> _themes;
         private readonly IReactiveOptions _reactiveOptions;
 
-        private ITheme? _currentTheme;
+        #endregion
+
+        #region Constructor
 
         public ThemeService(IReadOnlyList<ITheme> themes, IReactiveOptions reactiveOptions)
         {
             _themes = themes;
             _reactiveOptions = reactiveOptions;
+
+            _reactiveOptions.PropertyChanged += ReactiveOptionsOnPropertyChanged;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void Init()
         {
-            var theme = _themes.FirstOrDefault(t => t.Guid == _reactiveOptions.CurrentThemeId);
+            var theme = _themes.FirstOrDefault(t => t.Id == _reactiveOptions.CurrentThemeId);
 
-            if (theme != null) 
-                SetTheme(theme);
+            SetTheme(theme ?? _themes.First());
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void SetTheme(ITheme newTheme)
         {
+            if (newTheme == _currentTheme)
+                return;
+
+            var resources = Application.Current.Resources.MergedDictionaries;
+
             if (_currentTheme != null)
             {
-                var resourceDictionaryToRemove =
-                    Application.Current.Resources.MergedDictionaries.FirstOrDefault(r =>
-                        r.Source == _currentTheme.GetResourceUri());
+                var resourceDictionaryToRemove = resources
+                    .FirstOrDefault(r => r.Source == _currentTheme.ResourceUri);
+
                 if (resourceDictionaryToRemove != null)
-                    Application.Current.Resources.MergedDictionaries.Remove(resourceDictionaryToRemove);
+                    resources.Remove(resourceDictionaryToRemove);
             }
 
             _currentTheme = newTheme;
 
-            if (Application.LoadComponent(_currentTheme.GetResourceUri()) is ResourceDictionary resourceDict)
-                Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+            if (Application.LoadComponent(_currentTheme.ResourceUri) is ResourceDictionary resourceDict)
+                resources.Add(resourceDict);
         }
+
+        private void ReactiveOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IReactiveOptions.CurrentThemeId))
+            {
+                Init();
+            }
+        }
+
+        #endregion
     }
 }

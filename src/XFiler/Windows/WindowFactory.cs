@@ -36,7 +36,7 @@ namespace XFiler
             ShowNewWindow(tabsVm, new Point(24, 24));
         }
 
-        public IXFilerWindow GetWindowWithRootTab()
+        public IMainWindow GetWindowWithRootTab()
         {
             var tabsViewModel = _tabsFactory.Invoke().CreateTabsViewModel(new[]
             {

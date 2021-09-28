@@ -1,5 +1,4 @@
 ﻿using GongSolutions.Wpf.DragDrop;
-using Prism.Commands;
 using Serilog;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;

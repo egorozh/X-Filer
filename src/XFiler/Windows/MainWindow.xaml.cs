@@ -1,6 +1,6 @@
 ﻿namespace XFiler
 {
-    public sealed partial class MainWindow : IXFilerWindow
+    public sealed partial class MainWindow : IMainWindow
     {
         public MainWindow() => InitializeComponent();
 

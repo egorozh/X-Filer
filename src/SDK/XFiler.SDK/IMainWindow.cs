@@ -1,9 +1,9 @@
 namespace XFiler.SDK
 {
-    public interface IXFilerWindow
+    public interface IMainWindow
     {
         void Show();
-        
+
         void NormalizeAndActivate();
     }
 }
