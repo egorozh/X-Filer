@@ -8,6 +8,8 @@ public interface IStorage
     
     string LogDirectory { get; }
 
+    string ConfigDirectory { get; }
+
     string DbDirectory { get; }
             
     string Bookmarks { get; }

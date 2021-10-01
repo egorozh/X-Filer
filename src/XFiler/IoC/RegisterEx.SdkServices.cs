@@ -28,7 +28,7 @@ internal static partial class RegisterEx
         services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
 
         services.RegisterStartupOptions();
-        services.RegisterType<ReactiveOptions>().As<IReactiveOptions>().SingleInstance();
+        services.RegisterReactiveOptions();
 
         services.RegisterType<DirectorySettings>().As<IDirectorySettings>().SingleInstance();
         services.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
@@ -60,6 +60,19 @@ internal static partial class RegisterEx
 
     private static void RegisterStartupOptions(this ContainerBuilder services)
     {
+        IStartupOptions startupOptions = new StartupOptions();
+
+        services.RegisterInstance(startupOptions).As<IStartupOptions>().SingleInstance();
+    }
+
+    private static void RegisterReactiveOptions(this ContainerBuilder services)
+    {
+        services.RegisterType<ReactiveOptionsFileManager>().As<IReactiveOptionsFileManager>().SingleInstance();
+
+        services.Register(s => s.Resolve<IReactiveOptionsFileManager>().GetOptions())
+            .As<IReactiveOptions>()
+            .SingleInstance();
+
         IStartupOptions startupOptions = new StartupOptions();
 
         services.RegisterInstance(startupOptions).As<IStartupOptions>().SingleInstance();

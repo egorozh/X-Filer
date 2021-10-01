@@ -12,6 +12,8 @@ internal sealed class Storage : IStorage
 
     public string LogDirectory { get; }
 
+    public string ConfigDirectory { get; }
+
     public string DbDirectory { get; }
 
     public string Bookmarks { get; }    
@@ -31,6 +33,9 @@ internal sealed class Storage : IStorage
 
         LogDirectory = Path.Combine(BaseDirectory, "Logs");
         Directory.CreateDirectory(LogDirectory);
+
+        ConfigDirectory = Path.Combine(BaseDirectory, "Config");
+        Directory.CreateDirectory(ConfigDirectory);
 
         DbDirectory = Path.Combine(BaseDirectory, "Data");
         Directory.CreateDirectory(DbDirectory);
