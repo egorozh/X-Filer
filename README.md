@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/egorozh/X-Filer">
-    <img alt="X-Filer" width="200" heigth="200" src="https://github.com/egorozh/X-Filer/blob/main/src/XFiler/files.ico">
+    <img alt="X-Filer" width="200" heigth="200" src="https://github.com/egorozh/X-Filer/blob/main/icon.svg">
   </a>
   <h1>X-Filer</h1>
   <p>
@@ -18,5 +18,5 @@
 ## Others
 - Native Windows File Operations (Copy, Cut, Paste, Rename)
 - Custom icon providers (SVG, Images and other extensions)
-- Table and tile presenters
+- Table, Small-Regular-Large icons, content and tiles presenters
 - Grouping items
