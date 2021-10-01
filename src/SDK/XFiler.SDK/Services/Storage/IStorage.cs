@@ -3,7 +3,9 @@
 public interface IStorage
 {
     string BaseDirectory { get; }
-
+    
+    string ExplorerWallpapersDirectory { get; }
+    
     string LogDirectory { get; }
 
     string DbDirectory { get; }

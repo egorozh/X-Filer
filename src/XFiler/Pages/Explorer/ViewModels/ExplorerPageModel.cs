@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace XFiler;
 
@@ -8,6 +10,8 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     #region Private Fields
 
     private IDirectorySettings _directorySettings;
+    private IReactiveOptions _reactiveOptions;
+    private IStorage _storage;
     private DirectoryInfo _directory;
 
     #endregion
@@ -20,12 +24,18 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; }
     public IFilesGroup CurrentGroup { get; set; }
 
+    public ImageSource? BackgroundImage { get; private set; }
+
     #endregion
+
+    #region Commands
 
     public DelegateCommand<object> PasteCommand { get; private set; }
     public DelegateCommand<IFileSystemModel> CreateFolderCommand { get; private set; }
     public DelegateCommand<IFileSystemModel> CreateTextCommand { get; private set; }
     public DelegateCommand<IFileSystemModel> OpenInNativeExplorerCommand { get; private set; }
+
+    #endregion
 
     #region Constructor
 
@@ -36,9 +46,12 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         IMainCommands mainCommands,
         IDirectorySettings directorySettings,
         IReactiveOptions reactiveOptions,
+        IStorage storage,
         DirectoryInfo directory) : base(typeof(ExplorerPage), new DirectoryRoute(directory))
     {
         _directorySettings = directorySettings;
+        _reactiveOptions = reactiveOptions;
+        _storage = storage;
         _directory = directory;
 
         FilesPresenters = filesPresenters;
@@ -60,6 +73,10 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
             factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
 
         CurrentPresenter = SelectInitPresenter(dirSettings, reactiveOptions);
+
+        BackgroundImage = CreateImageSource(reactiveOptions.ExplorerBackgroundImagePath);
+
+        _reactiveOptions.PropertyChanged += ReactiveOptionsOnPropertyChanged;
     }
 
     #endregion
@@ -72,6 +89,8 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
         PropertyChanged -= DirectoryTabItemViewModelOnPropertyChanged;
 
+        _reactiveOptions.PropertyChanged -= ReactiveOptionsOnPropertyChanged;
+
         foreach (var factory in FilesPresenters)
         {
             factory.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
@@ -81,6 +100,8 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
         _directory = null!;
         _directorySettings = null!;
+        _storage = null!;
+        _reactiveOptions = null!;
         FilesPresenters = null!;
         CurrentPresenter = null!;
         FilesGroups = null!;
@@ -96,14 +117,11 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
     #region Private Methods
 
-    private void OpenDirectory()
-    {
-        CurrentPresenter.UpdatePresenter(_directory, CurrentGroup);
-    }
+    private void OpenDirectory() => CurrentPresenter.UpdatePresenter(_directory, CurrentGroup);
 
     private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
     {
-        XFilerRoute route = e.FileEntityViewModel switch
+        var route = e.FileEntityViewModel switch
         {
             DirectoryViewModel directoryViewModel => new DirectoryRoute(directoryViewModel.DirectoryInfo),
             FileViewModel fileViewModel => new FileRoute(fileViewModel.FileInfo),
@@ -135,11 +153,30 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     {
         var presenterId = options.DefaultPresenterId;
 
-        if (!options.AlwaysOpenDirectoryInDefaultPresenter) 
+        if (!options.AlwaysOpenDirectoryInDefaultPresenter)
             presenterId = dirSettings.PresenterId ?? presenterId;
 
         return FilesPresenters.FirstOrDefault(p => p.Id == presenterId) ??
                FilesPresenters.First();
+    }
+
+    private void ReactiveOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(IReactiveOptions.ExplorerBackgroundImagePath))
+            BackgroundImage = CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
+    }
+
+    private ImageSource? CreateImageSource(string? imagePath)
+    {
+        if (imagePath != null)
+        {
+            var fullPath = Path.Combine(_storage.ExplorerWallpapersDirectory, imagePath);
+
+            if (File.Exists(fullPath))
+                return new BitmapImage(new Uri(fullPath));
+        }
+
+        return null;
     }
 
     #endregion

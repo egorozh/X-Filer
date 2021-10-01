@@ -30,7 +30,7 @@
         <sdk:CommandReference x:Key="OpenCommand"
                               Command="{Binding DataContext.OpenCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}" />
-        
+
         <sdk:CommandReference x:Key="AddToBookmarksCommand"
                               Command="{Binding SelectedItem.AddBookmarkCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" />
@@ -77,6 +77,7 @@
     <controls:RectSelectDataGrid ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
 
                                  Style="{DynamicResource {x:Static themes:ResourceKeys.RectSelectDataGridStyle}}"
+                                 Background="Transparent"
 
                                  AutoGenerateColumns="False"
 
@@ -300,6 +301,7 @@
         <DataGrid.RowStyle>
             <Style TargetType="{x:Type DataGridRow}">
                 <Setter Property="Margin" Value="0" />
+                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
                 <Setter Property="ValidationErrorTemplate"
@@ -525,22 +527,22 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <controls:EditBox x:Name="TextBlock"
-                                         Style="{DynamicResource TreeViewEditBox}"
-                                         Background="Transparent"
-                                         DisplayTextForegroundBrush="White"
-                                         Foreground="White"
-                                         IsEditableOnDoubleClick="True"
-                                         IsReadOnly="False"
-                                         MinimumClickTime="500"
-                                         MaximumClickTime="1200"
-                                         Focusable="True"
-                                         RenameCommand="{StaticResource RenameCommand}"
-                                         RenameCommandParameter="{Binding}"
-                                         VerticalAlignment="Center"
-                                         HorizontalAlignment="Left"
-                                         Margin="5 0"
-                                         DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                         Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                          Style="{DynamicResource TreeViewEditBox}"
+                                          Background="Transparent"
+                                          DisplayTextForegroundBrush="White"
+                                          Foreground="White"
+                                          IsEditableOnDoubleClick="True"
+                                          IsReadOnly="False"
+                                          MinimumClickTime="500"
+                                          MaximumClickTime="1200"
+                                          Focusable="True"
+                                          RenameCommand="{StaticResource RenameCommand}"
+                                          RenameCommandParameter="{Binding}"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Left"
+                                          Margin="5 0"
+                                          DisplayText="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
 

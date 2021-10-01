@@ -15,6 +15,7 @@ internal sealed class PageFactory : IPageFactory
     private readonly IMainCommands _mainCommands;
     private readonly IDirectorySettings _directorySettings;
     private readonly IReactiveOptions _reactiveOptions;
+    private readonly IStorage _storage;
 
     public PageFactory(
         IIndex<PageType, IPageModel> pageModelFactory,
@@ -23,7 +24,8 @@ internal sealed class PageFactory : IPageFactory
         IClipboardService clipboardService,
         IMainCommands mainCommands,
         IDirectorySettings directorySettings,
-        IReactiveOptions reactiveOptions)
+        IReactiveOptions reactiveOptions,
+        IStorage storage)
     {
         _pageModelFactory = pageModelFactory;
         _filesPresenters = filesPresenters;
@@ -32,6 +34,7 @@ internal sealed class PageFactory : IPageFactory
         _mainCommands = mainCommands;
         _directorySettings = directorySettings;
         _reactiveOptions = reactiveOptions;
+        _storage = storage;
     }
 
     public IPageModel? CreatePage(XFilerRoute route)
@@ -90,6 +93,7 @@ internal sealed class PageFactory : IPageFactory
             _mainCommands,
             _directorySettings,
             _reactiveOptions,
+            _storage,
             dir);
     }
 
