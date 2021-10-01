@@ -1,10 +1,9 @@
-﻿namespace XFiler.MyComputer
+﻿namespace XFiler.MyComputer;
+
+public sealed partial class MyComputerPage : IExplorerPage
 {
-    public sealed partial class MyComputerPage : IExplorerPage
+    public MyComputerPage()
     {
-        public MyComputerPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

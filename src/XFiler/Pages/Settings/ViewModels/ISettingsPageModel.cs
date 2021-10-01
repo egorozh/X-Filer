@@ -1,8 +1,5 @@
-﻿using XFiler.SDK;
+﻿namespace XFiler;
 
-namespace XFiler
+public interface ISettingsPageModel : IPageModel
 {
-    public interface ISettingsPageModel : IPageModel
-    {
-    }
 }

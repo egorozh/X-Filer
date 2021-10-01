@@ -1,7 +1,6 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface IThemeService
 {
-    public interface IThemeService
-    {
-        void Init();
-    }
+    void Init();
 }

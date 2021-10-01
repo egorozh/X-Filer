@@ -1,10 +1,9 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public sealed partial class SettingsPage 
 {
-    public sealed partial class SettingsPage 
+    public SettingsPage()
     {
-        public SettingsPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

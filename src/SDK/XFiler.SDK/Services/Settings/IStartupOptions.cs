@@ -1,7 +1,6 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface IStartupOptions
 {
-    public interface IStartupOptions
-    {
-        public string? CurrentLanguage { get; } 
-    }
+    public string? CurrentLanguage { get; } 
 }

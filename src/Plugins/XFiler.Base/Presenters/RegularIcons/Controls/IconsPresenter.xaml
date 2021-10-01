@@ -6,12 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              xmlns:base="clr-namespace:XFiler.Base"
-             xmlns:dd="urn:gong-wpf-dragdrop"
-             xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
-             xmlns:controls="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls"
-             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:loc="clr-namespace:XFiler.Base.Localization"
-             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -341,7 +339,6 @@
                     <vwp:VirtualizingWrapPanel Orientation="Vertical"
                                                SpacingMode="Uniform"
                                                ScrollUnit="Pixel" />
-                    <!--<VirtualizingStackPanel Orientation="Vertical" />-->
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
 
@@ -369,7 +366,7 @@
 
                             </Border>
 
-                            <editBox:EditBox Grid.Row="1"
+                            <controls:EditBox Grid.Row="1"
                                              x:Name="TextBlock"
                                              Style="{StaticResource TileEditBox}"
                                              Background="Transparent"

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IPageModel : IDisposable
 {
-    public interface IPageModel : IDisposable
-    {
-        event EventHandler<HyperlinkEventArgs> GoToUrl;
+    event EventHandler<HyperlinkEventArgs> GoToUrl;
 
-        DataTemplate Template { get; }
+    DataTemplate Template { get; }
 
-        XFilerRoute Route { get; }
-    }
+    XFilerRoute Route { get; }
 }

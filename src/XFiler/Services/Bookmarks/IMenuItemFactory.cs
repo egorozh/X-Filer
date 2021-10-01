@@ -1,11 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
-namespace XFiler
+namespace XFiler;
+
+internal interface IMenuItemFactory
 {
-    internal interface IMenuItemFactory
-    {
-        MenuItemViewModel CreateItem(BookmarkItem bookmarkItem,
-            ObservableCollection<IMenuItemViewModel> children, ICommand bookmarkClickCommand);
-    }
+    MenuItemViewModel CreateItem(BookmarkItem bookmarkItem,
+        ObservableCollection<IMenuItemViewModel> children, ICommand bookmarkClickCommand);
 }

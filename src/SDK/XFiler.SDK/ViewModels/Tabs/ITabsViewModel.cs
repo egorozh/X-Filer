@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface ITabsViewModel
 {
-    public interface ITabsViewModel
-    {
-        void OnOpenNewTab(IFileSystemModel fileEntityViewModel, bool isSelectNewTab = false);
-        void OnOpenNewTab(IEnumerable<IFileSystemModel> fileEntityViewModel, bool isSelectNewTab = false);
-    }
+    void OnOpenNewTab(IFileSystemModel fileEntityViewModel, bool isSelectNewTab = false);
+    void OnOpenNewTab(IEnumerable<IFileSystemModel> fileEntityViewModel, bool isSelectNewTab = false);
 }

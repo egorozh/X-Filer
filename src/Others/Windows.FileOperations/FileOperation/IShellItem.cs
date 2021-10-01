@@ -1,24 +1,19 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
+﻿namespace Windows.FileOperations.FileOperation;
 
-namespace Windows.FileOperations.FileOperation
+[ComImport]
+[Guid(Guids.IShellItem)]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface IShellItem
 {
-    [ComImport]
-    [Guid(Guids.IShellItem)]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IShellItem
-    {
-        [return: MarshalAs(UnmanagedType.Interface)]
-        object BindToHandler(IBindCtx pbc, ref Guid bhid, ref Guid riid);
+    [return: MarshalAs(UnmanagedType.Interface)]
+    object BindToHandler(IBindCtx pbc, ref Guid bhid, ref Guid riid);
 
-        IShellItem GetParent();
+    IShellItem GetParent();
 
-        [return: MarshalAs(UnmanagedType.LPWStr)]
-        string GetDisplayName(SIGDN sigdnName);
+    [return: MarshalAs(UnmanagedType.LPWStr)]
+    string GetDisplayName(SIGDN sigdnName);
 
-        uint GetAttributes(uint sfgaoMask);
+    uint GetAttributes(uint sfgaoMask);
 
-        int Compare(IShellItem psi, uint hint);
-    }
+    int Compare(IShellItem psi, uint hint);
 }

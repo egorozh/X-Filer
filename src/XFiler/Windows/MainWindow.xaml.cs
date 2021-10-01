@@ -1,15 +1,14 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public sealed partial class MainWindow : IMainWindow
 {
-    public sealed partial class MainWindow : IMainWindow
+    public MainWindow() => InitializeComponent();
+
+    public void NormalizeAndActivate()
     {
-        public MainWindow() => InitializeComponent();
+        if (WindowState == WindowState.Minimized)
+            WindowState = WindowState.Normal;
 
-        public void NormalizeAndActivate()
-        {
-            if (WindowState == WindowState.Minimized)
-                WindowState = WindowState.Normal;
-
-            Activate();
-        }
+        Activate();
     }
 }

@@ -1,25 +1,24 @@
 ﻿using System;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public class DisposableViewModel : BaseViewModel, IDisposable
 {
-    public class DisposableViewModel : BaseViewModel, IDisposable
+    protected bool Disposed;
+
+    ~DisposableViewModel()
     {
-        protected bool Disposed;
+        Dispose(false);
+    }
 
-        ~DisposableViewModel()
-        {
-            Dispose(false);
-        }
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            Disposed = true;
-        }
+    protected virtual void Dispose(bool disposing)
+    {
+        Disposed = true;
     }
 }

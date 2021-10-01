@@ -1,7 +1,6 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface IPageFactory
 {
-    public interface IPageFactory
-    {
-        IPageModel? CreatePage(XFilerRoute route);
-    }
+    IPageModel? CreatePage(XFilerRoute route);
 }

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface ITabsFactory
 {
-    public interface ITabsFactory
-    {
-        ITabsViewModel CreateTabsViewModel(IEnumerable<ITabItemModel> initItems);
-        ITabsViewModel CreateTabsViewModel();   
-    }
+    ITabsViewModel CreateTabsViewModel(IEnumerable<ITabItemModel> initItems);
+    ITabsViewModel CreateTabsViewModel();   
 }

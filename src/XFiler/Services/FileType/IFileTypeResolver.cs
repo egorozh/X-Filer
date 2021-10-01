@@ -1,9 +1,8 @@
 ﻿using System.IO;
 
-namespace XFiler
+namespace XFiler;
+
+public interface IFileTypeResolver
 {
-    public interface IFileTypeResolver
-    {
-        string GetFileType(FileSystemInfo info);
-    }
+    string GetFileType(FileSystemInfo info);
 }

@@ -1,10 +1,9 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public sealed partial class TabsControl
 {
-    public sealed partial class TabsControl
+    public TabsControl()
     {
-        public TabsControl()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public interface ISearchHandler 
 {
-    public interface ISearchHandler 
-    {
-        IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute);
-    }
+    IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute);
 }

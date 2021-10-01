@@ -1,11 +1,10 @@
 ﻿using XFiler.Views;
 
-namespace XFiler.ViewModels
+namespace XFiler.ViewModels;
+
+internal sealed class SearchPageModel : BasePageModel
 {
-    internal sealed class SearchPageModel : BasePageModel
+    public SearchPageModel(XFilerRoute route) : base(typeof(SearchPage), route)
     {
-        public SearchPageModel(XFilerRoute route) : base(typeof(SearchPage), route)
-        {
-        }
     }
 }

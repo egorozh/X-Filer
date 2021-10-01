@@ -1,9 +1,8 @@
-namespace XFiler.SDK
-{
-    public interface IMainWindow
-    {
-        void Show();
+namespace XFiler.SDK;
 
-        void NormalizeAndActivate();
-    }
+public interface IMainWindow
+{
+    void Show();
+
+    void NormalizeAndActivate();
 }

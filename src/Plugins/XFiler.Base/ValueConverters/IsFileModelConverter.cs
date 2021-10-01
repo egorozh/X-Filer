@@ -1,18 +1,12 @@
-using System;
-using System.Globalization;
-using System.IO;
-using XFiler.SDK;
+namespace XFiler.Base;
 
-namespace XFiler.Base
+internal sealed class IsFileModelConverter : BaseValueConverter
 {
-    internal sealed class IsFileModelConverter : BaseValueConverter
+    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is IFileSystemModel model)
-                return model.Info is FileInfo;
+        if (value is IFileSystemModel model)
+            return model.Info is FileInfo;
 
-            return false;
-        }
+        return false;
     }
 }

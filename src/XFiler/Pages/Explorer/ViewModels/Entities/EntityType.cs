@@ -1,8 +1,7 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public enum EntityType
 {
-    public enum EntityType
-    {
-        File,
-        Directory
-    }
+    File,
+    Directory
 }

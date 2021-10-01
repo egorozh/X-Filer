@@ -1,16 +1,15 @@
 ﻿using XFiler.Resources.Localization;
 
-namespace XFiler
+namespace XFiler;
+
+public class FilesGroupOfNone : DisposableViewModel, IFilesGroup
 {
-    public class FilesGroupOfNone : DisposableViewModel, IFilesGroup
+    public string Name { get; } = Strings.Grouping_None;
+
+    public string GetGroup(IFileItem item)
     {
-        public string Name { get; } = Strings.Grouping_None;
-
-        public string GetGroup(IFileItem item)
-        {
-            return null;
-        }
-
-        public string Id { get; } = "21a6615b-61e1-4dc9-acde-95a8bc532cbe";
+        return null;
     }
+
+    public string Id { get; } = "21a6615b-61e1-4dc9-acde-95a8bc532cbe";
 }

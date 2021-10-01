@@ -1,14 +1,13 @@
 ﻿using Prism.Commands;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IMainCommands
 {
-    public interface IMainCommands
-    {
-        DelegateCommand<IFileSystemModel> CreateFolderCommand { get; }
-        DelegateCommand<IFileSystemModel> CreateTextCommand { get; }
+    DelegateCommand<IFileSystemModel> CreateFolderCommand { get; }
+    DelegateCommand<IFileSystemModel> CreateTextCommand { get; }
 
-        DelegateCommand<IFileSystemModel> OpenInNativeExplorerCommand { get; }
+    DelegateCommand<IFileSystemModel> OpenInNativeExplorerCommand { get; }
 
-        DelegateCommand<object> OpenNewTabCommand { get; }
-    }
+    DelegateCommand<object> OpenNewTabCommand { get; }
 }

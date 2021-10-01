@@ -1,71 +1,65 @@
-﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
+﻿namespace Windows.FileOperations.FileOperation;
 
-namespace Windows.FileOperations.FileOperation
+public class RenameFilesOperation : IDisposable
 {
-    public class RenameFilesOperation : IDisposable
+    private static readonly Type _fileOperationType = Type.GetTypeFromCLSID(new Guid(Guids.CLSID_FileOperation));
+        
+    private readonly IFileOperation _fileOperation;
+    private readonly ShellItemFactory _shellItemFactory;
+
+    public RenameFilesOperation() : this(CreateHandle())
     {
-        private static readonly Type _fileOperationType = Type.GetTypeFromCLSID(new Guid(Guids.CLSID_FileOperation));
+    }
+
+    public RenameFilesOperation(IntPtr handle)
+    {
+        _fileOperation = (IFileOperation)Activator.CreateInstance(_fileOperationType);
         
-        private readonly IFileOperation _fileOperation;
-        private readonly ShellItemFactory _shellItemFactory;
+        _fileOperation.SetOperationFlags(FileOperationFlags.FOFX_SHOWELEVATIONPROMPT);
+        _fileOperation.SetOwnerWindow((uint)handle);
 
-        public RenameFilesOperation() : this(CreateHandle())
-        {
-        }
+        _shellItemFactory = new ShellItemFactory();
+    }
 
-        public RenameFilesOperation(IntPtr handle)
-        {
-            _fileOperation = (IFileOperation)Activator.CreateInstance(_fileOperationType);
-        
-            _fileOperation.SetOperationFlags(FileOperationFlags.FOFX_SHOWELEVATIONPROMPT);
-            _fileOperation.SetOwnerWindow((uint)handle);
-
-            _shellItemFactory = new ShellItemFactory();
-        }
-
-        public void Rename(string source, string newName)
-        {
-            using ComDisposer<IShellItem> sourceItem = _shellItemFactory.Create(source);
+    public void Rename(string source, string newName)
+    {
+        using ComDisposer<IShellItem> sourceItem = _shellItemFactory.Create(source);
            
-            _fileOperation.RenameItem(sourceItem.Value, newName+"\0", null);
-        }
+        _fileOperation.RenameItem(sourceItem.Value, newName+"\0", null);
+    }
 
-        /// <summary>
-        /// Start the file copy operation and release all resources.
-        /// </summary>
-        public void Dispose()
+    /// <summary>
+    /// Start the file copy operation and release all resources.
+    /// </summary>
+    public void Dispose()
+    {
+        try
         {
-            try
-            {
-                _fileOperation.PerformOperations();
-            }
-            catch
-            {
-            } // if something goes wrong the IFileOperation UI will tell the user so we don't have to
-
-            Marshal.FinalReleaseComObject(_fileOperation);
-            GC.SuppressFinalize(this);
+            _fileOperation.PerformOperations();
         }
-
-        private static IntPtr CreateHandle()
+        catch
         {
-            try
+        } // if something goes wrong the IFileOperation UI will tell the user so we don't have to
+
+        Marshal.FinalReleaseComObject(_fileOperation);
+        GC.SuppressFinalize(this);
+    }
+
+    private static IntPtr CreateHandle()
+    {
+        try
+        {
+            return Process.GetCurrentProcess().MainWindowHandle;
+        }
+        catch (Exception ex)
+        {
+            switch (ex)
             {
-                return Process.GetCurrentProcess().MainWindowHandle;
-            }
-            catch (Exception ex)
-            {
-                switch (ex)
-                {
-                    case SecurityException _:
-                    case InvalidOperationException _:
-                        return IntPtr.Zero;
-                    default:
-                        throw;
-                }
+                case SecurityException _:
+                case InvalidOperationException _:
+                    return IntPtr.Zero;
+                default:
+                    throw;
             }
         }
     }

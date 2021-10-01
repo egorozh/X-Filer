@@ -1,7 +1,6 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface ILanguageService
 {
-    public interface ILanguageService
-    {
-        void Init();
-    }
+    void Init();
 }

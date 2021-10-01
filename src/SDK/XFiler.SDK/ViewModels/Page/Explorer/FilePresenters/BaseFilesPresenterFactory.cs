@@ -3,61 +3,60 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenterFactory
 {
-    public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenterFactory
+    public IFilesPresenter? FilesPresenter { get; private set; }
+
+    public ImageSource IconSource { get; }
+
+    public string Name { get; }
+
+    public DataTemplate Template { get; }
+
+    public string Id { get; }
+
+    public event EventHandler<OpenDirectoryEventArgs>? DirectoryOrFileOpened;
+
+    protected BaseFilesPresenterFactory(
+        string name,
+        DataTemplate template, 
+        ImageSource iconSource, 
+        string id)
     {
-        public IFilesPresenter? FilesPresenter { get; private set; }
+        Name = name;
+        Template = template;
+        IconSource = iconSource;
+        Id = id;
+    }
 
-        public ImageSource IconSource { get; }
-
-        public string Name { get; }
-
-        public DataTemplate Template { get; }
-
-        public string Id { get; }
-
-        public event EventHandler<OpenDirectoryEventArgs>? DirectoryOrFileOpened;
-
-        protected BaseFilesPresenterFactory(
-            string name,
-            DataTemplate template, 
-            ImageSource iconSource, 
-            string id)
+    public void UpdatePresenter(DirectoryInfo directory, IFilesGroup group)
+    {
+        if (FilesPresenter != null)
         {
-            Name = name;
-            Template = template;
-            IconSource = iconSource;
-            Id = id;
+            FilesPresenter.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
+            FilesPresenter.Dispose();
         }
 
-        public void UpdatePresenter(DirectoryInfo directory, IFilesGroup group)
+        FilesPresenter = CreatePresenter(directory, group);
+
+        FilesPresenter.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
+    }
+
+    public virtual void Dispose()
+    {
+        if (FilesPresenter != null)
         {
-            if (FilesPresenter != null)
-            {
-                FilesPresenter.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
-                FilesPresenter.Dispose();
-            }
-
-            FilesPresenter = CreatePresenter(directory, group);
-
-            FilesPresenter.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
+            FilesPresenter.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
+            FilesPresenter.Dispose();
         }
+    }
 
-        public virtual void Dispose()
-        {
-            if (FilesPresenter != null)
-            {
-                FilesPresenter.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
-                FilesPresenter.Dispose();
-            }
-        }
+    public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group);
 
-        public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group);
-
-        private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
-        {
-            DirectoryOrFileOpened?.Invoke(sender, e);
-        }
+    private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
+    {
+        DirectoryOrFileOpened?.Invoke(sender, e);
     }
 }

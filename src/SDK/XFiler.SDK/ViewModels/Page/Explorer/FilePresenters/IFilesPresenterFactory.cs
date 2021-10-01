@@ -3,18 +3,17 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IFilesPresenterFactory : INotifyPropertyChanged, IDisposable, ICheckedItem
 {
-    public interface IFilesPresenterFactory : INotifyPropertyChanged, IDisposable, ICheckedItem
-    {
-        IFilesPresenter? FilesPresenter { get; }
+    IFilesPresenter? FilesPresenter { get; }
         
-        DataTemplate Template { get; }
+    DataTemplate Template { get; }
         
-        string Id { get; }
+    string Id { get; }
 
-        event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
+    event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
 
-        void UpdatePresenter(DirectoryInfo directory, IFilesGroup currentGroup);
-    }
+    void UpdatePresenter(DirectoryInfo directory, IFilesGroup currentGroup);
 }

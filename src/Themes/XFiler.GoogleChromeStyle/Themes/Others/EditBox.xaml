@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls">
+                    xmlns:editBox="clr-namespace:XFiler.Controls;assembly=XFiler.Controls">
 
     <Style x:Key="TileEditBox"
            TargetType="{x:Type editBox:EditBox}">

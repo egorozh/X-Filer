@@ -1,10 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿namespace Windows.ImageOperations.Internal;
 
-namespace Windows.ImageOperations.Internal
+[StructLayout(LayoutKind.Sequential)]
+internal struct RECT
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct RECT
-    {
-        public int left, top, right, bottom;
-    }
+    public int left, top, right, bottom;
 }

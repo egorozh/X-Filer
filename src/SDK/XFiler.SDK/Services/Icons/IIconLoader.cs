@@ -2,12 +2,11 @@
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace XFiler.SDK
-{
-    public interface IIconLoader
-    {
-        ImageSource? GetIcon(XFilerRoute? route, IconSize size);
+namespace XFiler.SDK;
 
-        Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size);
-    }
+public interface IIconLoader
+{
+    ImageSource? GetIcon(XFilerRoute? route, IconSize size);
+
+    Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size);
 }

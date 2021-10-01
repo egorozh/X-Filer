@@ -1,13 +1,12 @@
 ﻿using System.IO;
 
-namespace XFiler.SDK
-{
-    public interface ITabFactory
-    {
-        ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo);
+namespace XFiler.SDK;
 
-        ITabItemModel? CreateTab(XFilerRoute route);
+public interface ITabFactory
+{
+    ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo);
+
+    ITabItemModel? CreateTab(XFilerRoute route);
             
-        ITabItemModel CreateMyComputerTab();
-    }   
+    ITabItemModel CreateMyComputerTab();
 }

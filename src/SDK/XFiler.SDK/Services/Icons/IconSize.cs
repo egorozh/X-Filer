@@ -1,11 +1,10 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public enum IconSize
 {
-    public enum IconSize
-    {
-        Small = 48,
+    Small = 48,
 
-        Large = 128,
+    Large = 128,
 
-        ExtraLarge = 256,
-    }
+    ExtraLarge = 256,
 }

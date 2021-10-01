@@ -1,9 +1,8 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+internal enum PageType
 {
-    internal enum PageType
-    {
-        BookmarksDispatcher,
-        MyComputer,
-        Settings
-    }
+    BookmarksDispatcher,
+    MyComputer,
+    Settings
 }

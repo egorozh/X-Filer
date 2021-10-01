@@ -1,10 +1,9 @@
-﻿namespace XFiler.Base
+﻿namespace XFiler.Base;
+
+public partial class ContentFilePresenter
 {
-    public partial class ContentFilePresenter
+    public ContentFilePresenter()
     {
-        public ContentFilePresenter()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

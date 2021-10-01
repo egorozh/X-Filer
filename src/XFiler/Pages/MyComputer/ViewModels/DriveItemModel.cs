@@ -1,32 +1,30 @@
-﻿using Prism.Commands;
-using System.IO;
+﻿using System.IO;
 
-namespace XFiler.MyComputer
+namespace XFiler.MyComputer;
+
+public sealed class DriveItemModel : BaseItemModel
 {
-    public sealed class DriveItemModel : BaseItemModel
+    public long TotalFreeSpace { get; }
+
+    public long TotalSize { get; }
+
+    public double UsedPercentage { get; set; }
+
+    public DriveItemModel(string drivePath, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
+        : base(new XFilerRoute(new DriveInfo(drivePath)), iconLoader, openCommand)
     {
-        public long TotalFreeSpace { get; }
-
-        public long TotalSize { get; }
-
-        public double UsedPercentage { get; set; }
-
-        public DriveItemModel(string drivePath, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
-            : base(new XFilerRoute(new DriveInfo(drivePath)), iconLoader, openCommand)
+        try
         {
-            try
-            {
-                var driveInfo = new DriveInfo(drivePath);
+            var driveInfo = new DriveInfo(drivePath);
 
-                TotalSize = driveInfo.TotalSize;
-                TotalFreeSpace = driveInfo.TotalFreeSpace;
+            TotalSize = driveInfo.TotalSize;
+            TotalFreeSpace = driveInfo.TotalFreeSpace;
 
-                UsedPercentage = (TotalSize - TotalFreeSpace) / (double)TotalSize * 100;
-            }
-            catch (Exception)
-            {
-                // It is Empty CD-Rom
-            }
+            UsedPercentage = (TotalSize - TotalFreeSpace) / (double)TotalSize * 100;
+        }
+        catch (Exception)
+        {
+            // It is Empty CD-Rom
         }
     }
 }

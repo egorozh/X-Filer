@@ -1,37 +1,36 @@
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public enum RouteType
 {
-    public enum RouteType
-    {
-        File,
+    File,
 
-        Directory,
+    Directory,
 
-        SystemDrive,
+    SystemDrive,
 
-        Drive,
+    Drive,
 
-        WebLink,
+    WebLink,
 
-        MyComputer,
+    MyComputer,
 
-        Settings,
+    Settings,
 
-        Desktop,
+    Desktop,
 
-        Downloads,
+    Downloads,
 
-        MyDocuments,
+    MyDocuments,
 
-        MyPictures,
+    MyPictures,
 
-        MyMusic,
+    MyMusic,
 
-        MyVideos,
+    MyVideos,
 
-        RecycleBin,
+    RecycleBin,
 
-        BookmarksDispatcher,
+    BookmarksDispatcher,
 
-        Search
-    }
+    Search
 }

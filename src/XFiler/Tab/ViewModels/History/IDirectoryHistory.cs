@@ -1,19 +1,18 @@
-﻿namespace XFiler.History
+﻿namespace XFiler.History;
+
+internal interface IDirectoryHistory : IEnumerable<DirectoryNode>
 {
-    internal interface IDirectoryHistory : IEnumerable<DirectoryNode>
-    {
-        bool CanMoveBack { get; }
+    bool CanMoveBack { get; }
 
-        bool CanMoveForward { get; }
+    bool CanMoveForward { get; }
 
-        DirectoryNode Current { get; }
+    DirectoryNode Current { get; }
 
-        event EventHandler HistoryChanged;
+    event EventHandler HistoryChanged;
 
-        void MoveBack();
+    void MoveBack();
 
-        void MoveForward();
+    void MoveForward();
 
-        void Add(XFilerRoute route);    
-    }
+    void Add(XFilerRoute route);    
 }

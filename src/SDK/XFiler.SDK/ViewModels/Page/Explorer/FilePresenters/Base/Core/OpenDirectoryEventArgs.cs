@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace XFiler.SDK
-{
-    public class OpenDirectoryEventArgs : EventArgs
-    {
-        public IFileSystemModel FileEntityViewModel { get; }
+namespace XFiler.SDK;
 
-        public OpenDirectoryEventArgs(IFileSystemModel fileEntityViewModel)
-        {
-            FileEntityViewModel = fileEntityViewModel;
-        }
+public class OpenDirectoryEventArgs : EventArgs
+{
+    public IFileSystemModel FileEntityViewModel { get; }
+
+    public OpenDirectoryEventArgs(IFileSystemModel fileEntityViewModel)
+    {
+        FileEntityViewModel = fileEntityViewModel;
     }
 }

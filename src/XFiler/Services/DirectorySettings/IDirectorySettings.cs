@@ -1,9 +1,8 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public interface IDirectorySettings
 {
-    public interface IDirectorySettings
-    {
-        DirectorySettingsInfo GetSettings(string directoryFullName);
+    DirectorySettingsInfo GetSettings(string directoryFullName);
        
-        void SetSettings(string directoryFullName, DirectorySettingsInfo info);
-    }
+    void SetSettings(string directoryFullName, DirectorySettingsInfo info);
 }

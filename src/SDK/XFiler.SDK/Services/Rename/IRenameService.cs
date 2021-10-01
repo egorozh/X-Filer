@@ -1,10 +1,9 @@
 ﻿using Prism.Commands;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IRenameService
 {
-    public interface IRenameService
-    {
-        DelegateCommand<object> RenameCommand { get; }
-        DelegateCommand<object> StartRenameCommand { get; }
-    }
+    DelegateCommand<object> RenameCommand { get; }
+    DelegateCommand<object> StartRenameCommand { get; }
 }

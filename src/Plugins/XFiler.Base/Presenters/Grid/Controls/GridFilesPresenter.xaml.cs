@@ -1,10 +1,9 @@
-﻿namespace XFiler.Base
+﻿namespace XFiler.Base;
+
+public partial class GridFilesPresenter
 {
-    public partial class GridFilesPresenter
+    public GridFilesPresenter()
     {
-        public GridFilesPresenter()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

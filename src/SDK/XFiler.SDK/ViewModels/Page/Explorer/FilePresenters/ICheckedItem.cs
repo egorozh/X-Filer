@@ -1,7 +1,6 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface ICheckedItem
 {
-    public interface ICheckedItem
-    {
-        string Name { get; }
-    }
+    string Name { get; }
 }

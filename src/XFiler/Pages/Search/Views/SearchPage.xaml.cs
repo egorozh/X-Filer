@@ -1,10 +1,9 @@
-﻿namespace XFiler.Views
+﻿namespace XFiler.Views;
+
+public sealed partial class SearchPage 
 {
-    public sealed partial class SearchPage 
+    public SearchPage()
     {
-        public SearchPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IFileOperations
 {
-    public interface IFileOperations
-    {
-        void Move(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
+    void Move(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
 
-        void Copy(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
+    void Copy(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
 
-        void Delete(IReadOnlyList<FileSystemInfo> items, DirectoryInfo targetDirectory,
-            bool isDeletePermanently = false);
+    void Delete(IReadOnlyList<FileSystemInfo> items, DirectoryInfo targetDirectory,
+        bool isDeletePermanently = false);
 
-        void CreateLink(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
+    void CreateLink(IReadOnlyList<FileSystemInfo> sourceItems, DirectoryInfo targetDirectory);
 
-        void Rename(FileSystemInfo modelInfo, string newName);
+    void Rename(FileSystemInfo modelInfo, string newName);
 
-        void CreateFolder(string targetFolder, string name = "Новая папка");
+    void CreateFolder(string targetFolder, string name = "Новая папка");
 
-        void CreateEmptyTextFile(string targetFolder, string name = "Новый текстовый документ");
-    }   
+    void CreateEmptyTextFile(string targetFolder, string name = "Новый текстовый документ");
 }

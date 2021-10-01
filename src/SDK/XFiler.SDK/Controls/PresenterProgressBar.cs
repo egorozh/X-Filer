@@ -1,18 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public class PresenterProgressBar : ProgressBar
 {
-    public class PresenterProgressBar : ProgressBar
+    #region Static Constructor
+
+    static PresenterProgressBar()
     {
-        #region Static Constructor
-
-        static PresenterProgressBar()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(PresenterProgressBar),
-                new FrameworkPropertyMetadata(typeof(PresenterProgressBar)));
-        }
-
-        #endregion
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(PresenterProgressBar),
+            new FrameworkPropertyMetadata(typeof(PresenterProgressBar)));
     }
+
+    #endregion
 }

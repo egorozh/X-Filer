@@ -1,83 +1,80 @@
-﻿using System.Collections;
+﻿namespace XFiler.History;
 
-namespace XFiler.History
+internal sealed class DirectoryHistory : IDirectoryHistory
 {
-    internal sealed class DirectoryHistory : IDirectoryHistory
-    {
-        #region Properties
+    #region Properties
 
-        public bool CanMoveBack => Current.PreviousNode != null;
-        public bool CanMoveForward => Current.NextNode != null;
+    public bool CanMoveBack => Current.PreviousNode != null;
+    public bool CanMoveForward => Current.NextNode != null;
 
-        public DirectoryNode Current { get; private set; }
+    public DirectoryNode Current { get; private set; }
 
-        #endregion
+    #endregion
 
-        #region Events
+    #region Events
 
-        public event EventHandler? HistoryChanged;
+    public event EventHandler? HistoryChanged;
 
-        #endregion
+    #endregion
 
-        #region Constructor
+    #region Constructor
 
-        public DirectoryHistory(XFilerRoute route)
-        {   
-            var head = new DirectoryNode(route);
-            Current = head;
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public void MoveBack()
-        {
-            var prev = Current.PreviousNode;
-
-            Current = prev!;
-
-            RaiseHistoryChanged();
-        }
-
-        public void MoveForward()
-        {
-            var next = Current.NextNode;
-
-            Current = next!;
-
-            RaiseHistoryChanged();
-        }
-
-        public void Add(XFilerRoute route)
-        {
-            var node = new DirectoryNode(route);
-                
-            Current.NextNode = node;
-            node.PreviousNode = Current;
-
-            Current = node;
-
-            RaiseHistoryChanged();
-        }
-
-        #endregion
-        
-        #region Private Methods
-
-        private void RaiseHistoryChanged() => HistoryChanged?.Invoke(this, EventArgs.Empty);
-
-        #endregion
-
-        #region Enumerator
-
-        public IEnumerator<DirectoryNode> GetEnumerator()
-        {
-            yield return Current;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
+    public DirectoryHistory(XFilerRoute route)
+    {   
+        var head = new DirectoryNode(route);
+        Current = head;
     }
+
+    #endregion
+
+    #region Public Methods
+
+    public void MoveBack()
+    {
+        var prev = Current.PreviousNode;
+
+        Current = prev!;
+
+        RaiseHistoryChanged();
+    }
+
+    public void MoveForward()
+    {
+        var next = Current.NextNode;
+
+        Current = next!;
+
+        RaiseHistoryChanged();
+    }
+
+    public void Add(XFilerRoute route)
+    {
+        var node = new DirectoryNode(route);
+                
+        Current.NextNode = node;
+        node.PreviousNode = Current;
+
+        Current = node;
+
+        RaiseHistoryChanged();
+    }
+
+    #endregion
+        
+    #region Private Methods
+
+    private void RaiseHistoryChanged() => HistoryChanged?.Invoke(this, EventArgs.Empty);
+
+    #endregion
+
+    #region Enumerator
+
+    public IEnumerator<DirectoryNode> GetEnumerator()
+    {
+        yield return Current;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    #endregion
 }

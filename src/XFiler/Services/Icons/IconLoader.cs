@@ -1,49 +1,48 @@
 ﻿using System.IO;
 using System.Windows.Media;
 
-namespace XFiler
+namespace XFiler;
+
+internal sealed class IconLoader : IIconLoader
 {
-    internal sealed class IconLoader : IIconLoader
+    private readonly IReadOnlyList<IIconProvider> _imageProviders;
+
+    public IconLoader(IReadOnlyList<IIconProvider> imageProviders)
     {
-        private readonly IReadOnlyList<IIconProvider> _imageProviders;
+        _imageProviders = imageProviders;
+    }
 
-        public IconLoader(IReadOnlyList<IIconProvider> imageProviders)
+    public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
+    {
+        ImageSource? source = null;
+
+        foreach (var imageProvider in _imageProviders)
         {
-            _imageProviders = imageProviders;
+            source = imageProvider.GetIcon(route, size);
+
+            if (source == null)
+                continue;
+
+            break;
         }
 
-        public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
+        return source;
+    }
+
+    public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+    {
+        Stream? stream = null;
+
+        foreach (var imageProvider in _imageProviders)
         {
-            ImageSource? source = null;
+            stream = await imageProvider.GetIconStream(route, size);
 
-            foreach (var imageProvider in _imageProviders)
-            {
-                source = imageProvider.GetIcon(route, size);
+            if (stream == null)
+                continue;
 
-                if (source == null)
-                    continue;
-
-                break;
-            }
-
-            return source;
+            break;
         }
 
-        public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
-        {
-            Stream? stream = null;
-
-            foreach (var imageProvider in _imageProviders)
-            {
-                stream = await imageProvider.GetIconStream(route, size);
-
-                if (stream == null)
-                    continue;
-
-                break;
-            }
-
-            return stream;
-        }
+        return stream;
     }
 }

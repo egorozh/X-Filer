@@ -1,9 +1,8 @@
 ﻿using System.IO;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IDirectoryModel
 {
-    public interface IDirectoryModel
-    {
-        DirectoryInfo DirectoryInfo { get; }
-    }
+    DirectoryInfo DirectoryInfo { get; }
 }

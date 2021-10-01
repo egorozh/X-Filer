@@ -7,10 +7,9 @@
              xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              xmlns:base="clr-namespace:XFiler.Base"
              xmlns:dd="urn:gong-wpf-dragdrop"
-             xmlns:editBox="clr-namespace:XFiler.Controls.EditBox;assembly=XFiler.Controls"
-             xmlns:controls="clr-namespace:XFiler.Controls.RectangleSelect;assembly=XFiler.Controls"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:loc="clr-namespace:XFiler.Base.Localization"
+             xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
@@ -355,11 +354,14 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Stretch="Uniform"
+                                <Image Grid.Column="0" 
+                                       Stretch="Uniform"
+                                       Height="28"
+                                       Width="28"
                                        x:Name="IconImage"
                                        Source="{Binding Icon}" />
 
-                                <editBox:EditBox Grid.Column="1"
+                                <controls:EditBox Grid.Column="1"
                                                  x:Name="TextBlock"
                                                  Style="{StaticResource TreeViewEditBox}"
                                                  Background="Transparent"

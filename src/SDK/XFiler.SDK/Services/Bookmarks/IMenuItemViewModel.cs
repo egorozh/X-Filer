@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IMenuItemViewModel : IDisposable
 {
-    public interface IMenuItemViewModel : IDisposable
-    {
-        IList<IMenuItemViewModel> Items { get; set; }
+    IList<IMenuItemViewModel> Items { get; set; }
 
-        XFilerRoute? Route { get; }
+    XFilerRoute? Route { get; }
 
-        bool IsSelected { get; }
-        string? Header { get; }
+    bool IsSelected { get; }
+    string? Header { get; }
 
-        event EventHandler IsSelectedChanged;
+    event EventHandler IsSelectedChanged;
 
-        BookmarkItem GetItem();
-    }
+    BookmarkItem GetItem();
 }

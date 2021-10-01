@@ -1,13 +1,12 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface IStorage
 {
-    public interface IStorage
-    {
-        string BaseDirectory { get; }
+    string BaseDirectory { get; }
 
-        string LogDirectory { get; }
+    string LogDirectory { get; }
 
-        string DbDirectory { get; }
+    string DbDirectory { get; }
             
-        string Bookmarks { get; }
-    }
+    string Bookmarks { get; }
 }

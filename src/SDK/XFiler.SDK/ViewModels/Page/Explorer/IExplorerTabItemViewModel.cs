@@ -1,6 +1,5 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface IExplorerPageModel : IPageModel
 {
-    public interface IExplorerPageModel : IPageModel
-    {
-    }
 }

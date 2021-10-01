@@ -1,10 +1,9 @@
-﻿namespace XFiler.Base
+﻿namespace XFiler.Base;
+
+public partial class TileFilePresenter
 {
-    public partial class TileFilePresenter
+    public TileFilePresenter()
     {
-        public TileFilePresenter()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

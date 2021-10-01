@@ -1,18 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public class BookmarksControl : Control
 {
-    public class BookmarksControl : Control
+    #region Static Constructor
+
+    static BookmarksControl()
     {
-        #region Static Constructor
-
-        static BookmarksControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(BookmarksControl),
-                new FrameworkPropertyMetadata(typeof(BookmarksControl)));
-        }
-
-        #endregion
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(BookmarksControl),
+            new FrameworkPropertyMetadata(typeof(BookmarksControl)));
     }
+
+    #endregion
 }

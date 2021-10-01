@@ -1,42 +1,41 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+internal sealed class SearchHandler : ISearchHandler
 {
-    internal sealed class SearchHandler : ISearchHandler
+    private readonly IResultModelFactory _resultModelFactory;
+
+    public SearchHandler(IResultModelFactory resultModelFactory)
     {
-        private readonly IResultModelFactory _resultModelFactory;
+        _resultModelFactory = resultModelFactory;
+    }
 
-        public SearchHandler(IResultModelFactory resultModelFactory)
+    public IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute)
+    {
+        var results = new List<ResultsModel>();
+
+        if (string.IsNullOrEmpty(query))
+            return results;
+
+        var route = XFilerRoute.FromPathEx(query);
+
+        if (route != null && route.FullName != currentRoute.FullName)
+            results.Add(_resultModelFactory.CreateRouteModel(route));
+        else
         {
-            _resultModelFactory = resultModelFactory;
-        }
-
-        public IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute)
-        {
-            var results = new List<ResultsModel>();
-
-            if (string.IsNullOrEmpty(query))
-                return results;
-
-            var route = XFilerRoute.FromPathEx(query);
-
-            if (route != null && route.FullName != currentRoute.FullName)
-                results.Add(_resultModelFactory.CreateRouteModel(route));
-            else
+            switch (currentRoute.Type)
             {
-                switch (currentRoute.Type)
-                {
-                    case RouteType.Directory:
-                        results.Add(_resultModelFactory.CreateSearchInDirectoryModel(query, currentRoute));
-                        break;
-                    case RouteType.Drive or RouteType.SystemDrive:
-                        results.Add(_resultModelFactory.CreateSearchInDriveModel(query, currentRoute));
-                        break;
-                }
-
-                results.Add(_resultModelFactory.CreateSearchInAllDrivesModel(query));
+                case RouteType.Directory:
+                    results.Add(_resultModelFactory.CreateSearchInDirectoryModel(query, currentRoute));
+                    break;
+                case RouteType.Drive or RouteType.SystemDrive:
+                    results.Add(_resultModelFactory.CreateSearchInDriveModel(query, currentRoute));
+                    break;
             }
 
-
-            return results;
+            results.Add(_resultModelFactory.CreateSearchInAllDrivesModel(query));
         }
+
+
+        return results;
     }
 }

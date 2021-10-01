@@ -1,63 +1,57 @@
-﻿using System;
-using Serilog;
-using System.Collections;
-using System.Linq;
+﻿namespace XFiler;
 
-namespace XFiler
+internal sealed class RenameService : IRenameService
 {
-    internal sealed class RenameService : IRenameService
+    private readonly IFileOperations _fileOperations;
+    private readonly ILogger _logger;
+
+    public DelegateCommand<object> RenameCommand { get; }
+    public DelegateCommand<object> StartRenameCommand { get; }
+
+    public RenameService(IFileOperations fileOperations, ILogger logger)
     {
-        private readonly IFileOperations _fileOperations;
-        private readonly ILogger _logger;
+        _fileOperations = fileOperations;
+        _logger = logger;
+        RenameCommand = new DelegateCommand<object>(OnRename);
+        StartRenameCommand = new DelegateCommand<object>(OnStartRename);
+    }
 
-        public DelegateCommand<object> RenameCommand { get; }
-        public DelegateCommand<object> StartRenameCommand { get; }
+    private void OnRename(object parameters)
+    {
+        if (parameters is not Tuple<string, object>(var newName, var parameter))
+            return;
 
-        public RenameService(IFileOperations fileOperations, ILogger logger)
+        if (parameter is IFileSystemModel fileSystemModel)
         {
-            _fileOperations = fileOperations;
-            _logger = logger;
-            RenameCommand = new DelegateCommand<object>(OnRename);
-            StartRenameCommand = new DelegateCommand<object>(OnStartRename);
+            try
+            {
+                _fileOperations.Rename(fileSystemModel.Info, newName);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Rename Error");
+            }
         }
 
-        private void OnRename(object parameters)
+        if (parameter is MenuItemViewModel menuModel)
         {
-            if (parameters is not Tuple<string, object>(var newName, var parameter))
+            if (string.IsNullOrEmpty(newName))
                 return;
 
-            if (parameter is IFileSystemModel fileSystemModel)
-            {
-                try
-                {
-                    _fileOperations.Rename(fileSystemModel.Info, newName);
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(e, "Rename Error");
-                }
-            }
-
-            if (parameter is MenuItemViewModel menuModel)
-            {
-                if (string.IsNullOrEmpty(newName))
-                    return;
-
-                menuModel.Header = newName;
-            }
+            menuModel.Header = newName;
         }
+    }
 
-        private void OnStartRename(object parameters)
+    private void OnStartRename(object parameters)
+    {
+        if (parameters is FileEntityViewModel vm)
+            vm.StartRename();
+        else if (parameters is IEnumerable e)
         {
-            if (parameters is FileEntityViewModel vm)
-                vm.StartRename();
-            else if (parameters is IEnumerable e)
-            {
-                var items = e.OfType<FileEntityViewModel>().ToList();
+            var items = e.OfType<FileEntityViewModel>().ToList();
 
-                if (items.Count == 1)
-                    items[0].StartRename();
-            }
+            if (items.Count == 1)
+                items[0].StartRename();
         }
     }
 }

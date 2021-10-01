@@ -1,7 +1,6 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+internal class StartupOptions : IStartupOptions
 {
-    internal class StartupOptions : IStartupOptions
-    {
-        public string? CurrentLanguage { get; set; } /*= "En-us";*/
-    }
+    public string? CurrentLanguage { get; set; } /*= "En-us";*/
 }

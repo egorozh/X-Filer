@@ -1,11 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿namespace Windows.ImageOperations.Internal;
 
-namespace Windows.ImageOperations.Internal
+[StructLayout(LayoutKind.Sequential)]
+internal struct POINT
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct POINT
-    {
-        int x;
-        int y;
-    }
+    int x;
+    int y;
 }

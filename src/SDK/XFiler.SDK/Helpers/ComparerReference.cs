@@ -2,64 +2,63 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public class ComparerReference : Freezable, INaturalStringComparer
 {
-    public class ComparerReference : Freezable, INaturalStringComparer
-    {
-        #region Dependency Properties
+    #region Dependency Properties
 
-        public static readonly DependencyProperty ComparerProperty = DependencyProperty.Register(
-            nameof(Comparer), typeof(INaturalStringComparer), typeof(ComparerReference),
-            new PropertyMetadata());
+    public static readonly DependencyProperty ComparerProperty = DependencyProperty.Register(
+        nameof(Comparer), typeof(INaturalStringComparer), typeof(ComparerReference),
+        new PropertyMetadata());
         
-        #endregion
+    #endregion
             
-        #region Public Properties
+    #region Public Properties
 
-        public INaturalStringComparer? Comparer
-        {
-            get => (INaturalStringComparer) GetValue(ComparerProperty);
-            set => SetValue(ComparerProperty, value);
-        }
+    public INaturalStringComparer? Comparer
+    {
+        get => (INaturalStringComparer) GetValue(ComparerProperty);
+        set => SetValue(ComparerProperty, value);
+    }
 
-        #endregion
+    #endregion
 
-        #region Freezable
+    #region Freezable
 
-        protected override Freezable CreateInstanceCore() => throw new NotImplementedException();
+    protected override Freezable CreateInstanceCore() => throw new NotImplementedException();
 
-        #endregion
+    #endregion
 
-        public int Compare(object? x, object? y)
+    public int Compare(object? x, object? y)
+    {
+        if (Comparer != null) 
+            return Comparer.Compare(x, y);
+
+        return 0;
+    }
+
+    public int Compare(string? x, string? y)
+    {
+        if (Comparer != null)
+            return Comparer.Compare(x, y);
+
+        return 0;
+    }
+
+    public ListSortDirection SortDirection
+    {
+        get
         {
             if (Comparer != null) 
-                return Comparer.Compare(x, y);
+                return Comparer.SortDirection;
 
-            return 0;
+            return ListSortDirection.Ascending;
         }
-
-        public int Compare(string? x, string? y)
+        set
         {
-            if (Comparer != null)
-                return Comparer.Compare(x, y);
-
-            return 0;
-        }
-
-        public ListSortDirection SortDirection
-        {
-            get
-            {
-                if (Comparer != null) 
-                    return Comparer.SortDirection;
-
-                return ListSortDirection.Ascending;
-            }
-            set
-            {
-                if (Comparer != null) 
-                    Comparer.SortDirection = value;
-            }
+            if (Comparer != null) 
+                Comparer.SortDirection = value;
         }
     }
 }

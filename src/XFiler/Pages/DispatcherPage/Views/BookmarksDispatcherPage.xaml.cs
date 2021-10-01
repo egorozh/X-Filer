@@ -1,10 +1,9 @@
-﻿namespace XFiler.DispatcherPage
+﻿namespace XFiler.DispatcherPage;
+
+public sealed partial class BookmarksDispatcherPage
 {
-    public sealed partial class BookmarksDispatcherPage
+    public BookmarksDispatcherPage()
     {
-        public BookmarksDispatcherPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

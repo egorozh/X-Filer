@@ -1,15 +1,14 @@
 using Prism.Commands;
 using System.Collections.Generic;
 
-namespace XFiler.SDK
+namespace XFiler.SDK;
+
+public interface IWindowFactory
 {
-    public interface IWindowFactory
-    {
-        DelegateCommand<object> OpenNewWindowCommand { get; }
+    DelegateCommand<object> OpenNewWindowCommand { get; }
 
-        void OpenTabInNewWindow(ITabItemModel tabItem);
-        void OpenTabInNewWindow(IEnumerable<ITabItemModel> tabs);
+    void OpenTabInNewWindow(ITabItemModel tabItem);
+    void OpenTabInNewWindow(IEnumerable<ITabItemModel> tabs);
 
-        IMainWindow GetWindowWithRootTab();
-    }
+    IMainWindow GetWindowWithRootTab();
 }

@@ -1,6 +1,5 @@
-﻿namespace XFiler.SDK
+﻿namespace XFiler.SDK;
+
+public interface IExplorerPage
 {
-    public interface IExplorerPage
-    {
-    }
 }

@@ -1,9 +1,8 @@
 ﻿using Autofac;
 
-namespace XFiler.SDK.Plugins
+namespace XFiler.SDK.Plugins;
+
+public interface IPlugin
 {
-    public interface IPlugin
-    {
-        void Load(ContainerBuilder services);
-    }
+    void Load(ContainerBuilder services);
 }

@@ -1,10 +1,9 @@
-﻿namespace XFiler
+﻿namespace XFiler;
+
+public sealed partial class ExplorerPage : IExplorerPage
 {
-    public sealed partial class ExplorerPage : IExplorerPage
+    public ExplorerPage()
     {
-        public ExplorerPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

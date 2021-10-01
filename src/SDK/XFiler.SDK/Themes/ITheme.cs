@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace XFiler.SDK.Themes
-{
-    public interface ITheme
-    {
-        string Id { get; }
+namespace XFiler.SDK.Themes;
 
-        Uri ResourceUri { get; }
-    }
+public interface ITheme
+{
+    string Id { get; }
+
+    Uri ResourceUri { get; }
 }
