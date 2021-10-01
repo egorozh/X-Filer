@@ -6,9 +6,11 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Settings"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   FontSize="22" />
+        <Button Content="Save"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontSize="22"
+
+                Command="{Binding SaveCommand}" />
     </Grid>
 </UserControl>

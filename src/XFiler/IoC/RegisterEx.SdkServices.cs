@@ -60,22 +60,20 @@ internal static partial class RegisterEx
 
     private static void RegisterStartupOptions(this ContainerBuilder services)
     {
-        IStartupOptions startupOptions = new StartupOptions();
+        services.RegisterType<StartupOptionsFileManager>().As<IStartupOptionsFileManager>().SingleInstance(); ;
 
-        services.RegisterInstance(startupOptions).As<IStartupOptions>().SingleInstance();
+        services.Register(s => s.Resolve<IStartupOptionsFileManager>().InitOptions())
+            .As<IStartupOptions>()
+            .SingleInstance();
     }
 
     private static void RegisterReactiveOptions(this ContainerBuilder services)
     {
         services.RegisterType<ReactiveOptionsFileManager>().As<IReactiveOptionsFileManager>().SingleInstance();
 
-        services.Register(s => s.Resolve<IReactiveOptionsFileManager>().GetOptions())
+        services.Register(s => s.Resolve<IReactiveOptionsFileManager>().InitOptions())
             .As<IReactiveOptions>()
             .SingleInstance();
-
-        IStartupOptions startupOptions = new StartupOptions();
-
-        services.RegisterInstance(startupOptions).As<IStartupOptions>().SingleInstance();
     }
 
     private static void RegisterThemes(this ContainerBuilder services)

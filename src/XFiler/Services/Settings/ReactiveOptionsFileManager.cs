@@ -15,9 +15,9 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
         _configPath = Path.Combine(storage.ConfigDirectory, "reactive.config");
     }
 
-    public IReactiveOptions GetOptions() => _options = Open();
-
-    public void Save()
+    public IReactiveOptions InitOptions() => _options = Open();
+        
+    public async Task Save()
     {
         try
         {
@@ -26,7 +26,8 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
                 WriteIndented = true
             };
 
-            JsonSerializer.Serialize(_options, options);
+            await using FileStream stream = new (_configPath, FileMode.Create);
+            await JsonSerializer.SerializeAsync(stream,_options, options);
         }
         catch (Exception e)
         {

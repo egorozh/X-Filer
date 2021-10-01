@@ -1,6 +1,10 @@
-﻿namespace XFiler.SDK;
+﻿using System.Threading.Tasks;
+
+namespace XFiler.SDK;
 
 public interface IReactiveOptionsFileManager
 {
-    IReactiveOptions GetOptions();
+    IReactiveOptions InitOptions();
+
+    Task Save();
 }
