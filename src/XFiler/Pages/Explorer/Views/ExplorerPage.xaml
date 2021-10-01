@@ -39,10 +39,10 @@
         <Grid Grid.Row="2">
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding BackgroundImage}"
-                            Stretch="UniformToFill"
                             TileMode="Tile"
-                            Viewport="0,0 0.3,0.3"
-                            ViewportUnits="RelativeToBoundingBox"/>
+                            ViewportUnits="Absolute"
+                            Viewport="{Binding Path=ImageSource,RelativeSource={RelativeSource Self},
+                    Converter={local:ImageBrushToViewportConverter}}"/>
             </Grid.Background>
 
             <ContentControl x:Name="ContentControl"
