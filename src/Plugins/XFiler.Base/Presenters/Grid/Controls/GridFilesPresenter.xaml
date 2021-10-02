@@ -76,6 +76,8 @@
 
     <controls:RectSelectDataGrid ItemsSource="{Binding Source={StaticResource GroupedCollectionViewSource}}"
 
+                                 x:Name="RectSelectDataGrid"
+
                                  Style="{DynamicResource {x:Static themes:ResourceKeys.RectSelectDataGridStyle}}"
                                  Background="Transparent"
 
