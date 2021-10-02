@@ -86,6 +86,8 @@ public class RectSelectDataGrid : DataGrid
     {
         base.OnMouseLeftButtonDown(e);
 
+        this.Focus();
+
         _selectLogic?.OnMouseLeftButtonDown(e);
     }
 

@@ -76,7 +76,7 @@
                 <MultiTrigger.Setters>
                     <Setter Property="Effect">
                         <Setter.Value>
-                            <DropShadowEffect BlurRadius="20" />
+                            <DropShadowEffect BlurRadius="10"/>
                         </Setter.Value>
                     </Setter>
                 </MultiTrigger.Setters>
