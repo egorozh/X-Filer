@@ -12,7 +12,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     private IDirectorySettings _directorySettings;
     private IReactiveOptions _reactiveOptions;
     private IStorage _storage;
-    private DirectoryInfo _directory;
+    private DirectoryInfo _directory = null!;
 
     #endregion
 
@@ -46,14 +46,12 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         IMainCommands mainCommands,
         IDirectorySettings directorySettings,
         IReactiveOptions reactiveOptions,
-        IStorage storage,
-        DirectoryInfo directory) : base(typeof(ExplorerPage), new DirectoryRoute(directory))
+        IStorage storage)
     {
         _directorySettings = directorySettings;
         _reactiveOptions = reactiveOptions;
         _storage = storage;
-        _directory = directory;
-
+        
         FilesPresenters = filesPresenters;
         FilesGroups = groups;
         PasteCommand = clipboardService.PasteCommand;
@@ -61,27 +59,34 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         CreateFolderCommand = mainCommands.CreateFolderCommand;
         CreateTextCommand = mainCommands.CreateTextCommand;
         OpenInNativeExplorerCommand = mainCommands.OpenInNativeExplorerCommand;
+    }
 
-        var dirSettings = directorySettings.GetSettings(directory.FullName);
+    #endregion
+
+    #region Public Methods
+
+    public void Init(DirectoryInfo directory)
+    {
+        Init(typeof(ExplorerPage), new DirectoryRoute(directory));
+
+        _directory = directory;
+
+        var dirSettings = _directorySettings.GetSettings(directory.FullName);
 
         CurrentGroup = FilesGroups.FirstOrDefault(g => g.Id == dirSettings.GroupId) ??
                        FilesGroups.First();
 
         PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
 
-        foreach (var factory in filesPresenters)
+        foreach (var factory in FilesPresenters)
             factory.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
 
-        CurrentPresenter = SelectInitPresenter(dirSettings, reactiveOptions);
+        CurrentPresenter = SelectInitPresenter(dirSettings, _reactiveOptions);
 
-        BackgroundImage = CreateImageSource(reactiveOptions.ExplorerBackgroundImagePath);
+        BackgroundImage = CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
 
         _reactiveOptions.PropertyChanged += ReactiveOptionsOnPropertyChanged;
     }
-
-    #endregion
-
-    #region Public Methods
 
     public override void Dispose()
     {

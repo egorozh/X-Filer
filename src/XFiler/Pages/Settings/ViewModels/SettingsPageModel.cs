@@ -12,9 +12,10 @@ internal sealed class SettingsPageModel : BasePageModel, ISettingsPageModel
     public SettingsPageModel(IReactiveOptions reactiveOptions,
         IStartupOptions startupOptions,
         IStartupOptionsFileManager startupOptionsFileManager,
-        IReactiveOptionsFileManager reactiveOptionsFileManager) : base(
-        typeof(SettingsPage), SpecialRoutes.Settings)
+        IReactiveOptionsFileManager reactiveOptionsFileManager)
     {
+        Init(typeof(SettingsPage), SpecialRoutes.Settings);
+
         _reactiveOptions = reactiveOptions;
         _startupOptions = startupOptions;
         _startupOptionsFileManager = startupOptionsFileManager;

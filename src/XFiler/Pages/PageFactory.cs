@@ -9,32 +9,10 @@ namespace XFiler;
 internal sealed class PageFactory : IPageFactory
 {
     private readonly IIndex<PageType, IPageModel> _pageModelFactory;
-    private readonly Func<IReadOnlyList<IFilesPresenterFactory>> _filesPresenters;
-    private readonly Func<IReadOnlyList<IFilesGroup>> _groups;
-    private readonly IClipboardService _clipboardService;
-    private readonly IMainCommands _mainCommands;
-    private readonly IDirectorySettings _directorySettings;
-    private readonly IReactiveOptions _reactiveOptions;
-    private readonly IStorage _storage;
 
-    public PageFactory(
-        IIndex<PageType, IPageModel> pageModelFactory,
-        Func<IReadOnlyList<IFilesPresenterFactory>> filesPresenters,
-        Func<IReadOnlyList<IFilesGroup>> groups,
-        IClipboardService clipboardService,
-        IMainCommands mainCommands,
-        IDirectorySettings directorySettings,
-        IReactiveOptions reactiveOptions,
-        IStorage storage)
+    public PageFactory(IIndex<PageType, IPageModel> pageModelFactory)
     {
         _pageModelFactory = pageModelFactory;
-        _filesPresenters = filesPresenters;
-        _groups = groups;
-        _clipboardService = clipboardService;
-        _mainCommands = mainCommands;
-        _directorySettings = directorySettings;
-        _reactiveOptions = reactiveOptions;
-        _storage = storage;
     }
 
     public IPageModel? CreatePage(XFilerRoute route)
@@ -63,9 +41,18 @@ internal sealed class PageFactory : IPageFactory
                     RouteType.MyComputer => _pageModelFactory[PageType.MyComputer],
                     RouteType.Settings => _pageModelFactory[PageType.Settings],
                     RouteType.BookmarksDispatcher => _pageModelFactory[PageType.BookmarksDispatcher],
-                    _ => new SearchPageModel(route)
+                    _ => CreateSearchPage(route)
                 };
         }
+    }
+
+    private IPageModel CreateSearchPage(XFilerRoute route)
+    {
+        var searchPage = (SearchPageModel) _pageModelFactory[PageType.Search];
+
+        searchPage.Init(route);
+
+        return searchPage;
     }
 
     private ExplorerPageModel? CreateExplorerPage(XFilerRoute route)
@@ -86,15 +73,10 @@ internal sealed class PageFactory : IPageFactory
             return null;
         }
 
-        return new ExplorerPageModel(
-            _filesPresenters.Invoke(),
-            _groups.Invoke(),
-            _clipboardService,
-            _mainCommands,
-            _directorySettings,
-            _reactiveOptions,
-            _storage,
-            dir);
+        var explorerPage = (ExplorerPageModel) _pageModelFactory[PageType.Explorer];
+        explorerPage.Init(dir);
+
+        return explorerPage;
     }
 
     private static void OpenFile(string path)

@@ -4,5 +4,7 @@ internal enum PageType
 {
     BookmarksDispatcher,
     MyComputer,
-    Settings
+    Settings,
+    Explorer,
+    Search
 }

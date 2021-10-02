@@ -5,8 +5,8 @@ internal sealed class BookmarksDispatcherPageModel : BasePageModel
     public IBookmarksManager BookmarksManager { get; }
 
     public BookmarksDispatcherPageModel(IBookmarksManager bookmarksManager)
-        : base(typeof(BookmarksDispatcherPage), SpecialRoutes.BookmarksDispatcher)
     {
+        Init(typeof(BookmarksDispatcherPage), SpecialRoutes.BookmarksDispatcher);
         BookmarksManager = bookmarksManager;
     }
 }

@@ -4,7 +4,8 @@ namespace XFiler.ViewModels;
 
 internal sealed class SearchPageModel : BasePageModel
 {
-    public SearchPageModel(XFilerRoute route) : base(typeof(SearchPage), route)
+    public void Init(XFilerRoute route)
     {
+        Init(typeof(SearchPage), route);
     }
 }

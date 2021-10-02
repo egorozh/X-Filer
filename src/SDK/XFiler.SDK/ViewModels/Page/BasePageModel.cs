@@ -5,29 +5,29 @@ namespace XFiler.SDK;
 
 public abstract class BasePageModel : BaseViewModel, IPageModel
 {
-    public DataTemplate Template { get; }
+    public DataTemplate Template { get; private set; } = null!;
 
-    public XFilerRoute Route { get; }
+    public XFilerRoute Route { get; private set; } = null!;
 
     public event EventHandler<HyperlinkEventArgs>? GoToUrl;
 
-    protected BasePageModel(DataTemplate template, XFilerRoute route)
+    protected void GoTo(XFilerRoute route, bool isOpenInNewTab = false)
+    {
+        GoToUrl?.Invoke(this, new HyperlinkEventArgs(route, isOpenInNewTab));
+    }
+
+    protected void Init(DataTemplate template, XFilerRoute route)
     {
         Template = template;
         Route = route;
     }
 
-    protected BasePageModel(Type pageType, XFilerRoute route)
+    protected void Init(Type pageType, XFilerRoute route)
     {
         Route = route;
         Template = CreateTemplate(pageType);
     }
-        
-    protected void GoTo(XFilerRoute route, bool isOpenInNewTab = false)
-    {
-        GoToUrl?.Invoke(this, new HyperlinkEventArgs(route, isOpenInNewTab));
-    }
-        
+
     public virtual void Dispose()
     {
     }

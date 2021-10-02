@@ -24,9 +24,10 @@ public sealed class MyComputerPageModel : BasePageModel
 
     #region Constructor
 
-    public MyComputerPageModel(IIconLoader iconLoader) 
-        : base(typeof(MyComputerPage), SpecialRoutes.MyComputer)
+    public MyComputerPageModel(IIconLoader iconLoader)
     {
+        Init(typeof(MyComputerPage), SpecialRoutes.MyComputer);
+
         OpenCommand = new DelegateCommand<XFilerRoute>(OnOpen);
 
         Folders = new ObservableCollection<FolderItemModel>(
