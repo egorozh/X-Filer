@@ -16,7 +16,7 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
     }
 
     public IReactiveOptions InitOptions() => _options = Open();
-        
+
     public async Task Save()
     {
         try
@@ -26,8 +26,8 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
                 WriteIndented = true
             };
 
-            await using FileStream stream = new (_configPath, FileMode.Create);
-            await JsonSerializer.SerializeAsync(stream,_options, options);
+            await using FileStream stream = new(_configPath, FileMode.Create);
+            await JsonSerializer.SerializeAsync(stream, _options, options);
         }
         catch (Exception e)
         {
@@ -41,7 +41,7 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
         {
             if (File.Exists(_configPath))
             {
-                return JsonSerializer.Deserialize<IReactiveOptions>(_configPath)
+                return JsonSerializer.Deserialize<ReactiveOptions>(File.ReadAllText(_configPath))
                        ?? new ReactiveOptions();
             }
         }

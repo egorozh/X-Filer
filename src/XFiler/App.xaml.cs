@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
-using Serilog;
 using SingleInstanceHelper;
 using XFiler.NotifyIcon;
 
@@ -50,7 +49,6 @@ internal sealed partial class App : IXFilerApp
 
         base.OnStartup(e);
     }
-
 
     protected override void OnExit(ExitEventArgs e)
     {

@@ -27,9 +27,6 @@ internal sealed class SvgIconProvider : IIconProvider
                 catch (Exception e)
                 {
                     _logger.Error(e, $"SvgIconProvider error for path:\"{svgPath}\"");
-#if DEBUG
-                    throw;
-#endif
                 }
             }
         }
@@ -54,13 +51,8 @@ internal sealed class SvgIconProvider : IIconProvider
 
         var drawing = converter.Read(filePath);
 
-        if (drawing != null)
-        {
-            DrawingImage imageSource = new(drawing);
-
-            return imageSource;
-        }
-
-        return null;
+        return drawing != null 
+            ? new DrawingImage(drawing) 
+            : null;
     }
 }

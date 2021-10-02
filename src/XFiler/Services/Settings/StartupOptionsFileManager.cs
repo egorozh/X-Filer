@@ -14,7 +14,7 @@ internal class StartupOptionsFileManager : IStartupOptionsFileManager
         _logger = logger;
         _configPath = Path.Combine(storage.ConfigDirectory, "startup.config");
     }
-    
+
     public IStartupOptions InitOptions() => _options = Open();
 
     public async Task Save()
@@ -41,7 +41,7 @@ internal class StartupOptionsFileManager : IStartupOptionsFileManager
         {
             if (File.Exists(_configPath))
             {
-                return JsonSerializer.Deserialize<IStartupOptions>(_configPath)
+                return JsonSerializer.Deserialize<StartupOptions>(File.ReadAllText(_configPath))
                        ?? new StartupOptions();
             }
         }
