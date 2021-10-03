@@ -32,6 +32,7 @@ internal sealed partial class App : IXFilerApp
 
         Host.Resolve<ILanguageService>().Init();
         Host.Resolve<IThemeService>().Init();
+        Host.Resolve<ILaunchAtStartupService>().Init();
 
         LoadNotifyIconResourceDictionary();
 

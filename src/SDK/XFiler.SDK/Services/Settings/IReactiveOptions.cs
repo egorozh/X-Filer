@@ -13,4 +13,6 @@ public interface IReactiveOptions : INotifyPropertyChanged
     string? CurrentThemeId { get; }
 
     string? ExplorerBackgroundImagePath { get; }
-}
+        
+    bool LaunchAtStartup { get; }
+}   

@@ -36,6 +36,7 @@ internal static partial class RegisterEx
         services.RegisterThemes();
 
         services.RegisterType<ThemeService>().As<IThemeService>().SingleInstance();
+        services.RegisterType<LaunchAtStartupService>().As<ILaunchAtStartupService>().SingleInstance();
     }
 
     private static void RegisterBookmarksServices(this ContainerBuilder services)

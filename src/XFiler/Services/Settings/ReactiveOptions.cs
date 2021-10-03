@@ -13,4 +13,6 @@ internal class ReactiveOptions : BaseViewModel, IReactiveOptions
     public string CurrentThemeId { get; set; } = "e394f339-5907-4c5f-9113-6e49368b3d22";
 
     public string? ExplorerBackgroundImagePath { get; set; } = "abstract.png";
+    
+    public bool LaunchAtStartup { get; set; }
 }
