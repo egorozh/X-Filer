@@ -26,8 +26,10 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
                 WriteIndented = true
             };
 
-            await using FileStream stream = new(_configPath, FileMode.Create);
+            await using MemoryStream stream = new();
             await JsonSerializer.SerializeAsync(stream, _options, options);
+
+            await File.WriteAllBytesAsync(_configPath, stream.GetBuffer());
         }
         catch (Exception e)
         {
