@@ -1,6 +1,8 @@
-﻿namespace XFiler.SDK;
+﻿using System.ComponentModel;
 
-public interface IStartupOptions
+namespace XFiler.SDK;
+
+public interface IStartupOptions : INotifyPropertyChanged
 {
     public string? CurrentLanguage { get; } 
 }

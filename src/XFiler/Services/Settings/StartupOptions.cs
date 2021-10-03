@@ -1,6 +1,6 @@
 ﻿namespace XFiler;
 
-internal class StartupOptions : IStartupOptions
+internal class StartupOptions : BaseViewModel, IStartupOptions
 {
     public string? CurrentLanguage { get; set; } /*= "En-us";*/
 }

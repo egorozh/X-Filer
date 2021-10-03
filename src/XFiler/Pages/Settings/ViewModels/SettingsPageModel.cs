@@ -1,13 +1,14 @@
-﻿namespace XFiler;
+﻿using System.ComponentModel;
+
+namespace XFiler;
 
 internal sealed class SettingsPageModel : BasePageModel, ISettingsPageModel
 {
-    private IReactiveOptions _reactiveOptions;
-    private IStartupOptions _startupOptions;
     private IStartupOptionsFileManager _startupOptionsFileManager;
     private IReactiveOptionsFileManager _reactiveOptionsFileManager;
 
-    public DelegateCommand SaveCommand { get; }
+    public IReactiveOptions ReactiveOptions { get; private set; }
+    public IStartupOptions StartupOptions { get; private set; }
 
     public SettingsPageModel(IReactiveOptions reactiveOptions,
         IStartupOptions startupOptions,
@@ -16,26 +17,38 @@ internal sealed class SettingsPageModel : BasePageModel, ISettingsPageModel
     {
         Init(typeof(SettingsPage), SpecialRoutes.Settings);
 
-        _reactiveOptions = reactiveOptions;
-        _startupOptions = startupOptions;
+        ReactiveOptions = reactiveOptions;
+        StartupOptions = startupOptions;
         _startupOptionsFileManager = startupOptionsFileManager;
         _reactiveOptionsFileManager = reactiveOptionsFileManager;
-        SaveCommand = new DelegateCommand(OnSave);
+
+        ReactiveOptions.PropertyChanged += ReactiveOptionsOnPropertyChanged;
+        StartupOptions.PropertyChanged += StartupOptionsOnPropertyChanged;
     }
 
     public override void Dispose()
     {
         base.Dispose();
 
-        _reactiveOptions = null!;
-        _startupOptions = null!;
+        ReactiveOptions.PropertyChanged -= ReactiveOptionsOnPropertyChanged;
+        StartupOptions.PropertyChanged -= StartupOptionsOnPropertyChanged;
+
+        ReactiveOptions = null!;
+        StartupOptions = null!;
         _startupOptionsFileManager = null!;
         _reactiveOptionsFileManager = null!;
     }
 
-    private async void OnSave()
+    private async void StartupOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         await _startupOptionsFileManager.Save();
+
+        MessageBox.Show("Изменения вступят в силу только после перезапуска приложения",
+            "Изменения настроек", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private async void ReactiveOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
         await _reactiveOptionsFileManager.Save();
     }
 }
