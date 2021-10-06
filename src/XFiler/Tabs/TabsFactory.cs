@@ -1,28 +1,21 @@
-﻿using Dragablz;
-
-namespace XFiler;
+﻿namespace XFiler;
 
 public sealed class TabsFactory : ITabsFactory
 {
-    private readonly IInterTabClient _tabClient;
-    private readonly ITabFactory _tabFactory;
-    private readonly IWindowFactory _windowFactory;
-    private readonly IBookmarksManager _bookmarksManager;
-        
-    public TabsFactory(IInterTabClient tabClient, ITabFactory tabFactory,
-        IWindowFactory windowFactory, IBookmarksManager bookmarksManager)
-    {
-        _tabClient = tabClient;
-        _tabFactory = tabFactory;
-        _windowFactory = windowFactory;
-        _bookmarksManager = bookmarksManager;
-    }
+    private readonly Func<ITabsViewModel> _tabsFactory;
 
-    public ITabsViewModel CreateTabsViewModel(IEnumerable<ITabItemModel> initItems)
-        => new TabsViewModel(_tabClient, _tabFactory, _windowFactory,
-            _bookmarksManager, initItems);
-
+    public TabsFactory(Func<ITabsViewModel> tabsFactory)
+        => _tabsFactory = tabsFactory;
+    
     public ITabsViewModel CreateTabsViewModel()
-        => new TabsViewModel(_tabClient, _tabFactory, _windowFactory, _bookmarksManager,
-            Enumerable.Empty<ITabItemModel>());
+        => CreateTabsViewModel(Enumerable.Empty<ITabItemModel>());
+
+    public ITabsViewModel CreateTabsViewModel(IEnumerable<ITabItemModel> initTabs)
+    {
+        var tabs = _tabsFactory.Invoke();
+
+        tabs.Init(initTabs);
+
+        return tabs;
+    }
 }

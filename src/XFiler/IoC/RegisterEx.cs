@@ -21,5 +21,15 @@ internal static partial class RegisterEx
         services.RegisterType<BookmarksDispatcherPageModel>().Keyed<IPageModel>(PageType.BookmarksDispatcher);
         services.RegisterType<ExplorerPageModel>().Keyed<IPageModel>(PageType.Explorer);
         services.RegisterType<SearchPageModel>().Keyed<IPageModel>(PageType.Search);
+
+        services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
+    }
+
+    public static void RegisterFileModels(this ContainerBuilder services)
+    {
+        services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
+        services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);
+
+        services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
     }
 }

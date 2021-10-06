@@ -17,7 +17,7 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
 
     public IInterTabClient InterTabClient { get; }
 
-    public ObservableCollection<ITabItemModel> TabItems { get; }
+    public ObservableCollection<ITabItemModel> TabItems { get; private set; } = null!;
 
     public ItemActionCallback ClosingTabItemHandler { get; }
 
@@ -46,8 +46,7 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
     public TabsViewModel(IInterTabClient tabClient,
         ITabFactory tabFactory,
         IWindowFactory windowFactory,
-        IBookmarksManager bookmarksManager,
-        IEnumerable<ITabItemModel> init)
+        IBookmarksManager bookmarksManager)
     {
         _tabFactory = tabFactory;
         _windowFactory = windowFactory;
@@ -65,18 +64,19 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
         CreateBookmarksDispatcherPageCommand = new DelegateCommand(OnOpenBookmarksDispatcher);
 
         CloseAllTabsCommand = new DelegateCommand(OnCloseAllTabs);
-
-
-        TabItems = new ObservableCollection<ITabItemModel>(init);
-
-        Factory = CreateTabVm;
-
-        TabItems.CollectionChanged += TabItemsOnCollectionChanged;
-    }
         
+        Factory = CreateTabVm;
+    }
+
     #endregion
 
     #region Public Methods
+
+    public void Init(IEnumerable<ITabItemModel> initTabs)
+    {
+        TabItems = new ObservableCollection<ITabItemModel>(initTabs);
+        TabItems.CollectionChanged += TabItemsOnCollectionChanged;
+    }
 
     public void OnOpenNewTab(IFileSystemModel fileEntityViewModel, bool isSelectNewTab = false)
     {
@@ -168,8 +168,8 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
     private void OnOpenSettings()
     {
         var tab = _tabFactory.CreateTab(SpecialRoutes.Settings);
-           
-        if (tab == null) 
+
+        if (tab == null)
             return;
 
         TabItems.Add(tab);

@@ -28,20 +28,12 @@ internal sealed class IoC
             plugin.Load(services);
 
         services.RegisterExternalServices();
-
         services.RegisterSdkServices();
-
         services.RegisterGroups();
-
         services.RegisterPages();
+        services.RegisterFileModels();
 
-        services.RegisterType<FileViewModel>().Keyed<FileEntityViewModel>(EntityType.File);
-        services.RegisterType<DirectoryViewModel>().Keyed<FileEntityViewModel>(EntityType.Directory);
-
-    
-            
         services.RegisterType<MainWindowTabClient>().As<IInterTabClient>().SingleInstance();
-
 
         services.RegisterType<BookmarksDispatcherDropTarget>().As<IBookmarksDispatcherDropTarget>()
             .SingleInstance();
@@ -51,16 +43,15 @@ internal sealed class IoC
         services.RegisterType<XFilerDragDrop>().As<IDropTarget>().SingleInstance();
         services.RegisterType<XFilerDragHandler>().As<IDragSource>().SingleInstance();
 
-        services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
+       
 
         services.RegisterType<ResultModelFactory>().As<IResultModelFactory>().SingleInstance();
         services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
 
         services.RegisterType<TabItemModel>().As<ITabItemModel>();
-
         services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
-        services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
 
+        services.RegisterType<TabsViewModel>().As<ITabsViewModel>();
         services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
 
         services.RegisterType<NotifyIconViewModel>().AsSelf().SingleInstance();
