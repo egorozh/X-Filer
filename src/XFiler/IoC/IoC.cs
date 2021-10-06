@@ -56,6 +56,8 @@ internal sealed class IoC
         services.RegisterType<ResultModelFactory>().As<IResultModelFactory>().SingleInstance();
         services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
 
+        services.RegisterType<TabItemModel>().As<ITabItemModel>();
+
         services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
         services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
 

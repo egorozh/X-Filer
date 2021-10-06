@@ -10,5 +10,7 @@ public interface ITabItemModel : IDisposable
     bool IsSelected { get; }
     bool LogicalIndex { get; }
 
+    void Init(XFilerRoute route);
+
     void Open(XFilerRoute route);
 }

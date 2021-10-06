@@ -54,32 +54,20 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
     public TabItemModel(
         IBookmarksManager bookmarksManager,
         IPageFactory pageFactory,
-        ISearchHandler searchHandler,
-        XFilerRoute route,
-        IPageModel initPage)
+        ISearchHandler searchHandler)
     {
         _pageFactory = pageFactory;
         _searchHandler = searchHandler;
 
         AddBookmarkCommand = bookmarksManager.AddBookmarkCommand;
 
-        _history = new DirectoryHistory(route);
-
         MoveBackCommand = new DelegateCommand(OnMoveBack, OnCanMoveBack);
         MoveForwardCommand = new DelegateCommand(OnMoveForward, OnCanMoveForward);
         UpdateCommand = new DelegateCommand(OnUpdate);
-
         GoToCommand = new DelegateCommand<ResultsModel>(OnGoTo);
 
-        Route = route;
-        Header = route.Header;
-        _searchText = route.FullName;
-        Page = initPage;
-
         GetResultsHandler = GetResultsFilter;
-
-        Page.GoToUrl += PageOnGoToUrl;
-        _history.HistoryChanged += History_HistoryChanged;
+       
     }
 
     #endregion
@@ -103,31 +91,16 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
         _searchHandler = null!;
     }
 
-    public void Open(XFilerRoute route)
+    public void Init(XFilerRoute route)
     {
-        if (Route == route)
-            return;
+        _history = new DirectoryHistory(route);
+        
+        Open(route, true);
 
-        var page = _pageFactory.CreatePage(route);
-
-        if (page != null)
-        {
-            _history.Add(route);
-            Route = route;
-            Header = route.Header;
-            SearchText = route.FullName;
-
-            if (Page != null!)
-            {
-                Page.GoToUrl -= PageOnGoToUrl;
-                Page.Dispose();
-            }
-
-
-            Page = page;
-            Page.GoToUrl += PageOnGoToUrl;
-        }
+        _history.HistoryChanged += History_HistoryChanged;
     }
+
+    public void Open(XFilerRoute route) => Open(route, false);
 
     #endregion
 
@@ -211,6 +184,33 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
 
     private IReadOnlyList<object> GetResultsFilter(string arg)
         => _searchHandler.GetResultsFilter(arg, Route);
+
+    private void Open(XFilerRoute route, bool init)
+    {
+        if (Route == route)
+            return;
+
+        var page = _pageFactory.CreatePage(route);
+
+        if (page != null)
+        {
+            if (!init)
+                _history.Add(route);
+
+            Route = route;
+            Header = route.Header;
+            SearchText = route.FullName;
+
+            if (Page != null!)
+            {
+                Page.GoToUrl -= PageOnGoToUrl;
+                Page.Dispose();
+            }
+
+            Page = page;
+            Page.GoToUrl += PageOnGoToUrl;
+        }
+    }
 
     #endregion
 }

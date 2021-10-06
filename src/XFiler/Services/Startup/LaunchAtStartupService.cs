@@ -15,7 +15,7 @@ namespace XFiler
         private readonly string _appPath;
 
         #endregion
-        
+
         #region Constructor
 
         public LaunchAtStartupService(ILogger logger, IReactiveOptions reactiveOptions)
@@ -27,6 +27,7 @@ namespace XFiler
             {
                 _appPath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ??
                            throw new Exception("Can't definition app path");
+                _logger.Information($"AppPath: {_appPath}");
             }
             catch (Exception e)
             {
@@ -45,7 +46,7 @@ namespace XFiler
         }
 
         #endregion
-        
+
         #region Private Methods
 
         private void ReactiveOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
