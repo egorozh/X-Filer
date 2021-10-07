@@ -12,9 +12,9 @@ internal interface IDirectoryHistory : IEnumerable<DirectoryNode>
 
     void Init(XFilerRoute route);
 
+    void Add(XFilerRoute route);
+
     void MoveBack();
 
     void MoveForward();
-
-    void Add(XFilerRoute route);
 }

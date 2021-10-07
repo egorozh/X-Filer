@@ -8,20 +8,20 @@ public sealed class BasePlugin : IPlugin
 {
     public void Load(ContainerBuilder services)
     {
-        services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Grid);
-        services.RegisterType<SmallIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.SmallIcons);
-        services.RegisterType<RegularIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.RegularIcons);
-        services.RegisterType<LargeIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.LargeIcons);
-        services.RegisterType<TilesPresenterModel>().Keyed<IFilesPresenter>(PresenterType.Tiles);
-        services.RegisterType<ContentPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Content);
+        services.RegisterType<GridFilesPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Grid).ExternallyOwned();
+        services.RegisterType<SmallIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.SmallIcons).ExternallyOwned();
+        services.RegisterType<RegularIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.RegularIcons).ExternallyOwned();
+        services.RegisterType<LargeIconsPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.LargeIcons).ExternallyOwned();
+        services.RegisterType<TilesPresenterModel>().Keyed<IFilesPresenter>(PresenterType.Tiles).ExternallyOwned();
+        services.RegisterType<ContentPresenterViewModel>().Keyed<IFilesPresenter>(PresenterType.Content).ExternallyOwned();
 
 
-        services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>();
-        services.RegisterType<SmallIconsPresenterFactory>().As<IFilesPresenterFactory>();
-        services.RegisterType<RegularIconsPresenterFactory>().As<IFilesPresenterFactory>();
-        services.RegisterType<LargeIconsPresenterFactory>().As<IFilesPresenterFactory>();
-        services.RegisterType<TilesPresenterFactory>().As<IFilesPresenterFactory>();
-        services.RegisterType<ContentPresenterFactory>().As<IFilesPresenterFactory>();
+        services.RegisterType<GridFilesPresenterFactory>().As<IFilesPresenterFactory>().ExternallyOwned();
+        services.RegisterType<SmallIconsPresenterFactory>().As<IFilesPresenterFactory>().ExternallyOwned();
+        services.RegisterType<RegularIconsPresenterFactory>().As<IFilesPresenterFactory>().ExternallyOwned();
+        services.RegisterType<LargeIconsPresenterFactory>().As<IFilesPresenterFactory>().ExternallyOwned();
+        services.RegisterType<TilesPresenterFactory>().As<IFilesPresenterFactory>().ExternallyOwned();
+        services.RegisterType<ContentPresenterFactory>().As<IFilesPresenterFactory>().ExternallyOwned();
 
         services.RegisterType<SvgIconProvider>().As<IIconProvider>().SingleInstance();
     }

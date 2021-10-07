@@ -49,11 +49,11 @@ internal sealed class IoC
         services.RegisterType<ResultModelFactory>().As<IResultModelFactory>().SingleInstance();
         services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
 
-        services.RegisterType<DirectoryHistory>().As<IDirectoryHistory>();
-        services.RegisterType<TabItemModel>().As<ITabItemModel>();
+        services.RegisterType<DirectoryHistory>().As<IDirectoryHistory>().ExternallyOwned();
+        services.RegisterType<TabItemModel>().As<ITabItemModel>().ExternallyOwned();
         services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
 
-        services.RegisterType<TabsViewModel>().As<ITabsViewModel>();
+        services.RegisterType<TabsViewModel>().As<ITabsViewModel>().ExternallyOwned();
         services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
 
         services.RegisterType<NotifyIconViewModel>().AsSelf().SingleInstance();
