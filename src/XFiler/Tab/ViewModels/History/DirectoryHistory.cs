@@ -17,17 +17,9 @@ internal sealed class DirectoryHistory : IDirectoryHistory
 
     #endregion
 
-    #region Constructor
-
-    public DirectoryHistory(XFilerRoute route)
-    {   
-        var head = new DirectoryNode(route);
-        Current = head;
-    }
-
-    #endregion
-
     #region Public Methods
+
+    public void Init(XFilerRoute route) => Current = new DirectoryNode(route);
 
     public void MoveBack()
     {
@@ -50,7 +42,7 @@ internal sealed class DirectoryHistory : IDirectoryHistory
     public void Add(XFilerRoute route)
     {
         var node = new DirectoryNode(route);
-                
+
         Current.NextNode = node;
         node.PreviousNode = Current;
 
@@ -60,7 +52,7 @@ internal sealed class DirectoryHistory : IDirectoryHistory
     }
 
     #endregion
-        
+
     #region Private Methods
 
     private void RaiseHistoryChanged() => HistoryChanged?.Invoke(this, EventArgs.Empty);

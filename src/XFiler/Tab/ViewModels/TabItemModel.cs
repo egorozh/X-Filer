@@ -2,34 +2,29 @@
 
 namespace XFiler;
 
-public sealed class TabItemModel : BaseViewModel, ITabItemModel
+internal sealed class TabItemModel : BaseViewModel, ITabItemModel
 {
     #region Private Fields
 
     private IDirectoryHistory _history;
     private IPageFactory _pageFactory;
     private ISearchHandler _searchHandler;
-    private string _searchText;
 
     #endregion
 
     #region Public Properties
 
-    public IPageModel Page { get; private set; }
+    public IPageModel Page { get; private set; } = null!;
 
-    public XFilerRoute Route { get; private set; }
+    public XFilerRoute Route { get; private set; } = null!;
 
-    public string Header { get; set; }
+    public string Header { get; set; } = null!;
 
     public bool IsSelected { get; set; }
 
     public bool LogicalIndex { get; set; }
 
-    public string SearchText
-    {
-        get => _searchText;
-        set => SetSearchText(value);
-    }
+    public string? SearchText { get; set; }
 
     public Func<string, IReadOnlyList<object>> GetResultsHandler { get; private set; }
 
@@ -54,10 +49,12 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
     public TabItemModel(
         IBookmarksManager bookmarksManager,
         IPageFactory pageFactory,
-        ISearchHandler searchHandler)
+        ISearchHandler searchHandler,
+        IDirectoryHistory history)
     {
         _pageFactory = pageFactory;
         _searchHandler = searchHandler;
+        _history = history;
 
         AddBookmarkCommand = bookmarksManager.AddBookmarkCommand;
 
@@ -67,7 +64,6 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
         GoToCommand = new DelegateCommand<ResultsModel>(OnGoTo);
 
         GetResultsHandler = GetResultsFilter;
-       
     }
 
     #endregion
@@ -80,27 +76,28 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
         {
             Page.GoToUrl -= PageOnGoToUrl;
             Page.Dispose();
-            Page = null!;
         }
+
+        Page = null!;
 
         _history.HistoryChanged -= History_HistoryChanged;
 
         _history = null!;
         _pageFactory = null!;
-        AddBookmarkCommand = null!;
         _searchHandler = null!;
+        AddBookmarkCommand = null!;
+        GetResultsHandler = null!;
     }
 
     public void Init(XFilerRoute route)
     {
-        _history = new DirectoryHistory(route);
-        
-        Open(route, true);
-
+        _history.Init(route);
         _history.HistoryChanged += History_HistoryChanged;
+
+        SetPage(route, false);
     }
 
-    public void Open(XFilerRoute route) => Open(route, false);
+    public void Open(XFilerRoute route) => SetPage(route, true);
 
     #endregion
 
@@ -112,7 +109,7 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
     {
         _history.MoveForward();
 
-        UpdatePage(_history.Current.Route);
+        SetPage(_history.Current.Route, false);
     }
 
     private bool OnCanMoveBack() => _history.CanMoveBack;
@@ -121,12 +118,12 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
     {
         _history.MoveBack();
 
-        UpdatePage(_history.Current.Route);
+        SetPage(_history.Current.Route, false);
     }
 
     private void OnUpdate()
     {
-        UpdatePage(_history.Current.Route);
+        SetPage(_history.Current.Route, false, true);
     }
 
     private void OnGoTo(ResultsModel result)
@@ -151,50 +148,21 @@ public sealed class TabItemModel : BaseViewModel, ITabItemModel
         MoveForwardCommand?.RaiseCanExecuteChanged();
     }
 
-    private void SetSearchText(string text)
-    {
-        _searchText = text;
-    }
-
-    private void PageOnGoToUrl(object? sender, HyperlinkEventArgs e)
-    {
-        Open(e.Route);
-    }
-
-    private void UpdatePage(XFilerRoute route)
-    {
-        Route = route;
-        Header = route.Header;
-        SearchText = route.FullName;
-
-        if (Page != null!)
-        {
-            Page.GoToUrl -= PageOnGoToUrl;
-            Page.Dispose();
-        }
-
-        var page = _pageFactory.CreatePage(Route);
-
-        if (page != null)
-        {
-            Page = page;
-            Page.GoToUrl += PageOnGoToUrl;
-        }
-    }
-
+    private void PageOnGoToUrl(object? sender, HyperlinkEventArgs e) => Open(e.Route);
+    
     private IReadOnlyList<object> GetResultsFilter(string arg)
         => _searchHandler.GetResultsFilter(arg, Route);
 
-    private void Open(XFilerRoute route, bool init)
+    private void SetPage(XFilerRoute route, bool addToHistory, bool update = false)
     {
-        if (Route == route)
+        if (!update && Route == route)
             return;
 
         var page = _pageFactory.CreatePage(route);
 
-        if (page != null)
+        if (page is not InvalidatePage)
         {
-            if (!init)
+            if (addToHistory)
                 _history.Add(route);
 
             Route = route;

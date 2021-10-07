@@ -15,35 +15,36 @@ internal sealed class PageFactory : IPageFactory
         _pageModelFactory = pageModelFactory;
     }
 
-    public IPageModel? CreatePage(XFilerRoute route)
+    public IPageModel CreatePage(XFilerRoute route) => route.Type switch
     {
-        switch (route.Type)
-        {
-            case RouteType.File:
-                OpenFile(route.FullName);
-                return null;
-            case RouteType.WebLink:
-                OpenFile(route.FullName);
-                return null;
-            default:
-                return route.Type switch
-                {
-                    RouteType.Directory => CreateExplorerPage(route),
-                    RouteType.Desktop => CreateExplorerPage(route),
-                    RouteType.Downloads => CreateExplorerPage(route),
-                    RouteType.MyDocuments => CreateExplorerPage(route),
-                    RouteType.MyMusic => CreateExplorerPage(route),
-                    RouteType.MyPictures => CreateExplorerPage(route),
-                    RouteType.MyVideos => CreateExplorerPage(route),
-                    RouteType.SystemDrive => CreateExplorerPage(route),
-                    RouteType.Drive => CreateExplorerPage(route),
-                    RouteType.RecycleBin => CreateExplorerPage(route),
-                    RouteType.MyComputer => _pageModelFactory[PageType.MyComputer],
-                    RouteType.Settings => _pageModelFactory[PageType.Settings],
-                    RouteType.BookmarksDispatcher => _pageModelFactory[PageType.BookmarksDispatcher],
-                    _ => CreateSearchPage(route)
-                };
-        }
+        RouteType.File => CreateFilePage(route),
+        RouteType.WebLink => CreateWebPage(route),
+        RouteType.Directory => CreateExplorerPage(route),
+        RouteType.Desktop => CreateExplorerPage(route),
+        RouteType.Downloads => CreateExplorerPage(route),
+        RouteType.MyDocuments => CreateExplorerPage(route),
+        RouteType.MyMusic => CreateExplorerPage(route),
+        RouteType.MyPictures => CreateExplorerPage(route),
+        RouteType.MyVideos => CreateExplorerPage(route),
+        RouteType.SystemDrive => CreateExplorerPage(route),
+        RouteType.Drive => CreateExplorerPage(route),
+        RouteType.RecycleBin => CreateExplorerPage(route),
+        RouteType.MyComputer => _pageModelFactory[PageType.MyComputer],
+        RouteType.Settings => _pageModelFactory[PageType.Settings],
+        RouteType.BookmarksDispatcher => _pageModelFactory[PageType.BookmarksDispatcher],
+        _ => CreateSearchPage(route)
+    };
+
+    private IPageModel CreateWebPage(XFilerRoute route)
+    {
+        OpenFile(route.FullName);
+        return new InvalidatePage(route);
+    }
+
+    private IPageModel CreateFilePage(XFilerRoute route)
+    {
+        OpenFile(route.FullName);
+        return new InvalidatePage(route);
     }
 
     private IPageModel CreateSearchPage(XFilerRoute route)
@@ -55,7 +56,7 @@ internal sealed class PageFactory : IPageFactory
         return searchPage;
     }
 
-    private ExplorerPageModel? CreateExplorerPage(XFilerRoute route)
+    private IPageModel CreateExplorerPage(XFilerRoute route)
     {
         var dir = new DirectoryInfo(route.FullName);
 
@@ -70,7 +71,7 @@ internal sealed class PageFactory : IPageFactory
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
 
-            return null;
+            return new InvalidatePage(route);
         }
 
         var explorerPage = (ExplorerPageModel) _pageModelFactory[PageType.Explorer];

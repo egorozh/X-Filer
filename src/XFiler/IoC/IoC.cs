@@ -3,6 +3,7 @@ using Dragablz;
 using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;
 using XFiler.DragDrop;
+using XFiler.History;
 using XFiler.NotifyIcon;
 using XFiler.SDK.Plugins;
 
@@ -48,6 +49,7 @@ internal sealed class IoC
         services.RegisterType<ResultModelFactory>().As<IResultModelFactory>().SingleInstance();
         services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
 
+        services.RegisterType<DirectoryHistory>().As<IDirectoryHistory>();
         services.RegisterType<TabItemModel>().As<ITabItemModel>();
         services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
 

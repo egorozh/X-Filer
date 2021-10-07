@@ -1,10 +1,11 @@
 ﻿using Dragablz;
 using System.Collections.Specialized;
 using System.IO;
+using System.Windows.Input;
 
 namespace XFiler;
 
-public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
+internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel
 {
     #region Private Fields
 
@@ -31,13 +32,19 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
 
     #region Commands
 
-    public DelegateCommand<object> CreateNewTabItemCommand { get; }
+    public ICommand CreateNewTabItemCommand { get; }
+
+    public ICommand DuplicateTabCommand { get; }
+
+    public ICommand CreateSettingsTabCommand { get; }
+
+    public ICommand CreateBookmarksDispatcherPageCommand { get; }
+
+    public ICommand CloseAllTabsCommand { get; }
+
     public DelegateCommand<object> OpenTabItemInNewWindowCommand { get; }
-    public DelegateCommand<object> DuplicateTabCommand { get; }
+
     public DelegateCommand<object> CloseOtherTabsCommand { get; }
-    public DelegateCommand CreateSettingsTabCommand { get; }
-    public DelegateCommand CreateBookmarksDispatcherPageCommand { get; }
-    public DelegateCommand CloseAllTabsCommand { get; }
 
     #endregion
 
@@ -54,17 +61,21 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
         InterTabClient = tabClient;
         Bookmarks = bookmarksManager.Bookmarks;
         ClosingTabItemHandler = ClosingTabItemHandlerImpl;
+        
         CreateNewTabItemCommand = new DelegateCommand<object>(OnCreateNewTabItem);
-        OpenTabItemInNewWindowCommand =
-            new DelegateCommand<object>(OnOpenTabItemInNewWindow, OnCanOpenTabItemInNewWindow);
+       
+        OpenTabItemInNewWindowCommand = new (OnOpenTabItemInNewWindow, OnCanOpenTabItemInNewWindow);
+       
         DuplicateTabCommand = new DelegateCommand<object>(OnDuplicate);
-        CloseOtherTabsCommand = new DelegateCommand<object>(OnCloseOtherTabs, CanCloseAllTabs);
+        
+        CloseOtherTabsCommand = new (OnCloseOtherTabs, CanCloseAllTabs);
 
         CreateSettingsTabCommand = new DelegateCommand(OnOpenSettings);
+        
         CreateBookmarksDispatcherPageCommand = new DelegateCommand(OnOpenBookmarksDispatcher);
 
         CloseAllTabsCommand = new DelegateCommand(OnCloseAllTabs);
-        
+
         Factory = CreateTabVm;
     }
 
@@ -116,12 +127,11 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
 
     #region Private Methods
 
-    private void OnCreateNewTabItem(object? obj)
-    {
-        TabItems.Add(_tabFactory.CreateMyComputerTab());
-    }
+    private void OnCreateNewTabItem(object? obj) 
+        => TabItems.Add(_tabFactory.CreateMyComputerTab());
 
-    private bool OnCanOpenTabItemInNewWindow(object? obj) => TabItems.Count > 1;
+    private bool OnCanOpenTabItemInNewWindow(object? obj) 
+        => TabItems.Count > 1;
 
     private void OnOpenTabItemInNewWindow(object? obj)
     {
@@ -144,7 +154,8 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
             TabItems.Add(tab);
     }
 
-    private bool CanCloseAllTabs(object? obj) => TabItems.Count > 1;
+    private bool CanCloseAllTabs(object? obj) 
+        => TabItems.Count > 1;
 
     private void OnCloseOtherTabs(object? obj)
     {
@@ -195,7 +206,7 @@ public sealed class TabsViewModel : BaseViewModel, ITabsViewModel
         CloseOtherTabsCommand.RaiseCanExecuteChanged();
     }
 
-    private void ClosingTabItemHandlerImpl(ItemActionCallbackArgs<TabablzControl> args)
+    private static void ClosingTabItemHandlerImpl(ItemActionCallbackArgs<TabablzControl> args)
     {
         var viewModel = args.DragablzItem.DataContext as ITabItemModel;
         viewModel?.Dispose();

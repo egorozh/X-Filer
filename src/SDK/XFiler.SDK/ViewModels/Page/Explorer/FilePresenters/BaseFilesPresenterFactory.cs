@@ -9,11 +9,11 @@ public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenter
 {
     public IFilesPresenter? FilesPresenter { get; private set; }
 
-    public ImageSource IconSource { get; }
+    public ImageSource IconSource { get; private set; }
 
     public string Name { get; }
 
-    public DataTemplate Template { get; }
+    public DataTemplate Template { get; private set; }
 
     public string Id { get; }
 
@@ -51,6 +51,9 @@ public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenter
             FilesPresenter.DirectoryOrFileOpened -= FilePresenterOnDirectoryOrFileOpened;
             FilesPresenter.Dispose();
         }
+
+        IconSource = null!;
+        Template = null!;
     }
 
     public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group);

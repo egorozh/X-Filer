@@ -30,7 +30,7 @@ internal sealed class MainCommands : IMainCommands
         _fileOperations.CreateEmptyTextFile(targetDir.Info.FullName);
     }
 
-    private void OnOpenInNativeExplorer(IFileSystemModel openedDir) => new Process
+    private static void OnOpenInNativeExplorer(IFileSystemModel openedDir) => new Process
     {
         StartInfo =
         {
