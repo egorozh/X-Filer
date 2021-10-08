@@ -6,6 +6,9 @@ public sealed class MyComputerPageModel : BasePageModel
 {
     #region Private Fields
 
+    private IIconLoader _iconLoader;
+    private IDriveDetector _driveDetector;
+
     #endregion
 
     #region Public Methods
@@ -24,8 +27,11 @@ public sealed class MyComputerPageModel : BasePageModel
 
     #region Constructor
 
-    public MyComputerPageModel(IIconLoader iconLoader)
+    public MyComputerPageModel(IIconLoader iconLoader, IDriveDetector driveDetector)
     {
+        _iconLoader = iconLoader;
+        _driveDetector = driveDetector;
+
         Init(typeof(MyComputerPage), SpecialRoutes.MyComputer);
 
         OpenCommand = new DelegateCommand<XFilerRoute>(OnOpen);
@@ -35,6 +41,8 @@ public sealed class MyComputerPageModel : BasePageModel
 
         Drives = new ObservableCollection<DriveItemModel>(
             Directory.GetLogicalDrives().Select(p => new DriveItemModel(p, iconLoader, OpenCommand)));
+
+        _driveDetector.DriveChanged += DriveDetectorOnDriveChanged;
     }
 
     #endregion
@@ -46,9 +54,13 @@ public sealed class MyComputerPageModel : BasePageModel
         base.Dispose();
 
         foreach (var folder in Folders)
-        {
             folder.Dispose();
-        }
+        foreach (var folder in Drives)
+            folder.Dispose();
+
+        _driveDetector.DriveChanged -= DriveDetectorOnDriveChanged;
+        _driveDetector = null!;
+        _iconLoader = null!;
     }
 
     #endregion
@@ -58,6 +70,26 @@ public sealed class MyComputerPageModel : BasePageModel
     private void OnOpen(XFilerRoute route)
     {
         GoTo(route);
+    }
+
+    private void DriveDetectorOnDriveChanged(EventType type, string driveName)
+    {
+        DriveInfo info = new (driveName);
+
+        if (type == EventType.Added)
+        {
+            Drives.Add(new DriveItemModel(info.Name, _iconLoader, OpenCommand));
+        }
+        else
+        {
+            var removedDrive = Drives.FirstOrDefault(d => d.Route.FullName == info.Name);
+
+            if (removedDrive != null)
+            {
+                Drives.Remove(removedDrive);
+                removedDrive.Dispose();
+            }
+        }
     }
 
     #endregion
