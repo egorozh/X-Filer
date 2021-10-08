@@ -1,32 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.2.0" />
-    <PackageReference Include="DragablzF" Version="0.1.0.1" />
-    <PackageReference Include="gong-wpf-dragdrop" Version="2.4.2" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Serilog" Version="2.10.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="6.2.0" />
+		<PackageReference Include="DragablzF" Version="0.1.0.1" />
+		<PackageReference Include="gong-wpf-dragdrop" Version="2.4.2" />
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Serilog" Version="2.10.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Controls\XFiler.Controls\XFiler.Controls.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Controls\XFiler.Controls\XFiler.Controls.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Localization\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Localization\Strings.Designer.cs">
+			<DependentUpon>Strings.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Localization\Strings.resx">
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Localization\Strings.resx">
+			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
+			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+	</ItemGroup>
 
 </Project>

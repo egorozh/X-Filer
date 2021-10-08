@@ -8,77 +8,75 @@ namespace XFiler;
 
 internal static partial class RegisterEx
 {
-    public static void RegisterSdkServices(this ContainerBuilder services)
+    public static void RegisterSdkServices(this IDIService services)
     {
-        services.RegisterType<Storage>().As<IStorage>().SingleInstance();
+        services.RegisterSingleton<Storage, IStorage>();
 
         services.RegisterBookmarksServices();
 
-        services.RegisterType<MainCommands>().As<IMainCommands>().SingleInstance();
+        services.RegisterSingleton<MainCommands, IMainCommands>();
 
-        services.RegisterType<ClipboardService>().As<IClipboardService>().SingleInstance();
+        services.RegisterSingleton<ClipboardService, IClipboardService>();
 
-        services.RegisterType<FileOperations>().As<IFileOperations>().SingleInstance();
-        services.RegisterType<WindowsNaturalStringComparer>().As<INaturalStringComparer>().SingleInstance();
+        services.RegisterSingleton<FileOperations, IFileOperations>();
+        services.RegisterSingleton<WindowsNaturalStringComparer, INaturalStringComparer>();
 
-        services.RegisterType<FileTypeResolver>().As<IFileTypeResolver>().SingleInstance();
+        services.RegisterSingleton<FileTypeResolver, IFileTypeResolver>();
 
         services.RegisterIconServices();
 
-        services.RegisterType<RenameService>().As<IRenameService>().SingleInstance();
+        services.RegisterSingleton<RenameService, IRenameService>();
 
         services.RegisterStartupOptions();
         services.RegisterReactiveOptions();
 
-        services.RegisterType<DirectorySettings>().As<IDirectorySettings>().SingleInstance();
-        services.RegisterType<LanguageService>().As<ILanguageService>().SingleInstance();
+        services.RegisterSingleton<DirectorySettings, IDirectorySettings>();
+        services.RegisterSingleton<LanguageService, ILanguageService>();
 
         services.RegisterThemes();
 
-        services.RegisterType<ThemeService>().As<IThemeService>().SingleInstance();
-        services.RegisterType<LaunchAtStartupService>().As<ILaunchAtStartupService>().SingleInstance();
+        services.RegisterSingleton<ThemeService, IThemeService>();
+        services.RegisterSingleton<LaunchAtStartupService, ILaunchAtStartupService>();
     }
 
-    private static void RegisterBookmarksServices(this ContainerBuilder services)
+    private static void RegisterBookmarksServices(this IDIService services)
     {
-        services.RegisterType<MenuItemFactory>().As<IMenuItemFactory>().SingleInstance();
-        services.RegisterType<BookmarksManager>().As<IBookmarksManager>().SingleInstance();
+        services.RegisterSingleton<MenuItemFactory, IMenuItemFactory>();
+        services.RegisterSingleton<BookmarksManager, IBookmarksManager>();
     }
 
-    private static void RegisterIconServices(this ContainerBuilder services)
+    private static void RegisterIconServices(this IDIService services)
     {
-        services.RegisterType<FastResizeImageService>().As<IResizeImageService>().SingleInstance();
+        services.RegisterSingleton<FastResizeImageService, IResizeImageService>();
 
         // Image icon pipeline:
-        services.RegisterType<NativeExeIconProvider>().As<IIconProvider>().SingleInstance();
-        services.RegisterType<IconProviderForImages>().As<IIconProvider>().SingleInstance();
-        services.RegisterType<BaseIconProvider>().As<IIconProvider>().SingleInstance();
-        services.RegisterType<NativeFileIconProvider>().As<IIconProvider>().SingleInstance();
-        services.RegisterType<BlankIconProvider>().As<IIconProvider>().SingleInstance();
+        services.RegisterSingleton<NativeExeIconProvider, IIconProvider>();
+        services.RegisterSingleton<IconProviderForImages, IIconProvider>();
+        services.RegisterSingleton<BaseIconProvider, IIconProvider>();
+        services.RegisterSingleton<NativeFileIconProvider, IIconProvider>();
+        services.RegisterSingleton<BlankIconProvider, IIconProvider>();
 
-        services.RegisterType<IconLoader>().As<IIconLoader>().SingleInstance();
+        services.RegisterSingleton<IconLoader, IIconLoader>();
     }
 
-    private static void RegisterStartupOptions(this ContainerBuilder services)
+    private static void RegisterStartupOptions(this IDIService services)
     {
-        services.RegisterType<StartupOptionsFileManager>().As<IStartupOptionsFileManager>().SingleInstance(); ;
+        services.RegisterSingleton<StartupOptionsFileManager, IStartupOptionsFileManager>();
 
-        services.Register(s => s.Resolve<IStartupOptionsFileManager>().InitOptions())
-            .As<IStartupOptions>()
-            .SingleInstance();
+        services.RegisterSingleton(s =>
+            s.Resolve<IStartupOptionsFileManager>().InitOptions());
     }
 
-    private static void RegisterReactiveOptions(this ContainerBuilder services)
+    private static void RegisterReactiveOptions(this IDIService services)
     {
-        services.RegisterType<ReactiveOptionsFileManager>().As<IReactiveOptionsFileManager>().SingleInstance();
+        services.RegisterSingleton<ReactiveOptionsFileManager, IReactiveOptionsFileManager>();
 
-        services.Register(s => s.Resolve<IReactiveOptionsFileManager>().InitOptions())
-            .As<IReactiveOptions>()
-            .SingleInstance();
+        services.RegisterSingleton(s =>
+            s.Resolve<IReactiveOptionsFileManager>().InitOptions());
     }
 
-    private static void RegisterThemes(this ContainerBuilder services)
+    private static void RegisterThemes(this IDIService services)
     {
-        services.RegisterInstance(new GoogleChromeTheme()).As<ITheme>().SingleInstance();
+        services.RegisterSingleton<GoogleChromeTheme, ITheme>();
     }
 }

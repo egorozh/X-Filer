@@ -7,34 +7,30 @@ namespace XFiler;
 
 internal static partial class RegisterEx
 {
-    public static void RegisterGroups(this ContainerBuilder services)
+    public static void RegisterGroups(this IDIService services)
     {
-        services.RegisterType<FilesGroupOfNone>().As<IFilesGroup>().ExternallyOwned();
-        services.RegisterType<FilesGroupOfName>().As<IFilesGroup>().ExternallyOwned();
-        services.RegisterType<FilesGroupOfType>().As<IFilesGroup>().ExternallyOwned();
+        services.Register<FilesGroupOfNone, IFilesGroup>();
+        services.Register<FilesGroupOfName, IFilesGroup>();
+        services.Register<FilesGroupOfType, IFilesGroup>();
     }
 
-    public static void RegisterPages(this ContainerBuilder services)
+    public static void RegisterPages(this IDIService services)
     {
-        services.RegisterType<MyComputerPageModel>().Keyed<IPageModel>(PageType.MyComputer).ExternallyOwned();
-        services.RegisterType<SettingsPageModel>().Keyed<IPageModel>(PageType.Settings).ExternallyOwned();
-        services.RegisterType<BookmarksDispatcherPageModel>().Keyed<IPageModel>(PageType.BookmarksDispatcher).ExternallyOwned();
-        services.RegisterType<ExplorerPageModel>().Keyed<IPageModel>(PageType.Explorer).ExternallyOwned();
-        services.RegisterType<SearchPageModel>().Keyed<IPageModel>(PageType.Search).ExternallyOwned();
+        services.Register<MyComputerPageModel, IPageModel>(PageType.MyComputer);
+        services.Register<SettingsPageModel, IPageModel>(PageType.Settings);
+        services.Register<BookmarksDispatcherPageModel, IPageModel>(PageType.BookmarksDispatcher);
+        services.Register<ExplorerPageModel, IPageModel>(PageType.Explorer);
+        services.Register<SearchPageModel, IPageModel>(PageType.Search);
 
-        services.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
+        services.RegisterSingleton<PageFactory, IPageFactory>();
     }
 
-    public static void RegisterFileModels(this ContainerBuilder services)
+    public static void RegisterFileModels(this IDIService services)
     {
-        services.RegisterType<FileViewModel>()
-            .Keyed<FileEntityViewModel>(EntityType.File)
-            .ExternallyOwned();
+        services.Register<FileViewModel, FileEntityViewModel>(EntityType.File);
 
-        services.RegisterType<DirectoryViewModel>()
-            .Keyed<FileEntityViewModel>(EntityType.Directory)
-            .ExternallyOwned(); 
+        services.Register<DirectoryViewModel, FileEntityViewModel>(EntityType.Directory);
 
-        services.RegisterType<FileEntityFactory>().As<IFileEntityFactory>().SingleInstance();
+        services.RegisterSingleton<FileEntityFactory, IFileEntityFactory>();
     }
 }

@@ -1,18 +1,17 @@
-﻿using Autofac;
-using System.IO;
+﻿using System.IO;
 
 namespace XFiler;
 
 internal static partial class RegisterEx
 {
-    public static void RegisterExternalServices(this ContainerBuilder services)
+    public static void RegisterExternalServices(this IDIService services)
     {
         services.RegisterLogger();
     }
 
-    private static void RegisterLogger(this ContainerBuilder services)
+    private static void RegisterLogger(this IDIService services)
     {
-        services.Register(c =>
+        services.RegisterSingleton(c =>
         {
             var storage = c.Resolve<IStorage>();
 
@@ -22,6 +21,6 @@ internal static partial class RegisterEx
                     rollingInterval: RollingInterval.Month)
                 .CreateLogger();
             return Log.Logger;
-        }).As<ILogger>().SingleInstance();
+        });
     }
 }

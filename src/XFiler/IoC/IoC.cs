@@ -13,8 +13,8 @@ internal sealed class IoC
 {
     public IContainer Build()
     {
-        var services = new ContainerBuilder();
-
+        var services = new AutofacDIService();
+        
         RegisterServices(services, new[]
         {
             new BasePlugin()
@@ -23,8 +23,8 @@ internal sealed class IoC
         return services.Build();
     }
 
-    private static void RegisterServices(ContainerBuilder services, IEnumerable<IPlugin> plugins)
-    {
+    private static void RegisterServices(IDIService services, IEnumerable<IPlugin> plugins)
+    {   
         foreach (var plugin in plugins)
             plugin.Load(services);
 
@@ -34,28 +34,25 @@ internal sealed class IoC
         services.RegisterPages();
         services.RegisterFileModels();
 
-        services.RegisterType<MainWindowTabClient>().As<IInterTabClient>().SingleInstance();
+        services.RegisterSingleton<MainWindowTabClient,IInterTabClient>();
 
-        services.RegisterType<BookmarksDispatcherDropTarget>().As<IBookmarksDispatcherDropTarget>()
-            .SingleInstance();
-
-        services.RegisterType<WindowFactory>().As<IWindowFactory>().SingleInstance();
-
-        services.RegisterType<XFilerDragDrop>().As<IDropTarget>().SingleInstance();
-        services.RegisterType<XFilerDragHandler>().As<IDragSource>().SingleInstance();
-
+        services.RegisterSingleton<BookmarksDispatcherDropTarget, IBookmarksDispatcherDropTarget>();
        
+        services.RegisterSingleton<WindowFactory, IWindowFactory>();
 
-        services.RegisterType<ResultModelFactory>().As<IResultModelFactory>().SingleInstance();
-        services.RegisterType<SearchHandler>().As<ISearchHandler>().SingleInstance();
+        services.RegisterSingleton<XFilerDragDrop, IDropTarget>();
+        services.RegisterSingleton<XFilerDragHandler, IDragSource>();
 
-        services.RegisterType<DirectoryHistory>().As<IDirectoryHistory>().ExternallyOwned();
-        services.RegisterType<TabItemModel>().As<ITabItemModel>().ExternallyOwned();
-        services.RegisterType<TabFactory>().As<ITabFactory>().SingleInstance();
+        services.RegisterSingleton<ResultModelFactory, IResultModelFactory>();
+        services.RegisterSingleton<SearchHandler, ISearchHandler>();
+        
+        services.Register<DirectoryHistory,IDirectoryHistory>();
+        services.Register<TabItemModel,ITabItemModel>();
+        services.RegisterSingleton<TabFactory, ITabFactory>();
 
-        services.RegisterType<TabsViewModel>().As<ITabsViewModel>().ExternallyOwned();
-        services.RegisterType<TabsFactory>().As<ITabsFactory>().SingleInstance();
+        services.Register<TabsViewModel, ITabsViewModel>();
+        services.RegisterSingleton<TabsFactory, ITabsFactory>();
 
-        services.RegisterType<NotifyIconViewModel>().AsSelf().SingleInstance();
+        services.RegisterSingleton<NotifyIconViewModel, NotifyIconViewModel>();
     }
 }
