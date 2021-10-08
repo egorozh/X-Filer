@@ -1,5 +1,4 @@
-﻿using Autofac;
-using XFiler.Commands;
+﻿using XFiler.Commands;
 using XFiler.GoogleChromeStyle;
 using XFiler.Resize;
 using XFiler.SDK.Themes;
@@ -10,33 +9,24 @@ internal static partial class RegisterEx
 {
     public static void RegisterSdkServices(this IDIService services)
     {
-        services.RegisterSingleton<Storage, IStorage>();
-
-        services.RegisterBookmarksServices();
-
-        services.RegisterSingleton<MainCommands, IMainCommands>();
-
-        services.RegisterSingleton<ClipboardService, IClipboardService>();
-
-        services.RegisterSingleton<FileOperations, IFileOperations>();
-        services.RegisterSingleton<WindowsNaturalStringComparer, INaturalStringComparer>();
-
-        services.RegisterSingleton<FileTypeResolver, IFileTypeResolver>();
-
         services.RegisterIconServices();
-
-        services.RegisterSingleton<RenameService, IRenameService>();
-
         services.RegisterStartupOptions();
         services.RegisterReactiveOptions();
+        services.RegisterThemes();
+        services.RegisterBookmarksServices();
 
+        services.RegisterSingleton<Storage, IStorage>();
+        services.RegisterSingleton<MainCommands, IMainCommands>();
+        services.RegisterSingleton<ClipboardService, IClipboardService>();
+        services.RegisterSingleton<FileOperations, IFileOperations>();
+        services.RegisterSingleton<WindowsNaturalStringComparer, INaturalStringComparer>();
+        services.RegisterSingleton<FileTypeResolver, IFileTypeResolver>();
+        services.RegisterSingleton<RenameService, IRenameService>();
         services.RegisterSingleton<DirectorySettings, IDirectorySettings>();
         services.RegisterSingleton<LanguageService, ILanguageService>();
-
-        services.RegisterThemes();
-
         services.RegisterSingleton<ThemeService, IThemeService>();
         services.RegisterSingleton<LaunchAtStartupService, ILaunchAtStartupService>();
+        services.RegisterSingleton<DriveDetector, IDriveDetector>();
     }
 
     private static void RegisterBookmarksServices(this IDIService services)

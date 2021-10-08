@@ -49,19 +49,33 @@ internal sealed class WindowFactory : IWindowFactory
     {
         var currentApp = Application.Current ?? throw new ArgumentNullException("Application.Current");
 
-        var activeWindow = (currentApp.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)
-                            ?? currentApp.MainWindow)
-                           ?? throw new ArgumentNullException("Application.Current.MainWindow");
+        var activeWindow = currentApp.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)
+                           ?? currentApp.MainWindow;
 
-        MainWindow mainWindow = new()
+        if (activeWindow != null)
         {
-            DataContext = mvm,
-            WindowStartupLocation = WindowStartupLocation.Manual,
-            Left = activeWindow.Left + location.X,
-            Top = activeWindow.Top + location.Y
-        };
+            MainWindow mainWindow = new()
+            {
+                DataContext = mvm,
+                WindowStartupLocation = WindowStartupLocation.Manual,
+                Left = activeWindow.Left + location.X,
+                Top = activeWindow.Top + location.Y
+            };
 
-        mainWindow.Show();
+            mainWindow.Show();
+        }
+        else
+        {
+            MainWindow mainWindow = new()
+            {
+                DataContext = mvm,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+
+            mainWindow.Show();
+        }
+
+       
     }
 
     private void OnOpenNewWindow(object parameter)

@@ -15,7 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="6.2.0" />
 		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
 		<PackageReference Include="LiteDB" Version="5.0.11" />
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
@@ -24,6 +23,7 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 		<PackageReference Include="SingleInstanceHelper" Version="1.0.3" />
 		<PackageReference Include="SharpClipboard" Version="3.5.2" />
+		<PackageReference Include="System.Management" Version="6.0.0-rc.1.21451.13" />
 	</ItemGroup>
 
 	<ItemGroup>

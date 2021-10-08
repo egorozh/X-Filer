@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.IO;
+using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
 using XFiler.NotifyIcon;
@@ -33,6 +34,8 @@ internal sealed partial class App : IXFilerApp
         Host.Resolve<ILanguageService>().Init();
         Host.Resolve<IThemeService>().Init();
         Host.Resolve<ILaunchAtStartupService>().Init();
+
+        Host.Resolve<IDriveDetector>().DriveChanged += OnDriveChanged;
 
         LoadNotifyIconResourceDictionary();
 
@@ -86,6 +89,19 @@ internal sealed partial class App : IXFilerApp
         if (LoadComponent(new Uri("/XFiler;component/Resources/NotifyIcon.xaml", UriKind.Relative))
             is ResourceDictionary resourceDict)
             resources.Add(resourceDict);
+    }
+
+    private void OnDriveChanged(EventType type, string driveName)
+    {
+        if (type == EventType.Added)
+        {
+            DirectoryInfo info = new(driveName);
+
+            var tab = Host.Resolve<Func<ITabFactory>>().Invoke().CreateExplorerTab(info);
+
+            if (tab != null)
+                Host.Resolve<IWindowFactory>().OpenTabInNewWindow(tab);
+        }
     }
 
     #endregion
