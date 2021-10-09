@@ -1,40 +1,39 @@
 ﻿using System.Management;
 
-namespace XFiler
+namespace XFiler;
+
+internal class DriveDetector : IDriveDetector
 {
-    internal class DriveDetector : IDriveDetector
+    private const string Query = "SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3";
+
+    public event Action<EventType, string>? DriveChanged;
+
+    public DriveDetector() => Init();
+
+    private void Init()
     {
-        private const string Query = "SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3";
-
-        public event Action<EventType, string>? DriveChanged;
-
-        public DriveDetector() => Init();
-
-        private void Init()
+        ManagementEventWatcher watcher = new()
         {
-            ManagementEventWatcher watcher = new()
-            {
-                Query = new WqlEventQuery(Query)
-            };
+            Query = new WqlEventQuery(Query)
+        };
 
-            watcher.EventArrived += WatcherOnEventArrived;
+        watcher.EventArrived += WatcherOnEventArrived;
 
-            watcher.Start();
-        }
+        watcher.Start();
+    }
 
-        private void WatcherOnEventArrived(object sender, EventArrivedEventArgs e)
-        {
-            var driveName = e.NewEvent.Properties["DriveName"].Value.ToString();
+    private void WatcherOnEventArrived(object sender, EventArrivedEventArgs e)
+    {
+        var driveName = e.NewEvent.Properties["DriveName"].Value.ToString();
 
-            var res = int.TryParse(e.NewEvent.Properties["EventType"].Value.ToString(), out var eventTypeValue);
+        var res = int.TryParse(e.NewEvent.Properties["EventType"].Value.ToString(), out var eventTypeValue);
 
-            if (res && driveName != null)
-                RaiseDriveChanged(driveName, (EventType) eventTypeValue);
-        }
+        if (res && driveName != null)
+            RaiseDriveChanged(driveName, (EventType) eventTypeValue);
+    }
 
-        private void RaiseDriveChanged(string driveName, EventType eventType)
-        {
-            Application.Current.Dispatcher.Invoke(() => { DriveChanged?.Invoke(eventType, driveName); });
-        }
+    private void RaiseDriveChanged(string driveName, EventType eventType)
+    {
+        Application.Current.Dispatcher.Invoke(() => { DriveChanged?.Invoke(eventType, driveName); });
     }
 }
