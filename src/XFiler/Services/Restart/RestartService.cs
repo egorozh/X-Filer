@@ -9,6 +9,6 @@ internal class RestartService :IRestartService
         Application.Current.Shutdown();
 
         // Restart the app passing "/restart [processId]" as cmd line args
-        Process.Start(Environment.ProcessPath, "/restart" + Process.GetCurrentProcess().Id);
+        Process.Start(Environment.ProcessPath, IRestartService.RestartKey + Process.GetCurrentProcess().Id);
     }
 }

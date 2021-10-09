@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
@@ -44,11 +45,19 @@ internal sealed partial class App : IXFilerApp
 
         _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
 
+#if RELEASE
+        if (e.Args.Length > 0 && e.Args[0].StartsWith(IRestartService.RestartKey))
+        {
+            Host.Resolve<IWindowFactory>()
+                .GetWindowWithRootTab()
+                .Show();
+        }
+#endif
+        
 #if DEBUG
-        var windowFactory = Host.Resolve<IWindowFactory>();
-        var window = windowFactory.GetWindowWithRootTab();
-
-        window.Show();
+        Host.Resolve<IWindowFactory>()
+            .GetWindowWithRootTab()
+            .Show();
 #endif
 
         base.OnStartup(e);
@@ -102,6 +111,16 @@ internal sealed partial class App : IXFilerApp
             if (tab != null)
                 Host.Resolve<IWindowFactory>().OpenTabInNewWindow(tab);
         }
+    }
+
+    private void ShowArgs(IEnumerable<string> args)
+    {
+        StringBuilder sb = new();
+
+        foreach (var arg in args)
+            sb.AppendLine(arg);
+
+        MessageBox.Show(sb.ToString(), "Args");
     }
 
     #endregion
