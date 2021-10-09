@@ -2,5 +2,5 @@
 
 internal class StartupOptions : BaseViewModel, IStartupOptions
 {
-    public string? CurrentLanguage { get; set; } /*= "En-us";*/
+    public string? CurrentLanguage { get; set; } 
 }

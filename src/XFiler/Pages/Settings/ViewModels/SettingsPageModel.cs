@@ -8,30 +8,41 @@ internal sealed class SettingsPageModel : BasePageModel, ISettingsPageModel
     private IReactiveOptionsFileManager _reactiveOptionsFileManager;
 
     public IReactiveOptions ReactiveOptions { get; private set; }
-    public IStartupOptions StartupOptions { get; private set; }
+    public StartupOptions StartupOptions { get; private set; }
+
+    public CultureInfo[] Languages { get; }
+    public CultureInfo CurrentLanguage { get; set; }
 
     public SettingsPageModel(IReactiveOptions reactiveOptions,
         IStartupOptions startupOptions,
         IStartupOptionsFileManager startupOptionsFileManager,
-        IReactiveOptionsFileManager reactiveOptionsFileManager)
+        IReactiveOptionsFileManager reactiveOptionsFileManager,
+        ILanguageService languageService)
     {
         Init(typeof(SettingsPage), SpecialRoutes.Settings);
 
+        Languages = languageService.Languages;
+        CurrentLanguage = languageService.Current;
+
+
         ReactiveOptions = reactiveOptions;
-        StartupOptions = startupOptions;
+        StartupOptions = (StartupOptions) startupOptions;
         _startupOptionsFileManager = startupOptionsFileManager;
         _reactiveOptionsFileManager = reactiveOptionsFileManager;
 
         ReactiveOptions.PropertyChanged += ReactiveOptionsOnPropertyChanged;
         StartupOptions.PropertyChanged += StartupOptionsOnPropertyChanged;
-    }
 
+        PropertyChanged += SettingsPropertyChanged;
+    }
+    
     public override void Dispose()
     {
         base.Dispose();
 
         ReactiveOptions.PropertyChanged -= ReactiveOptionsOnPropertyChanged;
         StartupOptions.PropertyChanged -= StartupOptionsOnPropertyChanged;
+        PropertyChanged -= SettingsPropertyChanged;
 
         ReactiveOptions = null!;
         StartupOptions = null!;
@@ -50,5 +61,13 @@ internal sealed class SettingsPageModel : BasePageModel, ISettingsPageModel
     private async void ReactiveOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         await _reactiveOptionsFileManager.Save();
+    }
+
+    private void SettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(CurrentLanguage))
+        {
+            StartupOptions.CurrentLanguage = CurrentLanguage.Name;
+        }
     }
 }

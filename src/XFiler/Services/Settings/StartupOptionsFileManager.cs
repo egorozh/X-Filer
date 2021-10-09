@@ -12,7 +12,7 @@ internal class StartupOptionsFileManager : IStartupOptionsFileManager
     public StartupOptionsFileManager(IStorage storage, ILogger logger)
     {
         _logger = logger;
-        _configPath = Path.Combine(storage.ConfigDirectory, "startup.config");
+        _configPath = Path.Combine(storage.ConfigDirectory, "startup.json");
     }
 
     public IStartupOptions InitOptions() => _options = Open();
@@ -26,10 +26,8 @@ internal class StartupOptionsFileManager : IStartupOptionsFileManager
                 WriteIndented = true
             };
 
-            await using MemoryStream stream = new();
-            await JsonSerializer.SerializeAsync(stream, _options, options);
-
-            await File.WriteAllBytesAsync(_configPath, stream.GetBuffer());
+            await using var fs = new FileStream(_configPath, FileMode.OpenOrCreate);
+            await JsonSerializer.SerializeAsync(fs, _options, options);
         }
         catch (Exception e)
         {
@@ -43,7 +41,14 @@ internal class StartupOptionsFileManager : IStartupOptionsFileManager
         {
             if (File.Exists(_configPath))
             {
-                return JsonSerializer.Deserialize<StartupOptions>(File.ReadAllText(_configPath))
+                JsonSerializerOptions options = new()
+                {
+                    WriteIndented = true
+                };
+
+                var json = File.ReadAllText(_configPath);
+
+                return JsonSerializer.Deserialize<StartupOptions>(json, options)
                        ?? new StartupOptions();
             }
         }

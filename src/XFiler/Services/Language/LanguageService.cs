@@ -4,34 +4,48 @@ namespace XFiler;
 
 internal class LanguageService : ILanguageService
 {
-    private readonly IStartupOptions _startupOptions;
+    private CultureInfo _current;
 
-    private string[] _availableCultures =
+    public CultureInfo[] Languages { get; }
+
+    public CultureInfo Current
     {
-        "En-us",
-        "Ru-ru"
-    };
+        get => _current;
+        set
+        {
+            _current = value;
+            SetCulture(value);
+        }
+    }
 
     public LanguageService(IStartupOptions startupOptions)
     {
-        _startupOptions = startupOptions;
+        Languages = new[]
+        {
+            new CultureInfo("En-us"),
+            new CultureInfo("Ru-ru"),
+        };
+
+        var userLang = startupOptions.CurrentLanguage;
+
+        if (userLang != null)
+            Current = Languages.First(l => l.Name == userLang);
+        else
+        {
+            var defaultCulture = Languages.FirstOrDefault(l => l.Name == CultureInfo.CurrentCulture.Name);
+
+            Current = defaultCulture ?? Languages.First();
+        }
     }
 
     public void Init()
     {
-        var userLang = _startupOptions.CurrentLanguage;
-
-        if (userLang != null) 
-            SetCulture(userLang);
-
         FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
             new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
     }
 
-    public static void SetCulture(string culture)
+    public static void SetCulture(CultureInfo currentCulture)
     {
-        CultureInfo currentCulture = new(culture);
-
         CultureInfo.DefaultThreadCurrentCulture = currentCulture;
         CultureInfo.DefaultThreadCurrentUICulture = currentCulture;
         CultureInfo.CurrentCulture = currentCulture;

@@ -12,7 +12,7 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
     public ReactiveOptionsFileManager(IStorage storage, ILogger logger)
     {
         _logger = logger;
-        _configPath = Path.Combine(storage.ConfigDirectory, "reactive.config");
+        _configPath = Path.Combine(storage.ConfigDirectory, "reactive.json");
     }
 
     public IReactiveOptions InitOptions() => _options = Open();
@@ -26,10 +26,8 @@ internal class ReactiveOptionsFileManager : IReactiveOptionsFileManager
                 WriteIndented = true
             };
 
-            await using MemoryStream stream = new();
-            await JsonSerializer.SerializeAsync(stream, _options, options);
-
-            await File.WriteAllBytesAsync(_configPath, stream.GetBuffer());
+            await using var fs = new FileStream(_configPath, FileMode.OpenOrCreate);
+            await JsonSerializer.SerializeAsync(fs, _options, options);
         }
         catch (Exception e)
         {
