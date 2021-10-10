@@ -11,7 +11,7 @@ internal sealed partial class App : IXFilerApp
 {
     #region Private Fields
 
-    private TaskbarIcon _notifyIcon = null!;
+    private TaskbarIcon _tratIcon = null!;
 
     #endregion
 
@@ -40,10 +40,10 @@ internal sealed partial class App : IXFilerApp
 
         LoadNotifyIconResourceDictionary();
 
-        _notifyIcon = FindResource("NotifyIcon") as TaskbarIcon
+        _tratIcon = FindResource("TrayIcon") as TaskbarIcon
                       ?? throw new NotImplementedException("NotifyIcon not found in Resources");
 
-        _notifyIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
+        _tratIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
 
 #if RELEASE
         if (e.Args.Length > 0 && e.Args[0].StartsWith(IRestartService.RestartKey))
@@ -65,7 +65,7 @@ internal sealed partial class App : IXFilerApp
 
     protected override void OnExit(ExitEventArgs e)
     {
-        _notifyIcon.Dispose();
+        _tratIcon.Dispose();
         base.OnExit(e);
     }
 

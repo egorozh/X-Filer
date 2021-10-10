@@ -10,8 +10,8 @@
         <MenuItem Header="{x:Static localization:Strings.NotifyIcon_ContextMenu_ExitHeader}" 
                   Command="{Binding ExitApplicationCommand}" />
     </ContextMenu>
-
-    <tb:TaskbarIcon x:Key="NotifyIcon"
+    
+    <tb:TaskbarIcon x:Key="TrayIcon"
                     IconSource="../files.ico"
                     ToolTipText="{x:Static localization:Strings.NotifyIcon_ToolTipText}"
                     DoubleClickCommand="{Binding ShowWindowCommand}"
