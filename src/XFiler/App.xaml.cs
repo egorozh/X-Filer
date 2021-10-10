@@ -11,7 +11,7 @@ internal sealed partial class App : IXFilerApp
 {
     #region Private Fields
 
-    private TaskbarIcon _tratIcon = null!;
+    private TaskbarIcon _trayIcon = null!;
 
     #endregion
 
@@ -40,10 +40,10 @@ internal sealed partial class App : IXFilerApp
 
         LoadNotifyIconResourceDictionary();
 
-        _tratIcon = FindResource("TrayIcon") as TaskbarIcon
-                      ?? throw new NotImplementedException("NotifyIcon not found in Resources");
+        _trayIcon = FindResource("TrayIcon") as TaskbarIcon
+                      ?? throw new NotImplementedException("TrayIcon not found in Resources");
 
-        _tratIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
+        _trayIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
 
 #if RELEASE
         if (e.Args.Length > 0 && e.Args[0].StartsWith(IRestartService.RestartKey))
@@ -65,7 +65,7 @@ internal sealed partial class App : IXFilerApp
 
     protected override void OnExit(ExitEventArgs e)
     {
-        _tratIcon.Dispose();
+        _trayIcon.Dispose();
         base.OnExit(e);
     }
 
@@ -95,7 +95,7 @@ internal sealed partial class App : IXFilerApp
     {
         var resources = Resources.MergedDictionaries;
 
-        if (LoadComponent(new Uri("/XFiler;component/Resources/NotifyIcon.xaml", UriKind.Relative))
+        if (LoadComponent(new Uri("/XFiler;component/Resources/TrayIcon.xaml", UriKind.Relative))
             is ResourceDictionary resourceDict)
             resources.Add(resourceDict);
     }
