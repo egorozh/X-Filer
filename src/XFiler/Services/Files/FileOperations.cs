@@ -52,12 +52,7 @@ internal sealed class FileOperations : IFileOperations
             return;
         }
 
-        Task.Run(() =>
-        {
-            using var renameOp = new RenameFilesOperation();
-
-            renameOp.Rename(info.FullName, newName);
-        });
+        Task.Run(() => { FileSystemEx.Rename(info.FullName, newName); });
     }
 
     public void CreateFolder(string targetFolder, string name = "Новая папка")

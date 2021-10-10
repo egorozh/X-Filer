@@ -6,8 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Others\Windows.FileOperations\Windows.FileOperations.csproj" />
-		<ProjectReference Include="..\Others\Windows.ImageOperations\Windows.ImageOperations.csproj" />
 		<ProjectReference Include="..\Themes\XFiler.BaseStyle\XFiler.BaseStyle.csproj" />
 		<ProjectReference Include="..\Plugins\XFiler.Base\XFiler.Base.csproj" />
 		<ProjectReference Include="..\Themes\XFiler.GoogleChromeStyle\XFiler.GoogleChromeStyle.csproj" />
@@ -15,6 +13,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Egorozh.Windows.FileOperations" Version="0.1.0" />
+		<PackageReference Include="Egorozh.Windows.ImageOperations" Version="0.1.0" />
 		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
 		<PackageReference Include="LiteDB" Version="5.0.11" />
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
