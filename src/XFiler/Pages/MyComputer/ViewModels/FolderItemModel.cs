@@ -2,7 +2,7 @@
 
 public sealed class FolderItemModel : BaseItemModel
 {
-    public FolderItemModel(XFilerRoute route, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
+    public FolderItemModel(Route route, IIconLoader iconLoader, DelegateCommand<Route> openCommand)
         : base(route, iconLoader, openCommand)
     {
     }

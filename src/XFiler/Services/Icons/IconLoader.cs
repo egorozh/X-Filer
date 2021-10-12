@@ -12,7 +12,7 @@ internal sealed class IconLoader : IIconLoader
         _imageProviders = imageProviders;
     }
 
-    public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
+    public ImageSource? GetIcon(Route? route, IconSize size)
     {
         ImageSource? source = null;
 
@@ -29,7 +29,7 @@ internal sealed class IconLoader : IIconLoader
         return source;
     }
 
-    public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+    public async Task<Stream?> GetIconStream(Route? route, IconSize size)
     {
         Stream? stream = null;
 

@@ -19,7 +19,7 @@ internal sealed class DirectoryHistory : IDirectoryHistory
 
     #region Public Methods
 
-    public void Init(XFilerRoute route) => Current = new DirectoryNode(route);
+    public void Init(Route route) => Current = new DirectoryNode(route);
 
     public void MoveBack()
     {
@@ -39,7 +39,7 @@ internal sealed class DirectoryHistory : IDirectoryHistory
         RaiseHistoryChanged();
     }
 
-    public void Add(XFilerRoute route)
+    public void Add(Route route)
     {
         var node = new DirectoryNode(route);
 

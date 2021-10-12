@@ -15,7 +15,7 @@ public sealed class TabFactory : ITabFactory
     public ITabItemModel CreateMyComputerTab()
         => CreateTab(SpecialRoutes.MyComputer);
 
-    public ITabItemModel CreateTab(XFilerRoute route)
+    public ITabItemModel CreateTab(Route route)
     {
         var tvm = _tabFactory.Invoke();
         tvm.Init(route);

@@ -5,8 +5,8 @@ using XFiler.SDK.Localization;
 
 namespace XFiler.SDK;
 
-public record XFilerRoute
-{
+public record Route
+{   
     #region Public Properties
 
     public string Header { get; }
@@ -23,14 +23,14 @@ public record XFilerRoute
 
     #region Constructors
 
-    public XFilerRoute(string header, string fullName, RouteType type)
+    public Route(string header, string fullName, RouteType type)
     {
         Header = header;
         FullName = fullName;
         Type = type;
     }
         
-    public XFilerRoute(DriveInfo driveInfo)
+    public Route(DriveInfo driveInfo)
     {
         Header = GetName(driveInfo);
         FullName = driveInfo.RootDirectory.FullName;
@@ -40,7 +40,7 @@ public record XFilerRoute
             : RouteType.Drive;
     }
 
-    public XFilerRoute(string query, string? targetSearchDirectory)
+    public Route(string query, string? targetSearchDirectory)
     {
         Query = query;
         TargetSearchDirectory = targetSearchDirectory;
@@ -54,29 +54,9 @@ public record XFilerRoute
     #endregion
 
     #region Public Methods
-
-    public static XFilerRoute FromPath(string path)
-    {
-        var special = SpecialRoutes.GetSpecialUrl(path);
-
-        if (special != null)
-            return special;
-
-        var fileSystem = IsFileSystemRoute(path);
-
-        if (fileSystem != null)
-            return fileSystem;
-
-        var webLink = IsWebLinkRoute(path);
-
-        if (webLink != null)
-            return webLink;
-
-        return SpecialRoutes.MyComputer;
-    }
-
-    public static XFilerRoute? FromPathEx(string path)
-    {
+    
+    public static Route? FromPath(string path)
+    {   
         var special = SpecialRoutes.GetSpecialUrl(path);
 
         if (special != null)
@@ -99,7 +79,7 @@ public record XFilerRoute
 
     #region Private Methods
 
-    private static XFilerRoute? IsWebLinkRoute(string url)
+    private static Route? IsWebLinkRoute(string url)
     {
         try
         {
@@ -112,7 +92,7 @@ public record XFilerRoute
                 {
                     response.Close();
 
-                    return new XFilerRoute(url, url, RouteType.WebLink);
+                    return new Route(url, url, RouteType.WebLink);
                 }
             }
         }
@@ -124,7 +104,7 @@ public record XFilerRoute
         return null;
     }
 
-    private static XFilerRoute? IsFileSystemRoute(string path)
+    private static Route? IsFileSystemRoute(string path)
     {
         var info = path.ToInfo();
 
@@ -134,7 +114,7 @@ public record XFilerRoute
         return info switch
         {
             FileInfo fileInfo => new FileRoute(fileInfo),
-            DirectoryInfo { Parent: null } => new XFilerRoute(new DriveInfo(path)),
+            DirectoryInfo { Parent: null } => new Route(new DriveInfo(path)),
             DirectoryInfo dir => new DirectoryRoute(dir),
             _ => null
         };

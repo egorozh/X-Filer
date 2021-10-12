@@ -9,5 +9,5 @@ public interface IPageModel : IDisposable
 
     DataTemplate Template { get; }
 
-    XFilerRoute Route { get; }
+    Route Route { get; }
 }

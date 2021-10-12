@@ -6,7 +6,7 @@ public interface ITabFactory
 {
     ITabItemModel? CreateExplorerTab(DirectoryInfo directoryInfo);
 
-    ITabItemModel? CreateTab(XFilerRoute route);
+    ITabItemModel? CreateTab(Route route);
             
     ITabItemModel CreateMyComputerTab();
 }

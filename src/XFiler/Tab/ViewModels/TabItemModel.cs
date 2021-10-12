@@ -16,7 +16,7 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
 
     public IPageModel Page { get; private set; } = null!;
 
-    public XFilerRoute Route { get; private set; } = null!;
+    public Route Route { get; private set; } = null!;
 
     public string Header { get; set; } = null!;
 
@@ -89,7 +89,7 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
         GetResultsHandler = null!;
     }
 
-    public void Init(XFilerRoute route)
+    public void Init(Route route)
     {
         _history.Init(route);
         _history.HistoryChanged += History_HistoryChanged;
@@ -97,7 +97,7 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
         SetPage(route, false);
     }
 
-    public void Open(XFilerRoute route) => SetPage(route, true);
+    public void Open(Route route) => SetPage(route, true);
 
     #endregion
 
@@ -153,7 +153,7 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
     private IReadOnlyList<object> GetResultsFilter(string arg)
         => _searchHandler.GetResultsFilter(arg, Route);
 
-    private void SetPage(XFilerRoute route, bool addToHistory, bool update = false)
+    private void SetPage(Route route, bool addToHistory, bool update = false)
     {
         if (!update && Route == route)
             return;

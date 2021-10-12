@@ -6,7 +6,7 @@ namespace XFiler.SDK;
 
 public interface IIconLoader
 {
-    ImageSource? GetIcon(XFilerRoute? route, IconSize size);
+    ImageSource? GetIcon(Route? route, IconSize size);
 
-    Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size);
+    Task<Stream?> GetIconStream(Route? route, IconSize size);
 }

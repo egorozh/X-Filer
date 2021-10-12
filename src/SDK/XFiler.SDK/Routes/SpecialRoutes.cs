@@ -1,7 +1,7 @@
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Microsoft.Win32;
 using XFiler.SDK.Localization;
 
 namespace XFiler.SDK;
@@ -10,31 +10,31 @@ public static class SpecialRoutes
 {
     #region Private Fields
 
-    private static readonly Dictionary<string, XFilerRoute> Routes;
+    private static readonly Dictionary<string, Route> Routes;
 
     #endregion
 
     #region Public Properties
 
-    public static XFilerRoute MyComputer { get; }
+    public static Route MyComputer { get; }
 
-    public static XFilerRoute Settings { get; }
+    public static Route Settings { get; }
 
-    public static XFilerRoute BookmarksDispatcher { get; }
+    public static Route BookmarksDispatcher { get; }
         
-    public static XFilerRoute Desktop { get; }
+    public static Route Desktop { get; }
 
-    public static XFilerRoute Downloads { get; }
+    public static Route Downloads { get; }
 
-    public static XFilerRoute MyDocuments { get; }
+    public static Route MyDocuments { get; }
 
-    public static XFilerRoute MyPictures { get; }
+    public static Route MyPictures { get; }
 
-    public static XFilerRoute MyMusic { get; }
+    public static Route MyMusic { get; }
 
-    public static XFilerRoute MyVideos { get; }
+    public static Route MyVideos { get; }
 
-    public static XFilerRoute RecycleBin { get; }
+    public static Route RecycleBin { get; }
 
     #endregion
 
@@ -42,43 +42,43 @@ public static class SpecialRoutes
 
     static SpecialRoutes()
     {
-        MyComputer = new XFilerRoute(Strings.Routes_MyComputer, "xfiler://mycomputer", RouteType.MyComputer);
+        MyComputer = new Route(Strings.Routes_MyComputer, "xfiler://mycomputer", RouteType.MyComputer);
 
-        Settings = new XFilerRoute(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
+        Settings = new Route(Strings.Routes_Settings, "xfiler://settings", RouteType.Settings);
 
         BookmarksDispatcher =
-            new XFilerRoute(Strings.Routes_BookmarksDispatcher, "xfiler://bookmarks", RouteType.BookmarksDispatcher);
+            new Route(Strings.Routes_BookmarksDispatcher, "xfiler://bookmarks", RouteType.BookmarksDispatcher);
 
-        Desktop = new XFilerRoute(Strings.Routes_Desktop,
+        Desktop = new Route(Strings.Routes_Desktop,
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop), RouteType.Desktop);
 
-        Downloads = new XFilerRoute(Strings.Routes_Downloads,
+        Downloads = new Route(Strings.Routes_Downloads,
             GetDownloadFolderPath(), RouteType.Downloads);
 
-        MyDocuments = new XFilerRoute(Strings.Routes_MyDocuments,
+        MyDocuments = new Route(Strings.Routes_MyDocuments,
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), RouteType.MyDocuments);
 
-        MyPictures = new XFilerRoute(Strings.Routes_MyPictures,
+        MyPictures = new Route(Strings.Routes_MyPictures,
             Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), RouteType.MyPictures);
 
-        MyMusic = new XFilerRoute(Strings.Routes_MyMusic,
+        MyMusic = new Route(Strings.Routes_MyMusic,
             Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), RouteType.MyMusic);
 
-        MyVideos = new XFilerRoute(Strings.Routes_MyVideos,
+        MyVideos = new Route(Strings.Routes_MyVideos,
             Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), RouteType.MyVideos);
 
-        RecycleBin = new XFilerRoute(Strings.Routes_RecycleBin,
+        RecycleBin = new Route(Strings.Routes_RecycleBin,
             @"C:\$Recycle.Bin", RouteType.RecycleBin);
 
         var type = typeof(SpecialRoutes);
 
         var routesProps = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
 
-        Routes = new Dictionary<string, XFilerRoute>();
+        Routes = new Dictionary<string, Route>();
 
         foreach (var prop in routesProps)
         {
-            if (prop.GetValue(null) is XFilerRoute value) 
+            if (prop.GetValue(null) is Route value) 
                 Routes.Add(value.FullName, value);
         }
     }
@@ -87,11 +87,11 @@ public static class SpecialRoutes
 
     #region Public Methods
 
-    public static XFilerRoute? GetSpecialUrl(string fullName) => Routes.ContainsKey(fullName)
+    public static Route? GetSpecialUrl(string fullName) => Routes.ContainsKey(fullName)
         ? Routes[fullName]
         : null;
 
-    public static IReadOnlyList<XFilerRoute> GetFolders() => new List<XFilerRoute>
+    public static IReadOnlyList<Route> GetFolders() => new List<Route>
     {
         Desktop, Downloads,
         MyDocuments, MyPictures,

@@ -5,19 +5,19 @@ namespace XFiler;
 
 internal sealed class BaseIconProvider : IIconProvider
 {
-    public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
+    public ImageSource? GetIcon(Route? route, IconSize size)
     {
         var key = GetResourceKey(route);
 
         return Application.Current.TryFindResource(key) as ImageSource;
     }
 
-    public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+    public async Task<Stream?> GetIconStream(Route? route, IconSize size)
     {
         return null;
     }
 
-    private static string GetResourceKey(XFilerRoute? route)
+    private static string GetResourceKey(Route? route)
     {
         if (route == null)
             return IconName.BookmarkFolder;

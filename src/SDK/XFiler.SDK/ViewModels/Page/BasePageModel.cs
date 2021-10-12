@@ -7,22 +7,22 @@ public abstract class BasePageModel : BaseViewModel, IPageModel
 {
     public DataTemplate Template { get; private set; } = null!;
 
-    public XFilerRoute Route { get; private set; } = null!;
+    public Route Route { get; private set; } = null!;
 
     public event EventHandler<HyperlinkEventArgs>? GoToUrl;
 
-    protected void GoTo(XFilerRoute route, bool isOpenInNewTab = false)
+    protected void GoTo(Route route, bool isOpenInNewTab = false)
     {
         GoToUrl?.Invoke(this, new HyperlinkEventArgs(route, isOpenInNewTab));
     }
 
-    protected void Init(DataTemplate template, XFilerRoute route)
+    protected void Init(DataTemplate template, Route route)
     {
         Template = template;
         Route = route;
     }
 
-    protected void Init(Type pageType, XFilerRoute route)
+    protected void Init(Type pageType, Route route)
     {
         Route = route;
         Template = CreateTemplate(pageType);

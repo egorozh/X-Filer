@@ -5,12 +5,12 @@ namespace XFiler.SDK;
 public interface ITabItemModel : IDisposable
 {
     IPageModel Page { get; }
-    XFilerRoute Route { get; }
+    Route Route { get; }
     string Header { get; }
     bool IsSelected { get; }
     bool LogicalIndex { get; }
 
-    void Init(XFilerRoute route);
+    void Init(Route route);
 
-    void Open(XFilerRoute route);
+    void Open(Route route);
 }

@@ -2,9 +2,9 @@
 
 public class RouteModel : ResultsModel
 {
-    public XFilerRoute Route { get; }
+    public Route Route { get; }
 
-    public RouteModel(string text, XFilerRoute route) : base(text)
+    public RouteModel(string text, Route route) : base(text)
     {
         Route = route;
     }

@@ -9,14 +9,14 @@ internal sealed class SearchHandler : ISearchHandler
         _resultModelFactory = resultModelFactory;
     }
 
-    public IReadOnlyList<ResultsModel> GetResultsFilter(string query, XFilerRoute currentRoute)
+    public IReadOnlyList<ResultsModel> GetResultsFilter(string query, Route currentRoute)
     {
         var results = new List<ResultsModel>();
 
         if (string.IsNullOrEmpty(query))
             return results;
 
-        var route = XFilerRoute.FromPathEx(query);
+        var route = Route.FromPath(query);
 
         if (route != null && route.FullName != currentRoute.FullName)
             results.Add(_resultModelFactory.CreateRouteModel(route));

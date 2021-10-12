@@ -2,7 +2,7 @@ using System.IO;
 
 namespace XFiler.SDK;
 
-public record FileRoute : XFilerRoute
+public record FileRoute : Route
 {
     public FileInfo File { get; }
 

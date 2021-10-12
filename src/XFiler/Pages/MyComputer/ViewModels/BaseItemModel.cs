@@ -8,11 +8,11 @@ public abstract class BaseItemModel : BaseViewModel, IDisposable
 
     public ImageSource? Icon { get; private set; }
 
-    public XFilerRoute Route { get; private set; }
+    public Route Route { get; private set; }
 
-    public DelegateCommand<XFilerRoute> OpenCommand { get; private set; }
+    public DelegateCommand<Route> OpenCommand { get; private set; }
 
-    protected BaseItemModel(XFilerRoute route, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
+    protected BaseItemModel(Route route, IIconLoader iconLoader, DelegateCommand<Route> openCommand)
     {
         Route = route;
         OpenCommand = openCommand;

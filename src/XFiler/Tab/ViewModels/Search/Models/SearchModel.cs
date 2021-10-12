@@ -5,8 +5,8 @@ public class SearchModel : ResultsModel
     public SearchModel(string text, string query, string? targetDir = null) 
         : base(text)
     {
-        Route = new XFilerRoute(query, targetDir);
+        Route = new Route(query, targetDir);
     }
 
-    public XFilerRoute Route { get; }
+    public Route Route { get; }
 }

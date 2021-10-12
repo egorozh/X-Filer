@@ -3,8 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:fluentWpf="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
                     xmlns:localization="clr-namespace:XFiler.GoogleChromeStyle.Localization"
-                    xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
-                    xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters">
+                    xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK">
 
     <Style TargetType="ProgressBar" x:Key="DriveSizeProgressBar">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />

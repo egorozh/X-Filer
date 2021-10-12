@@ -32,6 +32,8 @@ internal static partial class RegisterEx
 
     private static void RegisterBookmarksServices(this IDIService services)
     {
+        services.Register<MenuItemViewModel, IMenuItemViewModel>();
+
         services.RegisterSingleton<MenuItemFactory, IMenuItemFactory>();
         services.RegisterSingleton<BookmarksManager, IBookmarksManager>();
     }

@@ -10,9 +10,9 @@ internal interface IDirectoryHistory : IEnumerable<DirectoryNode>
 
     event EventHandler HistoryChanged;
 
-    void Init(XFilerRoute route);
+    void Init(Route route);
 
-    void Add(XFilerRoute route);
+    void Add(Route route);
 
     void MoveBack();
 

@@ -15,7 +15,7 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
     private readonly IStorage _storage;
 
     #endregion
-        
+
     #region Private Fields
 
     private readonly ObservableCollection<IMenuItemViewModel> _bookmarks;
@@ -47,7 +47,7 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
 
     public BookmarksManager(IMenuItemFactory itemFactory,
         ILogger logger,
-        IStorage storage, 
+        IStorage storage,
         IDragSource dragSource,
         IBookmarksDispatcherDropTarget dropTarget)
     {
@@ -77,7 +77,7 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
     private void OnBookmarkClicked(IList<object> parameters)
     {
         if (parameters.Count == 2 &&
-            parameters[0] is XFilerRoute url &&
+            parameters[0] is Route url &&
             parameters[1] is ITabItemModel tabItemViewModel)
         {
             tabItemViewModel.Open(url);
@@ -86,22 +86,21 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
 
     private void OnAddBookmark(object parameter)
     {
-        if (parameter is IPageModel page)
+        var vm = parameter switch
         {
-            var route = page.Route;
-
-            _bookmarks.Add(CreateItem(new BookmarkItem
+            IPageModel page => CreateItem(new BookmarkItem
             {
-                Path = route.FullName
-            }));
-        }
-        else if (parameter is IFileSystemModel fileSystemModel)
-        {
-            _bookmarks.Add(CreateItem(new BookmarkItem
+                Path = page.Route.FullName
+            }),
+            IFileSystemModel fileSystemModel => CreateItem(new BookmarkItem
             {
                 Path = fileSystemModel.Info.FullName
-            }));
-        }
+            }),
+            _ => null
+        };
+
+        if (vm != null)
+            _bookmarks.Add(vm);
     }
 
     private bool CanRemove() => SelectedItem != null;
@@ -154,10 +153,13 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
             insertIndex = parentCollection.IndexOf(SelectedItem) + 1;
         }
 
-        parentCollection.Insert(insertIndex, CreateItem(new BookmarkItem
+        var vm = CreateItem(new BookmarkItem
         {
             BookmarkFolderName = "Новая папка"
-        }));
+        });
+
+        if (vm != null)
+            parentCollection.Insert(insertIndex, vm);
     }
 
     #endregion
@@ -175,7 +177,8 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
         {
             var vm = CreateItem(bookmarkItem);
 
-            menuVms.Add(vm);
+            if (vm != null)
+                menuVms.Add(vm);
         }
 
         return menuVms;
@@ -227,7 +230,7 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
 
     private void VmOnIsSelectedChanged(object? sender, EventArgs e)
     {
-        if (sender is IMenuItemViewModel { IsSelected: true } menuItem)
+        if (sender is IMenuItemViewModel {IsSelected: true} menuItem)
         {
             SelectedItem = menuItem;
         }
@@ -235,13 +238,14 @@ internal sealed class BookmarksManager : BaseViewModel, IBookmarksManager
         RemoveCommand.RaiseCanExecuteChanged();
     }
 
-    private MenuItemViewModel CreateItem(BookmarkItem bookmarkItem)
+    private IMenuItemViewModel? CreateItem(BookmarkItem bookmarkItem)
     {
         var vm = _itemFactory
             .CreateItem(bookmarkItem, CreateMenuItemViewModels(bookmarkItem.Children),
                 BookmarkClickCommand);
 
-        vm.IsSelectedChanged += VmOnIsSelectedChanged;
+        if (vm is not null)
+            vm.IsSelectedChanged += VmOnIsSelectedChanged;
 
         return vm;
     }

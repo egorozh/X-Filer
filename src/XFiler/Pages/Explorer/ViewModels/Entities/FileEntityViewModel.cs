@@ -21,7 +21,7 @@ public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemMode
 
     public FileSystemInfo Info { get; private set; } = null!;
 
-    public XFilerRoute Route { get; private set; } = null!;
+    public Route Route { get; private set; } = null!;
 
     public string Name { get; set; } = null!;
 
@@ -71,7 +71,7 @@ public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemMode
 
     #region Public Methods
 
-    public async Task Init(XFilerRoute route, FileSystemInfo info, IFilesGroup filesGroup,
+    public async Task Init(Route route, FileSystemInfo info, IFilesGroup filesGroup,
         IconSize iconSize)
     {
         Name = route.Header;
@@ -131,7 +131,7 @@ public abstract class FileEntityViewModel : DisposableViewModel, IFileSystemMode
 
     #region Private Methods
 
-    private async Task LoadIcon(XFilerRoute route, IconSize iconSize)
+    private async Task LoadIcon(Route route, IconSize iconSize)
     {
         var iconStream = await _iconLoader.GetIconStream(route, iconSize);
 

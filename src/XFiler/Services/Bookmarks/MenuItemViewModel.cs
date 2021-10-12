@@ -13,39 +13,38 @@ internal sealed class MenuItemViewModel : DisposableViewModel, IMenuItemViewMode
 
     public DelegateCommand<object> RenameCommand { get; private set; }
 
-    public XFilerRoute? Route { get; }        
-        
-    public IList<IMenuItemViewModel> Items { get; set; }
+    public Route? Route { get; private set; }
+
+    public IList<IMenuItemViewModel> Items { get; set; } = null!;
 
     public IIconLoader IconLoader { get; private set; }
 
     public bool IsSelected { get; set; }
 
     public event EventHandler? IsSelectedChanged;
-        
-    public MenuItemViewModel(BookmarkItem bookmarkItem,
-        ObservableCollection<IMenuItemViewModel> children,
-        ICommand command, 
-        IIconLoader iconLoader,
+
+    public MenuItemViewModel(IIconLoader iconLoader,
         IRenameService renameService)
     {
-        Path = bookmarkItem.Path;
-
-        Items = children;
         IconLoader = iconLoader;
-
         RenameCommand = renameService.RenameCommand;
+    }
 
-        if (Path == null)
-        {
-            Header = bookmarkItem.BookmarkFolderName;
-        }
-        else
-        {
-            Command = command;
-            Route = XFilerRoute.FromPath(Path);
-            Header = Route.Header;
-        }
+    public void Init(Route route, ObservableCollection<IMenuItemViewModel> children, ICommand command)
+    {
+        Route = route;
+        Path = route.FullName;
+        Header = route.Header;
+        Items = children;
+        Command = command;
+
+        PropertyChanged += OnPropertyChanged;
+    }
+
+    public void Init(string folderHeader, ObservableCollection<IMenuItemViewModel> children)
+    {
+        Header = folderHeader;
+        Items = children;
 
         PropertyChanged += OnPropertyChanged;
     }
@@ -78,7 +77,7 @@ internal sealed class MenuItemViewModel : DisposableViewModel, IMenuItemViewMode
         {
             IList<BookmarkItem> items = new List<BookmarkItem>();
 
-            foreach (var model in Items) 
+            foreach (var model in Items)
                 items.Add(model.GetItem());
 
             return new BookmarkItem()

@@ -21,7 +21,7 @@ public sealed class MyComputerPageModel : BasePageModel
 
     #region Commands
 
-    public DelegateCommand<XFilerRoute> OpenCommand { get; }
+    public DelegateCommand<Route> OpenCommand { get; }
 
     #endregion
 
@@ -34,7 +34,7 @@ public sealed class MyComputerPageModel : BasePageModel
 
         Init(typeof(MyComputerPage), SpecialRoutes.MyComputer);
 
-        OpenCommand = new DelegateCommand<XFilerRoute>(OnOpen);
+        OpenCommand = new DelegateCommand<Route>(OnOpen);
 
         Folders = new ObservableCollection<FolderItemModel>(
             SpecialRoutes.GetFolders().Select(r => new FolderItemModel(r, iconLoader, OpenCommand)));
@@ -67,7 +67,7 @@ public sealed class MyComputerPageModel : BasePageModel
 
     #region Private Methods
 
-    private void OnOpen(XFilerRoute route)
+    private void OnOpen(Route route)
     {
         GoTo(route);
     }

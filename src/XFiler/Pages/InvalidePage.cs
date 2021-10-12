@@ -5,9 +5,9 @@ internal class InvalidatePage : IPageModel
     public event EventHandler<HyperlinkEventArgs>? GoToUrl;
 
     public DataTemplate Template { get; }
-    public XFilerRoute Route { get; }
+    public Route Route { get; }
         
-    public InvalidatePage(XFilerRoute route)
+    public InvalidatePage(Route route)
     {
         Route = route;
     }

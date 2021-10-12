@@ -10,8 +10,8 @@ public sealed class DriveItemModel : BaseItemModel
 
     public double UsedPercentage { get; set; }
 
-    public DriveItemModel(string drivePath, IIconLoader iconLoader, DelegateCommand<XFilerRoute> openCommand)
-        : base(new XFilerRoute(new DriveInfo(drivePath)), iconLoader, openCommand)
+    public DriveItemModel(string drivePath, IIconLoader iconLoader, DelegateCommand<Route> openCommand)
+        : base(new Route(new DriveInfo(drivePath)), iconLoader, openCommand)
     {
         try
         {

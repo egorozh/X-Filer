@@ -15,7 +15,7 @@ internal sealed class PageFactory : IPageFactory
         _pageModelFactory = pageModelFactory;
     }
 
-    public IPageModel CreatePage(XFilerRoute route) => route.Type switch
+    public IPageModel CreatePage(Route route) => route.Type switch
     {
         RouteType.File => CreateFilePage(route),
         RouteType.WebLink => CreateWebPage(route),
@@ -35,19 +35,19 @@ internal sealed class PageFactory : IPageFactory
         _ => CreateSearchPage(route)
     };
 
-    private IPageModel CreateWebPage(XFilerRoute route)
+    private IPageModel CreateWebPage(Route route)
     {
         OpenFile(route.FullName);
         return new InvalidatePage(route);
     }
 
-    private IPageModel CreateFilePage(XFilerRoute route)
+    private IPageModel CreateFilePage(Route route)
     {
         OpenFile(route.FullName);
         return new InvalidatePage(route);
     }
 
-    private IPageModel CreateSearchPage(XFilerRoute route)
+    private IPageModel CreateSearchPage(Route route)
     {
         var searchPage = (SearchPageModel) _pageModelFactory[PageType.Search];
 
@@ -56,7 +56,7 @@ internal sealed class PageFactory : IPageFactory
         return searchPage;
     }
 
-    private IPageModel CreateExplorerPage(XFilerRoute route)
+    private IPageModel CreateExplorerPage(Route route)
     {
         var dir = new DirectoryInfo(route.FullName);
 

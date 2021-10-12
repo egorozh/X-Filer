@@ -12,7 +12,7 @@ internal sealed class SvgIconProvider : IIconProvider
         _logger = logger;
     }
 
-    public ImageSource? GetIcon(XFilerRoute? route, IconSize size)
+    public ImageSource? GetIcon(Route? route, IconSize size)
     {
         if (route is FileRoute fileRoute)
         {
@@ -34,7 +34,7 @@ internal sealed class SvgIconProvider : IIconProvider
         return null;
     }
 
-    public async Task<Stream?> GetIconStream(XFilerRoute? route, IconSize size)
+    public async Task<Stream?> GetIconStream(Route? route, IconSize size)
     {
         return null;
     }
