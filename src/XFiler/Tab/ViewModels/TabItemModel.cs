@@ -129,13 +129,9 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
     private void OnGoTo(ResultsModel result)
     {
         if (result is RouteModel routeModel)
-        {
             Open(routeModel.Route);
-        }
-        else if (result is SearchModel searchModel)
-        {
+        else if (result is SearchModel searchModel) 
             Open(searchModel.Route);
-        }
     }
 
     #endregion

@@ -7,7 +7,7 @@ internal sealed class DirectoryHistory : IDirectoryHistory
     public bool CanMoveBack => Current.PreviousNode != null;
     public bool CanMoveForward => Current.NextNode != null;
 
-    public DirectoryNode Current { get; private set; }
+    public DirectoryNode Current { get; private set; } = null!;
 
     #endregion
 
