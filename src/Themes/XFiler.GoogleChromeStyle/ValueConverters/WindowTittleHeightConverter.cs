@@ -1,9 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using XFiler.SDK;
-
-namespace XFiler.GoogleChromeStyle.ValueConverters;
+﻿namespace XFiler.GoogleChromeStyle.ValueConverters;
 
 internal class WindowTitleHeightConverter : BaseValueConverter
 {
