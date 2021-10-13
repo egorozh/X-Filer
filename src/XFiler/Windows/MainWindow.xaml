@@ -17,7 +17,8 @@
         Height="720" Width="1024">
 
     <dockablz:Layout Partition="2AE89D18-F236-4D20-9605-6C03319038E6"
-                     IsFloatDropZoneEnabled="False">
+                     IsFloatDropZoneEnabled="False"
+                     x:Name="Layout">
 
         <dockablz:Layout.BranchTemplate>
             <DataTemplate>

@@ -57,7 +57,7 @@ public class CommandReference : Freezable, ICommand
     public event EventHandler? CanExecuteChanged;
 
     #endregion
-
+    
     #region Private Methods
 
     private static object? GetParameter(object? mainParameter, object? referenceParameter)

@@ -2,7 +2,12 @@
 
 public sealed partial class MainWindow : IMainWindow
 {
-    public MainWindow() => InitializeComponent();
+    public MainWindow()
+    {
+        InitializeComponent();
+
+        //Closed += OnClosed;
+    }
 
     public void NormalizeAndActivate()
     {
@@ -11,4 +16,14 @@ public sealed partial class MainWindow : IMainWindow
 
         Activate();
     }
+
+    //private void OnClosed(object? sender, EventArgs e)
+    //{
+    //    Closed -= OnClosed;
+        
+    //    if (DataContext is IDisposable disposable)
+    //    {
+    //        disposable.Dispose();
+    //    }
+    //}
 }

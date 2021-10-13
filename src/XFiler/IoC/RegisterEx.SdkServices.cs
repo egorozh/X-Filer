@@ -28,6 +28,7 @@ internal static partial class RegisterEx
         services.RegisterSingleton<LaunchAtStartupService, ILaunchAtStartupService>();
         services.RegisterSingleton<DriveDetector, IDriveDetector>();
         services.RegisterSingleton<RestartService, IRestartService>();
+        services.RegisterSingleton<WallpapersService, IWallpapersService>();
     }
 
     private static void RegisterBookmarksServices(this IDIService services)

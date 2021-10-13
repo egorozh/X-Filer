@@ -11,7 +11,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
     private IDirectorySettings _directorySettings;
     private IReactiveOptions _reactiveOptions;
-    private IStorage _storage;
+    private IWallpapersService _wallpapersService;
     private DirectoryInfo _directory = null!;
 
     #endregion
@@ -46,12 +46,12 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         IMainCommands mainCommands,
         IDirectorySettings directorySettings,
         IReactiveOptions reactiveOptions,
-        IStorage storage)
+        IWallpapersService wallpapersService)
     {
         _directorySettings = directorySettings;
         _reactiveOptions = reactiveOptions;
-        _storage = storage;
-        
+        _wallpapersService = wallpapersService;
+
         FilesPresenters = filesPresenters;
         FilesGroups = groups;
         PasteCommand = clipboardService.PasteCommand;
@@ -83,7 +83,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
         CurrentPresenter = SelectInitPresenter(dirSettings, _reactiveOptions);
 
-        BackgroundImage = CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
+        BackgroundImage = _wallpapersService.CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
 
         _reactiveOptions.PropertyChanged += ReactiveOptionsOnPropertyChanged;
     }
@@ -105,8 +105,8 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
         _directory = null!;
         _directorySettings = null!;
-        _storage = null!;
         _reactiveOptions = null!;
+        _wallpapersService = null!;
         FilesPresenters = null!;
         CurrentPresenter = null!;
         FilesGroups = null!;
@@ -168,20 +168,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     private void ReactiveOptionsOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(IReactiveOptions.ExplorerBackgroundImagePath))
-            BackgroundImage = CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
-    }
-
-    private ImageSource? CreateImageSource(string? imagePath)
-    {
-        if (imagePath != null)
-        {
-            var fullPath = Path.Combine(_storage.ExplorerWallpapersDirectory, imagePath);
-
-            if (File.Exists(fullPath))
-                return new BitmapImage(new Uri(fullPath));
-        }
-
-        return null;
+            BackgroundImage = _wallpapersService.CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
     }
 
     #endregion

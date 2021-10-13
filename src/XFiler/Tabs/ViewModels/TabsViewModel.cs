@@ -5,28 +5,28 @@ using System.Windows.Input;
 
 namespace XFiler;
 
-internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel
+internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel, IDisposable
 {
     #region Private Fields
 
-    private readonly ITabFactory _tabFactory;
-    private readonly IWindowFactory _windowFactory;
+    private ITabFactory _tabFactory;
+    private IWindowFactory _windowFactory;
 
     #endregion
 
     #region Public Properties
 
-    public IInterTabClient InterTabClient { get; }
+    public IInterTabClient InterTabClient { get; private set; } 
 
     public ObservableCollection<ITabItemModel> TabItems { get; private set; } = null!;
 
-    public ItemActionCallback ClosingTabItemHandler { get; }
+    public ItemActionCallback ClosingTabItemHandler { get; private set; }
 
     public ITabItemModel? CurrentTabItem { get; set; }
 
-    public IReadOnlyCollection<IMenuItemViewModel> Bookmarks { get; }
+    public IReadOnlyCollection<IMenuItemViewModel> Bookmarks { get; private set; }
 
-    public Func<ITabItemModel> Factory { get; }
+    public Func<ITabItemModel> Factory { get; private set; }
 
     #endregion
 
@@ -64,11 +64,11 @@ internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel
         
         CreateNewTabItemCommand = new DelegateCommand<object>(OnCreateNewTabItem);
        
-        OpenTabItemInNewWindowCommand = new (OnOpenTabItemInNewWindow, OnCanOpenTabItemInNewWindow);
+        OpenTabItemInNewWindowCommand = new DelegateCommand<object>(OnOpenTabItemInNewWindow, OnCanOpenTabItemInNewWindow);
        
         DuplicateTabCommand = new DelegateCommand<object>(OnDuplicate);
         
-        CloseOtherTabsCommand = new (OnCloseOtherTabs, CanCloseAllTabs);
+        CloseOtherTabsCommand = new DelegateCommand<object>(OnCloseOtherTabs, CanCloseAllTabs);
 
         CreateSettingsTabCommand = new DelegateCommand(OnOpenSettings);
         
@@ -121,6 +121,19 @@ internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel
                     CurrentTabItem = tab;
             }
         }
+    }
+
+    public void Dispose()
+    {
+        CurrentTabItem?.Dispose();
+
+        CurrentTabItem = null!;
+        InterTabClient = null!;
+        Bookmarks = null!;
+        Factory =null!;
+        ClosingTabItemHandler = null!;
+        _tabFactory = null!;
+        _windowFactory = null!;
     }
 
     #endregion
@@ -213,4 +226,6 @@ internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel
     }
 
     #endregion
+
+   
 }
