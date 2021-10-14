@@ -42,7 +42,7 @@
                             TileMode="Tile"
                             ViewportUnits="Absolute"
                             Viewport="{Binding Path=ImageSource,RelativeSource={RelativeSource Self},
-                    Converter={local:ImageBrushToViewportConverter}}"/>
+                    Converter={local:ImageBrushToViewportConverter}}" />
             </Grid.Background>
 
             <ContentControl x:Name="ContentControl"
@@ -50,6 +50,11 @@
 
                 <ContentControl.ContextMenu>
                     <ContextMenu>
+                        <b:Interaction.Behaviors>
+                            <local:RegistryContextMenuBehavior Command="{Binding InvokeRegistryCommand}"
+                                                               FileInfoModel="{Binding CurrentPresenter.FilesPresenter}"
+                                                               Models="{Binding AllEntityContextModels}" />
+                        </b:Interaction.Behaviors>
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonHeader}"
                                   InputGestureText="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonGesture}"

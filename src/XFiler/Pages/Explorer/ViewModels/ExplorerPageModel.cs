@@ -11,7 +11,6 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     private IDirectorySettings _directorySettings;
     private IReactiveOptions _reactiveOptions;
     private IWallpapersService _wallpapersService;
-    private IRegistryContextMenuLoader _registryContextMenuLoader;
     private DirectoryInfo _directory = null!;
 
     #endregion
@@ -25,6 +24,10 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     public IFilesGroup CurrentGroup { get; set; }
 
     public ImageSource? BackgroundImage { get; private set; }
+
+    public List<IRegistryContextMenuModel> AllEntityContextModels { get; private set; }
+
+    public DelegateCommand<object> InvokeRegistryCommand { get; private set; }
 
     #endregion
 
@@ -52,7 +55,9 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         _directorySettings = directorySettings;
         _reactiveOptions = reactiveOptions;
         _wallpapersService = wallpapersService;
-        _registryContextMenuLoader = registryContextMenuLoader;
+
+        AllEntityContextModels = registryContextMenuLoader.AllEntityContextModels;
+        InvokeRegistryCommand = registryContextMenuLoader.InvokeRegistryCommand;
 
         FilesPresenters = filesPresenters;
         FilesGroups = groups;
@@ -109,16 +114,17 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         _directorySettings = null!;
         _reactiveOptions = null!;
         _wallpapersService = null!;
-        _registryContextMenuLoader = null!;
 
         FilesPresenters = null!;
         CurrentPresenter = null!;
         FilesGroups = null!;
         CurrentGroup = null!;
+        AllEntityContextModels = null!;
 
         PasteCommand = null!;
         CreateFolderCommand = null!;
         CreateTextCommand = null!;
+        InvokeRegistryCommand = null!;
         OpenInNativeExplorerCommand = null!;
     }
 

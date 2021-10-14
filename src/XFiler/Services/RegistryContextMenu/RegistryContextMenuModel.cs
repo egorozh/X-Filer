@@ -1,6 +1,6 @@
 ﻿namespace XFiler;
 
-internal class RegistryContextMenuModel : BaseViewModel
+internal class RegistryContextMenuModel : BaseViewModel, IRegistryContextMenuModel
 {
     public string Name { get; }
     public string? IconPath { get; }

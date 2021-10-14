@@ -1,22 +1,26 @@
-﻿using Microsoft.Win32;
+﻿using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace XFiler;
 
 internal class RegistryContextMenuLoader : IRegistryContextMenuLoader
 {
-    public List<RegistryContextMenuModel> AllEntityContextModels { get; } = new();
+    public List<IRegistryContextMenuModel> AllEntityContextModels { get; } = new();
+    public DelegateCommand<object> InvokeRegistryCommand { get; }
 
     public RegistryContextMenuLoader()
     {
+        InvokeRegistryCommand = new DelegateCommand<object>(OnInvoke);
+
         Init();
     }
-
+    
     public void Init()
     {
         GetContextModels(Registry.ClassesRoot.OpenSubKey("*\\shell"), AllEntityContextModels);
     }
 
-    private static void GetContextModels(RegistryKey? searchSubKey, ICollection<RegistryContextMenuModel> collection)
+    private static void GetContextModels(RegistryKey? searchSubKey, ICollection<IRegistryContextMenuModel> collection)
     {
         if (searchSubKey == null)
             return;
@@ -53,5 +57,16 @@ internal class RegistryContextMenuLoader : IRegistryContextMenuLoader
         }
 
         return null;
+    }
+
+    private void OnInvoke(object obj)
+    {
+        if (obj is Tuple<IFileSystemModel, string?>(var destination, var command))
+        {
+            if (!string.IsNullOrWhiteSpace(command))
+            {
+                Process.Start(command.Replace("%1", destination.Info.FullName));
+            }
+        }
     }
 }
