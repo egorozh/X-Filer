@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace XFiler;
 
@@ -12,6 +11,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     private IDirectorySettings _directorySettings;
     private IReactiveOptions _reactiveOptions;
     private IWallpapersService _wallpapersService;
+    private IRegistryContextMenuLoader _registryContextMenuLoader;
     private DirectoryInfo _directory = null!;
 
     #endregion
@@ -46,11 +46,13 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         IMainCommands mainCommands,
         IDirectorySettings directorySettings,
         IReactiveOptions reactiveOptions,
-        IWallpapersService wallpapersService)
+        IWallpapersService wallpapersService,
+        IRegistryContextMenuLoader registryContextMenuLoader)
     {
         _directorySettings = directorySettings;
         _reactiveOptions = reactiveOptions;
         _wallpapersService = wallpapersService;
+        _registryContextMenuLoader = registryContextMenuLoader;
 
         FilesPresenters = filesPresenters;
         FilesGroups = groups;
@@ -107,6 +109,8 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         _directorySettings = null!;
         _reactiveOptions = null!;
         _wallpapersService = null!;
+        _registryContextMenuLoader = null!;
+
         FilesPresenters = null!;
         CurrentPresenter = null!;
         FilesGroups = null!;
