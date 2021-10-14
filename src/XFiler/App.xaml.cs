@@ -3,7 +3,7 @@ using System.Text;
 using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
-using XFiler.NotifyIcon;
+using XFiler.TrayIcon;
 
 namespace XFiler;
 
@@ -43,7 +43,7 @@ internal sealed partial class App : IXFilerApp
         _trayIcon = FindResource("TrayIcon") as TaskbarIcon
                       ?? throw new NotImplementedException("TrayIcon not found in Resources");
 
-        _trayIcon.DataContext = Host.Resolve<NotifyIconViewModel>();
+        _trayIcon.DataContext = Host.Resolve<TrayIconViewModel>();
 
 #if RELEASE
         if (e.Args.Length > 0 && e.Args[0].StartsWith(IRestartService.RestartKey))

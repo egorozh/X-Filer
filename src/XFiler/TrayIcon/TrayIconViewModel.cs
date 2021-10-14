@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
 
-namespace XFiler.NotifyIcon;
+namespace XFiler.TrayIcon;
 
-public sealed class NotifyIconViewModel
+public sealed class TrayIconViewModel
 {
     private readonly IWindowFactory _windowFactory;
 
@@ -10,7 +10,7 @@ public sealed class NotifyIconViewModel
 
     public ICommand ExitApplicationCommand { get; }
 
-    public NotifyIconViewModel(IWindowFactory windowFactory)
+    public TrayIconViewModel(IWindowFactory windowFactory)
     {
         _windowFactory = windowFactory;
         ShowWindowCommand = new DelegateCommand(OnShowWindow);

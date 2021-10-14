@@ -1,12 +1,14 @@
 ﻿namespace XFiler;
 
-public sealed class TabsFactory : ITabsFactory
+internal sealed class TabsFactory : ITabsFactory
 {
     private readonly Func<ITabsViewModel> _tabsFactory;
-
+   
     public TabsFactory(Func<ITabsViewModel> tabsFactory)
-        => _tabsFactory = tabsFactory;
-    
+    {
+        _tabsFactory = tabsFactory;
+    }
+
     public ITabsViewModel CreateTabsViewModel()
         => CreateTabsViewModel(Enumerable.Empty<ITabItemModel>());
 

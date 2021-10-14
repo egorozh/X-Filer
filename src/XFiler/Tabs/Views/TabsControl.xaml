@@ -34,7 +34,7 @@
 
                              NewItemFactory="{Binding Factory}"
                              ClosingItemCallback="{Binding ClosingTabItemHandler}"
-
+                             
                              FixedHeaderCount="0"
 
                              AddLocationHint="After">

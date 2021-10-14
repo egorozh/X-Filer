@@ -125,7 +125,7 @@ internal sealed class TabsViewModel : BaseViewModel, ITabsViewModel, IDisposable
 
     public void Dispose()
     {
-        CurrentTabItem?.Dispose();
+        //CurrentTabItem?.Dispose();
 
         CurrentTabItem = null!;
         InterTabClient = null!;

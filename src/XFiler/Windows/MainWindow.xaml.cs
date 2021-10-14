@@ -1,4 +1,7 @@
-﻿namespace XFiler;
+﻿using System.Windows.Media;
+using Dragablz;
+
+namespace XFiler;
 
 public sealed partial class MainWindow : IMainWindow
 {
@@ -6,7 +9,7 @@ public sealed partial class MainWindow : IMainWindow
     {
         InitializeComponent();
 
-        //Closed += OnClosed;
+        Closed += OnClosed;
     }
 
     public void NormalizeAndActivate()
@@ -17,13 +20,29 @@ public sealed partial class MainWindow : IMainWindow
         Activate();
     }
 
-    //private void OnClosed(object? sender, EventArgs e)
-    //{
-    //    Closed -= OnClosed;
-        
-    //    if (DataContext is IDisposable disposable)
-    //    {
-    //        disposable.Dispose();
-    //    }
-    //}
+    private void OnClosed(object? sender, EventArgs e)
+    {
+        Closed -= OnClosed;
+
+        //var items = new List<TabablzControl>();
+
+        //FindVisualChild(this, items);
+
+        //foreach (var disposable in items.Select(i => i.DataContext).OfType<IDisposable>()) 
+        //    disposable.Dispose();
+    }
+
+    private static void FindVisualChild<TItem>(DependencyObject obj, ICollection<TItem> items)
+        where TItem : DependencyObject
+    {
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+        {
+            var child = VisualTreeHelper.GetChild(obj, i);
+
+            if (child is TItem item)
+                items.Add(item);
+
+            FindVisualChild(child, items);
+        }
+    }
 }

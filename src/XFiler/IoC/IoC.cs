@@ -4,8 +4,8 @@ using GongSolutions.Wpf.DragDrop;
 using XFiler.Base;
 using XFiler.DragDrop;
 using XFiler.History;
-using XFiler.NotifyIcon;
 using XFiler.SDK.Plugins;
+using XFiler.TrayIcon;
 
 namespace XFiler;
 
@@ -53,6 +53,6 @@ internal sealed class IoC
         services.Register<TabsViewModel, ITabsViewModel>();
         services.RegisterSingleton<TabsFactory, ITabsFactory>();
 
-        services.RegisterSingleton<NotifyIconViewModel, NotifyIconViewModel>();
+        services.RegisterSingleton<TrayIconViewModel, TrayIconViewModel>();
     }
 }
