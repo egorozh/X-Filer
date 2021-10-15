@@ -1,11 +1,25 @@
-﻿using System.Windows.Controls;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Xaml.Behaviors;
 
 namespace XFiler;
 
 internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
 {
+    #region Attached Properties
+
+    public static readonly DependencyProperty RootItemProperty = DependencyProperty.RegisterAttached(
+        "RootItem", typeof(bool), typeof(RegistryContextMenuBehavior),
+        new PropertyMetadata(false));
+
+    public static void SetRootItem(DependencyObject element, bool value)
+        => element.SetValue(RootItemProperty, value);
+
+    public static bool GetRootItem(DependencyObject element)
+        => (bool) element.GetValue(RootItemProperty);
+
+    #endregion
+
     #region Dependency Properties
 
     public static readonly DependencyProperty ModelsProperty = DependencyProperty.Register(
@@ -20,10 +34,11 @@ internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
     }
 
     public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-        "Command", typeof(ICommand), typeof(RegistryContextMenuBehavior), new PropertyMetadata(default(ICommand)));
+        nameof(Command), typeof(ICommand), typeof(RegistryContextMenuBehavior),
+        new PropertyMetadata(default(ICommand)));
 
     public static readonly DependencyProperty FileInfoModelProperty = DependencyProperty.Register(
-        "FileInfoModel", typeof(IFileSystemModel),
+        nameof(FileInfoModel), typeof(IFileSystemModel),
         typeof(RegistryContextMenuBehavior), new PropertyMetadata(default(IFileSystemModel)));
 
     #endregion
@@ -54,24 +69,27 @@ internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
 
     private void ModelsChanged()
     {
-        if (Models != null)
-        {
-            foreach (var model in Models)
-            {
-                AssociatedObject.Items.Add(CreateRegistryMenuItem(model));
-            }
-        }
+        if (Models == null)
+            return;
+
+        var rootItem = AssociatedObject.Items.OfType<MenuItem>()
+            .FirstOrDefault(GetRootItem);
+
+        var index = AssociatedObject.Items.Count;
+
+        if (rootItem != null)
+            index = AssociatedObject.Items.IndexOf(rootItem) + 1;
+
+        foreach (var model in Models)
+            AssociatedObject.Items.Insert(index++, CreateRegistryMenuItem(model));
     }
 
-    private MenuItem CreateRegistryMenuItem(IRegistryContextMenuModel model)
+    private MenuItem CreateRegistryMenuItem(IRegistryContextMenuModel model) => new()
     {
-        return new MenuItem()
-        {
-            Header = model.Name,
-            Command = Command,
-            CommandParameter = new Tuple<IFileSystemModel, string?>(FileInfoModel, model.Command)
-        };
-    }
+        Header = model.Name,
+        Command = Command,
+        CommandParameter = new Tuple<IFileSystemModel, string?>(FileInfoModel, model.Command)
+    };
 
     #endregion
 }

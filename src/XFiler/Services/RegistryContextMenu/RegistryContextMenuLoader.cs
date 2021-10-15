@@ -18,6 +18,7 @@ internal class RegistryContextMenuLoader : IRegistryContextMenuLoader
     public void Init()
     {
         GetContextModels(Registry.ClassesRoot.OpenSubKey("*\\shell"), AllEntityContextModels);
+        //GetContextModels(Registry.CurrentUser, AllEntityContextModels);
     }
 
     private static void GetContextModels(RegistryKey? searchSubKey, ICollection<IRegistryContextMenuModel> collection)
@@ -33,6 +34,8 @@ internal class RegistryContextMenuLoader : IRegistryContextMenuLoader
 
             if (cm != null)
                 collection.Add(cm);
+
+            //GetContextModels(r, collection);
         }
     }
 
@@ -53,7 +56,8 @@ internal class RegistryContextMenuLoader : IRegistryContextMenuLoader
 
             var commandValue = registryKey.OpenSubKey(command).GetValue("") as string;
 
-            return new RegistryContextMenuModel(name, icon, commandValue);
+            if (!string.IsNullOrWhiteSpace(name))
+                return new RegistryContextMenuModel(name, icon, commandValue);
         }
 
         return null;

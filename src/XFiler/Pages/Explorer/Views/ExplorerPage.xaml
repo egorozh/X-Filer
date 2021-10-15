@@ -72,7 +72,8 @@
 
                         <MenuItem Header="{x:Static localization:Strings.ExlporerTab_ContextMenu_OpenInNativeExplorer}"
                                   Command="{Binding OpenInNativeExplorerCommand}"
-                                  CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
+                                  CommandParameter="{Binding CurrentPresenter.FilesPresenter}"
+                                  local:RegistryContextMenuBehavior.RootItem="True" />
 
                         <Separator />
 
