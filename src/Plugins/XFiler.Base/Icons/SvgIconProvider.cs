@@ -49,7 +49,7 @@ internal sealed class SvgIconProvider : IIconProvider
 
         FileSvgReader converter = new(settings);
 
-        var drawing = converter.Read(filePath);
+        var drawing = converter.Read(new Uri(filePath));
 
         return drawing != null 
             ? new DrawingImage(drawing) 

@@ -51,9 +51,8 @@
                 <ContentControl.ContextMenu>
                     <ContextMenu>
                         <b:Interaction.Behaviors>
-                            <local:RegistryContextMenuBehavior Command="{Binding InvokeRegistryCommand}"
-                                                               FileInfoModel="{Binding CurrentPresenter.FilesPresenter}"
-                                                               Models="{Binding AllEntityContextModels}" />
+                            <local:RegistryContextMenuBehavior NativeContextMenuLoader="{Binding NativeContextMenuLoader}"
+                                                               FileInfoModel="{Binding CurrentPresenter.FilesPresenter}" />
                         </b:Interaction.Behaviors>
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonHeader}"

@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace XFiler;
 
-internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
+internal sealed class RegistryContextMenuBehavior : Behavior<System.Windows.Controls.ContextMenu>
 {
     #region Attached Properties
 
@@ -22,42 +21,36 @@ internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
 
     #region Dependency Properties
 
-    public static readonly DependencyProperty ModelsProperty = DependencyProperty.Register(
-        nameof(Models), typeof(IReadOnlyCollection<IRegistryContextMenuModel>),
+    public static readonly DependencyProperty NativeContextMenuLoaderProperty = DependencyProperty.Register(
+        nameof(NativeContextMenuLoader), typeof(INativeContextMenuLoader),
         typeof(RegistryContextMenuBehavior),
-        new PropertyMetadata(null, ModelsChangedCallback));
-
-    private static void ModelsChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is RegistryContextMenuBehavior b)
-            b.ModelsChanged();
-    }
-
-    public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-        nameof(Command), typeof(ICommand), typeof(RegistryContextMenuBehavior),
-        new PropertyMetadata(default(ICommand)));
+        new PropertyMetadata(default(INativeContextMenuLoader), PropsChangedCallback));
 
     public static readonly DependencyProperty FileInfoModelProperty = DependencyProperty.Register(
         nameof(FileInfoModel), typeof(IFileSystemModel),
-        typeof(RegistryContextMenuBehavior), new PropertyMetadata(default(IFileSystemModel)));
+        typeof(RegistryContextMenuBehavior),
+        new PropertyMetadata(default(IFileSystemModel), PropsChangedCallback));
+
+    private static void PropsChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is RegistryContextMenuBehavior behavior)
+        {
+            if (behavior.NativeContextMenuLoader != null && behavior.FileInfoModel != null)
+                behavior.LoadNativeContextMenuItems(behavior.NativeContextMenuLoader, behavior.FileInfoModel);
+        }
+    }
 
     #endregion
 
     #region Public Properties
 
-    public IReadOnlyCollection<IRegistryContextMenuModel>? Models
+    public INativeContextMenuLoader? NativeContextMenuLoader
     {
-        get => (IReadOnlyCollection<IRegistryContextMenuModel>) GetValue(ModelsProperty);
-        set => SetValue(ModelsProperty, value);
+        get => (INativeContextMenuLoader) GetValue(NativeContextMenuLoaderProperty);
+        set => SetValue(NativeContextMenuLoaderProperty, value);
     }
 
-    public ICommand Command
-    {
-        get => (ICommand) GetValue(CommandProperty);
-        set => SetValue(CommandProperty, value);
-    }
-
-    public IFileSystemModel FileInfoModel
+    public IFileSystemModel? FileInfoModel
     {
         get => (IFileSystemModel) GetValue(FileInfoModelProperty);
         set => SetValue(FileInfoModelProperty, value);
@@ -67,11 +60,8 @@ internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
 
     #region Private Methods
 
-    private void ModelsChanged()
+    private void LoadNativeContextMenuItems(INativeContextMenuLoader loader, IFileSystemModel fileInfo)
     {
-        if (Models == null)
-            return;
-
         var rootItem = AssociatedObject.Items.OfType<MenuItem>()
             .FirstOrDefault(GetRootItem);
 
@@ -80,16 +70,42 @@ internal sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
         if (rootItem != null)
             index = AssociatedObject.Items.IndexOf(rootItem) + 1;
 
-        foreach (var model in Models)
-            AssociatedObject.Items.Insert(index++, CreateRegistryMenuItem(model));
+        var models = loader.CreateMenuItems(new[] {fileInfo.Info.FullName});
+
+        foreach (var model in models)
+            AssociatedObject.Items.Insert(index++, CreateRegistryMenuItem(loader, model));
+
+        AssociatedObject.Unloaded += AssociatedObjectOnUnloaded;
     }
 
-    private MenuItem CreateRegistryMenuItem(IRegistryContextMenuModel model) => new()
+    private void AssociatedObjectOnUnloaded(object sender, RoutedEventArgs e)
     {
-        Header = model.Name,
-        Command = Command,
-        CommandParameter = new Tuple<IFileSystemModel, string?>(FileInfoModel, model.Command)
-    };
+        AssociatedObject.Unloaded -= AssociatedObjectOnUnloaded;
+
+        NativeContextMenuLoader?.DisposeContextMenu();
+    }
+
+    private static MenuItem CreateRegistryMenuItem(INativeContextMenuLoader loader, IRegistryContextMenuModel model)
+    {
+        List<MenuItem>? subItems = null;
+
+        if (model.Children != null)
+        {
+            subItems = model.Children
+                .Select(child => CreateRegistryMenuItem(loader, child))
+                .ToList();
+        }
+
+        MenuItem item = new()
+        {
+            Header = model.Name,
+            Command = loader.InvokeCommand,
+            CommandParameter = model,
+            ItemsSource = subItems
+        };
+
+        return item;
+    }
 
     #endregion
 }

@@ -21,14 +21,11 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     public IFilesPresenterFactory CurrentPresenter { get; set; }
 
     public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; }
+    public INativeContextMenuLoader NativeContextMenuLoader { get; private set; }
     public IFilesGroup CurrentGroup { get; set; }
 
     public ImageSource? BackgroundImage { get; private set; }
-
-    public List<IRegistryContextMenuModel> AllEntityContextModels { get; private set; }
-
-    public DelegateCommand<object> InvokeRegistryCommand { get; private set; }
-
+    
     #endregion
 
     #region Commands
@@ -50,17 +47,15 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         IDirectorySettings directorySettings,
         IReactiveOptions reactiveOptions,
         IWallpapersService wallpapersService,
-        IRegistryContextMenuLoader registryContextMenuLoader)
+        INativeContextMenuLoader nativeContextMenuLoader)
     {
         _directorySettings = directorySettings;
         _reactiveOptions = reactiveOptions;
         _wallpapersService = wallpapersService;
-
-        AllEntityContextModels = registryContextMenuLoader.AllEntityContextModels;
-        InvokeRegistryCommand = registryContextMenuLoader.InvokeRegistryCommand;
-
+        
         FilesPresenters = filesPresenters;
         FilesGroups = groups;
+        NativeContextMenuLoader = nativeContextMenuLoader;
         PasteCommand = clipboardService.PasteCommand;
 
         CreateFolderCommand = mainCommands.CreateFolderCommand;
@@ -119,12 +114,11 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         CurrentPresenter = null!;
         FilesGroups = null!;
         CurrentGroup = null!;
-        AllEntityContextModels = null!;
+        NativeContextMenuLoader = null!;
 
         PasteCommand = null!;
         CreateFolderCommand = null!;
         CreateTextCommand = null!;
-        InvokeRegistryCommand = null!;
         OpenInNativeExplorerCommand = null!;
     }
 

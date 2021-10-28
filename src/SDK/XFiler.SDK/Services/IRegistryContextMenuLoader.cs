@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
-using Prism.Commands;
+using System.Windows.Input;
 
 namespace XFiler.SDK;
 
-public interface IRegistryContextMenuLoader
+public interface INativeContextMenuLoader
 {
-    List<IRegistryContextMenuModel> AllEntityContextModels { get; }
+    ICommand InvokeCommand { get; }
 
-    DelegateCommand<object> InvokeRegistryCommand { get; } 
+    IReadOnlyList<IRegistryContextMenuModel> CreateMenuItems(IEnumerable<string> selectedItems);
+
+    void DisposeContextMenu();
 }
 
 public interface IRegistryContextMenuModel
 {
     string Name { get; }
-    string? IconPath { get; }
-    string? Command { get; }
+
+    IReadOnlyList<IRegistryContextMenuModel>? Children { get; }
 }
