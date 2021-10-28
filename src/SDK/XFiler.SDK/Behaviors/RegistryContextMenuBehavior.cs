@@ -1,9 +1,13 @@
-﻿using Microsoft.Xaml.Behaviors;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Xaml.Behaviors;
 
-namespace XFiler;
+namespace XFiler.SDK;
 
-internal sealed class RegistryContextMenuBehavior : Behavior<System.Windows.Controls.ContextMenu>
+public sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
 {
     #region Attached Properties
 
@@ -62,6 +66,8 @@ internal sealed class RegistryContextMenuBehavior : Behavior<System.Windows.Cont
 
     private void LoadNativeContextMenuItems(INativeContextMenuLoader loader, IFileSystemModel fileInfo)
     {
+        ClearOldItems();
+
         var rootItem = AssociatedObject.Items.OfType<MenuItem>()
             .FirstOrDefault(GetRootItem);
 
@@ -78,6 +84,19 @@ internal sealed class RegistryContextMenuBehavior : Behavior<System.Windows.Cont
         AssociatedObject.Unloaded += AssociatedObjectOnUnloaded;
     }
 
+    private void ClearOldItems()
+    {
+        if (AssociatedObject.Items is { } items)
+        {
+            var oldItems = items.OfType<MenuItem>()
+                .Where(i => i.DataContext is IRegistryContextMenuModel)
+                .ToList();
+
+            foreach (var oldItem in oldItems) 
+                AssociatedObject.Items.Remove(oldItem);
+        }
+    }
+
     private void AssociatedObjectOnUnloaded(object sender, RoutedEventArgs e)
     {
         AssociatedObject.Unloaded -= AssociatedObjectOnUnloaded;
@@ -88,6 +107,7 @@ internal sealed class RegistryContextMenuBehavior : Behavior<System.Windows.Cont
     private static MenuItem CreateRegistryMenuItem(INativeContextMenuLoader loader, IRegistryContextMenuModel model)
     {
         List<MenuItem>? subItems = null;
+        Image? icon = null;
 
         if (model.Children != null)
         {
@@ -96,12 +116,22 @@ internal sealed class RegistryContextMenuBehavior : Behavior<System.Windows.Cont
                 .ToList();
         }
 
+        if (model.Icon != null)
+        {
+            icon = new Image
+            {
+                Source = model.Icon
+            };
+        }
+
         MenuItem item = new()
         {
             Header = model.Name,
+            DataContext = model,
             Command = loader.InvokeCommand,
             CommandParameter = model,
-            ItemsSource = subItems
+            ItemsSource = subItems,
+            Icon = icon
         };
 
         return item;

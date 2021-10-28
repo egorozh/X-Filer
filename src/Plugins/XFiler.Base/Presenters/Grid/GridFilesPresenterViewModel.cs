@@ -17,9 +17,10 @@ public class GridFilesPresenterViewModel : BaseFilesPresenter
         ILogger logger,
         IRenameService renameService,
         IMainCommands mainCommands,
-        INaturalStringComparer naturalStringComparer) :
+        INaturalStringComparer naturalStringComparer,
+        INativeContextMenuLoader nativeContextMenuLoader) :
         base(fileEntityFactory, dropTarget, dragSource, windowFactory, clipboardService, 
-            reactiveOptions, fileOperations, logger, renameService, mainCommands, naturalStringComparer)
+            reactiveOptions, fileOperations, logger, renameService, mainCommands, naturalStringComparer, nativeContextMenuLoader)
     {
     }
 }

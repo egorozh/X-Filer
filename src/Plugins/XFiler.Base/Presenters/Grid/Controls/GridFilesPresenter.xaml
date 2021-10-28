@@ -11,12 +11,17 @@
              xmlns:themes="clr-namespace:XFiler.SDK.Themes;assembly=XFiler.SDK"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
              DataContext="{Binding FilesPresenter}">
 
     <UserControl.Resources>
+
+        <sdk:NativeContextMenuLoaderReference x:Key="NativeContextMenuLoader"
+                                              NativeContextMenuLoader="{Binding NativeContextMenuLoader}"/>
+
         <CollectionViewSource x:Key="GroupedCollectionViewSource"
                               Source="{Binding DirectoriesAndFiles}">
             <CollectionViewSource.GroupDescriptions>
@@ -151,6 +156,10 @@
                                   CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
 
             <ContextMenu x:Key="DirectoryContextMenu">
+                <b:Interaction.Behaviors>
+                    <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
+                                                     FileInfoModel="{Binding }" />
+                </b:Interaction.Behaviors>
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                           Command="{StaticResource OpenCommand}"
                           CommandParameter="{Binding}" />
@@ -164,7 +173,8 @@
 
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNativeExplorer}"
                           Command="{StaticResource OpenInNativeExplorerCommand}"
-                          CommandParameter="{Binding }" />
+                          CommandParameter="{Binding }"
+                          sdk:RegistryContextMenuBehavior.RootItem="True" />
 
                 <Separator />
 

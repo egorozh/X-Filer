@@ -21,8 +21,8 @@ internal class WindowsApiContextMenuLoader : INativeContextMenuLoader
 
         if (_contextMenu != null)
             return _contextMenu.Items
-                .Where(i => i.Id > 0 && i.Label != null)
-                .Select(c => new NativeContextMenuItem(c)).ToList();
+                .Select(c => new NativeContextMenuItem(c))
+                .ToList();
 
         return new List<IRegistryContextMenuModel>();
     }

@@ -51,8 +51,9 @@
                 <ContentControl.ContextMenu>
                     <ContextMenu>
                         <b:Interaction.Behaviors>
-                            <local:RegistryContextMenuBehavior NativeContextMenuLoader="{Binding NativeContextMenuLoader}"
-                                                               FileInfoModel="{Binding CurrentPresenter.FilesPresenter}" />
+                            <sdk:RegistryContextMenuBehavior
+                                NativeContextMenuLoader="{Binding NativeContextMenuLoader}"
+                                FileInfoModel="{Binding CurrentPresenter.FilesPresenter}" />
                         </b:Interaction.Behaviors>
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_BackButtonHeader}"
@@ -72,7 +73,7 @@
                         <MenuItem Header="{x:Static localization:Strings.ExlporerTab_ContextMenu_OpenInNativeExplorer}"
                                   Command="{Binding OpenInNativeExplorerCommand}"
                                   CommandParameter="{Binding CurrentPresenter.FilesPresenter}"
-                                  local:RegistryContextMenuBehavior.RootItem="True" />
+                                  sdk:RegistryContextMenuBehavior.RootItem="True" />
 
                         <Separator />
 

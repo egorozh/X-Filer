@@ -58,15 +58,11 @@ public class ContextMenuOperations
 
         var items = EnumMenuItems(menu, hMenu, itemFilter);
 
-        return new ContextMenu(menu, hMenu,
-            shellItems.Select(x => x.ParsingName).ToList(),
-            items);
+        return new ContextMenu(menu, hMenu, shellItems.Select(x => x.ParsingName).ToList(), items);
     }
 
-    private static IReadOnlyList<ContextMenuItem> EnumMenuItems(
-        Shell32.IContextMenu cMenu,
-        HMENU hMenu,
-        Func<string, bool>? itemFilter = null)
+    private static IReadOnlyList<ContextMenuItem> EnumMenuItems(Shell32.IContextMenu cMenu,
+        HMENU hMenu, Func<string, bool>? itemFilter = null)
     {
         var menuItemsResult = new List<ContextMenuItem>();
 
@@ -95,15 +91,18 @@ public class ContextMenuOperations
                 continue;
             }
 
-            var menuItem = new ContextMenuItem();
-            menuItem.Type = (MenuItemType) mii.fType;
-            menuItem.Id = (int) (mii.wID - 1); // wID - idCmdFirst
-            if (menuItem.Type == MenuItemType.MFT_STRING)
+            var type = (MenuItemType) mii.fType;
+            var id = (int) (mii.wID - 1);
+            var label = mii.dwTypeData;
+            var commandString = GetCommandString(cMenu, mii.wID - 1);
+            Bitmap? icon = null;
+            IReadOnlyList<ContextMenuItem>? subItems = null;
+
+            if (type == MenuItemType.MFT_STRING && id > 0)
             {
                 Debug.WriteLine("Item {0} ({1}): {2}", ii, mii.wID, mii.dwTypeData);
-                menuItem.Label = mii.dwTypeData;
-                menuItem.CommandString = GetCommandString(cMenu, mii.wID - 1);
-                if (itemFilter != null && (itemFilter(menuItem.CommandString) || itemFilter(menuItem.Label)))
+
+                if (itemFilter != null && (itemFilter(commandString) || itemFilter(label)))
                 {
                     // Skip items implemented in UWP
                     container.Dispose();
@@ -113,18 +112,13 @@ public class ContextMenuOperations
                 if (mii.hbmpItem != HBITMAP.NULL &&
                     !Enum.IsDefined(typeof(ContextMenu.HbitmapHmenu), ((IntPtr) mii.hbmpItem).ToInt64()))
                 {
-                    using var bitmap = Win32API.GetBitmapFromHBitmap(mii.hbmpItem);
-                    if (bitmap != null)
-                    {
-                        byte[] bitmapData = (byte[]) new ImageConverter().ConvertTo(bitmap, typeof(byte[]));
-                        menuItem.IconBase64 = Convert.ToBase64String(bitmapData, 0, bitmapData.Length);
-                    }
+                    icon = Win32API.GetBitmapFromHBitmap(mii.hbmpItem);
                 }
 
                 if (mii.hSubMenu != HMENU.NULL)
                 {
                     Debug.WriteLine("Item {0}: has submenu", ii);
-                  
+
                     try
                     {
                         (cMenu as Shell32.IContextMenu2)?.HandleMenuMsg((uint) User32.WindowMessage.WM_INITMENUPOPUP,
@@ -134,10 +128,12 @@ public class ContextMenuOperations
                     {
                         // Only for dynamic/owner drawn? (open with, etc)
                     }
-                    
-                    menuItem.SubItems = EnumMenuItems(cMenu, mii.hSubMenu, itemFilter);
+
+                    subItems = EnumMenuItems(cMenu, mii.hSubMenu, itemFilter);
                     Debug.WriteLine("Item {0}: done submenu", ii);
                 }
+
+                menuItemsResult.Add(new ContextMenuItem(id, label, commandString, type, icon, subItems));
             }
             else
             {
@@ -145,7 +141,6 @@ public class ContextMenuOperations
             }
 
             container.Dispose();
-            menuItemsResult.Add(menuItem);
         }
 
         return menuItemsResult;

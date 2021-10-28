@@ -1,29 +1,37 @@
-﻿namespace XFiler;
+﻿using System.Drawing;
+
+namespace XFiler;
 
 public class ContextMenuItem : IDisposable
 {
-    public string IconBase64 { get; set; }
-    public int Id { get; set; } // Valid only in current menu to invoke item
-    public string? Label { get; set; }  
-    public string CommandString { get; set; }
-    public MenuItemType Type { get; set; }
-    public IReadOnlyList<ContextMenuItem>? SubItems { get; set; }
+    public int Id { get; }
+    public Bitmap? Icon { get; }
+    public string Label { get; }
+    public string CommandString { get; }
+    public MenuItemType Type { get; }
+    public IReadOnlyList<ContextMenuItem>? SubItems { get; private set; }
 
-    public ContextMenuItem()
+    public ContextMenuItem(int id, string label,
+        string commandString, MenuItemType type,
+        Bitmap? icon = null,
+        IReadOnlyList<ContextMenuItem>? subItems = null)
     {
-        SubItems = new List<ContextMenuItem>();
+        Id = id;
+        Icon = icon;
+        Label = label;
+        CommandString = commandString;
+        Type = type;
+        SubItems = subItems;
     }
 
     public void Dispose()
     {
-        if (SubItems != null)
-        {
-            foreach (var si in SubItems)
-            {
-                (si as IDisposable)?.Dispose();
-            }
+        if (SubItems == null)
+            return;
 
-            SubItems = null;
-        }
+        foreach (var si in SubItems)
+            si?.Dispose();
+
+        SubItems = null;
     }
 }

@@ -30,6 +30,7 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
     #region Public Properties
 
     public INaturalStringComparer NaturalStringComparer { get; private set; }
+    public INativeContextMenuLoader NativeContextMenuLoader { get; private set; }
 
     public ObservableCollection<IFileSystemModel> DirectoriesAndFiles { get; set; } = new();
 
@@ -89,13 +90,15 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
         ILogger logger,
         IRenameService renameService,
         IMainCommands mainCommands,
-        INaturalStringComparer naturalStringComparer)
+        INaturalStringComparer naturalStringComparer,
+        INativeContextMenuLoader nativeContextMenuLoader)
     {
         _fileEntityFactory = fileEntityFactory;
         _settings = settings;
         _fileOperations = fileOperations;
         _logger = logger;
         NaturalStringComparer = naturalStringComparer;
+        NativeContextMenuLoader = nativeContextMenuLoader;
 
         DropTarget = dropTarget;
         DragSource = dragSource;
@@ -175,6 +178,7 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
             _fileOperations = null!;
             _logger = null!;
             NaturalStringComparer = null!;
+            NativeContextMenuLoader = null!;
 
             Group = null!;
             DirectoryInfo = null!;

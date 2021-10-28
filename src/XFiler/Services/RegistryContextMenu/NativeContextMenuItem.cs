@@ -1,4 +1,7 @@
-﻿namespace XFiler;
+﻿using System.Windows.Media;
+using Windows.ImageOperations;
+
+namespace XFiler;
 
 internal class NativeContextMenuItem : IRegistryContextMenuModel
 {
@@ -6,13 +9,18 @@ internal class NativeContextMenuItem : IRegistryContextMenuModel
 
     public string Name { get; }
 
+    public ImageSource? Icon { get; }
+
     public IReadOnlyList<IRegistryContextMenuModel>? Children { get; }
-        
+
     public NativeContextMenuItem(ContextMenuItem contextMenuItem)
     {
         ContextMenuItem = contextMenuItem;
-
+        
         Name = contextMenuItem.Label.Replace("&", "");
+
+        if (contextMenuItem.Icon != null)
+            Icon = contextMenuItem.Icon.ToBitmapImage();
 
         if (ContextMenuItem.SubItems != null)
         {
