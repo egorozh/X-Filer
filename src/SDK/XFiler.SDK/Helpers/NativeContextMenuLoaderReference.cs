@@ -16,19 +16,14 @@ public class NativeContextMenuLoaderReference : Freezable, INativeContextMenuLoa
         get => (INativeContextMenuLoader) GetValue(NativeContextMenuLoaderProperty);
         set => SetValue(NativeContextMenuLoaderProperty, value);
     }
-    
+
     public ICommand InvokeCommand => NativeContextMenuLoader.InvokeCommand;
 
     public IReadOnlyList<IRegistryContextMenuModel> CreateMenuItems(IEnumerable<string> selectedItems)
     {
         return NativeContextMenuLoader?.CreateMenuItems(selectedItems) ?? new List<IRegistryContextMenuModel>();
     }
-
-    public void DisposeContextMenu()
-    {
-        NativeContextMenuLoader?.DisposeContextMenu();
-    }
-
+    
     #region Freezable
 
     protected override Freezable CreateInstanceCore() => throw new NotImplementedException();

@@ -17,6 +17,8 @@ internal class WindowsApiContextMenuLoader : INativeContextMenuLoader
 
     public IReadOnlyList<IRegistryContextMenuModel> CreateMenuItems(IEnumerable<string> selectedItems)
     {
+        _contextMenu?.Dispose();
+
         _contextMenu = ContextMenuOperations.GetContextMenu(selectedItems, FilterMenuItems(false));
 
         if (_contextMenu != null)
@@ -26,13 +28,7 @@ internal class WindowsApiContextMenuLoader : INativeContextMenuLoader
 
         return new List<IRegistryContextMenuModel>();
     }
-
-    public void DisposeContextMenu()
-    {
-        _contextMenu?.Dispose();
-        _contextMenu = null;
-    }
-
+    
     private void OnInvoke(object obj)
     {
         if (obj is NativeContextMenuItem item)

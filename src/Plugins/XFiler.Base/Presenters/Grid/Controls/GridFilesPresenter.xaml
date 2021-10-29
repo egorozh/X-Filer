@@ -20,7 +20,7 @@
     <UserControl.Resources>
 
         <sdk:NativeContextMenuLoaderReference x:Key="NativeContextMenuLoader"
-                                              NativeContextMenuLoader="{Binding NativeContextMenuLoader}"/>
+                                              NativeContextMenuLoader="{Binding NativeContextMenuLoader}" />
 
         <CollectionViewSource x:Key="GroupedCollectionViewSource"
                               Source="{Binding DirectoriesAndFiles}">
@@ -155,6 +155,9 @@
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:GridFilesPresenter}}}"
                                   CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
 
+            <sdk:ObjectReference x:Key="SelectedItemsContainer"
+                                 Value="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+
             <ContextMenu x:Key="DirectoryContextMenu">
                 <b:Interaction.Behaviors>
                     <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
@@ -216,6 +219,10 @@
             </ContextMenu>
 
             <ContextMenu x:Key="FileContextMenu">
+                <b:Interaction.Behaviors>
+                    <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
+                                                     FileInfoModel="{Binding }" />
+                </b:Interaction.Behaviors>
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                           Command="{StaticResource OpenCommand}"
                           CommandParameter="{Binding}" />
@@ -225,6 +232,8 @@
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                           Command="{StaticResource  OpenNewWindowCommand}"
                           CommandParameter="{Binding}" />
+
+                <Separator sdk:RegistryContextMenuBehavior.RootItem="True" />
 
                 <Separator />
 
@@ -260,11 +269,17 @@
             </ContextMenu>
 
             <ContextMenu x:Key="ManyItemsContextMenu">
+                <b:Interaction.Behaviors>
+                    <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
+                                                     SelectedItemsContainer="{StaticResource SelectedItemsContainer}" />
+                </b:Interaction.Behaviors>
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                           Command="{StaticResource  OpenManyItemsNewTabCommand}" />
 
                 <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                           Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
+
+                <Separator sdk:RegistryContextMenuBehavior.RootItem="True" />
 
                 <Separator />
 

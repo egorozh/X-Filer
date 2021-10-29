@@ -4,18 +4,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
              xmlns:base="clr-namespace:XFiler.Base"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:sdk="clr-namespace:XFiler.SDK;assembly=XFiler.SDK"
              xmlns:loc="clr-namespace:XFiler.Base.Localization"
              xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
 
              DataContext="{Binding FilesPresenter}">
 
     <UserControl.Resources>
+        <sdk:NativeContextMenuLoaderReference x:Key="NativeContextMenuLoader"
+                                              NativeContextMenuLoader="{Binding NativeContextMenuLoader}" />
+
         <CollectionViewSource x:Key="GroupedCollectionViewSource"
                               Source="{Binding DirectoriesAndFiles}">
             <CollectionViewSource.GroupDescriptions>
@@ -128,8 +131,15 @@
                                       Command="{Binding DataContext.DeletePermanentlyCommand, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type base:ContentFilePresenter}}}"
                                       CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
+               
+                <sdk:ObjectReference x:Key="SelectedItemsContainer"
+                                     Value="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type controls:RectSelectListBox}}}" />
 
                 <ContextMenu x:Key="DirectoryContextMenu">
+                    <b:Interaction.Behaviors>
+                        <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
+                                                         FileInfoModel="{Binding }" />
+                    </b:Interaction.Behaviors>
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                               Command="{StaticResource OpenCommand}"
                               CommandParameter="{Binding}" />
@@ -144,7 +154,8 @@
 
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNativeExplorer}"
                               Command="{StaticResource OpenInNativeExplorerCommand}"
-                              CommandParameter="{Binding }" />
+                              CommandParameter="{Binding }"
+                              sdk:RegistryContextMenuBehavior.RootItem="True"/>
 
                     <Separator />
 
@@ -186,6 +197,10 @@
                 </ContextMenu>
 
                 <ContextMenu x:Key="FileContextMenu">
+                    <b:Interaction.Behaviors>
+                        <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
+                                                         FileInfoModel="{Binding }" />
+                    </b:Interaction.Behaviors>
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_Open}"
                               Command="{StaticResource OpenCommand}"
                               CommandParameter="{Binding}" />
@@ -195,6 +210,7 @@
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                               Command="{StaticResource  OpenNewWindowCommand}"
                               CommandParameter="{Binding}" />
+                    <Separator sdk:RegistryContextMenuBehavior.RootItem="True" />
 
                     <Separator />
 
@@ -230,12 +246,16 @@
                 </ContextMenu>
 
                 <ContextMenu x:Key="ManyItemsContextMenu">
+                    <b:Interaction.Behaviors>
+                        <sdk:RegistryContextMenuBehavior NativeContextMenuLoader="{StaticResource NativeContextMenuLoader}"
+                                                         SelectedItemsContainer="{StaticResource SelectedItemsContainer}" />
+                    </b:Interaction.Behaviors>
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewTab}"
                               Command="{StaticResource  OpenManyItemsNewTabCommand}" />
 
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_OpenInNewWindow}"
                               Command="{StaticResource  OpenManyItemsNewWindowCommand}" />
-
+                    <Separator sdk:RegistryContextMenuBehavior.RootItem="True" />
                     <Separator />
 
                     <MenuItem Header="{x:Static loc:Strings.ContextMenu_Cut}"
