@@ -337,7 +337,7 @@
                         Value="{Binding Path=(mah:DataGridHelper.CellPadding), FallbackValue=0, TargetNullValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
                 <Setter Property="mah:DataGridHelper.SelectionUnit"
                         Value="{Binding Path=SelectionUnit, FallbackValue={x:Static DataGridSelectionUnit.FullRow}, TargetNullValue={x:Static DataGridSelectionUnit.FullRow}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
-
+                <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
                 <Setter Property="ContextMenu" Value="{StaticResource DirectoryContextMenu}" />
 
                 <Setter Property="Template">
@@ -353,9 +353,9 @@
                                     <MouseBinding MouseAction="MiddleClick"
                                                   Command="{StaticResource OpenNewTabCommand}"
                                                   CommandParameter="{Binding}" />
-                                    <MouseBinding MouseAction="LeftDoubleClick"
+                                    <!--<MouseBinding MouseAction="LeftDoubleClick"
                                                   Command="{StaticResource  OpenCommand}"
-                                                  CommandParameter="{Binding }" />
+                                                  CommandParameter="{Binding }" />-->
                                 </Border.InputBindings>
                                 <SelectiveScrollingGrid>
                                     <Grid.ColumnDefinitions>

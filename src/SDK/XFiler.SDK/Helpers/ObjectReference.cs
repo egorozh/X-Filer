@@ -14,8 +14,7 @@ public class ObjectReference : Freezable
         if (d is ObjectReference objectReference)
             objectReference.InvokeValueChanged();
     }
-
-
+    
     public object Value
     {
         get => GetValue(ValueProperty);

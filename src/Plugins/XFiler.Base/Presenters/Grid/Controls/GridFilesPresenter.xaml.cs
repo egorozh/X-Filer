@@ -1,4 +1,7 @@
-﻿namespace XFiler.Base;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
+
+namespace XFiler.Base;
 
 public partial class GridFilesPresenter
 {
@@ -14,5 +17,15 @@ public partial class GridFilesPresenter
         this.Loaded -= OnLoaded;
 
         RectSelectDataGrid.Focus();
+        FindResource("OpenCommand");
+    }
+
+    private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == MouseButton.Left && sender is Control control)
+        {
+            if (FindResource("OpenCommand") is ICommand command) 
+                command.Execute(control.DataContext);
+        }
     }
 }
