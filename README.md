@@ -15,6 +15,9 @@
 ## Multi-panel
 ![example](https://github.com/egorozh/X-Filer/blob/main/img/multi-panelling.png "Multipanel")
 
+## Native Windows Context Menus
+![Native Windows Context Menus](https://github.com/egorozh/X-Filer/blob/main/img/native_cm.png "Native Windows Context Menus")
+
 ## Others
 - Native Windows File Operations (Copy, Cut, Paste, Rename)
 - Custom icon providers (SVG, Images and other extensions)
