@@ -9,12 +9,12 @@ public partial class GridFilesPresenter
     {
         InitializeComponent();
 
-        this.Loaded += OnLoaded;
+        Loaded += OnLoaded;
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        this.Loaded -= OnLoaded;
+        Loaded -= OnLoaded;
 
         RectSelectDataGrid.Focus();
         FindResource("OpenCommand");

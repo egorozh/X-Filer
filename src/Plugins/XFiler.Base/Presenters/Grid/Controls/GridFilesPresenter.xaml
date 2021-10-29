@@ -353,9 +353,6 @@
                                     <MouseBinding MouseAction="MiddleClick"
                                                   Command="{StaticResource OpenNewTabCommand}"
                                                   CommandParameter="{Binding}" />
-                                    <!--<MouseBinding MouseAction="LeftDoubleClick"
-                                                  Command="{StaticResource  OpenCommand}"
-                                                  CommandParameter="{Binding }" />-->
                                 </Border.InputBindings>
                                 <SelectiveScrollingGrid>
                                     <Grid.ColumnDefinitions>
