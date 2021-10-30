@@ -11,7 +11,7 @@ using Vanara.PInvoke;
 
 namespace XFiler;
 
-internal class Win32API
+internal class Win32Api
 {
     public static Task<T> StartSTATask<T>(Func<T> func)
     {
@@ -147,9 +147,11 @@ internal class Win32API
         }
     }
 
-    public static (string icon, string overlay) GetFileIconAndOverlay(string path, int thumbnailSize, bool getOverlay = true, bool onlyGetOverlay = false)
+    public static (Bitmap? icon, string? overlay) GetFileIconAndOverlay(string path, int thumbnailSize,
+        bool getOverlay = true, bool onlyGetOverlay = false)
     {
-        string iconStr = null, overlayStr = null;
+        string? overlayStr = null;
+        Bitmap? icon = null;
 
         if (!onlyGetOverlay)
         {
@@ -161,12 +163,7 @@ internal class Win32API
                 var hres = fctry.GetImage(new SIZE(thumbnailSize, thumbnailSize), flags, out var hbitmap);
                 if (hres == HRESULT.S_OK)
                 {
-                    using var image = GetBitmapFromHBitmap(hbitmap);
-                    if (image != null)
-                    {
-                        byte[] bitmapData = (byte[])new ImageConverter().ConvertTo(image, typeof(byte[]));
-                        iconStr = Convert.ToBase64String(bitmapData, 0, bitmapData.Length);
-                    }
+                    icon = GetBitmapFromHBitmap(hbitmap);
                 }
                 //Marshal.ReleaseComObject(fctry);
             }
@@ -180,10 +177,11 @@ internal class Win32API
                 0,
                 ref shfi,
                 Shell32.SHFILEINFO.Size,
-                Shell32.SHGFI.SHGFI_OVERLAYINDEX | Shell32.SHGFI.SHGFI_ICON | Shell32.SHGFI.SHGFI_SYSICONINDEX | Shell32.SHGFI.SHGFI_ICONLOCATION);
+                Shell32.SHGFI.SHGFI_OVERLAYINDEX | Shell32.SHGFI.SHGFI_ICON | Shell32.SHGFI.SHGFI_SYSICONINDEX |
+                Shell32.SHGFI.SHGFI_ICONLOCATION);
             if (ret == IntPtr.Zero)
             {
-                return (iconStr, null);
+                return (icon, null);
             }
 
             User32.DestroyIcon(shfi.hIcon);
@@ -191,28 +189,47 @@ internal class Win32API
             using var imageList = ComCtl32.SafeHIMAGELIST.FromIImageList(tmp);
             if (imageList.IsNull || imageList.IsInvalid)
             {
-                return (iconStr, null);
+                return (icon, null);
             }
 
             var overlayIdx = shfi.iIcon >> 24;
             if (overlayIdx != 0)
             {
                 var overlayImage = imageList.Interface.GetOverlayImage(overlayIdx);
-                using var hOverlay = imageList.Interface.GetIcon(overlayImage, ComCtl32.IMAGELISTDRAWFLAGS.ILD_TRANSPARENT);
+                using var hOverlay =
+                    imageList.Interface.GetIcon(overlayImage, ComCtl32.IMAGELISTDRAWFLAGS.ILD_TRANSPARENT);
                 if (!hOverlay.IsNull && !hOverlay.IsInvalid)
                 {
                     using var image = hOverlay.ToIcon().ToBitmap();
-                    byte[] bitmapData = (byte[])new ImageConverter().ConvertTo(image, typeof(byte[]));
+                    byte[] bitmapData = (byte[]) new ImageConverter().ConvertTo(image, typeof(byte[]));
                     overlayStr = Convert.ToBase64String(bitmapData, 0, bitmapData.Length);
                 }
             }
 
-            return (iconStr, overlayStr);
+            return (icon, overlayStr);
         }
-        else
+
+        return (icon, null);
+    }
+
+    public static Bitmap? GetFileIcon(string path, int thumbnailSize)
+    {
+        using var shellItem = new Vanara.Windows.Shell.ShellItem(path);
+
+        if (shellItem.IShellItem is Shell32.IShellItemImageFactory fctry)
         {
-            return (iconStr, null);
+            var flags = Shell32.SIIGBF.SIIGBF_BIGGERSIZEOK;
+
+            if (thumbnailSize < 80) flags |= Shell32.SIIGBF.SIIGBF_ICONONLY;
+
+            var hres = fctry.GetImage(new SIZE(thumbnailSize, thumbnailSize), flags, out var hbitmap);
+            Marshal.ReleaseComObject(fctry);
+
+            if (hres == HRESULT.S_OK)
+                return GetBitmapFromHBitmap(hbitmap);
         }
+
+        return null;
     }
 
     public static bool RunPowershellCommand(string command, bool runAsAdmin)
@@ -225,6 +242,7 @@ internal class Win32API
                 process.StartInfo.UseShellExecute = true;
                 process.StartInfo.Verb = "runas";
             }
+
             process.StartInfo.FileName = "powershell.exe";
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -234,6 +252,7 @@ internal class Win32API
             {
                 return process.ExitCode == 0;
             }
+
             return false;
         }
         catch (Win32Exception)
@@ -266,20 +285,26 @@ internal class Win32API
 
     public static void UnlockBitlockerDrive(string drive, string password)
     {
-        RunPowershellCommand($"-command \"$SecureString = ConvertTo-SecureString '{password}' -AsPlainText -Force; Unlock-BitLocker -MountPoint '{drive}' -Password $SecureString\"", true);
+        RunPowershellCommand(
+            $"-command \"$SecureString = ConvertTo-SecureString '{password}' -AsPlainText -Force; Unlock-BitLocker -MountPoint '{drive}' -Password $SecureString\"",
+            true);
     }
 
     public static void OpenFormatDriveDialog(string drive)
     {
         // format requires elevation
         int driveIndex = drive.ToUpperInvariant()[0] - 'A';
-        RunPowershellCommand($"-command \"$Signature = '[DllImport(\\\"shell32.dll\\\", SetLastError = false)]public static extern uint SHFormatDrive(IntPtr hwnd, uint drive, uint fmtID, uint options);'; $SHFormatDrive = Add-Type -MemberDefinition $Signature -Name \"Win32SHFormatDrive\" -Namespace Win32Functions -PassThru; $SHFormatDrive::SHFormatDrive(0, {driveIndex}, 0xFFFF, 0x0001)\"", true);
+        RunPowershellCommand(
+            $"-command \"$Signature = '[DllImport(\\\"shell32.dll\\\", SetLastError = false)]public static extern uint SHFormatDrive(IntPtr hwnd, uint drive, uint fmtID, uint options);'; $SHFormatDrive = Add-Type -MemberDefinition $Signature -Name \"Win32SHFormatDrive\" -Namespace Win32Functions -PassThru; $SHFormatDrive::SHFormatDrive(0, {driveIndex}, 0xFFFF, 0x0001)\"",
+            true);
     }
 
     public static void SetVolumeLabel(string driveName, string newLabel)
     {
         // rename requires elevation
-        RunPowershellCommand($"-command \"$Signature = '[DllImport(\\\"kernel32.dll\\\", SetLastError = false)]public static extern bool SetVolumeLabel(string lpRootPathName, string lpVolumeName);'; $SetVolumeLabel = Add-Type -MemberDefinition $Signature -Name \"Win32SetVolumeLabel\" -Namespace Win32Functions -PassThru; $SetVolumeLabel::SetVolumeLabel('{driveName}', '{newLabel}')\"", true);
+        RunPowershellCommand(
+            $"-command \"$Signature = '[DllImport(\\\"kernel32.dll\\\", SetLastError = false)]public static extern bool SetVolumeLabel(string lpRootPathName, string lpVolumeName);'; $SetVolumeLabel = Add-Type -MemberDefinition $Signature -Name \"Win32SetVolumeLabel\" -Namespace Win32Functions -PassThru; $SetVolumeLabel::SetVolumeLabel('{driveName}', '{newLabel}')\"",
+            true);
     }
 
     public static void MountVhdDisk(string vhdPath)
@@ -288,11 +313,11 @@ internal class Win32API
         RunPowershellCommand($"-command \"Mount-DiskImage -ImagePath '{vhdPath}'\"", true);
     }
 
-    public static Bitmap GetBitmapFromHBitmap(HBITMAP hBitmap)
+    public static Bitmap? GetBitmapFromHBitmap(HBITMAP hBitmap)
     {
         try
         {
-            Bitmap bmp = Image.FromHbitmap((IntPtr)hBitmap);
+            Bitmap bmp = Image.FromHbitmap((IntPtr) hBitmap);
             if (Image.GetPixelFormatSize(bmp.PixelFormat) < 32)
             {
                 return bmp;
@@ -326,12 +351,14 @@ internal class Win32API
 
     private static Bitmap GetAlphaBitmapFromBitmapData(BitmapData bmpData)
     {
-        using var tmp = new Bitmap(bmpData.Width, bmpData.Height, bmpData.Stride, PixelFormat.Format32bppArgb, bmpData.Scan0);
+        using var tmp = new Bitmap(bmpData.Width, bmpData.Height, bmpData.Stride, PixelFormat.Format32bppArgb,
+            bmpData.Scan0);
         Bitmap clone = new Bitmap(tmp.Width, tmp.Height, tmp.PixelFormat);
         using (Graphics gr = Graphics.FromImage(clone))
         {
             gr.DrawImage(tmp, new Rectangle(0, 0, clone.Width, clone.Height));
         }
+
         return clone;
     }
 
@@ -353,7 +380,7 @@ internal class Win32API
 
         return false;
     }
-    
+
     // There is usually no need to define Win32 COM interfaces/P-Invoke methods here.
     // The Vanara library contains the definitions for all members of Shell32.dll, User32.dll and more
     // The ones below are due to bugs in the current version of the library and can be removed once fixed
@@ -377,8 +404,10 @@ internal class Win32API
             {
                 break;
             }
+
             windowsList.Add(prevHwnd);
         }
+
         return windowsList;
     }
 
@@ -393,7 +422,8 @@ internal class Win32API
             {
                 await Task.Delay(500);
 
-                var newWindows = GetDesktopWindows().Except(currentWindows).Where(x => User32.IsWindowVisible(x) && !User32.IsIconic(x));
+                var newWindows = GetDesktopWindows().Except(currentWindows)
+                    .Where(x => User32.IsWindowVisible(x) && !User32.IsIconic(x));
                 if (newWindows.Any())
                 {
                     foreach (var newWindow in newWindows)
@@ -401,8 +431,11 @@ internal class Win32API
                         User32.SetWindowPos(newWindow, User32.SpecialWindowHandles.HWND_TOPMOST,
                             0, 0, 0, 0, User32.SetWindowPosFlags.SWP_NOSIZE | User32.SetWindowPosFlags.SWP_NOMOVE);
                         User32.SetWindowPos(newWindow, User32.SpecialWindowHandles.HWND_NOTOPMOST,
-                            0, 0, 0, 0, User32.SetWindowPosFlags.SWP_SHOWWINDOW | User32.SetWindowPosFlags.SWP_NOSIZE | User32.SetWindowPosFlags.SWP_NOMOVE);
+                            0, 0, 0, 0,
+                            User32.SetWindowPosFlags.SWP_SHOWWINDOW | User32.SetWindowPosFlags.SWP_NOSIZE |
+                            User32.SetWindowPosFlags.SWP_NOMOVE);
                     }
+
                     break;
                 }
             }
@@ -423,7 +456,8 @@ internal class Win32API
             {
                 if (Regex.IsMatch(nameWithoutExt, @".*\(\d+\)"))
                 {
-                    uniquePath = Path.Combine(directory, $"{nameWithoutExt.Substring(0, nameWithoutExt.LastIndexOf("(", StringComparison.InvariantCultureIgnoreCase))}({count}){extension}");
+                    uniquePath = Path.Combine(directory,
+                        $"{nameWithoutExt.Substring(0, nameWithoutExt.LastIndexOf("(", StringComparison.InvariantCultureIgnoreCase))}({count}){extension}");
                 }
                 else
                 {
@@ -440,7 +474,8 @@ internal class Win32API
             {
                 if (Regex.IsMatch(Name, @".*\(\d+\)"))
                 {
-                    uniquePath = Path.Combine(directory, $"{Name.Substring(0, Name.LastIndexOf("(", StringComparison.InvariantCultureIgnoreCase))}({Count})");
+                    uniquePath = Path.Combine(directory,
+                        $"{Name.Substring(0, Name.LastIndexOf("(", StringComparison.InvariantCultureIgnoreCase))}({Count})");
                 }
                 else
                 {
@@ -461,11 +496,14 @@ internal class Win32API
     public static string PathFromFileId(ulong frn, string volumeHint)
     {
         string volumePath = Path.GetPathRoot(volumeHint);
-        using var volumeHandle = Kernel32.CreateFile(volumePath, Kernel32.FileAccess.GENERIC_READ, FileShare.Read, null, FileMode.Open, FileFlagsAndAttributes.FILE_FLAG_BACKUP_SEMANTICS);
+        using var volumeHandle = Kernel32.CreateFile(volumePath, Kernel32.FileAccess.GENERIC_READ, FileShare.Read, null,
+            FileMode.Open, FileFlagsAndAttributes.FILE_FLAG_BACKUP_SEMANTICS);
         if (volumeHandle.IsInvalid) return null;
-        var fileId = new Kernel32.FILE_ID_DESCRIPTOR() { Type = 0, Id = new Kernel32.FILE_ID_DESCRIPTOR.DUMMYUNIONNAME() { FileId = (long)frn } };
-        fileId.dwSize = (uint)Marshal.SizeOf(fileId);
-        using var hFile = Kernel32.OpenFileById(volumeHandle, fileId, Kernel32.FileAccess.GENERIC_READ, FileShare.Read, null, FileFlagsAndAttributes.FILE_FLAG_BACKUP_SEMANTICS);
+        var fileId = new Kernel32.FILE_ID_DESCRIPTOR()
+            {Type = 0, Id = new Kernel32.FILE_ID_DESCRIPTOR.DUMMYUNIONNAME() {FileId = (long) frn}};
+        fileId.dwSize = (uint) Marshal.SizeOf(fileId);
+        using var hFile = Kernel32.OpenFileById(volumeHandle, fileId, Kernel32.FileAccess.GENERIC_READ, FileShare.Read,
+            null, FileFlagsAndAttributes.FILE_FLAG_BACKUP_SEMANTICS);
         if (hFile.IsInvalid) return null;
         var sb = new StringBuilder(4096);
         var ret = Kernel32.GetFinalPathNameByHandle(hFile, sb, 4095, 0);

@@ -45,7 +45,7 @@ public class ContextMenu : IDisposable
 
         try
         {
-            var currentWindows = Win32API.GetDesktopWindows();
+            var currentWindows = Win32Api.GetDesktopWindows();
             var pici = new Shell32.CMINVOKECOMMANDINFOEX
             {
                 lpVerb = new SafeResourceId(verb, CharSet.Ansi),
@@ -53,7 +53,7 @@ public class ContextMenu : IDisposable
             };
             pici.cbSize = (uint) Marshal.SizeOf(pici);
             _cMenu.InvokeCommand(pici);
-            Win32API.BringToForeground(currentWindows);
+            Win32Api.BringToForeground(currentWindows);
             return true;
         }
         catch (Exception ex) when (ex is COMException or UnauthorizedAccessException)
@@ -71,7 +71,7 @@ public class ContextMenu : IDisposable
 
         try
         {
-            var currentWindows = Win32API.GetDesktopWindows();
+            //var currentWindows = Win32Api.GetDesktopWindows();
             var pici = new Shell32.CMINVOKECOMMANDINFOEX
             {
                 lpVerb = Macros.MAKEINTRESOURCE(itemId),
@@ -79,7 +79,7 @@ public class ContextMenu : IDisposable
             };
             pici.cbSize = (uint) Marshal.SizeOf(pici);
             _cMenu.InvokeCommand(pici);
-            Win32API.BringToForeground(currentWindows);
+            //Win32Api.BringToForeground(currentWindows);
         }
         catch (Exception ex) when (
             ex is COMException or UnauthorizedAccessException)

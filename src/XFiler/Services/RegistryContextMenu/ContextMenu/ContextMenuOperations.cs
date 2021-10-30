@@ -112,7 +112,7 @@ public class ContextMenuOperations
                 if (mii.hbmpItem != HBITMAP.NULL &&
                     !Enum.IsDefined(typeof(ContextMenu.HbitmapHmenu), ((IntPtr) mii.hbmpItem).ToInt64()))
                 {
-                    icon = Win32API.GetBitmapFromHBitmap(mii.hbmpItem);
+                    icon = Win32Api.GetBitmapFromHBitmap(mii.hbmpItem);
                 }
 
                 if (mii.hSubMenu != HMENU.NULL)
