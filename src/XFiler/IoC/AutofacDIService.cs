@@ -2,11 +2,11 @@
 
 namespace XFiler;
 
-internal class AutofacDIService : IDIService
+internal class AutofacDiService : IDIService
 {
     private readonly ContainerBuilder _services;
 
-    public AutofacDIService()
+    public AutofacDiService()
     {
         _services = new ContainerBuilder();
     }

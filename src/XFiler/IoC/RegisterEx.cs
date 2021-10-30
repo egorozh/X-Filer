@@ -1,5 +1,4 @@
-﻿using Autofac;
-using XFiler.DispatcherPage;
+﻿using XFiler.DispatcherPage;
 using XFiler.MyComputer;
 using XFiler.ViewModels;
 

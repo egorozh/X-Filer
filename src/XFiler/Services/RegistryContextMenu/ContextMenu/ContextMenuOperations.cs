@@ -11,7 +11,7 @@ namespace XFiler;
 public class ContextMenuOperations
 {
     public static ContextMenu? GetContextMenu(IEnumerable<string> filePathList,
-        Func<string, bool>? itemFilter = null) => GetContextMenuForFiles(filePathList,
+        Func<string?, bool>? itemFilter = null) => GetContextMenuForFiles(filePathList,
         Shell32.CMF.CMF_NORMAL | Shell32.CMF.CMF_SYNCCASCADEMENU, itemFilter);
 
     #region Private Fields
@@ -62,7 +62,7 @@ public class ContextMenuOperations
     }
 
     private static IReadOnlyList<ContextMenuItem> EnumMenuItems(Shell32.IContextMenu cMenu,
-        HMENU hMenu, Func<string, bool>? itemFilter = null)
+        HMENU hMenu, Func<string?, bool>? itemFilter = null)
     {
         var menuItemsResult = new List<ContextMenuItem>();
 
@@ -146,7 +146,7 @@ public class ContextMenuOperations
         return menuItemsResult;
     }
 
-    private static string GetCommandString(Shell32.IContextMenu cMenu, uint offset,
+    private static string? GetCommandString(Shell32.IContextMenu cMenu, uint offset,
         Shell32.GCS flags = Shell32.GCS.GCS_VERBW)
     {
         if (offset > 5000)
@@ -156,7 +156,7 @@ public class ContextMenuOperations
             return null;
         }
 
-        SafeCoTaskMemString commandString = null;
+        SafeCoTaskMemString? commandString = null;
         try
         {
             commandString = new SafeCoTaskMemString(512);
@@ -165,13 +165,13 @@ public class ContextMenuOperations
             Debug.WriteLine("Verb {0}: {1}", offset, commandString);
             return commandString.ToString();
         }
-        catch (Exception ex) when (ex is InvalidCastException || ex is ArgumentException)
+        catch (Exception ex) when (ex is InvalidCastException or ArgumentException)
         {
             // TODO: investigate this..
             Debug.WriteLine(ex);
             return null;
         }
-        catch (Exception ex) when (ex is COMException || ex is NotImplementedException)
+        catch (Exception ex) when (ex is COMException or NotImplementedException)
         {
             // Not every item has an associated verb
             return null;

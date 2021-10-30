@@ -13,7 +13,7 @@ internal sealed class IoC
 {
     public IContainer Build()
     {
-        var services = new AutofacDIService();
+        var services = new AutofacDiService();
         
         RegisterServices(services, new[]
         {
