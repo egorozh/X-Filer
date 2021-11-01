@@ -17,7 +17,12 @@ public class NativeContextMenuLoaderReference : Freezable, INativeContextMenuLoa
         set => SetValue(NativeContextMenuLoaderProperty, value);
     }
 
+    public IReadOnlyList<IAddNewContextMenuModel> AddItems => NativeContextMenuLoader.AddItems;
+
     public ICommand InvokeCommand => NativeContextMenuLoader.InvokeCommand;
+    public ICommand InvokeAddNewItemsCommand => NativeContextMenuLoader.InvokeAddNewItemsCommand;
+
+    public void Init() => NativeContextMenuLoader?.Init();
 
     public IReadOnlyList<IRegistryContextMenuModel> CreateMenuItems(IEnumerable<string> selectedItems)
     {

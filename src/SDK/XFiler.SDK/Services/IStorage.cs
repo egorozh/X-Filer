@@ -13,10 +13,6 @@ public interface IStorage
     string DbDirectory { get; }
             
     string Bookmarks { get; }
-
-    string ContextMenuFolder { get; }
-
-    string ContextMenuTxtFile { get; }
-
-    string ContextMenuTxtFile2 { get; }
+    
+    string ExtensionsDirectory { get; }
 }

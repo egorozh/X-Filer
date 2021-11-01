@@ -39,16 +39,7 @@ public sealed class RegistryContextMenuBehavior : Behavior<ContextMenu>
     public static readonly DependencyProperty SelectedItemsContainerProperty = DependencyProperty.Register(
         nameof(SelectedItemsContainer), typeof(ObjectReference), typeof(RegistryContextMenuBehavior),
         new PropertyMetadata(default(ObjectReference)));
-
-    //private static void PropsChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    //{
-    //    if (d is RegistryContextMenuBehavior behavior)
-    //    {
-    //        if (behavior.NativeContextMenuLoader != null && behavior.FileInfoModel != null)
-    //            behavior.LoadNativeContextMenuItems(behavior.NativeContextMenuLoader, behavior.FileInfoModel);
-    //    }
-    //}
-
+    
     #endregion
 
     #region Public Properties

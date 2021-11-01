@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Windows.FileOperations;
-using Windows.FileOperations.FileOperation;
 using RecycleOption = Windows.FileOperations.RecycleOption;
 using UICancelOption = Windows.FileOperations.UICancelOption;
 using UIOption = Windows.FileOperations.UIOption;
@@ -82,6 +81,42 @@ internal sealed class FileOperations : IFileOperations
                 filePath = Path.Combine(targetFolder, $"{name} ({index++}).txt");
 
             TryAction(() => File.WriteAllText(filePath, ""));
+        });
+    }
+
+    public async Task<string> CreateFile(string targetFolder, string name, string extension)
+    {
+        return await Task.Run(() =>
+        {
+            var filePath = Path.Combine(targetFolder, $"{name}{extension}");
+
+            var index = 2;
+
+            while (File.Exists(filePath))
+                filePath = Path.Combine(targetFolder, $"{name} ({index++}){extension}");
+
+            TryAction(() => File.Create(filePath).Dispose());
+
+            return filePath;
+        });
+    }
+
+    public async Task<string> CreateFileFromTemplate(string targetFolder, string name, string extension,
+        string template)
+    {
+        return await Task.Run(() =>
+        {
+            var filePath = Path.Combine(targetFolder, $"{name}{extension}");
+
+            var index = 2;
+
+            while (File.Exists(filePath))
+                filePath = Path.Combine(targetFolder, $"{name} ({index++}){extension}");
+
+            TryAction(() =>
+                File.Copy(template, filePath));
+
+            return filePath;
         });
     }
 

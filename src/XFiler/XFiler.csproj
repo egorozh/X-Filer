@@ -3,6 +3,8 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<ApplicationIcon>files.ico</ApplicationIcon>
+		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,8 +25,8 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 		<PackageReference Include="SingleInstanceHelper" Version="1.0.3" />
 		<PackageReference Include="SharpClipboard" Version="3.5.2" />
-		<PackageReference Include="System.Management" Version="6.0.0-rc.1.21451.13" />
-		<PackageReference Include="Vanara.Windows.Shell" Version="3.3.13" />
+		<PackageReference Include="System.Management" Version="6.0.0-rc.2.21480.5" />
+		<PackageReference Include="Vanara.Windows.Shell" Version="3.3.14" />
 	</ItemGroup>
 
 	<ItemGroup>

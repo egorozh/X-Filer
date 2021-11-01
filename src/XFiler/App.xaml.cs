@@ -1,8 +1,7 @@
-﻿using System.IO;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
+using System.Text;
 using XFiler.TrayIcon;
 
 namespace XFiler;
@@ -35,9 +34,9 @@ internal sealed partial class App : IXFilerApp
         Host.Resolve<ILanguageService>().Init();
         Host.Resolve<IThemeService>().Init();
         Host.Resolve<ILaunchAtStartupService>().Init();
-
-        Host.Resolve<IDriveDetector>().DriveChanged += OnDriveChanged;
-
+        Host.Resolve<INativeContextMenuLoader>().Init();
+        Host.Resolve<IDriveDetector>().Init();
+       
         LoadNotifyIconResourceDictionary();
 
         _trayIcon = FindResource("TrayIcon") as TaskbarIcon
@@ -99,20 +98,7 @@ internal sealed partial class App : IXFilerApp
             is ResourceDictionary resourceDict)
             resources.Add(resourceDict);
     }
-
-    private void OnDriveChanged(EventType type, string driveName)
-    {
-        if (type == EventType.Added)
-        {
-            DirectoryInfo info = new(driveName);
-
-            var tab = Host.Resolve<Func<ITabFactory>>().Invoke().CreateExplorerTab(info);
-
-            if (tab != null)
-                Host.Resolve<IWindowFactory>().OpenTabInNewWindow(tab);
-        }
-    }
-
+    
     private void ShowArgs(IEnumerable<string> args)
     {
         StringBuilder sb = new();

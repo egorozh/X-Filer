@@ -18,11 +18,7 @@ internal sealed class Storage : IStorage
 
     public string Bookmarks { get; }
 
-    public string ContextMenuFolder { get; }
-
-    public string ContextMenuTxtFile { get; }
-
-    public string ContextMenuTxtFile2 { get; }
+    public string ExtensionsDirectory { get; }
 
     #endregion
 
@@ -48,14 +44,8 @@ internal sealed class Storage : IStorage
 
         Bookmarks = Path.Combine(BaseDirectory, "bookmarks.json");
 
-        ContextMenuFolder = Path.Combine(BaseDirectory, "ContextMenu");
-        Directory.CreateDirectory(ContextMenuFolder);
-
-        ContextMenuTxtFile = Path.Combine(ContextMenuFolder, "cm.txt");
-        ContextMenuTxtFile2 = Path.Combine(ContextMenuFolder, "cm2.txt");
-
-        File.WriteAllText(ContextMenuTxtFile, "Egg");
-        File.WriteAllText(ContextMenuTxtFile2, "Egg2");
+        ExtensionsDirectory = Path.Combine(BaseDirectory, "Extensions");
+        Directory.CreateDirectory(ExtensionsDirectory);
     }
 
     public Storage() : this("X-Filer")

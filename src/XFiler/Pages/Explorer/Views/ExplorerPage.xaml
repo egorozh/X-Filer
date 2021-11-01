@@ -102,7 +102,12 @@
                         <Separator />
 
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Create}">
-
+                            <b:Interaction.Behaviors>
+                                <local:AddNewContextMenuBehavior
+                                    NativeContextMenuLoader="{Binding NativeContextMenuLoader}"
+                                    FileInfoModel="{Binding CurrentPresenter.FilesPresenter}"/>
+                            </b:Interaction.Behaviors>
+                          
                             <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Create_Folder}"
                                       Command="{Binding CreateFolderCommand}"
                                       CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
@@ -111,6 +116,9 @@
                             <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Create_TextFile}"
                                       Command="{Binding CreateTextCommand}"
                                       CommandParameter="{Binding CurrentPresenter.FilesPresenter}" />
+
+                            <Separator local:AddNewContextMenuBehavior.RootItem="True" />
+
                         </MenuItem>
 
                         <Separator />

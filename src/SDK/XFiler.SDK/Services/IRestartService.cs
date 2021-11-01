@@ -1,9 +1,8 @@
-﻿namespace XFiler.SDK
-{
-    public interface IRestartService
-    {
-        void RestartApplication();
+﻿namespace XFiler.SDK;
 
-        const string RestartKey = "/restart";
-    }
+public interface IRestartService
+{
+    void RestartApplication();
+
+    const string RestartKey = "/restart";
 }
