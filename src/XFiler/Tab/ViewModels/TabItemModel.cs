@@ -39,6 +39,8 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
     public DelegateCommand MoveForwardCommand { get; }
 
     public DelegateCommand UpdateCommand { get; }
+        
+    public DelegateCommand GoHomeCommand { get; }
 
     public DelegateCommand<ResultsModel> GoToCommand { get; }
 
@@ -62,10 +64,10 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
         MoveForwardCommand = new DelegateCommand(OnMoveForward, OnCanMoveForward);
         UpdateCommand = new DelegateCommand(OnUpdate);
         GoToCommand = new DelegateCommand<ResultsModel>(OnGoTo);
-
+        GoHomeCommand = new DelegateCommand(GoHome);
         GetResultsHandler = GetResultsFilter;
     }
-
+    
     #endregion
 
     #region Public Methods
@@ -124,6 +126,11 @@ internal sealed class TabItemModel : BaseViewModel, ITabItemModel
     private void OnUpdate()
     {
         SetPage(_history.Current.Route, false, true);
+    }
+
+    private void GoHome()
+    {
+        Open(SpecialRoutes.MyComputer);
     }
 
     private void OnGoTo(ResultsModel result)

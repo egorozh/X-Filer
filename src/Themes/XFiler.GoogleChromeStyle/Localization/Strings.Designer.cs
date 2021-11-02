@@ -88,7 +88,7 @@ namespace XFiler.GoogleChromeStyle.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на New tab.
         /// </summary>
         public static string MainWindow_Buttons_NewTabTooltip {
             get {
@@ -147,6 +147,15 @@ namespace XFiler.GoogleChromeStyle.Localization {
         public static string ToolBarControl_ForwardButtonTooltip {
             get {
                 return ResourceManager.GetString("ToolBarControl.ForwardButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string ToolBarControl_HomeButtonTooltip {
+            get {
+                return ResourceManager.GetString("ToolBarControl.HomeButtonTooltip", resourceCulture);
             }
         }
         

@@ -23,13 +23,13 @@ internal static partial class RegisterEx
         services.RegisterSingleton<FileTypeResolver, IFileTypeResolver>();
         services.RegisterSingleton<RenameService, IRenameService>();
         services.RegisterSingleton<DirectorySettings, IDirectorySettings>();
-        services.RegisterSingleton<LanguageService, ILanguageService>();
-        services.RegisterSingleton<ThemeService, IThemeService>();
-        services.RegisterSingleton<LaunchAtStartupService, ILaunchAtStartupService>();
-        services.RegisterSingleton<DriveDetector, IDriveDetector>();
+        services.RegisterInitializeSingleton<LanguageService, ILanguageService>();
+        services.RegisterInitializeSingleton<ThemeService, IThemeService>();
+        services.RegisterInitializeSingleton<LaunchAtStartupService, ILaunchAtStartupService>();
+        services.RegisterInitializeSingleton<DriveDetector, IDriveDetector>();
         services.RegisterSingleton<RestartService, IRestartService>();
         services.RegisterSingleton<WallpapersService, IWallpapersService>();
-        services.RegisterSingleton<WindowsApiContextMenuLoader, INativeContextMenuLoader>();
+        services.RegisterInitializeSingleton<WindowsApiContextMenuLoader, INativeContextMenuLoader>();
     }
 
     private static void RegisterBookmarksServices(this IDIService services)

@@ -30,13 +30,10 @@ internal sealed partial class App : IXFilerApp
             Shutdown();
 
         Host = new IoC().Build();
-
-        Host.Resolve<ILanguageService>().Init();
-        Host.Resolve<IThemeService>().Init();
-        Host.Resolve<ILaunchAtStartupService>().Init();
-        Host.Resolve<INativeContextMenuLoader>().Init();
-        Host.Resolve<IDriveDetector>().Init();
-       
+        
+        foreach (var s in Host.Resolve<IReadOnlyList<IInitializeService>>()) 
+            s.Init();
+        
         LoadNotifyIconResourceDictionary();
 
         _trayIcon = FindResource("TrayIcon") as TaskbarIcon

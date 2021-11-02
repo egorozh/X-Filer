@@ -26,6 +26,13 @@ internal class AutofacDiService : IDIService
         _services.RegisterType<TImplementer>().As<TTypedService>().SingleInstance();
     }
 
+    public void RegisterInitializeSingleton<TImplementer, TTypedService>()
+        where TImplementer : TTypedService
+        where TTypedService : IInitializeService
+    {
+        _services.RegisterType<TImplementer>().As<TTypedService>().As<IInitializeService>().SingleInstance();
+    }
+
     public void RegisterSingleton<TTypedService>(Func<IDIContext, TTypedService> @delegate)
         where TTypedService : notnull
     {   

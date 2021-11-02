@@ -137,4 +137,7 @@
   <data name="MainWindow.Buttons.NewTabTooltip" xml:space="preserve">
     <value>New tab</value>
   </data>
+	<data name="ToolBarControl.HomeButtonTooltip" xml:space="preserve">
+		<value>Go home</value>
+	</data>
 </root>

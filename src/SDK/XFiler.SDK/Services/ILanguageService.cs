@@ -2,11 +2,9 @@
 
 namespace XFiler.SDK;
 
-public interface ILanguageService
+public interface ILanguageService : IInitializeService
 {
-    void Init();
-
     CultureInfo[] Languages { get; }
 
     CultureInfo Current { get; set; }
-}   
+}

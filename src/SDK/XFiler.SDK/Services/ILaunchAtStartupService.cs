@@ -1,6 +1,5 @@
 ﻿namespace XFiler.SDK;
 
-public interface ILaunchAtStartupService
+public interface ILaunchAtStartupService : IInitializeService
 {
-    void Init();
 }

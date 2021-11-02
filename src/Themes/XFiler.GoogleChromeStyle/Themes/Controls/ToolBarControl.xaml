@@ -6,6 +6,7 @@
                     xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls"
                     xmlns:valueConverters="clr-namespace:XFiler.GoogleChromeStyle.ValueConverters"
                     xmlns:sdkLoc="clr-namespace:XFiler.SDK.Localization;assembly=XFiler.SDK">
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Buttons.xaml" />
         <ResourceDictionary Source="Icons.xaml" />
@@ -20,6 +21,7 @@
                         <Grid Margin="5 0">
 
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -45,9 +47,15 @@
                                     Content="{StaticResource UpdateIcon}"
                                     Command="{Binding UpdateCommand}" />
 
-                            <controls:SearchControl Grid.Column="3"
+                            <Button Grid.Column="3"
+                                    Style="{StaticResource ToolButton}"
+                                    ToolTip="{x:Static loc:Strings.ToolBarControl_HomeButtonTooltip}"
+                                    Content="{StaticResource HomeIcon}"
+                                   Command="{Binding GoHomeCommand}" />
+
+                            <controls:SearchControl Grid.Column="4"
                                                     VerticalAlignment="Center"
-                                                    Margin="10 0"
+                                                    Margin="5 0"
                                                     Text="{Binding SearchText}"
                                                     GetResultsHandler="{Binding GetResultsHandler}"
                                                     GoToCommand="{Binding GoToCommand}">
@@ -77,7 +85,7 @@
                                 </controls:SearchControl.SearchResultTemplate>
                             </controls:SearchControl>
 
-                            <StackPanel Grid.Column="4"
+                            <StackPanel Grid.Column="5"
                                         Orientation="Horizontal">
 
                                 <Grid x:Name="ExplorerPageSettingsButtons"
@@ -103,16 +111,18 @@
                                                 Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
 
                                             <StackPanel>
-                                                <TextBlock Text="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options}"
-                                                           Margin="0 5"
-                                                           FontSize="16" />
+                                                <TextBlock
+                                                    Text="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options}"
+                                                    Margin="0 5"
+                                                    FontSize="16" />
 
-                                                <TextBlock Text="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options_IconView}"
-                                                           Margin="0 5"
-                                                           FontSize="14" />
+                                                <TextBlock
+                                                    Text="{x:Static loc:Strings.ToolBarControl_ExplorerSettings_Display_options_IconView}"
+                                                    Margin="0 5"
+                                                    FontSize="14" />
 
                                                 <ListBox ItemsSource="{Binding FilesPresenters}"
-                                                         
+
                                                          SelectedItem="{Binding CurrentPresenter}"
                                                          ItemContainerStyle="{DynamicResource SelectPresenterListBoxItemStyle}">
                                                     <ListBox.ItemsPanel>
@@ -139,7 +149,7 @@
 
                             </StackPanel>
 
-                            <Menu Grid.Column="5"
+                            <Menu Grid.Column="6"
                                   DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}">
                                 <MenuItem Template="{DynamicResource MenuDotsMenuTemplate}"
                                           ToolTip="{x:Static loc:Strings.ToolBarControl_Settings}">

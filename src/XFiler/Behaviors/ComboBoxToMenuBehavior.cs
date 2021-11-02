@@ -14,7 +14,7 @@ internal sealed class ComboBoxToMenuBehavior : Behavior<MenuItem>
     #region Dependency Properties
 
     public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register(
-        "Items", typeof(IReadOnlyList<ICheckedItem>), typeof(ComboBoxToMenuBehavior),
+        nameof(Items), typeof(IReadOnlyList<ICheckedItem>), typeof(ComboBoxToMenuBehavior),
         new PropertyMetadata(default(IReadOnlyList<ICheckedItem>),
             ItemsChangedCallback));
 
@@ -24,7 +24,7 @@ internal sealed class ComboBoxToMenuBehavior : Behavior<MenuItem>
     }
 
     public static readonly DependencyProperty CurrentItemProperty = DependencyProperty.Register(
-        "CurrentItem", typeof(ICheckedItem), typeof(ComboBoxToMenuBehavior),
+        nameof(CurrentItem), typeof(ICheckedItem), typeof(ComboBoxToMenuBehavior),
         new PropertyMetadata(default(ICheckedItem), CurrentItemChangedCallback));
 
     private static void CurrentItemChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)

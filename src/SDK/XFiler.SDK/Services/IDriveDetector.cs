@@ -2,11 +2,9 @@
 
 namespace XFiler.SDK;
 
-public interface IDriveDetector
+public interface IDriveDetector : IInitializeService
 {
     event Action<EventType, string> DriveChanged;
-
-    void Init();
 }
 
 public enum EventType
