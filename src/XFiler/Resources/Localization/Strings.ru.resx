@@ -203,4 +203,16 @@
   <data name="Grouping,Type" xml:space="preserve">
     <value>Тип</value>
   </data>
+	<data name="Sorting.Name" xml:space="preserve">
+		<value>Имя</value>
+	</data>
+	<data name="Sorting.DateOfChange" xml:space="preserve">
+		<value>Дата изменения</value>
+	</data>
+	<data name="Sorting.Type" xml:space="preserve">
+		<value>Тип</value>
+	</data>
+	<data name="Sorting.Size" xml:space="preserve">
+		<value>Размер</value>
+	</data>
 </root>

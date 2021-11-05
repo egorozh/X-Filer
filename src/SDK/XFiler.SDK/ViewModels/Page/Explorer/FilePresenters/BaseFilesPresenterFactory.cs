@@ -31,7 +31,7 @@ public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenter
         Id = id;
     }
 
-    public void UpdatePresenter(DirectoryInfo directory, IFilesGroup group)
+    public void UpdatePresenter(DirectoryInfo directory, IFilesGroup @group, IFilesSorting sorting)
     {
         if (FilesPresenter != null)
         {
@@ -39,7 +39,7 @@ public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenter
             FilesPresenter.Dispose();
         }
 
-        FilesPresenter = CreatePresenter(directory, group);
+        FilesPresenter = CreatePresenter(directory, group, sorting);
 
         FilesPresenter.DirectoryOrFileOpened += FilePresenterOnDirectoryOrFileOpened;
     }
@@ -56,7 +56,8 @@ public abstract class BaseFilesPresenterFactory : BaseViewModel, IFilesPresenter
         Template = null!;
     }
 
-    public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group);
+    public abstract IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup @group,
+        IFilesSorting filesSorting);
 
     private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
     {

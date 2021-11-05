@@ -84,7 +84,13 @@
                             </b:Interaction.Behaviors>
                         </MenuItem>
 
-                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Sorting}" />
+                        <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Sorting}" >
+                            <b:Interaction.Behaviors>
+                                <local:ComboBoxToMenuBehavior Items="{Binding FilesSortings}"
+                                                              CurrentItem="{Binding CurrentSorting, Mode=TwoWay}" />
+                            </b:Interaction.Behaviors>
+                        </MenuItem>
+
                         <MenuItem Header="{x:Static localization:Strings.ExplorerTab_ContextMenu_Grouping}">
                             <b:Interaction.Behaviors>
                                 <local:ComboBoxToMenuBehavior Items="{Binding FilesGroups}"

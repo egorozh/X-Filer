@@ -14,10 +14,11 @@ internal class TilesPresenterFactory : BaseFilesPresenterFactory
         _presenterFactory = presenterFactory;
     }
 
-    public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup group)
+    public override IFilesPresenter CreatePresenter(DirectoryInfo currentDirectory, IFilesGroup @group,
+        IFilesSorting filesSorting)
     {
         var presenter = _presenterFactory[PresenterType.Tiles];
-        presenter.Init(currentDirectory, group);
+        presenter.Init(currentDirectory, group, filesSorting);
         return presenter;
     }
 

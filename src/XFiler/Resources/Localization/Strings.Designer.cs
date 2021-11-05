@@ -214,7 +214,7 @@ namespace XFiler.Resources.Localization {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Type.
         /// </summary>
         public static string Grouping_Type {
             get {
@@ -318,6 +318,42 @@ namespace XFiler.Resources.Localization {
         public static string SearchHandler_SearchDriveText {
             get {
                 return ResourceManager.GetString("SearchHandler.SearchDriveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Date of change.
+        /// </summary>
+        public static string Sorting_DateOfChange {
+            get {
+                return ResourceManager.GetString("Sorting.DateOfChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name.
+        /// </summary>
+        public static string Sorting_Name {
+            get {
+                return ResourceManager.GetString("Sorting.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string Sorting_Size {
+            get {
+                return ResourceManager.GetString("Sorting.Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Type.
+        /// </summary>
+        public static string Sorting_Type {
+            get {
+                return ResourceManager.GetString("Sorting.Type", resourceCulture);
             }
         }
         

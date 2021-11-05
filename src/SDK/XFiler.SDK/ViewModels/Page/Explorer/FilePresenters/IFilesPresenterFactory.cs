@@ -15,5 +15,5 @@ public interface IFilesPresenterFactory : INotifyPropertyChanged, IDisposable, I
 
     event EventHandler<OpenDirectoryEventArgs> DirectoryOrFileOpened;
 
-    void UpdatePresenter(DirectoryInfo directory, IFilesGroup currentGroup);
+    void UpdatePresenter(DirectoryInfo directory, IFilesGroup currentGroup, IFilesSorting currentSorting);
 }

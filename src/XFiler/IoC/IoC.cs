@@ -31,6 +31,7 @@ internal sealed class IoC
         services.RegisterExternalServices();
         services.RegisterSdkServices();
         services.RegisterGroups();
+        services.RegisterSorting();
         services.RegisterPages();
         services.RegisterFileModels();
 

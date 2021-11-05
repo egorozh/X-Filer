@@ -20,9 +20,11 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     public IReadOnlyList<IFilesPresenterFactory> FilesPresenters { get; private set; }
     public IFilesPresenterFactory CurrentPresenter { get; set; }
 
-    public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; }
+    public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; } 
+    public IReadOnlyList<IFilesSorting> FilesSortings { get; private set; }
     public INativeContextMenuLoader NativeContextMenuLoader { get; private set; }
     public IFilesGroup CurrentGroup { get; set; }
+    public IFilesSorting CurrentSorting { get; set; }
 
     public ImageSource? BackgroundImage { get; private set; }
     
@@ -42,6 +44,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     public ExplorerPageModel(
         IReadOnlyList<IFilesPresenterFactory> filesPresenters,
         IReadOnlyList<IFilesGroup> groups,
+        IReadOnlyList<IFilesSorting> sortings,
         IClipboardService clipboardService,
         IMainCommands mainCommands,
         IDirectorySettings directorySettings,
@@ -50,11 +53,12 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         INativeContextMenuLoader nativeContextMenuLoader)
     {
         _directorySettings = directorySettings;
-        _reactiveOptions = reactiveOptions;
+        _reactiveOptions = reactiveOptions; 
         _wallpapersService = wallpapersService;
         
         FilesPresenters = filesPresenters;
         FilesGroups = groups;
+        FilesSortings = sortings;
         NativeContextMenuLoader = nativeContextMenuLoader;
         PasteCommand = clipboardService.PasteCommand;
 
@@ -77,6 +81,9 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
         CurrentGroup = FilesGroups.FirstOrDefault(g => g.Id == dirSettings.GroupId) ??
                        FilesGroups.First();
+
+        CurrentSorting = FilesSortings.FirstOrDefault(g => g.Id == dirSettings.SortingId) ??
+                         FilesSortings.First();
 
         PropertyChanged += DirectoryTabItemViewModelOnPropertyChanged;
 
@@ -113,7 +120,9 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         FilesPresenters = null!;
         CurrentPresenter = null!;
         FilesGroups = null!;
+        FilesSortings = null!;
         CurrentGroup = null!;
+        CurrentSorting = null!;
         NativeContextMenuLoader = null!;
 
         PasteCommand = null!;
@@ -126,7 +135,7 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
 
     #region Private Methods
 
-    private void OpenDirectory() => CurrentPresenter.UpdatePresenter(_directory, CurrentGroup);
+    private void OpenDirectory() => CurrentPresenter.UpdatePresenter(_directory, CurrentGroup, CurrentSorting);
 
     private void FilePresenterOnDirectoryOrFileOpened(object? sender, OpenDirectoryEventArgs e)
     {
@@ -148,9 +157,10 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         {
             case nameof(CurrentPresenter):
             case nameof(CurrentGroup):
+            case nameof(CurrentSorting):
                 OpenDirectory();
                 _directorySettings.SetSettings(_directory.FullName,
-                    new DirectorySettingsInfo(CurrentGroup.Id, CurrentPresenter.Id));
+                    new DirectorySettingsInfo(CurrentGroup.Id, CurrentPresenter.Id, CurrentSorting.Id));
                 break;
         }
 

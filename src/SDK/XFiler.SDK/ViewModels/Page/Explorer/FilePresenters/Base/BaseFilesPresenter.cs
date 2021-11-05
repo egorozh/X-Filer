@@ -41,6 +41,8 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
 
     public IFilesGroup Group { get; private set; } = null!;
 
+    public IFilesSorting Sorting { get; private set; } = null!;
+
     public FileSystemInfo Info { get; private set; } = null!;
 
     public bool IsLoaded { get; set; }
@@ -124,11 +126,12 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
 
     #region Public Methods
 
-    public async void Init(DirectoryInfo directoryInfo, IFilesGroup group)
+    public async void Init(DirectoryInfo directoryInfo, IFilesGroup @group, IFilesSorting filesSorting)
     {
         DirectoryInfo = directoryInfo;
         Info = directoryInfo;
         Group = group;
+        Sorting = filesSorting;
 
         _watcher = new FileSystemWatcher(directoryInfo.FullName);
 
@@ -152,6 +155,7 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
         _watcher.IncludeSubdirectories = false;
         _watcher.EnableRaisingEvents = true;
     }
+
 
     public async Task InfoChanged(FileSystemInfo? newInfo)
     {
@@ -181,6 +185,7 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
             NativeContextMenuLoader = null!;
 
             Group = null!;
+            Sorting = null!;
             DirectoryInfo = null!;
             Info = null!;
 
@@ -294,17 +299,19 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
 
             var hideSystemFiles = !_settings.ShowSystemFiles;
             var hideHiddenFiles = !_settings.ShowHiddenFiles;
-
-            list.AddRange(DirectoryInfo.EnumerateDirectories()
+            
+            var dirs = DirectoryInfo.EnumerateDirectories()
                 .Where(f => NotSystemFilter(f, hideSystemFiles))
-                .Where(f => NotHidenFilter(f, hideHiddenFiles))
-                .OrderBy(d => d.Name, NaturalStringComparer)
+                .Where(f => NotHidenFilter(f, hideHiddenFiles));
+
+            list.AddRange(Sorting.OrderBy(dirs)
                 .Select(d => ((FileSystemInfo) d, EntityType.Directory)));
 
-            list.AddRange(DirectoryInfo.EnumerateFiles()
+            var files = DirectoryInfo.EnumerateFiles()
                 .Where(f => NotSystemFilter(f, hideSystemFiles))
-                .Where(f => NotHidenFilter(f, hideHiddenFiles))
-                .OrderBy(d => d.Name, NaturalStringComparer)
+                .Where(f => NotHidenFilter(f, hideHiddenFiles));
+
+            list.AddRange(Sorting.OrderBy(files)
                 .Select(d => ((FileSystemInfo) d, EntityType.File)));
 
             return list;
@@ -338,10 +345,7 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
 
             bw.ReportProgress((int) (i / (double) count * 100.0));
 
-            Application.Current.Dispatcher.Invoke(async () =>
-            {
-                DirectoriesAndFiles.Add(await CreateItem(items[i]));
-            });
+            Application.Current.Dispatcher.Invoke(async () => { DirectoriesAndFiles.Add(await CreateItem(items[i])); });
         }
     }
 
@@ -404,10 +408,7 @@ public abstract class BaseFilesPresenter : DisposableViewModel, IFilesPresenter
 
         if (renamedItem != null)
         {
-            Application.Current.Dispatcher.Invoke(async () =>
-            {
-                await renamedItem.InfoChanged(e.FullPath.ToInfo());
-            });
+            Application.Current.Dispatcher.Invoke(async () => { await renamedItem.InfoChanged(e.FullPath.ToInfo()); });
         }
     }
 

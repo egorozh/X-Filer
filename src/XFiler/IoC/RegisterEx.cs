@@ -1,5 +1,6 @@
 ﻿using XFiler.DispatcherPage;
 using XFiler.MyComputer;
+using XFiler.Sorting;
 using XFiler.ViewModels;
 
 namespace XFiler;
@@ -11,6 +12,14 @@ internal static partial class RegisterEx
         services.Register<FilesGroupOfNone, IFilesGroup>();
         services.Register<FilesGroupOfName, IFilesGroup>();
         services.Register<FilesGroupOfType, IFilesGroup>();
+    }
+
+    public static void RegisterSorting(this IDIService services)
+    {
+        services.Register<FilesSortingOfName, IFilesSorting>();
+        services.Register<FilesSortingOfDateOfChange, IFilesSorting>();
+        services.Register<FilesSortingOfType, IFilesSorting>();
+        services.Register<FilesSortingOfSize, IFilesSorting>();
     }
 
     public static void RegisterPages(this IDIService services)

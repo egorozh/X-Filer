@@ -18,10 +18,10 @@ internal class DirectorySettings : IDirectorySettings
 
         var col = db.GetCollection<DirectorySettingsInfoDto>("dirInfos");
 
-        var info = col.FindOne(x => x.Id== directoryFullName.ToLower());
+        var info = col.FindOne(x => x.Id == directoryFullName.ToLower());
 
         if (info != null)
-            return new DirectorySettingsInfo(info.GroupId, info.PresenterId);
+            return new DirectorySettingsInfo(info.GroupId, info.PresenterId, info.SortingId);
 
         return new DirectorySettingsInfo();
     }
@@ -38,6 +38,7 @@ internal class DirectorySettings : IDirectorySettings
         {
             oldInfo.GroupId = info.GroupId;
             oldInfo.PresenterId = info.PresenterId;
+            oldInfo.SortingId = info.SortingId;
             col.Update(oldInfo);
         }
         else
@@ -46,7 +47,8 @@ internal class DirectorySettings : IDirectorySettings
             {
                 Id = directoryFullName.ToLower(),
                 GroupId = info.GroupId,
-                PresenterId = info.PresenterId
+                PresenterId = info.PresenterId,
+                SortingId = info.SortingId
             };
 
             col.Insert(newInfo);
@@ -61,4 +63,6 @@ internal sealed class DirectorySettingsInfoDto
     public string GroupId { get; set; }
 
     public string PresenterId { get; set; }
+
+    public string SortingId { get; set; }
 }
