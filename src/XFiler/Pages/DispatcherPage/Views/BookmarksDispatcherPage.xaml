@@ -9,15 +9,15 @@
              xmlns:controls="clr-namespace:XFiler.Controls;assembly=XFiler.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+   
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="1" 
-              Margin="20"
+        <Grid Grid.Column="0"
               DataContext="{Binding BookmarksManager}">
 
             <Grid.ContextMenu>
@@ -28,7 +28,9 @@
                               Command="{Binding RemoveCommand}" />
                 </ContextMenu>
             </Grid.ContextMenu>
+
             <TreeView ItemsSource="{Binding Bookmarks}"
+                      Background="Transparent"
 
                       dd:DragDrop.DropScrollingMode="VerticalOnly"
                       dd:DragDrop.IsDragSource="True"
@@ -42,6 +44,7 @@
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="Background" Value="Transparent" />
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
@@ -59,20 +62,45 @@
                             </ContentControl>
 
                             <controls:EditBox Style="{StaticResource TreeViewEditBox}"
-                                            
-                                             IsEditableOnDoubleClick="True"
-                                             IsReadOnly="{Binding ., Converter={xFiler:MenuItemIsReadonlyConverter}}"
-                                             Focusable="True"
-                                             RenameCommand="{Binding RenameCommand}"
-                                             RenameCommandParameter="{Binding}"
-                                             Margin="0 4 0 0"
-                                             DisplayText="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                             Text="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                          
+
+                                              IsEditableOnDoubleClick="True"
+                                              IsReadOnly="{Binding ., Converter={xFiler:MenuItemIsReadonlyConverter}}"
+                                              Focusable="True"
+                                              RenameCommand="{Binding RenameCommand}"
+                                              RenameCommandParameter="{Binding}"
+                                              Margin="0 4 0 0"
+                                              DisplayText="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Text="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
         </Grid>
+
+        <GridSplitter Width="5"
+                      Grid.Column="1"
+                      ShowsPreview="False" />
+
+        <Grid Grid.Column="2"
+              DataContext="{Binding BookmarksManager.SelectedItem}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Заголовок"
+                       VerticalAlignment="Center" />
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="2"
+                     Text="{Binding Header}" />
+        </Grid>
+
     </Grid>
 </UserControl>
