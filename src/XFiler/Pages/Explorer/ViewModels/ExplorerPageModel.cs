@@ -20,14 +20,14 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     public IReadOnlyList<IFilesPresenterFactory> FilesPresenters { get; private set; }
     public IFilesPresenterFactory CurrentPresenter { get; set; }
 
-    public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; } 
+    public IReadOnlyList<IFilesGroup> FilesGroups { get; private set; }
     public IReadOnlyList<IFilesSorting> FilesSortings { get; private set; }
     public INativeContextMenuLoader NativeContextMenuLoader { get; private set; }
     public IFilesGroup CurrentGroup { get; set; }
     public IFilesSorting CurrentSorting { get; set; }
 
     public ImageSource? BackgroundImage { get; private set; }
-    
+
     #endregion
 
     #region Commands
@@ -53,10 +53,10 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
         INativeContextMenuLoader nativeContextMenuLoader)
     {
         _directorySettings = directorySettings;
-        _reactiveOptions = reactiveOptions; 
+        _reactiveOptions = reactiveOptions;
         _wallpapersService = wallpapersService;
-        
-        FilesPresenters = filesPresenters;
+
+        FilesPresenters = GetOveridedPresenters(filesPresenters);
         FilesGroups = groups;
         FilesSortings = sortings;
         NativeContextMenuLoader = nativeContextMenuLoader;
@@ -183,6 +183,29 @@ public sealed class ExplorerPageModel : BasePageModel, IExplorerPageModel
     {
         if (e.PropertyName == nameof(IReactiveOptions.ExplorerBackgroundImagePath))
             BackgroundImage = _wallpapersService.CreateImageSource(_reactiveOptions.ExplorerBackgroundImagePath);
+    }
+
+    private static IReadOnlyList<IFilesPresenterFactory> GetOveridedPresenters(
+        IReadOnlyList<IFilesPresenterFactory> filesPresenters)
+    {
+        var ids = new List<string>(filesPresenters.Count);
+
+        var presenters = new List<IFilesPresenterFactory>(filesPresenters.Count);
+
+        for (var i = filesPresenters.Count - 1; i >= 0; i--)
+        {
+            var presenter = filesPresenters[i];
+
+            if (!ids.Contains(presenter.Id))
+            {
+                ids.Add(presenter.Id);
+                presenters.Add(presenter);
+            }
+        }
+
+        presenters.Reverse();
+
+        return presenters;
     }
 
     #endregion

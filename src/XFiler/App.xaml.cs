@@ -2,6 +2,7 @@
 using Hardcodet.Wpf.TaskbarNotification;
 using SingleInstanceHelper;
 using System.Text;
+using XFiler.SDK.Plugins;
 using XFiler.TrayIcon;
 
 namespace XFiler;
@@ -30,7 +31,9 @@ internal sealed partial class App : IXFilerApp
             Shutdown();
 
         Host = new IoC().Build();
-        
+
+        var plugins = Host.Resolve<IReadOnlyList<IPlugin>>();
+
         foreach (var s in Host.Resolve<IReadOnlyList<IInitializeService>>()) 
             s.Init();
         

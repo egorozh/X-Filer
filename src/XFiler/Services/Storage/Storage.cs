@@ -14,6 +14,8 @@ internal sealed class Storage : IStorage
 
     public string ConfigDirectory { get; }
 
+    public string PluginsDirectory { get; }
+
     public string DbDirectory { get; }
 
     public string Bookmarks { get; }
@@ -46,6 +48,9 @@ internal sealed class Storage : IStorage
 
         ExtensionsDirectory = Path.Combine(BaseDirectory, "Extensions");
         Directory.CreateDirectory(ExtensionsDirectory);
+
+        PluginsDirectory = Path.Combine(BaseDirectory, "Plugins");
+        Directory.CreateDirectory(PluginsDirectory);
     }
 
     public Storage() : this("X-Filer")

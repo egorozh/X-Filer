@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Dragablz;
 using GongSolutions.Wpf.DragDrop;
-using XFiler.Base;
 using XFiler.DragDrop;
 using XFiler.History;
 using XFiler.SDK.Plugins;
@@ -14,17 +13,18 @@ internal sealed class IoC
     public IContainer Build()
     {
         var services = new AutofacDiService();
-        
-        RegisterServices(services, new[]
-        {
-            new BasePlugin()
-        });
+
+        IStorage storage = new Storage();
+
+        RegisterServices(services, storage, storage.GetPlugins());
 
         return services.Build();
     }
 
-    private static void RegisterServices(IDIService services, IEnumerable<IPlugin> plugins)
-    {   
+    private static void RegisterServices(IDIService services, IStorage storage, IEnumerable<IPlugin> plugins)
+    {
+        services.RegisterSingleton(_ => storage);
+
         foreach (var plugin in plugins)
             plugin.Load(services);
 
@@ -35,10 +35,10 @@ internal sealed class IoC
         services.RegisterPages();
         services.RegisterFileModels();
 
-        services.RegisterSingleton<MainWindowTabClient,IInterTabClient>();
+        services.RegisterSingleton<MainWindowTabClient, IInterTabClient>();
 
         services.RegisterSingleton<BookmarksDispatcherDropTarget, IBookmarksDispatcherDropTarget>();
-       
+
         services.RegisterSingleton<WindowFactory, IWindowFactory>();
 
         services.RegisterSingleton<XFilerDragDrop, IDropTarget>();
@@ -46,9 +46,9 @@ internal sealed class IoC
 
         services.RegisterSingleton<ResultModelFactory, IResultModelFactory>();
         services.RegisterSingleton<SearchHandler, ISearchHandler>();
-        
-        services.Register<DirectoryHistory,IDirectoryHistory>();
-        services.Register<TabItemModel,ITabItemModel>();
+
+        services.Register<DirectoryHistory, IDirectoryHistory>();
+        services.Register<TabItemModel, ITabItemModel>();
         services.RegisterSingleton<TabFactory, ITabFactory>();
 
         services.Register<TabsViewModel, ITabsViewModel>();

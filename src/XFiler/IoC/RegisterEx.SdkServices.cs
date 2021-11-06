@@ -14,8 +14,7 @@ internal static partial class RegisterEx
         services.RegisterReactiveOptions();
         services.RegisterThemes();
         services.RegisterBookmarksServices();
-
-        services.RegisterSingleton<Storage, IStorage>();
+        
         services.RegisterSingleton<MainCommands, IMainCommands>();
         services.RegisterSingleton<ClipboardService, IClipboardService>();
         services.RegisterSingleton<FileOperations, IFileOperations>();
