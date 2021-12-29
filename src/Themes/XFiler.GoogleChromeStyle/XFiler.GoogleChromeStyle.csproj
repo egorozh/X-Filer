@@ -4,6 +4,7 @@
     <PackageReference Include="FluentWPF" Version="0.10.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.5" />
+    <ProjectReference Include="..\..\Controls\XFiler.Controls\XFiler.Controls.csproj" />
     <ProjectReference Include="..\..\SDK\XFiler.SDK\XFiler.SDK.csproj" />
   </ItemGroup>
 

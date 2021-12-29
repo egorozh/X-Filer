@@ -1,5 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+	<PropertyGroup>
+		<PackageProjectUrl>https://github.com/egorozh/X-Filer</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/egorozh/X-Filer</RepositoryUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.3.0" />
 		<PackageReference Include="DragablzF" Version="0.1.0.1" />
@@ -7,11 +26,9 @@
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+		<PackageReference Include="Prism.Core" Version="8.1.97" />
 		<PackageReference Include="Serilog" Version="2.10.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\..\Controls\XFiler.Controls\XFiler.Controls.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

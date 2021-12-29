@@ -28,7 +28,7 @@ internal sealed class XFilerDragDrop : IDropTarget
         dropInfo.DestinationText = null;
         dropInfo.DropTargetAdorner = null;
 
-        if (dropInfo.Data is not IDataObject && dropInfo?.DragInfo == null)
+        if (dropInfo.Data is not IDataObject && dropInfo.DragInfo == null)
             return;
 
         if (!dropInfo.IsSameDragDropContextAsSource)

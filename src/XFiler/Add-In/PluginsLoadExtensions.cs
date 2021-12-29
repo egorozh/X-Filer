@@ -14,15 +14,15 @@ internal static class PluginsLoadExtensions
             new BasePlugin()
         };
 
-        var pluginsPaths = Directory.EnumerateFiles(storage.PluginsDirectory, "XFiler.Plus.dll");
+        //var pluginsPaths = Directory.EnumerateFiles(storage.PluginsDirectory, "XFiler.Plus.dll");
 
-        var other = pluginsPaths.SelectMany(pluginPath =>
-        {
-            var pluginAssembly = LoadPlugin(pluginPath);
-            return CreatePlugins(pluginAssembly);
-        });
+        //var other = pluginsPaths.SelectMany(pluginPath =>
+        //{
+        //    var pluginAssembly = LoadPlugin(pluginPath);
+        //    return CreatePlugins(pluginAssembly);
+        //});
 
-        plugins.AddRange(other);
+        //plugins.AddRange(other);
 
         return plugins;
     }
